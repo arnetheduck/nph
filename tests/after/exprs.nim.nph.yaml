@@ -1,0 +1,709 @@
+{
+  "kind": "nkStmtList",
+  "sons": [
+    {
+      "kind": "nkVarSection",
+      "sons": [
+        {
+          "kind": "nkIdentDefs",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "c3"
+            },
+            {
+              "kind": "nkEmpty"
+            },
+            {
+              "kind": "nkInfix",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "+"
+                },
+                {
+                  "kind": "nkBracketExpr",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "row"
+                    },
+                    {
+                      "kind": "nkIdent",
+                      "ident": "p"
+                    }
+                  ]
+                },
+                {
+                  "kind": "nkStmtListExpr",
+                  "sons": [
+                    {
+                      "kind": "nkIfStmt",
+                      "sons": [
+                        {
+                          "kind": "nkElifExpr",
+                          "sons": [
+                            {
+                              "kind": "nkInfix",
+                              "sons": [
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "!="
+                                },
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "runeA"
+                                },
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "runeB"
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "nkStmtList",
+                              "sons": [
+                                {
+                                  "kind": "nkIntLit",
+                                  "intVal": 1
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "nkElseExpr",
+                          "sons": [
+                            {
+                              "kind": "nkStmtList",
+                              "sons": [
+                                {
+                                  "kind": "nkIntLit",
+                                  "intVal": 0
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkVarSection",
+      "sons": [
+        {
+          "kind": "nkIdentDefs",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "c3"
+            },
+            {
+              "kind": "nkEmpty"
+            },
+            {
+              "kind": "nkInfix",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "+"
+                },
+                {
+                  "kind": "nkBracketExpr",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "row"
+                    },
+                    {
+                      "kind": "nkIdent",
+                      "ident": "p"
+                    }
+                  ]
+                },
+                {
+                  "kind": "nkStmtListExpr",
+                  "sons": [
+                    {
+                      "kind": "nkIfStmt",
+                      "sons": [
+                        {
+                          "kind": "nkElifExpr",
+                          "sons": [
+                            {
+                              "kind": "nkInfix",
+                              "sons": [
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "!="
+                                },
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "runeA"
+                                },
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "runeB"
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "nkStmtList",
+                              "sons": [
+                                {
+                                  "kind": "nkIntLit",
+                                  "intVal": 1
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "nkElseExpr",
+                          "sons": [
+                            {
+                              "kind": "nkIntLit",
+                              "intVal": 0
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkProcDef",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "f"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkFormalParams",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "bool"
+            }
+          ]
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkStmtList",
+          "prefix": [
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Comment here\", line: 14, col: 2, offsetA: 158, offsetB: 173)",
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## another\", line: 15, col: 2, offsetA: 176, offsetB: 186)"
+          ],
+          "sons": [
+            {
+              "kind": "nkPar",
+              "sons": [
+                {
+                  "kind": "nkInfix",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "or"
+                    },
+                    {
+                      "kind": "nkIdent",
+                      "ident": "true"
+                    },
+                    {
+                      "kind": "nkIdent",
+                      "ident": "false"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkProcDef",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "f"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkFormalParams",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "bool"
+            }
+          ]
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkStmtList",
+          "prefix": [
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Comment here\", line: 19, col: 2, offsetA: 225, offsetB: 240)",
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## another\", line: 20, col: 2, offsetA: 243, offsetB: 253)"
+          ],
+          "sons": [
+            {
+              "kind": "nkIfStmt",
+              "sons": [
+                {
+                  "kind": "nkElifBranch",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "true"
+                    },
+                    {
+                      "kind": "nkStmtList",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "false"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "nkElse",
+                  "sons": [
+                    {
+                      "kind": "nkStmtList",
+                      "prefix": [
+                        "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 24, col: 4, offsetA: 287, offsetB: 297)",
+                        "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment 2\", line: 25, col: 4, offsetA: 302, offsetB: 314)"
+                      ],
+                      "sons": [
+                        {
+                          "kind": "nkIfStmt",
+                          "sons": [
+                            {
+                              "kind": "nkElifBranch",
+                              "sons": [
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "true"
+                                },
+                                {
+                                  "kind": "nkStmtList",
+                                  "prefix": [
+                                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 27, col: 6, offsetA: 334, offsetB: 344)",
+                                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 28, col: 6, offsetA: 351, offsetB: 361)"
+                                  ],
+                                  "sons": [
+                                    {
+                                      "kind": "nkPar",
+                                      "sons": [
+                                        {
+                                          "kind": "nkInfix",
+                                          "sons": [
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "or"
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "true"
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "false"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "nkElse",
+                              "sons": [
+                                {
+                                  "kind": "nkStmtList",
+                                  "sons": [
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "false"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkForStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "a"
+        },
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "..<"
+            },
+            {
+              "kind": "nkIntLit",
+              "intVal": 0
+            },
+            {
+              "kind": "nkIntLit",
+              "intVal": 1
+            }
+          ]
+        },
+        {
+          "kind": "nkStmtList",
+          "sons": [
+            {
+              "kind": "nkDiscardStmt",
+              "sons": [
+                {
+                  "kind": "nkEmpty"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkForStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "a"
+        },
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": ".."
+            },
+            {
+              "kind": "nkIntLit",
+              "intVal": 0
+            },
+            {
+              "kind": "nkIntLit",
+              "intVal": 1
+            }
+          ]
+        },
+        {
+          "kind": "nkStmtList",
+          "sons": [
+            {
+              "kind": "nkDiscardStmt",
+              "sons": [
+                {
+                  "kind": "nkEmpty"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkForStmt",
+      "prefix": [
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# needs spaces\", line: 37, col: 0, offsetA: 462, offsetB: 476)"
+      ],
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "a"
+        },
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": ".."
+            },
+            {
+              "kind": "nkPrefix",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "^"
+                },
+                {
+                  "kind": "nkIntLit",
+                  "intVal": 1
+                }
+              ]
+            },
+            {
+              "kind": "nkPrefix",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "^"
+                },
+                {
+                  "kind": "nkIntLit",
+                  "intVal": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "nkStmtList",
+          "sons": [
+            {
+              "kind": "nkDiscardStmt",
+              "sons": [
+                {
+                  "kind": "nkEmpty"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkTemplateDef",
+      "sons": [
+        {
+          "kind": "nkPostfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "*"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "ttt"
+            }
+          ]
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkFormalParams",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "untyped"
+            }
+          ]
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkStmtList",
+          "sons": [
+            {
+              "kind": "nkBracketExpr",
+              "sons": [
+                {
+                  "kind": "nkStmtListExpr",
+                  "sons": [
+                    {
+                      "kind": "nkBlockStmt",
+                      "sons": [
+                        {
+                          "kind": "nkEmpty"
+                        },
+                        {
+                          "kind": "nkStmtList",
+                          "sons": [
+                            {
+                              "kind": "nkIdent",
+                              "ident": "xxx"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkDiscardStmt",
+      "prefix": [
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# command syntax with colon\", line: 46, col: 0, offsetA: 559, offsetB: 586)"
+      ],
+      "sons": [
+        {
+          "kind": "nkCommand",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "xxxx"
+            },
+            {
+              "kind": "nkStrLit",
+              "strVal": "arg"
+            },
+            {
+              "kind": "nkStmtList",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "yyy"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkCommand",
+      "sons": [
+        {
+          "kind": "nkDotExpr",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "res"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "add"
+            }
+          ]
+        },
+        {
+          "kind": "nkCall",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "fff"
+            },
+            {
+              "kind": "nkStmtList",
+              "sons": [
+                {
+                  "kind": "nkCall",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "yy"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkLetSection",
+      "prefix": [
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# we don\\\'t what `do` in let but need it in the above commend - this needs\", line: 53, col: 0, offsetA: 642, offsetB: 715)",
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# more investigation - this is important for templates calls like Result.valueOr\", line: 54, col: 0, offsetA: 716, offsetB: 796)",
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# which become ugly otherwise\", line: 55, col: 0, offsetA: 797, offsetB: 826)"
+      ],
+      "sons": [
+        {
+          "kind": "nkIdentDefs",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "xxx"
+            },
+            {
+              "kind": "nkEmpty"
+            },
+            {
+              "kind": "nkCall",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "implicitdo"
+                },
+                {
+                  "kind": "nkStmtList",
+                  "sons": [
+                    {
+                      "kind": "nkReturnStmt",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "xxx"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

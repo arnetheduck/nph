@@ -1,0 +1,232 @@
+{
+  "kind": "nkStmtList",
+  "sons": [
+    {
+      "kind": "nkImportStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "tables"
+        }
+      ]
+    },
+    {
+      "kind": "nkImportStmt",
+      "sons": [
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "/"
+            },
+            {
+              "kind": "nkStrLit",
+              "strVal": "."
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "tables"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkImportStmt",
+      "sons": [
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "/"
+            },
+            {
+              "kind": "nkStrLit",
+              "strVal": "."
+            },
+            {
+              "kind": "nkBracket",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "tables"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "sets"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkImportStmt",
+      "sons": [
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "as"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "sets"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "dummies"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkImportStmt",
+      "sons": [
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "/"
+            },
+            {
+              "kind": "nkStrLit",
+              "strVal": "."
+            },
+            {
+              "kind": "nkBracket",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "tables"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "sets"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "long"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "modules"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "even"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "more"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "more"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "a_really_long_module_here"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "more"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "more"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "more"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "more"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "more"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkImportStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "tables"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "sets"
+        }
+      ]
+    },
+    {
+      "kind": "nkFromStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "tables"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "Xxx"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "yyy"
+        }
+      ]
+    },
+    {
+      "kind": "nkExportStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "a"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "b"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "c"
+        }
+      ]
+    },
+    {
+      "kind": "nkExportStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "bbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "cccccccccccccccccccc"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "dddddddddddddddddd"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+name: CI
+on: [push, pull_request]
+
+concurrency: # Cancel stale PR builds (but not push builds)
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - os: linux
+            cpu: amd64
+            TEST_LANG: c
+        include:
+          - target:
+              os: linux
+            builder: ubuntu-20.04
+            shell: bash
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
+
+    name: '${{ matrix.target.os }}-${{ matrix.target.cpu }}-${{ matrix.target.TEST_LANG }}'
+    runs-on: ${{ matrix.builder }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Fetch nimble
+        run: |
+          wget https://github.com/nim-lang/nimble/releases/download/latest/nimble-linux_x64.tar.gz
+          tar xvf nimble-linux_x64.tar.gz
+          echo "$PWD" >> $GITHUB_PATH
+
+      - name: Build nph
+        run: |
+            nimble setup -l
+            nimble build
+
+      - name: Check formatting
+        run: |
+          find -name "*.nim"  ! -path "./tests/before/*" ! -path "./nimbledeps/*" -print0 | xargs -0 -n1 ./nph
+          git diff
+          # find -name "*.nim"  ! -path "./tests/before/*" ! -path "./nimbledeps/*" -print0 | xargs -0 -n1 ./nph --check
