@@ -6,9 +6,14 @@ import
   "."/[astcmp, phast, phastalgo, phmsgs, phlineinfos, phoptions, phparser, phrenderer]
 import idents
 
-from astalgo import nil
+from "$nim"/compiler/astalgo import nil
 
-import parseopt, strutils, os, sequtils
+import
+  std/[parseopt, strutils, os, sequtils]
+
+static:
+  doAssert (NimMajor, NimMinor, NimPatch) == (2, 0, 0),
+    "nph needs to be compiled with nim 2.0.0 exactly for now"
 
 const
   Version = "0.1"

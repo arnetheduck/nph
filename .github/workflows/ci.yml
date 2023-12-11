@@ -12,36 +12,58 @@ jobs:
       matrix:
         target:
           - os: linux
-            cpu: amd64
-            TEST_LANG: c
+            triple: x86_64-linux-musl
+            name: linux_x64
+          - os: macosx
+            triple: x86_64-apple-darwin14
+            name: apple_x64
+          - os: windows
+            triple: x86_64-w64-mingw32
+            name: windows_x64
         include:
           - target:
               os: linux
             builder: ubuntu-20.04
-            shell: bash
+          - target:
+              os: macosx
+            builder: macos-11
+          - target:
+              os: windows
+            builder: windows-2019
     defaults:
       run:
-        shell: ${{ matrix.shell }}
+        shell: bash
 
-    name: '${{ matrix.target.os }}-${{ matrix.target.cpu }}-${{ matrix.target.TEST_LANG }}'
+    name: '${{ matrix.target.name }}'
     runs-on: ${{ matrix.builder }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Fetch nimble
+        uses: robinraju/release-downloader@v1.8
+        with:
+          repository: "nim-lang/nimble"
+          tag: "latest"
+          fileName: "nimble-${{matrix.target.name}}.tar.gz"
+          extract: false
+      - name: Setup env
         run: |
-          wget https://github.com/nim-lang/nimble/releases/download/latest/nimble-linux_x64.tar.gz
-          tar xvf nimble-linux_x64.tar.gz
+          # extract: true doesn't work on osx :/
+          tar xvf nimble-${{matrix.target.name}}.tar.gz
+          # needed for nimble on windows
+          curl -L "https://curl.se/ca/cacert.pem" -o cacert.pem
           echo "$PWD" >> $GITHUB_PATH
 
       - name: Build nph
         run: |
+            ls -l
+
             nimble setup -l
             nimble build
 
       - name: Check formatting
         run: |
-          find -name "*.nim"  ! -path "./tests/before/*" ! -path "./nimbledeps/*" -print0 | xargs -0 -n1 ./nph
+          find src tests/after -name "*.nim" -print0 | xargs -0 -n1 ./nph
           git diff
           # find -name "*.nim"  ! -path "./tests/before/*" ! -path "./nimbledeps/*" -print0 | xargs -0 -n1 ./nph --check
