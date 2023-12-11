@@ -49,6 +49,8 @@ jobs:
           extract: true
       - name: Setup env
         run: |
+          # needed for nimble on windows
+          curl -L "https://curl.se/ca/cacert.pem" -o cacert.pem
           echo "$PWD" >> $GITHUB_PATH
 
       - name: Build nph
