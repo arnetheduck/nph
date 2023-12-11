@@ -12,9 +12,12 @@
 # nph version:
 # * enhanced concrete syntax information
 
-import hashes, options, ropes, idents, int128, tables
+import
+  std/[hashes, tables]
+import
+  "$nim"/compiler/[idents, options, int128, ropes]
 
-from strutils import toLowerAscii
+from std/strutils import toLowerAscii
 
 import
   "."/phlineinfos

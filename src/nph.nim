@@ -4,7 +4,8 @@
 
 import
   "."/[astcmp, phast, phastalgo, phmsgs, phlineinfos, phoptions, phparser, phrenderer]
-import idents
+import
+  "$nim"/compiler/idents
 
 from "$nim"/compiler/astalgo import nil
 
