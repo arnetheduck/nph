@@ -32,7 +32,8 @@
 # that the lexer is trying to do comment layout / reflow / analysis in the
 # middle of lexing..
 
-import llstream, idents, strutils, pathutils
+import
+  "$nim"/compiler/[llstream, idents, pathutils], std/[strutils]
 import
   "."/[phast, phlexer, phlineinfos, phmsgs, phoptions]
 when defined(nimPreviewSlimSystem):

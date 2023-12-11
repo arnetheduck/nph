@@ -12,11 +12,10 @@
 import
   std/[strutils, os, tables, terminal, macros, times],
   std/private/miscdollars,
-  pathutils
-import
-  ./phlineinfos, ./phoptions
+  "$nim"/compiler/pathutils,
+  "."/[phlineinfos, phoptions]
 
-import ropes except `%`
+import "$nim"/compiler/ropes except `%`
 when defined(nimPreviewSlimSystem):
   import
     std/[syncio, assertions]

@@ -18,8 +18,10 @@
 
 {.used.}
 
-import idents, strutils, sequtils
-import phlexer, phoptions, phast, phmsgs, phlineinfos
+import
+  "$nim"/compiler/[idents], std/[strutils, sequtils]
+import
+  "."/[phlexer, phoptions, phast, phmsgs, phlineinfos]
 when defined(nimPreviewSlimSystem):
   import
     std/[syncio, assertions, formatfloat]

@@ -3,7 +3,8 @@
 ## Compare two AST's for semantic equivalence - aka undo whitespace bugs in the
 ## Nim parser / grammar
 
-import ast, parser, idents, options, sequtils
+import
+  "$nim"/compiler/[ast, parser, idents, options], std/sequtils
 
 type
   Equivalence* = enum

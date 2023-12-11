@@ -9,11 +9,14 @@
 #    distribution, for details about the copyright.
 #
 
-import os, strutils, strtabs, sets, platform, prefixmatches, pathutils, nimpaths, tables
-import phlineinfos
+import
+  std/[os, strutils, strtabs, sets, tables],
+  "$nim"/compiler/[platform, prefixmatches, pathutils, nimpaths]
+import
+  ./phlineinfos
 
-from terminal import isatty
-from times import utc, fromUnix, local, getTime, format, DateTime
+from std/terminal import isatty
+from std/times import utc, fromUnix, local, getTime, format, DateTime
 from std/private/globs import nativeToUnixPath
 when defined(nimPreviewSlimSystem):
   import
@@ -901,7 +904,7 @@ proc clearNimblePath*(conf: ConfigRef) =
   conf.nimblePaths.setLen(0)
 
 include
-  packagehandling
+  "$nim"/compiler/packagehandling
 
 proc getOsCacheDir(): string =
   when defined(posix):

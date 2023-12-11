@@ -26,8 +26,9 @@
 # end-of-comment marker.
 
 import
-  hashes, phoptions, phmsgs, strutils, platform, idents, nimlexbase, llstream, wordrecg,
-  phlineinfos, pathutils, parseutils
+  "$nim"/compiler/[idents, platform, nimlexbase, llstream, pathutils, wordrecg],
+  "."/[phoptions, phmsgs, phlineinfos],
+  std/[hashes, strutils, parseutils]
 when defined(nimPreviewSlimSystem):
   import
     std/[assertions, formatfloat]
