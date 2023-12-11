@@ -27,7 +27,7 @@ jobs:
           - os: linux
             triple: armv7l-linux-musleabihf
             name: linux_armv7l
-            nimbleName: linux_arm7l
+            nimbleName: linux_armv7l
           - os: macosx
             triple: x86_64-apple-darwin14
             name: macosx_x64
@@ -39,7 +39,7 @@ jobs:
           - os: windows
             triple: i686-w64-mingw32
             name: windows_x32
-            nimbleName: windows_x432
+            nimbleName: windows_x32
         include:
           - target:
               os: linux
