@@ -82,8 +82,7 @@ jobs:
 
       - name: Create archive
         run: |
-          cd src
-          tar -c -z -v -f ../nph-${{ matrix.target.name }}.tar.gz `ls nph{,.exe} 2>/dev/null || true`
+          tar -c -z -v -f nph-${{ matrix.target.name }}.tar.gz `ls nph{,.exe} 2>/dev/null || true`
 
       - name: Upload the binaries
         uses: actions/upload-artifact@v3
