@@ -64,6 +64,6 @@ jobs:
 
       - name: Check formatting
         run: |
-          find -name "*.nim"  ! -path "./tests/before/*" ! -path "./nimbledeps/*" -print0 | xargs -0 -n1 ./nph
+          find src tests/after -name "*.nim" -print0 | xargs -0 -n1 ./nph
           git diff
           # find -name "*.nim"  ! -path "./tests/before/*" ! -path "./nimbledeps/*" -print0 | xargs -0 -n1 ./nph --check
