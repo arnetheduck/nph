@@ -46,9 +46,11 @@ jobs:
           repository: "nim-lang/nimble"
           tag: "latest"
           fileName: "nimble-${{matrix.target.name}}.tar.gz"
-          extract: true
+          extract: false
       - name: Setup env
         run: |
+          # extract: true doesn't work on osx :/
+          tar xvf nimble-${{matrix.target.name}}.tar.gz
           # needed for nimble on windows
           curl -L "https://curl.se/ca/cacert.pem" -o cacert.pem
           echo "$PWD" >> $GITHUB_PATH
