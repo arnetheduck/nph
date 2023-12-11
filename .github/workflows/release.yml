@@ -15,24 +15,31 @@ jobs:
           - os: linux
             triple: x86_64-linux-musl
             name: linux_x64
+            nimbleName: linux_x64
           - os: linux
             triple: i686-linux-musl
             name: linux_x32
+            nimbleName: linux_x32
           - os: linux
             triple: aarch64-linux-musl
             name: linux_arm64
+            nimbleName: linux_aarch64
           - os: linux
             triple: armv7l-linux-musleabihf
             name: linux_armv7l
+            nimbleName: linux_arm7l
           - os: macosx
             triple: x86_64-apple-darwin14
             name: macosx_x64
+            nimbleName: apple_x64
           - os: windows
             triple: x86_64-w64-mingw32
             name: windows_x64
+            nimbleName: windows_x64
           - os: windows
             triple: i686-w64-mingw32
             name: windows_x32
+            nimbleName: windows_x432
         include:
           - target:
               os: linux
@@ -58,12 +65,12 @@ jobs:
         with:
           repository: "nim-lang/nimble"
           tag: "latest"
-          fileName: "nimble-${{matrix.target.name}}.tar.gz"
+          fileName: "nimble-${{matrix.target.nimbleName}}.tar.gz"
           extract: false
       - name: Setup env
         run: |
           # extract: true doesn't work on osx :/
-          tar xvf nimble-${{matrix.target.name}}.tar.gz
+          tar xvf nimble-${{matrix.target.nimbleName}}.tar.gz
           # needed for nimble on windows
           curl -L "https://curl.se/ca/cacert.pem" -o cacert.pem
           echo "$PWD" >> $GITHUB_PATH
