@@ -49,7 +49,7 @@ jobs:
           extract: true
       - name: Setup env
         run: |
-          echo "$GITHUB_WORKSPACE" >> $GITHUB_PATH
+          echo "$PWD" >> $GITHUB_PATH
 
       - name: Build nph
         run: |
