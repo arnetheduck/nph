@@ -12,18 +12,20 @@ jobs:
       matrix:
         target:
           - os: linux
-            cpu: amd64
-            TEST_LANG: c
+            triple: x86_64-linux-musl
+            name: linux_x64
+          - os: windows
+            triple: x86_64-w64-mingw32
+            name: windows_x64
         include:
           - target:
               os: linux
             builder: ubuntu-20.04
-            shell: bash
     defaults:
       run:
-        shell: ${{ matrix.shell }}
+        shell: bash
 
-    name: '${{ matrix.target.os }}-${{ matrix.target.cpu }}-${{ matrix.target.TEST_LANG }}'
+    name: '${{ matrix.name }}'
     runs-on: ${{ matrix.builder }}
     steps:
       - name: Checkout
@@ -31,8 +33,8 @@ jobs:
 
       - name: Fetch nimble
         run: |
-          wget https://github.com/nim-lang/nimble/releases/download/latest/nimble-linux_x64.tar.gz
-          tar xvf nimble-linux_x64.tar.gz
+          wget https://github.com/nim-lang/nimble/releases/download/latest/nimble-${{matrix.target.name}}.tar.gz
+          tar xvf nimble-${{matrix.target.name}}.tar.gz
           echo "$PWD" >> $GITHUB_PATH
 
       - name: Build nph

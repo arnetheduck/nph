@@ -93,6 +93,11 @@ when defined(nimpretty) or defined(nph):
   proc fileSection*(conf: ConfigRef; fid: FileIndex; a, b: int): string =
     substr(conf.m.fileInfos[fid.int].fullContent, a, b)
 
+when not FileSystemCaseSensitive:
+  proc toLowerAscii(a: var string) {.inline.} =
+    for c in mitems(a):
+      if isUpperAscii(c): c = char(uint8(c) xor 0b0010_0000'u8)
+
 proc canonicalCase(path: var string) {.inline.} =
   ## the idea is to only use this for checking whether a path is already in
   ## the table but otherwise keep the original case
