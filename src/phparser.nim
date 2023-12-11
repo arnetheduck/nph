@@ -2649,9 +2649,9 @@ proc parseEnum(p: var Parser): PNode =
       symPragma.add(a)
       symPragma.add(pragma)
 
-    let symInd = p.currInd
+      comments.add commentLookahead(p)
 
-    comments.add commentLookahead(p)
+    let symInd = p.currInd
     if p.tok.indent >= 0 and p.tok.indent <= p.currInd:
       p.skipped = splitComments(comments, symPragma, symInd, clPostfix)
 
@@ -3256,9 +3256,10 @@ proc parseStmt(p: var Parser): PNode =
         p.hasProgress = false
         if p.tok.tokType in {tkElse, tkElif}:
           break
-        # Allow this too, see tests/parser/tifexprs
 
-        let a = complexOrSimpleStmt(p)
+        # Allow this too, see tests/parser/tifexprs
+        let
+          a = complexOrSimpleStmt(p)
         if a.kind == nkEmpty and not p.hasProgress:
           debugEcho 3
 

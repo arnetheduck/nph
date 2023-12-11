@@ -1108,10 +1108,9 @@ proc gstmts(g: var TSrcGen; n: PNode; c: TContext; doIndent = true) =
   if doIndent:
     indentNL(g)
 
-  gprefixes(g, n)
-
   var lastKind = nkStmtList
   if n.kind in {nkStmtList, nkStmtListExpr, nkStmtListType}:
+    gprefixes(g, n)
     for i in 0 ..< n.len:
       # This groups sections by their kind, giving a bit of air between "parts"
       # of code - we don't do it before control flow because there, the code
@@ -1132,11 +1131,11 @@ proc gstmts(g: var TSrcGen; n: PNode; c: TContext; doIndent = true) =
       gcoms(g)
 
       lastKind = n[i].kind
+    gpostfixes(g, n)
   else:
     gsub(g, n)
     gcoms(g)
 
-  gpostfixes(g, n)
   if doIndent:
     dedent(g)
 
