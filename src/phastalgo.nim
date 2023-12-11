@@ -14,7 +14,10 @@
 # nph version:
 # * yaml formatting for the nph-specific fields
 
-import phast, hashes, intsets, phoptions, phlineinfos, ropes, idents, rodutils, phmsgs
+import
+  "."/[phast, phoptions, phlineinfos, phmsgs],
+  std/[hashes, intsets],
+  "$nim"/compiler/[ropes, idents, rodutils]
 
 import strutils except addf
 when defined(nimPreviewSlimSystem):
