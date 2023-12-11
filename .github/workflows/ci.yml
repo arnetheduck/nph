@@ -25,7 +25,7 @@ jobs:
       run:
         shell: bash
 
-    name: '${{ matrix.name }}'
+    name: '${{ matrix.target.name }}'
     runs-on: ${{ matrix.builder }}
     steps:
       - name: Checkout
