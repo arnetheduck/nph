@@ -44,7 +44,7 @@ jobs:
         uses: robinraju/release-downloader@v1.8
         with:
           repository: "nim-lang/nimble"
-          latest: true
+          tag: "latest"
           fileName: "nimble-${{matrix.target.name}}.tar.gz"
           extract: true
       - name: Build nph
