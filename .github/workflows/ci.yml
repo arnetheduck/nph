@@ -14,6 +14,9 @@ jobs:
           - os: linux
             triple: x86_64-linux-musl
             name: linux_x64
+          - os: macosx
+            triple: x86_64-apple-darwin14
+            name: apple_x64
           - os: windows
             triple: x86_64-w64-mingw32
             name: windows_x64
@@ -21,6 +24,12 @@ jobs:
           - target:
               os: linux
             builder: ubuntu-20.04
+          - target:
+              os: macosx
+            builder: macos-11
+          - target:
+              os: windows
+            builder: windows-2019
     defaults:
       run:
         shell: bash
