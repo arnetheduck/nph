@@ -102,7 +102,7 @@ jobs:
 
       - uses: ncipollo/release-action@v1
         with:
-          name: Latest nph Binaries
+          name: Latest nph binaries
           artifacts: "*/*"
           allowUpdates: true
           makeLatest: true
