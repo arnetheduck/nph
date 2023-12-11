@@ -80,8 +80,38 @@ jobs:
             nimble setup -l
             nimble build -d:release
 
-      - name: Create and upload
+      - name: Create archive
         run: |
-          curl -O https://github.com/probonopd/uploadtool/raw/master/upload.sh
-          tar cvfz nph-${{matrix.target.name}}.tar.gz nph
-          bash upload.sh nph-${{matrix.target.name}}.tar.gz nph
+          cd src
+          tar -c -z -v -f ../nph-${{ matrix.target.name }}.tar.gz `ls nph{,.exe} 2>/dev/null || true`
+
+      - name: Upload the binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: nph-${{ matrix.target.name }}.tar.gz
+          path: nph-${{ matrix.target.name }}.tar.gz
+
+  create-github-release:
+    name: Create Github Release
+    needs: [build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download artefacts
+        uses: actions/download-artifact@v3
+
+      - uses: ncipollo/release-action@v1
+        with:
+          name: Latest nph Binaries
+          artifacts: "*/*"
+          allowUpdates: true
+          makeLatest: true
+          prerelease: true
+          tag: latest
+
+      - name: Delete artefacts
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          failOnError: false
+          name: "nph-*"
