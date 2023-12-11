@@ -1,0 +1,80 @@
+on:
+  push:
+    branches:
+      - master
+      - release
+    workflow_dispatch:
+
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - os: linux
+            triple: x86_64-linux-musl
+            name: linux_x64
+          - os: linux
+            triple: i686-linux-musl
+            name: linux_x32
+          - os: linux
+            triple: aarch64-linux-musl
+            name: linux_arm64
+          - os: linux
+            triple: armv7l-linux-musleabihf
+            name: linux_armv7l
+          - os: macosx
+            triple: x86_64-apple-darwin14
+            name: macosx_x64
+          - os: windows
+            triple: x86_64-w64-mingw32
+            name: windows_x64
+          - os: windows
+            triple: i686-w64-mingw32
+            name: windows_x32
+        include:
+          - target:
+              os: linux
+            builder: ubuntu-20.04
+          - target:
+              os: macosx
+            builder: macos-11
+          - target:
+              os: windows
+            builder: windows-2019
+    defaults:
+      run:
+        shell: bash
+
+    name: '${{ matrix.target.name }}'
+    runs-on: ${{ matrix.builder }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Fetch nimble
+        uses: robinraju/release-downloader@v1.8
+        with:
+          repository: "nim-lang/nimble"
+          tag: "latest"
+          fileName: "nimble-${{matrix.target.name}}.tar.gz"
+          extract: false
+      - name: Setup env
+        run: |
+          # extract: true doesn't work on osx :/
+          tar xvf nimble-${{matrix.target.name}}.tar.gz
+          # needed for nimble on windows
+          curl -L "https://curl.se/ca/cacert.pem" -o cacert.pem
+          echo "$PWD" >> $GITHUB_PATH
+
+      - name: Build nph
+        run: |
+            nimble setup -l
+            nimble build -d:release
+
+      - name: Create and upload
+        run: |
+          curl -O https://github.com/probonopd/uploadtool/raw/master/upload.sh
+          tar cvfz nph-${{matrix.target.name}}.tar.gz nph
+          bash upload.sh nph-${{matrix.target.name}}.tar.gz nph
