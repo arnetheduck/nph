@@ -26,17 +26,21 @@ nph --check somefile.nim || echo "Not formatted!"
 echo "echo 1" | nph -
 ```
 
-For bonus points, replace `nimpretty` with a symlink to `nph` - similar
-command line options are supported ;)
-
 ## Installation
 
-`nph` can be compiled or installed using `nimble` version `v0.14.2`+:
+Download binaries from the [releases page](https://github.com/arnetheduck/nph/releases/tag/latest).
+
+Versioned releases will be made availabe in the future.
+
+`nph` can be also compiled or installed using `nimble` version `v0.14.2`+:
 
 ```sh
 nimble -l setup
 nimble build
 ```
+
+For bonus points, replace `nimpretty` with a symlink to `nph` - similar
+command line options are supported ;)
 
 ## Priorities
 

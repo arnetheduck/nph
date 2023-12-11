@@ -1,0 +1,116 @@
+on:
+  push:
+    branches:
+      - master
+      - release
+    workflow_dispatch:
+
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - os: linux
+            triple: x86_64-linux-musl
+            name: linux_x64
+            nimbleName: linux_x64
+          - os: linux
+            triple: i686-linux-musl
+            name: linux_x32
+            nimbleName: linux_x32
+          - os: linux
+            triple: aarch64-linux-musl
+            name: linux_arm64
+            nimbleName: linux_aarch64
+          - os: linux
+            triple: armv7l-linux-musleabihf
+            name: linux_armv7l
+            nimbleName: linux_armv7l
+          - os: macosx
+            triple: x86_64-apple-darwin14
+            name: macosx_x64
+            nimbleName: apple_x64
+          - os: windows
+            triple: x86_64-w64-mingw32
+            name: windows_x64
+            nimbleName: windows_x64
+          - os: windows
+            triple: i686-w64-mingw32
+            name: windows_x32
+            nimbleName: windows_x32
+        include:
+          - target:
+              os: linux
+            builder: ubuntu-20.04
+          - target:
+              os: macosx
+            builder: macos-11
+          - target:
+              os: windows
+            builder: windows-2019
+    defaults:
+      run:
+        shell: bash
+
+    name: Release '${{ matrix.target.name }}'
+    runs-on: ${{ matrix.builder }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Fetch nimble
+        uses: robinraju/release-downloader@v1.8
+        with:
+          repository: "nim-lang/nimble"
+          tag: "latest"
+          fileName: "nimble-${{matrix.target.nimbleName}}.tar.gz"
+          extract: false
+      - name: Setup env
+        run: |
+          # extract: true doesn't work on osx :/
+          tar xvf nimble-${{matrix.target.nimbleName}}.tar.gz
+          # needed for nimble on windows
+          curl -L "https://curl.se/ca/cacert.pem" -o cacert.pem
+          echo "$PWD" >> $GITHUB_PATH
+
+      - name: Build nph
+        run: |
+            nimble setup -l
+            nimble build -d:release
+
+      - name: Create archive
+        run: |
+          tar -c -z -v -f nph-${{ matrix.target.name }}.tar.gz `ls nph{,.exe} 2>/dev/null || true`
+
+      - name: Upload the binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: nph-${{ matrix.target.name }}.tar.gz
+          path: nph-${{ matrix.target.name }}.tar.gz
+
+  create-github-release:
+    name: Create Github Release
+    needs: [build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download artefacts
+        uses: actions/download-artifact@v3
+
+      - uses: ncipollo/release-action@v1
+        with:
+          name: Latest nph binaries
+          artifacts: "*/*"
+          allowUpdates: true
+          makeLatest: true
+          prerelease: true
+          tag: latest
+
+      - name: Delete artefacts
+        uses: geekyeggo/delete-artifact@v2
+        with:
+          failOnError: false
+          name: "nph-*"
