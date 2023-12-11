@@ -47,10 +47,13 @@ jobs:
           tag: "latest"
           fileName: "nimble-${{matrix.target.name}}.tar.gz"
           extract: true
+      - name: Setup env
+        run: |
+          echo "$GITHUB_WORKSPACE" >> $GITHUB_PATH
+
       - name: Build nph
         run: |
             ls -l
-            echo "$GITHUB_WORKSPACE" >> $GITHUB_PATH
 
             nimble setup -l
             nimble build
