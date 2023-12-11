@@ -34,7 +34,7 @@ jobs:
       run:
         shell: bash
 
-    name: '${{ matrix.target.name }}'
+    name: CI '${{ matrix.target.name }}'
     runs-on: ${{ matrix.builder }}
     steps:
       - name: Checkout

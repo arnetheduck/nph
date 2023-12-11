@@ -54,7 +54,7 @@ jobs:
       run:
         shell: bash
 
-    name: '${{ matrix.target.name }}'
+    name: Release '${{ matrix.target.name }}'
     runs-on: ${{ matrix.builder }}
     steps:
       - name: Checkout
