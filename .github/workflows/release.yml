@@ -37,7 +37,7 @@ jobs:
             name: windows_x64
             nimbleName: windows_x64
           - os: windows
-            triple: i686-w64-mingw32
+            triple: i686-w32-mingw32
             name: windows_x32
             nimbleName: windows_x32
         include:
