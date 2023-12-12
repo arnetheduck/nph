@@ -12,15 +12,13 @@
 import
   std/[os, strutils, strtabs, sets, tables],
   "$nim"/compiler/[platform, prefixmatches, pathutils, nimpaths]
-import
-  ./phlineinfos
+import ./phlineinfos
 
 from std/terminal import isatty
 from std/times import utc, fromUnix, local, getTime, format, DateTime
 from std/private/globs import nativeToUnixPath
 when defined(nimPreviewSlimSystem):
-  import
-    std/[syncio, assertions]
+  import std/[syncio, assertions]
 
 const
   hasTinyCBackend* = defined(tinyc)
@@ -466,7 +464,7 @@ type
     lastLineInfo*: TLineInfo
     writelnHook*: proc(output: string) {.closure, gcsafe.}
     structuredErrorHook*: proc(
-        config: ConfigRef; info: TLineInfo; msg: string; severity: Severity
+      config: ConfigRef; info: TLineInfo; msg: string; severity: Severity
     ) {.closure, gcsafe.}
     cppCustomNamespace*: string
     nimMainPrefix*: string
@@ -542,8 +540,7 @@ when false:
     fn(globalOptions)
     fn(selectedGC)
 
-const
-  oldExperimentalFeatures* = {dotOperators, callOperator, parallel}
+const oldExperimentalFeatures* = {dotOperators, callOperator, parallel}
 const
   ChecksOptions* =
     {
@@ -581,17 +578,14 @@ template newPackageCache*(): untyped =
       modeCaseInsensitive
     else:
       modeCaseSensitive
+    ,
   )
 
 proc newProfileData(): ProfileData =
   ProfileData(data: newTable[TLineInfo, ProfileInfo]())
 
-const
-  foreignPackageNotesDefault* =
-    {
-      hintProcessing, warnUnknownMagic, hintQuitCalled, hintExecuting, hintUser,
-      warnUser
-    }
+const foreignPackageNotesDefault* =
+  {hintProcessing, warnUnknownMagic, hintQuitCalled, hintExecuting, hintUser, warnUser}
 
 proc isDefined*(conf: ConfigRef; symbol: string): bool
 
@@ -664,7 +658,7 @@ proc newConfigRef*(): ConfigRef =
       suggestMaxResults: 10_000,
       maxLoopIterationsVM: 10_000_000,
       vmProfileData: newProfileData(),
-      spellSuggestMax: spellSuggestSecretSauce
+      spellSuggestMax: spellSuggestSecretSauce,
     )
 
   initConfigRefCommon(result)
@@ -712,7 +706,8 @@ proc isDefined*(conf: ConfigRef; symbol: string): bool =
       result = conf.target.targetCPU == cpuAmd64
     of "posix", "unix":
       result =
-        conf.target.targetOS in {
+        conf.target.targetOS in
+          {
             osLinux, osMorphos, osSkyos, osIrix, osPalmos, osQnx, osAtari, osAix,
             osHaiku, osVxWorks, osSolaris, osNetbsd, osFreebsd, osOpenbsd, osDragonfly,
             osMacosx, osIos, osAndroid, osNintendoSwitch, osFreeRTOS, osCrossos,
@@ -759,9 +754,8 @@ proc isDefined*(conf: ConfigRef; symbol: string): bool =
       result = CPU[conf.target.targetCPU].bit == 64
     of "nimrawsetjmp":
       result =
-        conf.target.targetOS in {
-            osSolaris, osNetbsd, osFreebsd, osOpenbsd, osDragonfly, osMacosx
-          }
+        conf.target.targetOS in
+          {osSolaris, osNetbsd, osFreebsd, osOpenbsd, osDragonfly, osMacosx}
     else:
       discard
 
@@ -858,14 +852,11 @@ proc setDefaultLibpath*(conf: ConfigRef) =
 
     # Special rule to support other tools (nimble) which import the compiler
     # modules and make use of them.
-    let
-      realNimPath = findExe("nim")
+    let realNimPath = findExe("nim")
     # Find out if $nim/../../lib/system.nim exists.
-    let
-      parentNimLibPath = realNimPath.parentDir.parentDir / "lib"
-    if not fileExists(conf.libpath.string / "system.nim") and fileExists(
-        parentNimLibPath / "system.nim"
-      ):
+    let parentNimLibPath = realNimPath.parentDir.parentDir / "lib"
+    if not fileExists(conf.libpath.string / "system.nim") and
+        fileExists(parentNimLibPath / "system.nim"):
       conf.libpath = AbsoluteDir parentNimLibPath
 
 proc canonicalizePath*(conf: ConfigRef; path: AbsoluteFile): AbsoluteFile =
@@ -903,8 +894,7 @@ proc clearNimblePath*(conf: ConfigRef) =
   conf.lazyPaths.setLen(0)
   conf.nimblePaths.setLen(0)
 
-include
-  "$nim"/compiler/packagehandling
+include "$nim"/compiler/packagehandling
 
 proc getOsCacheDir(): string =
   when defined(posix):
@@ -940,7 +930,8 @@ proc pathSubs*(conf: ConfigRef; p, config: string): string =
 
   result =
     unixToNativePath(
-      p % [
+      p %
+        [
           "nim",
           getPrefixDir(conf).string,
           "lib",
@@ -957,7 +948,7 @@ proc pathSubs*(conf: ConfigRef; p, config: string): string =
           conf.projectPath.string,
           "nimcache",
           getNimcacheDir(conf).string
-        ]
+        ],
     ).expandTilde
 
 iterator nimbleSubs*(conf: ConfigRef; p: string): string =
@@ -1020,23 +1011,12 @@ template patchModule(conf: ConfigRef) {.dirty.} =
       if ov.len > 0:
         result = AbsoluteFile(ov)
 
-const
-  stdlibDirs* =
-    [
-      "pure",
-      "core",
-      "arch",
-      "pure/collections",
-      "pure/concurrency",
-      "pure/unidecode",
-      "impure",
-      "wrappers",
-      "wrappers/linenoise",
-      "windows",
-      "posix",
-      "js",
-      "deprecated/pure"
-    ]
+const stdlibDirs* =
+  [
+    "pure", "core", "arch", "pure/collections", "pure/concurrency", "pure/unidecode",
+    "impure", "wrappers", "wrappers/linenoise", "windows", "posix", "js",
+    "deprecated/pure"
+  ]
 const
   pkgPrefix = "pkg/"
   stdPrefix = "std/"
@@ -1106,8 +1086,7 @@ proc findModule*(conf: ConfigRef; modulename, currentModule: string): AbsoluteFi
   patchModule(conf)
 
 proc findProjectNimFile*(conf: ConfigRef; pkg: string): string =
-  const
-    extensions = [".nims", ".cfg", ".nimcfg", ".nimble"]
+  const extensions = [".nims", ".cfg", ".nimcfg", ".nimble"]
 
   var
     candidates: seq[string] = @[]
@@ -1196,9 +1175,8 @@ proc inclDynlibOverride*(conf: ConfigRef; lib: string) =
 
 proc isDynlibOverride*(conf: ConfigRef; lib: string): bool =
   result =
-    optDynlibOverrideAll in conf.globalOptions or conf.dllOverrides.hasKey(
-        lib.canonDynlibName
-      )
+    optDynlibOverrideAll in conf.globalOptions or
+      conf.dllOverrides.hasKey(lib.canonDynlibName)
 
 proc showNonExportedFields*(conf: ConfigRef) =
   incl(conf.globalOptions, optShowNonExportedFields)

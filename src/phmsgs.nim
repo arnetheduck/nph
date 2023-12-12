@@ -17,11 +17,9 @@ import
 
 import "$nim"/compiler/ropes except `%`
 when defined(nimPreviewSlimSystem):
-  import
-    std/[syncio, assertions]
+  import std/[syncio, assertions]
 
-type
-  InstantiationInfo* = typeof(instantiationInfo())
+type InstantiationInfo* = typeof(instantiationInfo())
 
 template instLoc*(): InstantiationInfo =
   instantiationInfo(-2, fullPaths = true)
@@ -88,14 +86,14 @@ proc newFileInfo(fullPath: AbsoluteFile; projPath: RelativeFile): TFileInfo =
       # XXX fixme
       result.fullContent = ""
 
-when defined(nimpretty) or defined(nph):
-  proc fileSection*(conf: ConfigRef; fid: FileIndex; a, b: int): string =
-    substr(conf.m.fileInfos[fid.int].fullContent, a, b)
+proc fileSection*(conf: ConfigRef; fid: FileIndex; a, b: int): string =
+  substr(conf.m.fileInfos[fid.int].fullContent, a, b)
 
 when not FileSystemCaseSensitive:
   proc toLowerAscii(a: var string) {.inline.} =
     for c in mitems(a):
-      if isUpperAscii(c): c = char(uint8(c) xor 0b0010_0000'u8)
+      if isUpperAscii(c):
+        c = char(uint8(c) xor 0b0010_0000'u8)
 
 proc canonicalCase(path: var string) {.inline.} =
   ## the idea is to only use this for checking whether a path is already in
@@ -147,7 +145,8 @@ proc fileInfoIdx*(
           RelativeFile filename
         else:
           relativeTo(canon, conf.projectPath)
-      )
+        ,
+      ),
     )
 
     conf.m.filenameToIndexTbl[canon2] = result
@@ -183,8 +182,7 @@ proc newLineInfo*(conf: ConfigRef; filename: AbsoluteFile; line, col: int): TLin
 .} =
   result = newLineInfo(fileInfoIdx(conf, filename), line, col)
 
-const
-  gCmdLineInfo* = newLineInfo(commandLineIdx, 1, 1)
+const gCmdLineInfo* = newLineInfo(commandLineIdx, 1, 1)
 
 proc concat(strings: openArray[string]): string =
   var totalLen = 0
@@ -256,7 +254,8 @@ template toFilename*(conf: ConfigRef; fileIdx: FileIndex): string =
   if fileIdx.int32 < 0 or conf == nil:
     if fileIdx == commandLineIdx:
       commandLineDesc
-    else: "???"
+    else:
+      "???"
   else:
     conf.m.fileInfos[fileIdx.int32].shortName
 
@@ -264,7 +263,8 @@ proc toProjPath*(conf: ConfigRef; fileIdx: FileIndex): string =
   if fileIdx.int32 < 0 or conf == nil:
     if fileIdx == commandLineIdx:
       commandLineDesc
-    else: "???"
+    else:
+      "???"
   else:
     conf.m.fileInfos[fileIdx.int32].projPath.string
 
@@ -307,6 +307,7 @@ proc toFullPathConsiderDirty*(conf: ConfigRef; fileIdx: FileIndex): AbsoluteFile
           commandLineDesc
         else:
           "???"
+        ,
       )
   elif not conf.m.fileInfos[fileIdx.int32].dirtyFile.isEmpty:
     result = conf.m.fileInfos[fileIdx.int32].dirtyFile
@@ -437,7 +438,9 @@ macro callIgnoringStyle(theProc: typed; first: typed; args: varargs[typed]): unt
       continue
 
     let typ = arg.getType
-    if typ.kind != nnkEnumTy or typ != typForegroundColor and typ != typBackgroundColor and typ != typStyle and typ != typTerminalCmd:
+    if typ.kind != nnkEnumTy or
+        typ != typForegroundColor and typ != typBackgroundColor and typ != typStyle and
+        typ != typTerminalCmd:
       result.add(arg)
 
 macro callStyledWriteLineStderr(args: varargs[typed]): untyped =
@@ -491,11 +494,10 @@ proc msgKindToString*(kind: TMsgKind): string =
 proc getMessageStr(msg: TMsgKind; arg: string): string =
   msgKindToString(msg) % [arg]
 
-type
-  TErrorHandling* = enum
-    doNothing
-    doAbort
-    doRaise
+type TErrorHandling* = enum
+  doNothing
+  doAbort
+  doRaise
 
 proc log*(s: string) =
   var f: File
@@ -515,10 +517,9 @@ proc quit(conf: ConfigRef; msg: TMsgKind) {.gcsafe.} =
           fgRed,
           """
 No stack traceback available
-To create a stacktrace, rerun compilation with './koch temp $1 <file>', see $2 for details""" % [
-              conf.command, "intern.html#debugging-the-compiler".createDocLink
-            ],
-          conf.unitSep
+To create a stacktrace, rerun compilation with './koch temp $1 <file>', see $2 for details""" %
+            [conf.command, "intern.html#debugging-the-compiler".createDocLink],
+          conf.unitSep,
         )
 
   quit 1
@@ -531,9 +532,8 @@ proc handleError(
       log(s)
 
     quit(conf, msg)
-  if msg >= errMin and msg <= errMax or (
-      msg in warnMin .. hintMax and msg in conf.warningAsErrors and not ignoreMsg
-    ):
+  if msg >= errMin and msg <= errMax or
+      (msg in warnMin .. hintMax and msg in conf.warningAsErrors and not ignoreMsg):
     inc(conf.errorCounter)
 
     conf.exitcode = 1'i8
@@ -553,10 +553,8 @@ proc exactEquals*(a, b: TLineInfo): bool =
   result = a.fileIndex == b.fileIndex and a.line == b.line and a.col == b.col
 
 proc writeContext(conf: ConfigRef; lastinfo: TLineInfo) =
-  const
-    instantiationFrom = "template/generic instantiation from here"
-  const
-    instantiationOfFrom = "template/generic instantiation of `$1` from here"
+  const instantiationFrom = "template/generic instantiation from here"
+  const instantiationOfFrom = "template/generic instantiation of `$1` from here"
 
   var info = lastinfo
   for i in 0 ..< conf.m.msgContext.len:
@@ -578,7 +576,8 @@ proc writeContext(conf: ConfigRef; lastinfo: TLineInfo) =
     info = context.info
 
 proc ignoreMsgBecauseOfIdeTools(conf: ConfigRef; msg: TMsgKind): bool =
-  msg >= errGenerated and conf.cmd == cmdIdeTools and optIdeDebug notin conf.globalOptions
+  msg >= errGenerated and conf.cmd == cmdIdeTools and
+    optIdeDebug notin conf.globalOptions
 
 proc addSourceLine(conf: ConfigRef; fileIdx: FileIndex; line: string) =
   conf.m.fileInfos[fileIdx.int32].lines.add line
@@ -611,8 +610,7 @@ proc sourceLine*(conf: ConfigRef; i: TLineInfo): string =
 
 proc getSurroundingSrc(conf: ConfigRef; info: TLineInfo): string =
   if conf.hasHint(hintSource) and info != unknownLineInfo:
-    const
-      indent = "  "
+    const indent = "  "
 
     result = "\n" & indent & $sourceLine(conf, info)
     if info.col >= 0:
@@ -638,7 +636,7 @@ proc liMessage*(
     eh: TErrorHandling;
     info2: InstantiationInfo;
     isRaw = false;
-    ignoreError = false
+    ignoreError = false;
 ) {.gcsafe, noinline.} =
   var
     title: string
@@ -711,12 +709,11 @@ proc liMessage*(
         ""
 
     # we could also show `conf.cmdInput` here for `projectIsCmd`
-    var
-      kindmsg =
-        if kind.len > 0:
-          KindFormat % kind
-        else:
-          ""
+    var kindmsg =
+      if kind.len > 0:
+        KindFormat % kind
+      else:
+        ""
     if conf.structuredErrorHook != nil:
       conf.structuredErrorHook(conf, info, s & kindmsg, sev)
     if not ignoreMsgBecauseOfIdeTools(conf, msg):
@@ -735,7 +732,7 @@ proc liMessage*(
           kindmsg,
           resetStyle,
           conf.getSurroundingSrc(info),
-          conf.unitSep
+          conf.unitSep,
         )
         if hintMsgOrigin in conf.mainPackageNotes:
           # xxx needs a bit of refactoring to honor `conf.filenameOption`
@@ -747,7 +744,7 @@ proc liMessage*(
             KindColor,
             KindFormat % $hintMsgOrigin,
             resetStyle,
-            conf.unitSep
+            conf.unitSep,
           )
   if not ignoreError:
     handleError(conf, msg, eh, s, ignoreMsg)
@@ -817,8 +814,7 @@ template internalError*(conf: ConfigRef; errMsg: string) =
 template internalAssert*(conf: ConfigRef; e: bool) =
   # xxx merge with `globalAssert`
   if not e:
-    const
-      info2 = instLoc()
+    const info2 = instLoc()
 
     let arg = info2.toFileLineCol
 
@@ -847,7 +843,8 @@ template listMsg(title, r) =
   for a in r:
     msgWriteln(
       conf,
-      "  [$1] $2" % [
+      "  [$1] $2" %
+        [
           if a in conf.notes:
             "x"
           else:
@@ -855,7 +852,7 @@ template listMsg(title, r) =
           ,
           $a
         ],
-      {msgNoUnitSep}
+      {msgNoUnitSep},
     )
 
 proc listWarnings*(conf: ConfigRef) =
@@ -905,8 +902,7 @@ proc genSuccessX*(conf: ConfigRef) =
   var build = ""
   var flags = ""
 
-  const
-    debugModeHints = "none (DEBUG BUILD, `-d:release` generates faster code)"
+  const debugModeHints = "none (DEBUG BUILD, `-d:release` generates faster code)"
   if conf.cmd in cmdBackends:
     if conf.backend != backendJs:
       build.add "mm: $#; " % $conf.selectedGC
@@ -960,17 +956,7 @@ proc genSuccessX*(conf: ConfigRef) =
     conf,
     hintSuccessX,
     [
-      "build",
-      build,
-      "loc",
-      loc,
-      "sec",
-      sec,
-      "mem",
-      mem,
-      "project",
-      project,
-      "output",
+      "build", build, "loc", loc, "sec", sec, "mem", mem, "project", project, "output",
       output
-    ]
+    ],
   )

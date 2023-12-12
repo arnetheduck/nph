@@ -510,7 +510,7 @@
                                     }
                                   ],
                                   "postfix": [
-                                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case field eol\", line: 69, col: 18, offsetA: 1224, offsetB: 1240)"
+                                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case field eol\", line: 69, col: 16, offsetA: 1222, offsetB: 1238)"
                                   ]
                                 }
                               ]
@@ -548,8 +548,8 @@
               "kind": "nkIdent",
               "ident": "int",
               "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## alias eol\", line: 72, col: 6, offsetA: 1267, offsetB: 1279)",
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## alias next\", line: 73, col: 6, offsetA: 1286, offsetB: 1299)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## alias eol\", line: 72, col: 6, offsetA: 1265, offsetB: 1277)",
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## alias next\", line: 73, col: 6, offsetA: 1284, offsetB: 1297)"
               ]
             }
           ]
@@ -581,11 +581,11 @@
             {
               "kind": "nkIdent",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after pragma\", line: 74, col: 26, offsetA: 1326, offsetB: 1340)"
+                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after pragma\", line: 74, col: 26, offsetA: 1324, offsetB: 1338)"
               ],
               "ident": "int",
               "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## alias2 eol\", line: 75, col: 8, offsetA: 1349, offsetB: 1362)"
+                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## alias2 eol\", line: 75, col: 8, offsetA: 1347, offsetB: 1360)"
               ]
             }
           ]
@@ -597,7 +597,7 @@
               "kind": "nkIdent",
               "ident": "SomeAlias3",
               "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# alias after symbol\", line: 76, col: 13, offsetA: 1376, offsetB: 1396)"
+                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# alias after symbol\", line: 76, col: 13, offsetA: 1374, offsetB: 1394)"
               ]
             },
             {
@@ -623,11 +623,11 @@
             {
               "kind": "nkIdent",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# alias after equals\", line: 77, col: 10, offsetA: 1407, offsetB: 1427)"
+                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# alias after equals\", line: 77, col: 10, offsetA: 1405, offsetB: 1425)"
               ],
               "ident": "int",
               "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# alias after type\", line: 78, col: 10, offsetA: 1438, offsetB: 1456)"
+                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# alias after type\", line: 78, col: 10, offsetA: 1436, offsetB: 1454)"
               ]
             }
           ]
@@ -655,8 +655,8 @@
                 }
               ],
               "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## after alias4\", line: 80, col: 6, offsetA: 1494, offsetB: 1509)",
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## more after alias4\", line: 81, col: 6, offsetA: 1516, offsetB: 1536)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## after alias4\", line: 80, col: 6, offsetA: 1492, offsetB: 1507)",
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## more after alias4\", line: 81, col: 6, offsetA: 1514, offsetB: 1534)"
               ]
             }
           ]
@@ -664,7 +664,7 @@
         {
           "kind": "nkTypeDef",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Some comment before whenobj\", line: 82, col: 2, offsetA: 1539, offsetB: 1569)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Some comment before whenobj\", line: 82, col: 2, offsetA: 1537, offsetB: 1567)"
           ],
           "sons": [
             {
@@ -677,7 +677,7 @@
             {
               "kind": "nkObjectTy",
               "mid": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# whenobject object line\", line: 83, col: 22, offsetA: 1592, offsetB: 1616)"
+                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# whenobject object line\", line: 83, col: 22, offsetA: 1590, offsetB: 1614)"
               ],
               "sons": [
                 {
@@ -695,7 +695,7 @@
                         {
                           "kind": "nkElifBranch",
                           "mid": [
-                            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# when object false line\", line: 84, col: 16, offsetA: 1633, offsetB: 1657)"
+                            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# when object false line\", line: 84, col: 16, offsetA: 1631, offsetB: 1655)"
                           ],
                           "sons": [
                             {
@@ -742,8 +742,8 @@
             {
               "kind": "nkObjectTy",
               "mid": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment eol\", line: 88, col: 4, offsetA: 1711, offsetB: 1725)",
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment nl\", line: 89, col: 4, offsetA: 1730, offsetB: 1743)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment eol\", line: 88, col: 4, offsetA: 1707, offsetB: 1721)",
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment nl\", line: 89, col: 4, offsetA: 1726, offsetB: 1739)"
               ],
               "sons": [
                 {
@@ -787,8 +787,8 @@
             {
               "kind": "nkObjectTy",
               "mid": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment nofield1 eol\", line: 92, col: 4, offsetA: 1781, offsetB: 1804)",
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment nl\", line: 93, col: 4, offsetA: 1809, offsetB: 1822)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment nofield1 eol\", line: 92, col: 4, offsetA: 1777, offsetB: 1800)",
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment nl\", line: 93, col: 4, offsetA: 1805, offsetB: 1818)"
               ],
               "sons": [
                 {
@@ -818,7 +818,7 @@
         {
           "kind": "nkElifBranch",
           "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# when colon line\", line: 95, col: 24, offsetA: 1848, offsetB: 1865)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# when colon line\", line: 95, col: 24, offsetA: 1844, offsetB: 1861)"
           ],
           "sons": [
             {
@@ -837,7 +837,7 @@
             {
               "kind": "nkStmtList",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# when first line\", line: 96, col: 2, offsetA: 1868, offsetB: 1885)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# when first line\", line: 96, col: 2, offsetA: 1864, offsetB: 1881)"
               ],
               "sons": [
                 {
@@ -855,16 +855,16 @@
         {
           "kind": "nkElse",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment\", line: 98, col: 0, offsetA: 1896, offsetB: 1905)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment\", line: 98, col: 0, offsetA: 1892, offsetB: 1901)"
           ],
           "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else colon line\", line: 99, col: 6, offsetA: 1912, offsetB: 1929)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else colon line\", line: 99, col: 6, offsetA: 1908, offsetB: 1925)"
           ],
           "sons": [
             {
               "kind": "nkStmtList",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else first line\", line: 100, col: 2, offsetA: 1932, offsetB: 1949)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else first line\", line: 100, col: 2, offsetA: 1928, offsetB: 1945)"
               ],
               "sons": [
                 {
@@ -894,7 +894,7 @@
             {
               "kind": "nkStmtList",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# if next line\", line: 103, col: 2, offsetA: 1971, offsetB: 1985)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# if next line\", line: 103, col: 2, offsetA: 1967, offsetB: 1981)"
               ],
               "sons": [
                 {
@@ -915,7 +915,7 @@
             {
               "kind": "nkStmtList",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else next line\", line: 106, col: 2, offsetA: 2004, offsetB: 2020)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else next line\", line: 106, col: 2, offsetA: 2000, offsetB: 2016)"
               ],
               "sons": [
                 {
@@ -938,7 +938,7 @@
         {
           "kind": "nkElifBranch",
           "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# if colon line\", line: 108, col: 9, offsetA: 2040, offsetB: 2055)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# if colon line\", line: 108, col: 9, offsetA: 2036, offsetB: 2051)"
           ],
           "sons": [
             {
@@ -963,7 +963,7 @@
         {
           "kind": "nkElse",
           "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else colon line\", line: 110, col: 6, offsetA: 2072, offsetB: 2089)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else colon line\", line: 110, col: 6, offsetA: 2068, offsetB: 2085)"
           ],
           "sons": [
             {
@@ -996,7 +996,7 @@
             {
               "kind": "nkStmtList",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# if dedented colon line\", line: 113, col: 2, offsetA: 2111, offsetB: 2135)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# if dedented colon line\", line: 113, col: 2, offsetA: 2107, offsetB: 2131)"
               ],
               "sons": [
                 {
@@ -1014,10 +1014,10 @@
         {
           "kind": "nkElse",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# before else dedented\", line: 115, col: 0, offsetA: 2146, offsetB: 2168)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# before else dedented\", line: 115, col: 0, offsetA: 2142, offsetB: 2164)"
           ],
           "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else colon line\", line: 116, col: 6, offsetA: 2175, offsetB: 2192)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else colon line\", line: 116, col: 6, offsetA: 2171, offsetB: 2188)"
           ],
           "sons": [
             {
@@ -1040,7 +1040,7 @@
     {
       "kind": "nkProcDef",
       "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after proc before indented name\", line: 119, col: 13, offsetA: 2217, offsetB: 2250)"
+        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after proc before indented name\", line: 119, col: 13, offsetA: 2213, offsetB: 2246)"
       ],
       "sons": [
         {
@@ -1085,7 +1085,7 @@
     {
       "kind": "nkProcDef",
       "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# proc eq line\", line: 122, col: 14, offsetA: 2276, offsetB: 2290)"
+        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# proc eq line\", line: 122, col: 14, offsetA: 2272, offsetB: 2286)"
       ],
       "sons": [
         {
@@ -1115,7 +1115,7 @@
         {
           "kind": "nkStmtList",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# proc first line\", line: 123, col: 2, offsetA: 2293, offsetB: 2310)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# proc first line\", line: 123, col: 2, offsetA: 2289, offsetB: 2306)"
           ],
           "sons": [
             {
@@ -1160,7 +1160,7 @@
         {
           "kind": "nkStmtList",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## A proc doc comment\", line: 127, col: 2, offsetA: 2335, offsetB: 2356)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## A proc doc comment\", line: 127, col: 2, offsetA: 2331, offsetB: 2352)"
           ],
           "sons": [
             {
@@ -1193,7 +1193,7 @@
                             }
                           ],
                           "postfix": [
-                            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# handle Ctrl+Z as EOF\", line: 129, col: 27, offsetA: 2395, offsetB: 2417)"
+                            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# handle Ctrl+Z as EOF\", line: 129, col: 27, offsetA: 2391, offsetB: 2413)"
                           ]
                         },
                         {
@@ -1290,16 +1290,16 @@
     {
       "kind": "nkImportStmt",
       "prefix": [
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## indented doc comment for proc\", line: 136, col: 0, offsetA: 2493, offsetB: 2525)",
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## that is long\", line: 137, col: 0, offsetA: 2526, offsetB: 2541)",
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# before module\", line: 138, col: 0, offsetA: 2542, offsetB: 2557)"
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## indented doc comment for proc\", line: 136, col: 0, offsetA: 2489, offsetB: 2521)",
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## that is long\", line: 137, col: 0, offsetA: 2522, offsetB: 2537)",
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# before module\", line: 138, col: 0, offsetA: 2538, offsetB: 2553)"
       ],
       "sons": [
         {
           "kind": "nkIdent",
           "ident": "module",
           "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# with a comment\", line: 139, col: 14, offsetA: 2572, offsetB: 2588)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# with a comment\", line: 139, col: 14, offsetA: 2568, offsetB: 2584)"
           ]
         }
       ]
@@ -1311,7 +1311,7 @@
           "kind": "nkIdent",
           "ident": "module",
           "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## with a comment\", line: 140, col: 14, offsetA: 2603, offsetB: 2620)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## with a comment\", line: 140, col: 14, offsetA: 2599, offsetB: 2616)"
           ]
         }
       ]
@@ -1319,13 +1319,13 @@
     {
       "kind": "nkTryStmt",
       "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try colon line\", line: 141, col: 5, offsetA: 2626, offsetB: 2642)"
+        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try colon line\", line: 141, col: 5, offsetA: 2622, offsetB: 2638)"
       ],
       "sons": [
         {
           "kind": "nkStmtList",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try first line\", line: 142, col: 2, offsetA: 2645, offsetB: 2661)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try first line\", line: 142, col: 2, offsetA: 2641, offsetB: 2657)"
           ],
           "sons": [
             {
@@ -1341,13 +1341,13 @@
         {
           "kind": "nkExceptBranch",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try last line\", line: 144, col: 0, offsetA: 2672, offsetB: 2687)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try last line\", line: 144, col: 0, offsetA: 2668, offsetB: 2683)"
           ],
           "sons": [
             {
               "kind": "nkStmtList",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except first line\", line: 146, col: 2, offsetA: 2698, offsetB: 2717)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except first line\", line: 146, col: 2, offsetA: 2694, offsetB: 2713)"
               ],
               "sons": [
                 {
@@ -1365,13 +1365,13 @@
         {
           "kind": "nkFinally",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except last line\", line: 148, col: 0, offsetA: 2728, offsetB: 2746)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except last line\", line: 148, col: 0, offsetA: 2724, offsetB: 2742)"
           ],
           "sons": [
             {
               "kind": "nkStmtList",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally first line\", line: 150, col: 2, offsetA: 2758, offsetB: 2778)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally first line\", line: 150, col: 2, offsetA: 2754, offsetB: 2774)"
               ],
               "sons": [
                 {
@@ -1391,13 +1391,13 @@
     {
       "kind": "nkTryStmt",
       "prefix": [
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally last line\", line: 152, col: 0, offsetA: 2789, offsetB: 2808)"
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally last line\", line: 152, col: 0, offsetA: 2785, offsetB: 2804)"
       ],
       "sons": [
         {
           "kind": "nkStmtList",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try first dedent line\", line: 154, col: 2, offsetA: 2816, offsetB: 2839)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try first dedent line\", line: 154, col: 2, offsetA: 2812, offsetB: 2835)"
           ],
           "sons": [
             {
@@ -1414,13 +1414,13 @@
         {
           "kind": "nkExceptBranch",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try last dedent line\", line: 156, col: 0, offsetA: 2846, offsetB: 2868)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try last dedent line\", line: 156, col: 0, offsetA: 2842, offsetB: 2864)"
           ],
           "sons": [
             {
               "kind": "nkStmtList",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except dedent first line\", line: 158, col: 2, offsetA: 2879, offsetB: 2905)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except dedent first line\", line: 158, col: 2, offsetA: 2875, offsetB: 2901)"
               ],
               "sons": [
                 {
@@ -1438,13 +1438,13 @@
         {
           "kind": "nkFinally",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except dedent last line\", line: 160, col: 0, offsetA: 2916, offsetB: 2941)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except dedent last line\", line: 160, col: 0, offsetA: 2912, offsetB: 2937)"
           ],
           "sons": [
             {
               "kind": "nkStmtList",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally first dedent line\", line: 162, col: 2, offsetA: 2953, offsetB: 2980)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally first dedent line\", line: 162, col: 2, offsetA: 2949, offsetB: 2976)"
               ],
               "sons": [
                 {
@@ -1464,10 +1464,10 @@
     {
       "kind": "nkForStmt",
       "prefix": [
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally last dedent line\", line: 164, col: 0, offsetA: 2991, offsetB: 3017)"
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally last dedent line\", line: 164, col: 0, offsetA: 2987, offsetB: 3013)"
       ],
       "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# for colon line\", line: 165, col: 17, offsetA: 3035, offsetB: 3051)"
+        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# for colon line\", line: 165, col: 17, offsetA: 3031, offsetB: 3047)"
       ],
       "sons": [
         {
@@ -1494,7 +1494,7 @@
         {
           "kind": "nkStmtList",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# for first line\", line: 166, col: 2, offsetA: 3054, offsetB: 3070)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# for first line\", line: 166, col: 2, offsetA: 3050, offsetB: 3066)"
           ],
           "sons": [
             {
@@ -1512,7 +1512,7 @@
     {
       "kind": "nkCaseStmt",
       "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case line\", line: 168, col: 7, offsetA: 3088, offsetB: 3099)"
+        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case line\", line: 168, col: 7, offsetA: 3084, offsetB: 3095)"
       ],
       "sons": [
         {
@@ -1522,7 +1522,7 @@
         {
           "kind": "nkOfBranch",
           "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# of colon line\", line: 169, col: 9, offsetA: 3109, offsetB: 3124)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# of colon line\", line: 169, col: 9, offsetA: 3105, offsetB: 3120)"
           ],
           "sons": [
             {
@@ -1532,7 +1532,7 @@
             {
               "kind": "nkStmtList",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# of first line\", line: 170, col: 2, offsetA: 3127, offsetB: 3142)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# of first line\", line: 170, col: 2, offsetA: 3123, offsetB: 3138)"
               ],
               "sons": [
                 {
@@ -1550,13 +1550,13 @@
         {
           "kind": "nkElse",
           "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case else colon line\", line: 172, col: 6, offsetA: 3159, offsetB: 3181)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case else colon line\", line: 172, col: 6, offsetA: 3155, offsetB: 3177)"
           ],
           "sons": [
             {
               "kind": "nkStmtList",
               "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case else first line\", line: 173, col: 2, offsetA: 3184, offsetB: 3206)"
+                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case else first line\", line: 173, col: 2, offsetA: 3180, offsetB: 3202)"
               ],
               "sons": [
                 {
@@ -1583,7 +1583,7 @@
         {
           "kind": "nkDo",
           "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# do colon line\", line: 176, col: 13, offsetA: 3231, offsetB: 3246)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# do colon line\", line: 176, col: 13, offsetA: 3227, offsetB: 3242)"
           ],
           "sons": [
             {
@@ -1638,7 +1638,7 @@
     {
       "kind": "nkBlockStmt",
       "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# block colon line\", line: 180, col: 7, offsetA: 3275, offsetB: 3293)"
+        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# block colon line\", line: 180, col: 7, offsetA: 3271, offsetB: 3289)"
       ],
       "sons": [
         {
@@ -1647,7 +1647,7 @@
         {
           "kind": "nkStmtList",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# block first line\", line: 181, col: 2, offsetA: 3296, offsetB: 3314)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# block first line\", line: 181, col: 2, offsetA: 3292, offsetB: 3310)"
           ],
           "sons": [
             {
@@ -1686,7 +1686,7 @@
             {
               "kind": "nkLambda",
               "mid": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# lambda eq line\", line: 186, col: 17, offsetA: 3361, offsetB: 3377)"
+                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# lambda eq line\", line: 186, col: 17, offsetA: 3357, offsetB: 3373)"
               ],
               "sons": [
                 {
@@ -1716,7 +1716,7 @@
                 {
                   "kind": "nkStmtList",
                   "prefix": [
-                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# lambda first line\", line: 187, col: 6, offsetA: 3384, offsetB: 3403)"
+                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# lambda first line\", line: 187, col: 6, offsetA: 3380, offsetB: 3399)"
                   ],
                   "sons": [
                     {
@@ -1753,7 +1753,7 @@
         {
           "kind": "nkStmtList",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# while first line\", line: 191, col: 2, offsetA: 3447, offsetB: 3465)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# while first line\", line: 191, col: 2, offsetA: 3443, offsetB: 3461)"
           ],
           "sons": [
             {
@@ -1771,13 +1771,13 @@
     {
       "kind": "nkStaticStmt",
       "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# static colon line\", line: 194, col: 8, offsetA: 3485, offsetB: 3504)"
+        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# static colon line\", line: 194, col: 8, offsetA: 3481, offsetB: 3500)"
       ],
       "sons": [
         {
           "kind": "nkStmtList",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# static first line\", line: 195, col: 2, offsetA: 3507, offsetB: 3526)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# static first line\", line: 195, col: 2, offsetA: 3503, offsetB: 3522)"
           ],
           "sons": [
             {
@@ -1808,8 +1808,8 @@
                 {
                   "kind": "nkIdent",
                   "prefix": [
-                    "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# object eol\", line: 199, col: 4, offsetA: 3558, offsetB: 3570)",
-                    "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# object first line\", line: 200, col: 4, offsetA: 3575, offsetB: 3594)"
+                    "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# object eol\", line: 199, col: 4, offsetA: 3554, offsetB: 3566)",
+                    "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# object first line\", line: 200, col: 4, offsetA: 3571, offsetB: 3590)"
                   ],
                   "ident": "field"
                 },
@@ -1819,7 +1819,7 @@
                 }
               ],
               "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# field line\", line: 201, col: 14, offsetA: 3609, offsetB: 3621)"
+                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# field line\", line: 201, col: 14, offsetA: 3605, offsetB: 3617)"
               ]
             },
             {
@@ -1835,7 +1835,7 @@
                 }
               ],
               "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# field colon line\", line: 202, col: 15, offsetA: 3637, offsetB: 3655)"
+                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# field colon line\", line: 202, col: 15, offsetA: 3633, offsetB: 3651)"
               ]
             }
           ]
@@ -1922,14 +1922,14 @@
           "kind": "nkIdent",
           "ident": "and",
           "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# dedented comment in infix\", line: 215, col: 8, offsetA: 3823, offsetB: 3850)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# dedented comment in infix\", line: 215, col: 8, offsetA: 3819, offsetB: 3846)"
           ]
         },
         {
           "kind": "nkIdent",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Doc comment after indented statement\", line: 213, col: 0, offsetA: 3753, offsetB: 3792)",
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## needs to be double\", line: 214, col: 0, offsetA: 3793, offsetB: 3814)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Doc comment after indented statement\", line: 213, col: 0, offsetA: 3749, offsetB: 3788)",
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## needs to be double\", line: 214, col: 0, offsetA: 3789, offsetB: 3810)"
           ],
           "ident": "abc"
         },
@@ -1946,7 +1946,7 @@
           "kind": "nkIdent",
           "ident": "and",
           "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# indented comment in infix\", line: 217, col: 8, offsetA: 3865, offsetB: 3892)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# indented comment in infix\", line: 217, col: 8, offsetA: 3859, offsetB: 3886)"
           ]
         },
         {
@@ -1972,7 +1972,7 @@
                   "kind": "nkIdent",
                   "ident": "and",
                   "postfix": [
-                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# dedented comment in infix\", line: 219, col: 11, offsetA: 3910, offsetB: 3937)"
+                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# dedented comment in infix\", line: 219, col: 11, offsetA: 3902, offsetB: 3929)"
                   ]
                 },
                 {
@@ -2015,7 +2015,7 @@
                   "kind": "nkIdent",
                   "ident": "and",
                   "postfix": [
-                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# indented comment in infix\", line: 222, col: 11, offsetA: 3966, offsetB: 3993)"
+                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# indented comment in infix\", line: 222, col: 11, offsetA: 3956, offsetB: 3983)"
                   ]
                 },
                 {
@@ -2065,7 +2065,7 @@
             }
           ],
           "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment after keyword parameter\", line: 226, col: 8, offsetA: 4020, offsetB: 4053)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment after keyword parameter\", line: 226, col: 8, offsetA: 4008, offsetB: 4041)"
           ]
         }
       ]
@@ -2095,14 +2095,14 @@
     {
       "kind": "nkPragma",
       "prefix": [
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# dedented comment after keyword parameter\", line: 230, col: 0, offsetA: 4068, offsetB: 4110)"
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# dedented comment after keyword parameter\", line: 230, col: 0, offsetA: 4056, offsetB: 4098)"
       ],
       "sons": [
         {
           "kind": "nkIdent",
           "ident": "pragma",
           "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment here\", line: 231, col: 9, offsetA: 4120, offsetB: 4134)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment here\", line: 231, col: 9, offsetA: 4108, offsetB: 4122)"
           ]
         }
       ]
@@ -2133,7 +2133,7 @@
                   "kind": "nkIdent",
                   "ident": "v",
                   "postfix": [
-                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"#[block]#\", line: 234, col: 9, offsetA: 4152, offsetB: 4160)"
+                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"#[block]#\", line: 234, col: 9, offsetA: 4138, offsetB: 4146)"
                   ]
                 },
                 {
@@ -2180,7 +2180,7 @@
         {
           "kind": "nkIdentDefs",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# let first line indented\", line: 238, col: 2, offsetA: 4190, offsetB: 4215)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# let first line indented\", line: 238, col: 2, offsetA: 4174, offsetB: 4199)"
           ],
           "sons": [
             {
@@ -2196,7 +2196,7 @@
             }
           ],
           "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after v\", line: 239, col: 9, offsetA: 4225, offsetB: 4234)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after v\", line: 239, col: 9, offsetA: 4209, offsetB: 4218)"
           ]
         }
       ]
@@ -2207,7 +2207,7 @@
         {
           "kind": "nkIdentDefs",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# var first line indented\", line: 242, col: 2, offsetA: 4242, offsetB: 4267)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# var first line indented\", line: 242, col: 2, offsetA: 4226, offsetB: 4251)"
           ],
           "sons": [
             {
@@ -2223,7 +2223,7 @@
             }
           ],
           "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after v\", line: 243, col: 9, offsetA: 4277, offsetB: 4286)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after v\", line: 243, col: 9, offsetA: 4261, offsetB: 4270)"
           ]
         }
       ]
@@ -2234,12 +2234,12 @@
         {
           "kind": "nkIntLit",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# discard eol\", line: 246, col: 2, offsetA: 4298, offsetB: 4311)",
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# discard first line\", line: 247, col: 2, offsetA: 4314, offsetB: 4334)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# discard eol\", line: 246, col: 2, offsetA: 4282, offsetB: 4295)",
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# discard first line\", line: 247, col: 2, offsetA: 4298, offsetB: 4318)"
           ],
           "intVal": 54,
           "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# discard value\", line: 248, col: 5, offsetA: 4340, offsetB: 4355)"
+            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# discard value\", line: 248, col: 5, offsetA: 4324, offsetB: 4339)"
           ]
         }
       ]
@@ -2253,8 +2253,8 @@
         {
           "kind": "nkStmtList",
           "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# also after call\", line: 251, col: 2, offsetA: 4366, offsetB: 4383)",
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment between the dots\", line: 252, col: 2, offsetA: 4386, offsetB: 4412)"
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# also after call\", line: 251, col: 2, offsetA: 4350, offsetB: 4367)",
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment between the dots\", line: 252, col: 2, offsetA: 4370, offsetB: 4396)"
           ],
           "sons": [
             {
@@ -2293,6 +2293,202 @@
                     {
                       "kind": "nkIdent",
                       "ident": "d"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkProcDef",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "f"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkFormalParams",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "bool"
+            }
+          ]
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkStmtList",
+          "prefix": [
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Comment here\", line: 256, col: 2, offsetA: 4431, offsetB: 4446)",
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## another\", line: 257, col: 2, offsetA: 4449, offsetB: 4459)"
+          ],
+          "sons": [
+            {
+              "kind": "nkPar",
+              "sons": [
+                {
+                  "kind": "nkInfix",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "or"
+                    },
+                    {
+                      "kind": "nkIdent",
+                      "ident": "true"
+                    },
+                    {
+                      "kind": "nkIdent",
+                      "ident": "false"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkProcDef",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "f"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkFormalParams",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "bool"
+            }
+          ]
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkStmtList",
+          "prefix": [
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Comment here\", line: 261, col: 2, offsetA: 4498, offsetB: 4513)",
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## another\", line: 262, col: 2, offsetA: 4516, offsetB: 4526)"
+          ],
+          "sons": [
+            {
+              "kind": "nkIfStmt",
+              "sons": [
+                {
+                  "kind": "nkElifBranch",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "true"
+                    },
+                    {
+                      "kind": "nkStmtList",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "false"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "nkElse",
+                  "sons": [
+                    {
+                      "kind": "nkStmtList",
+                      "prefix": [
+                        "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 266, col: 4, offsetA: 4560, offsetB: 4570)",
+                        "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment 2\", line: 267, col: 4, offsetA: 4575, offsetB: 4587)"
+                      ],
+                      "sons": [
+                        {
+                          "kind": "nkIfStmt",
+                          "sons": [
+                            {
+                              "kind": "nkElifBranch",
+                              "sons": [
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "true"
+                                },
+                                {
+                                  "kind": "nkStmtList",
+                                  "prefix": [
+                                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 269, col: 6, offsetA: 4607, offsetB: 4617)",
+                                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment 2\", line: 270, col: 6, offsetA: 4624, offsetB: 4636)"
+                                  ],
+                                  "sons": [
+                                    {
+                                      "kind": "nkPar",
+                                      "sons": [
+                                        {
+                                          "kind": "nkInfix",
+                                          "sons": [
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "or"
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "true"
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "false"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "nkElse",
+                              "sons": [
+                                {
+                                  "kind": "nkStmtList",
+                                  "sons": [
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "false"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
                     }
                   ]
                 }

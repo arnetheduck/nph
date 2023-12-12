@@ -276,3 +276,23 @@ block:
   .z()
   # also after call
   .d()
+
+proc f: bool =
+  ## Comment here
+  ## another
+  (true or false)
+
+proc f: bool =
+  ## Comment here
+  ## another
+  if true:
+    false
+  else:
+    ## comment
+    ## comment 2
+    if true:
+      ## comment
+      ## comment 2
+      (true or false)
+    else:
+      false

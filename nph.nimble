@@ -21,14 +21,13 @@ proc build() =
 task self, "Format nph itself":
   build()
 
-  # Stage changes before doing self-formatting!
-  exec "git diff --staged --no-ext-diff --quiet --exit-code"
-  exec "git add -A"
+  # Require there are no changes before self-formatting! Can stage if needed
+  exec "git diff --no-ext-diff --quiet --exit-code"
 
   for file in listFiles("src"):
     if file.len > 4 and file[^4..^1] == ".nim":
       echo file
-      exec "./nph " & file & " --debug"
+      exec "./nph " & file
 
 task f, "Format":
   build()

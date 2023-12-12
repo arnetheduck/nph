@@ -93,6 +93,79 @@
           "sons": [
             {
               "kind": "nkIdent",
+              "ident": "as"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "aaaaaaaaaaaaaa"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "bbbbbbbbbbbbbb"
+            }
+          ]
+        },
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "as"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "ccccccccccccc"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "dddddddddddddd"
+            }
+          ]
+        },
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "as"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "eeeeeeeeeeeee"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "fffffffffffffff"
+            }
+          ]
+        },
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "as"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "gggggggggggggggggg"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "hhhhhhhhhhhhhhhh"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkImportStmt",
+      "sons": [
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
               "ident": "/"
             },
             {
@@ -225,6 +298,150 @@
         {
           "kind": "nkIdent",
           "ident": "dddddddddddddddddd"
+        }
+      ]
+    },
+    {
+      "kind": "nkIncludeStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "a"
+        }
+      ]
+    },
+    {
+      "kind": "nkIncludeStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "aaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "bbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "ccccccccccccccccccccccccc"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "dddddddddddddddddd"
+        }
+      ]
+    },
+    {
+      "kind": "nkImportStmt",
+      "sons": [
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "/"
+            },
+            {
+              "kind": "nkStrLit",
+              "strVal": "a"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+            }
+          ]
+        },
+        {
+          "kind": "nkInfix",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "/"
+            },
+            {
+              "kind": "nkStrLit",
+              "strVal": "ccccccccccccccccccccccccc"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "dddddddddddddddddddddd"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkFromStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "a"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "a"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "b"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "c"
+        }
+      ]
+    },
+    {
+      "kind": "nkFromStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "aaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "bbbbbbbbbbbbbbb"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "cccccccccccccccc"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "ddddddddddddddd"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "eeeeeeeeeeeeeeeeeeeeeee"
+        },
+        {
+          "kind": "nkIdent",
+          "ident": "ffffffffffffff"
+        }
+      ]
+    },
+    {
+      "kind": "nkPragma",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "push"
+        },
+        {
+          "kind": "nkExprColonExpr",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "raises"
+            },
+            {
+              "kind": "nkBracket"
+            }
+          ]
         }
       ]
     }
