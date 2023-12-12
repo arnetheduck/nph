@@ -66,7 +66,7 @@ type
   CaseObject = object # caseobj eol
     case k: bool # casetype eol
     of true, false: # of eol
-        v: string # case field eol
+      v: string # case field eol
 
   SomeAlias* = int
       ## alias eol
@@ -82,7 +82,7 @@ type
   ## Some comment before whenobj
   WhenObject = object # whenobject object line
     when false: # when object false line
-        discard
+      discard
 
   NoField0* = object of RootObj
     ## comment eol
@@ -213,14 +213,14 @@ proc ffff() =
 ## Doc comment after indented statement
 ## needs to be double
 abc and # dedented comment in infix
-  def
+def
 abc and # indented comment in infix
-  def
+def
 if abc and # dedented comment in infix
-  def:
+def:
   discard
 if abc and # indented comment in infix
-  def:
+def:
   discard
 
 a(b = c # comment after keyword parameter
@@ -229,10 +229,10 @@ a(b = c)
 
 # dedented comment after keyword parameter
 {.pragma # comment here
-    .}
+  .}
 
 proc a(v #[block]#
-    : int; abc: int)
+  : int; abc: int)
 
 let
   # let first line indented
@@ -251,3 +251,23 @@ block:
   # also after call
   # comment between the dots
   f.x.z().d()
+
+proc f(): bool =
+  ## Comment here
+  ## another
+  (true or false)
+
+proc f(): bool =
+  ## Comment here
+  ## another
+  if true:
+    false
+  else:
+    ## comment
+    ## comment 2
+    if true:
+      ## comment
+      ## comment 2
+      (true or false)
+    else:
+      false

@@ -40,3 +40,5 @@ type Cp = proc(v: int)
 type Dp = proc() {.nimcall.}
 type Ep = proc {.nimcall.}
 type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc {.bbbbbbbbbbbbbbbbbbbbbbbb.}
+type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc (aaaaaaaa: Bbbbbbb, ccccccccc: Dddddddddddd, eeeeee: Ffffff)
+type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc (aaaaaaaa: Bbbbbbb, ccccccccc: Dddddddddddd, eeeeeeeeeeeee: Ffffffffffffffff, gggggggggggggg: Hhhhhhhhhhhhhhhhhhhh)

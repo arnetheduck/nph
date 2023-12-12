@@ -6,7 +6,7 @@ proc a(v: int) =
 
 proc a(
     aaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccccccc,
-    vvvvvvvvvvvvvvvvvvvvvv: string
+    vvvvvvvvvvvvvvvvvvvvvv: string;
 ) =
   discard
 
@@ -14,7 +14,7 @@ proc a(
     aaaaaaaaaaaaaaaaaaaaaaa: int;
     bbbbbbbbbbbbbbbbbbbbbb: int;
     ccccccccccccccccccccccccccc: int;
-    vvvvvvvvvvvvvvvvvvvvvv: string
+    vvvvvvvvvvvvvvvvvvvvvv: string;
 ) =
   discard
 
@@ -44,40 +44,42 @@ proc aaa[A, B, C](v: int)
 proc aaaa*[A, B, C](v: int)
 
 proc aaaaa[A, B, C](
-    aaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbb, cccccccccccccccc,
-    ddddddddddddddddddd: int
+  aaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbb, cccccccccccccccc,
+  ddddddddddddddddddd: int;
 )
 
 proc aaaa*[
-    Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc,
-    Dddddddddddddddddddddd
+  Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc,
+  Dddddddddddddddddddddd
 ](v: int)
 
 proc aaaaaaaaa*[
-    Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc,
-    Dddddddddddddddddddddd
+  Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc,
+  Dddddddddddddddddddddd
 ](
-    aaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbb, cccccccccccccccc,
-    ddddddddddddddddddd: int
+  aaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbb, cccccccccccccccc,
+  ddddddddddddddddddd: int;
 )
 
 proc aaaaaaaa[T: Aaaa](v: int)
 
 proc aaaaaaaa[
-    Tttttttttttttttttttttttttttttttttttttttttt: Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  Tttttttttttttttttttttttttttttttttttttttttt: Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 ](v: int)
 
 proc aaaaaaaa[T: Aaaa; S: static int](v: int)
 
 proc aaaaaaaa[
-    T: Aaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccccccccc
+  T: Aaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccccccccc
 ](v: int)
 
 proc aaaaaaaaaaa(
-    v: Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccccccccc
+  v: Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb |
+    Cccccccccccccccccccccccccc;
 )
 
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 42 + 33 + 44
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 42 + 33 +
+    44
 
 functionCall(
   aaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaa,
@@ -91,23 +93,28 @@ aasdcsaa(
   ccccccccccc = ddddddddddddd,
   eeeeeeeeeeee = ffffffffffff,
   gggggg,
-  hhhhhhhh
+  hhhhhhhh,
 )
 
-type
-  Ap = proc()
+type Ap = proc()
 
-type
-  Bp = proc
+type Bp = proc
 
-type
-  Cp = proc(v: int)
+type Cp = proc(v: int)
 
-type
-  Dp = proc() {.nimcall.}
+type Dp = proc() {.nimcall.}
 
-type
-  Ep = proc {.nimcall.}
+type Ep = proc {.nimcall.}
 
-type
-  Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc {.bbbbbbbbbbbbbbbbbbbbbbbb.}
+type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc {.bbbbbbbbbbbbbbbbbbbbbbbb.}
+
+type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =
+  proc(aaaaaaaa: Bbbbbbb; ccccccccc: Dddddddddddd; eeeeee: Ffffff)
+
+type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =
+  proc(
+    aaaaaaaa: Bbbbbbb;
+    ccccccccc: Dddddddddddd;
+    eeeeeeeeeeeee: Ffffffffffffffff;
+    gggggggggggggg: Hhhhhhhhhhhhhhhhhhhh;
+  )

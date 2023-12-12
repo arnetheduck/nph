@@ -4,13 +4,11 @@
 
 import
   "."/[astcmp, phast, phastalgo, phmsgs, phlineinfos, phoptions, phparser, phrenderer]
-import
-  "$nim"/compiler/idents
+import "$nim"/compiler/idents
 
 from "$nim"/compiler/astalgo import nil
 
-import
-  std/[parseopt, strutils, os, sequtils]
+import std/[parseopt, strutils, os, sequtils]
 
 static:
   doAssert (NimMajor, NimMinor, NimPatch) == (2, 0, 0),
@@ -19,7 +17,8 @@ static:
 const
   Version = "0.1"
   Usage =
-    "nph - Nim formatter " & Version & """
+    "nph - Nim formatter " & Version &
+      """
 Usage:
   nph [options] nimfiles...
 Options:
@@ -67,7 +66,7 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool
         writeFile(outfile, output)
         writeFile(
           outfile & ".nph.yaml",
-          treeToYaml(nil, parse(output, outfile, printTokens, newConfigRef()))
+          treeToYaml(nil, parse(output, outfile, printTokens, newConfigRef())),
         )
     elif fileExists(outFile) and output == readFile(outFile):
       # No formatting difference - don't touch file modificuation date
@@ -82,6 +81,7 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool
         "stdout"
       else:
         outfile
+      ,
     )
   if eq.kind == Different:
     stderr.writeLine "--- Input ---"

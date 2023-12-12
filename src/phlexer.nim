@@ -30,8 +30,7 @@ import
   "."/[phoptions, phmsgs, phlineinfos],
   std/[hashes, strutils, parseutils]
 when defined(nimPreviewSlimSystem):
-  import
-    std/[assertions, formatfloat]
+  import std/[assertions, formatfloat]
 
 const
   numChars*: set[char] = {'0' .. '9', 'a' .. 'z', 'A' .. 'Z'}
@@ -39,25 +38,8 @@ const
   SymStartChars*: set[char] = {'a' .. 'z', 'A' .. 'Z', '\x80' .. '\xFF'}
   OpChars*: set[char] =
     {
-      '+',
-      '-',
-      '*',
-      '/',
-      '\\',
-      '<',
-      '>',
-      '!',
-      '?',
-      '^',
-      '.',
-      '|',
-      '=',
-      '%',
-      '&',
-      '$',
-      '@',
-      '~',
-      ':'
+      '+', '-', '*', '/', '\\', '<', '>', '!', '?', '^', '.', '|', '=', '%', '&', '$',
+      '@', '~', ':'
     }
   UnaryMinusWhitelist = {' ', '\t', '\n', '\r', ',', ';', '(', '[', '{'}
 
@@ -249,7 +231,6 @@ template ones(n): untyped =
   ((1 shl n) - 1)
 
 # for utf-8 conversion
-
 proc isNimIdentifier*(s: string): bool =
   let sLen = s.len
   if sLen > 0 and s[0] in SymStartChars:
@@ -292,7 +273,8 @@ proc printTok*(conf: ConfigRef; tok: Token) =
   # xxx factor with toLocation
   msgWriteln(
     conf,
-    $tok.line & ":" & $tok.col & "\t" & $tok.indent & "\t" & $tok.tokType & " " & $tok & " " & $tok.offsetA & ":" & $tok.offsetB
+    $tok.line & ":" & $tok.col & "\t" & $tok.indent & "\t" & $tok.tokType & " " & $tok &
+      " " & $tok.offsetA & ":" & $tok.offsetB,
   )
 
 proc openLexer*(
@@ -301,7 +283,7 @@ proc openLexer*(
     inputstream: PLLStream;
     cache: IdentCache;
     config: ConfigRef;
-    printTokens: bool
+    printTokens: bool;
 ) =
   openBaseLexer(lex, inputstream)
 
@@ -321,7 +303,7 @@ proc openLexer*(
     inputstream: PLLStream;
     cache: IdentCache;
     config: ConfigRef;
-    printTokens: bool
+    printTokens: bool;
 ) =
   openLexer(lex, fileInfoIdx(config, filename), inputstream, cache, config, printTokens)
 
@@ -393,7 +375,8 @@ proc getNumber(L: var Lexer; result: var Token) =
           lexMessage(
             L,
             errGenerated,
-            "only single underscores may occur in a token and token may not " & "end with an underscore: e.g. '1__1' and '1_' are invalid"
+            "only single underscores may occur in a token and token may not " &
+              "end with an underscore: e.g. '1__1' and '1_' are invalid",
           )
 
           break
@@ -415,8 +398,7 @@ proc getNumber(L: var Lexer; result: var Token) =
       L: var Lexer; msg: string; startpos: int; msgKind = errGenerated
   ) =
     # Used to get slightly human friendlier err messages.
-    const
-      literalishChars = {'A' .. 'Z', 'a' .. 'z', '0' .. '9', '_', '.', '\''}
+    const literalishChars = {'A' .. 'Z', 'a' .. 'z', '0' .. '9', '_', '.', '\''}
 
     var msgPos = L.bufpos
     var t: Token
@@ -481,9 +463,10 @@ proc getNumber(L: var Lexer; result: var Token) =
     of 'c', 'C':
       lexMessageLitNum(
         L,
-        "$1 will soon be invalid for oct literals; Use '0o' " & "for octals. 'c', 'C' prefix",
+        "$1 will soon be invalid for oct literals; Use '0o' " &
+          "for octals. 'c', 'C' prefix",
         startpos,
-        warnDeprecated
+        warnDeprecated,
       )
       eatChar(L, result, 'c')
 
@@ -492,7 +475,7 @@ proc getNumber(L: var Lexer; result: var Token) =
       lexMessageLitNum(
         L,
         "$1 is an invalid int literal; For octal literals " & "use the '0o' prefix.",
-        startpos
+        startpos,
       )
     of 'x', 'X':
       eatChar(L, result, 'x')
@@ -530,8 +513,7 @@ proc getNumber(L: var Lexer; result: var Token) =
   let endpos = L.bufpos
 
   # Second stage, find out if there's a datatype suffix and handle it
-  var
-    postPos = endpos
+  var postPos = endpos
   if L.buf[postPos] in {'\'', 'f', 'F', 'd', 'D', 'i', 'I', 'u', 'U'}:
     let errPos = postPos
 
@@ -588,9 +570,8 @@ proc getNumber(L: var Lexer; result: var Token) =
     else:
       lexMessageLitNum(L, "invalid number suffix: '$1'", errPos)
   # Is there still a literalish char awaiting? Then it's an error!
-  if L.buf[postPos] in literalishChars or (
-      L.buf[postPos] == '.' and L.buf[postPos + 1] in {'0' .. '9'}
-    ):
+  if L.buf[postPos] in literalishChars or
+      (L.buf[postPos] == '.' and L.buf[postPos + 1] in {'0' .. '9'}):
     lexMessageLitNum(L, "invalid number: '$1'", startpos)
   if result.tokType != tkCustomLit:
     # Third stage, extract actual number
@@ -741,7 +722,7 @@ proc handleHexChar(L: var Lexer; xi: var int; position: range[0 .. 4]) =
     lexMessage(
       L,
       errGenerated,
-      "expected a hex digit, but found: " & L.buf[L.bufpos] & "; maybe prepend with 0"
+      "expected a hex digit, but found: " & L.buf[L.bufpos] & "; maybe prepend with 0",
     )
 
   case L.buf[L.bufpos]
@@ -777,8 +758,7 @@ proc handleDecChars(L: var Lexer; xi: var int) =
 proc addUnicodeCodePoint(s: var string; i: int) =
   let i = cast[uint](i)
   # inlined toUTF-8 to avoid unicode and strutils dependencies.
-  let
-    pos = s.len
+  let pos = s.len
   if i <= 127:
     s.setLen(pos + 1)
 
@@ -892,7 +872,7 @@ proc getEscapedChar(L: var Lexer; tok: var Token) =
         lexMessage(
           L,
           errGenerated,
-          "Unicode codepoint must be lower than 0x10FFFF, but was: " & hex
+          "Unicode codepoint must be lower than 0x10FFFF, but was: " & hex,
         )
     else:
       handleHexChar(L, xi, 1)
@@ -924,11 +904,10 @@ proc handleCRLF(L: var Lexer; pos: int): int =
   else:
     result = pos
 
-type
-  StringMode = enum
-    normal
-    raw
-    generalized
+type StringMode = enum
+  normal
+  raw
+  generalized
 
 proc getString(L: var Lexer; tok: var Token; mode: StringMode) =
   var pos = L.bufpos
@@ -979,7 +958,7 @@ proc getString(L: var Lexer; tok: var Token; mode: StringMode) =
           L,
           errGenerated,
           L.lineStart,
-          "closing \"\"\" expected, but end of file reached"
+          "closing \"\"\" expected, but end of file reached",
         )
 
         L.lineNumber = line2
@@ -1054,15 +1033,14 @@ proc getCharacter(L: var Lexer; tok: var Token) =
 
     tokenEndIgnore(tok, L.bufpos - 1)
 
-const
-  UnicodeOperatorStartChars = {'\226', '\194', '\195'}
-    # the allowed unicode characters ("∙ ∘ × ★ ⊗ ⊘ ⊙ ⊛ ⊠ ⊡ ∩ ∧ ⊓ ± ⊕ ⊖ ⊞ ⊟ ∪ ∨ ⊔")
-    # all start with one of these.
+const UnicodeOperatorStartChars = {'\226', '\194', '\195'}
 
-type
-  UnicodeOprPred = enum
-    Mul
-    Add
+# the allowed unicode characters ("∙ ∘ × ★ ⊗ ⊘ ⊙ ⊛ ⊠ ⊡ ∩ ∧ ⊓ ± ⊕ ⊖ ⊞ ⊟ ∪ ∨ ⊔")
+# all start with one of these.
+
+type UnicodeOprPred = enum
+  Mul
+  Add
 
 proc unicodeOprLen(buf: cstring; pos: int): (int8, UnicodeOprPred) =
   template m(len): untyped =
@@ -1167,9 +1145,8 @@ proc getSymbol(L: var Lexer; tok: var Token) =
 
   h = !$h
   tok.ident = L.cache.getIdent(cast[cstring](addr(L.buf[L.bufpos])), pos - L.bufpos, h)
-  if (tok.ident.id < ord(tokKeywordLow) - ord(tkSymbol)) or (
-      tok.ident.id > ord(tokKeywordHigh) - ord(tkSymbol)
-    ):
+  if (tok.ident.id < ord(tokKeywordLow) - ord(tkSymbol)) or
+      (tok.ident.id > ord(tokKeywordHigh) - ord(tkSymbol)):
     tok.tokType = tkSymbol
   else:
     tok.tokType = TokType(tok.ident.id + ord(tkSymbol))
@@ -1238,9 +1215,8 @@ proc getPrecedence*(tok: Token): int =
   of tkOpr:
     let relevantChar = tok.ident.s[0]
     # arrow like?
-    if tok.ident.s.len > 1 and tok.ident.s[^1] == '>' and tok.ident.s[^2] in {
-          '-', '~', '='
-        }:
+    if tok.ident.s.len > 1 and tok.ident.s[^1] == '>' and
+        tok.ident.s[^2] in {'-', '~', '='}:
       return 0
 
     template considerAsgn(value: untyped) =
@@ -1563,14 +1539,12 @@ proc rawGetTok*(L: var Lexer; tok: var Token) =
           discard
         else:
           lexMessage(
-            L,
-            errGenerated,
+            L, errGenerated,
             "invalid token: no whitespace between number and identifier"
           )
     of '-':
-      if L.buf[L.bufpos + 1] in {'0' .. '9'} and (
-          L.bufpos - 1 == 0 or L.buf[L.bufpos - 1] in UnaryMinusWhitelist
-        ):
+      if L.buf[L.bufpos + 1] in {'0' .. '9'} and
+          (L.bufpos - 1 == 0 or L.buf[L.bufpos - 1] in UnaryMinusWhitelist):
         # x)-23 # binary minus
         # ,-23  # unary minus
         # \n-78 # unary minus? Yes.
@@ -1583,8 +1557,7 @@ proc rawGetTok*(L: var Lexer; tok: var Token) =
             discard
           else:
             lexMessage(
-              L,
-              errGenerated,
+              L, errGenerated,
               "invalid token: no whitespace between number and identifier"
             )
       else:
@@ -1619,9 +1592,8 @@ proc getIndentWidth*(
   var prevToken = tkEof
   while tok.tokType != tkEof:
     rawGetTok(lex, tok)
-    if tok.indent > 0 and prevToken in {
-          tkColon, tkEquals, tkType, tkConst, tkLet, tkVar, tkUsing
-        }:
+    if tok.indent > 0 and
+        prevToken in {tkColon, tkEquals, tkType, tkConst, tkLet, tkVar, tkUsing}:
       result = tok.indent
       if result > 0:
         break
@@ -1634,9 +1606,8 @@ proc getPrecedence*(ident: PIdent): int =
   ## assumes ident is binary operator already
   let
     tokType =
-      if ident.id in ord(tokKeywordLow) - ord(tkSymbol) .. ord(tokKeywordHigh) - ord(
-              tkSymbol
-            ):
+      if ident.id in
+        ord(tokKeywordLow) - ord(tkSymbol) .. ord(tokKeywordHigh) - ord(tkSymbol):
         TokType(ident.id + ord(tkSymbol))
       else:
         tkOpr

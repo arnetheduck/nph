@@ -2290,6 +2290,202 @@
           ]
         }
       ]
+    },
+    {
+      "kind": "nkProcDef",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "f"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkFormalParams",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "bool"
+            }
+          ]
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkStmtList",
+          "prefix": [
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Comment here\", line: 281, col: 2, offsetA: 4813, offsetB: 4828)",
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## another\", line: 282, col: 2, offsetA: 4831, offsetB: 4841)"
+          ],
+          "sons": [
+            {
+              "kind": "nkPar",
+              "sons": [
+                {
+                  "kind": "nkInfix",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "or"
+                    },
+                    {
+                      "kind": "nkIdent",
+                      "ident": "true"
+                    },
+                    {
+                      "kind": "nkIdent",
+                      "ident": "false"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkProcDef",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "f"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkFormalParams",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "bool"
+            }
+          ]
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkEmpty"
+        },
+        {
+          "kind": "nkStmtList",
+          "prefix": [
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Comment here\", line: 286, col: 2, offsetA: 4878, offsetB: 4893)",
+            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## another\", line: 287, col: 2, offsetA: 4896, offsetB: 4906)"
+          ],
+          "sons": [
+            {
+              "kind": "nkIfStmt",
+              "sons": [
+                {
+                  "kind": "nkElifBranch",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "true"
+                    },
+                    {
+                      "kind": "nkStmtList",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "false"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "nkElse",
+                  "sons": [
+                    {
+                      "kind": "nkStmtList",
+                      "prefix": [
+                        "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 291, col: 4, offsetA: 4940, offsetB: 4950)",
+                        "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment 2\", line: 292, col: 4, offsetA: 4955, offsetB: 4967)"
+                      ],
+                      "sons": [
+                        {
+                          "kind": "nkIfStmt",
+                          "sons": [
+                            {
+                              "kind": "nkElifBranch",
+                              "sons": [
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "true"
+                                },
+                                {
+                                  "kind": "nkStmtList",
+                                  "prefix": [
+                                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 294, col: 6, offsetA: 4987, offsetB: 4997)",
+                                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment 2\", line: 295, col: 6, offsetA: 5004, offsetB: 5016)"
+                                  ],
+                                  "sons": [
+                                    {
+                                      "kind": "nkPar",
+                                      "sons": [
+                                        {
+                                          "kind": "nkInfix",
+                                          "sons": [
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "or"
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "true"
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "false"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "nkElse",
+                              "sons": [
+                                {
+                                  "kind": "nkStmtList",
+                                  "sons": [
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "false"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }

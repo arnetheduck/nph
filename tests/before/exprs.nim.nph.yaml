@@ -180,202 +180,6 @@
       ]
     },
     {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "f"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "bool"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Comment here\", line: 10, col: 2, offsetA: 128, offsetB: 143)",
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## another\", line: 11, col: 2, offsetA: 146, offsetB: 156)"
-          ],
-          "sons": [
-            {
-              "kind": "nkPar",
-              "sons": [
-                {
-                  "kind": "nkInfix",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "or"
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "true"
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "false"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "f"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "bool"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Comment here\", line: 15, col: 2, offsetA: 193, offsetB: 208)",
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## another\", line: 16, col: 2, offsetA: 211, offsetB: 221)"
-          ],
-          "sons": [
-            {
-              "kind": "nkIfStmt",
-              "sons": [
-                {
-                  "kind": "nkElifBranch",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "true"
-                    },
-                    {
-                      "kind": "nkStmtList",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "false"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkElse",
-                  "sons": [
-                    {
-                      "kind": "nkStmtList",
-                      "prefix": [
-                        "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 20, col: 4, offsetA: 255, offsetB: 265)",
-                        "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment 2\", line: 21, col: 4, offsetA: 270, offsetB: 282)"
-                      ],
-                      "sons": [
-                        {
-                          "kind": "nkIfStmt",
-                          "sons": [
-                            {
-                              "kind": "nkElifBranch",
-                              "sons": [
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "true"
-                                },
-                                {
-                                  "kind": "nkStmtList",
-                                  "prefix": [
-                                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 23, col: 6, offsetA: 302, offsetB: 312)",
-                                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 24, col: 6, offsetA: 319, offsetB: 329)"
-                                  ],
-                                  "sons": [
-                                    {
-                                      "kind": "nkPar",
-                                      "sons": [
-                                        {
-                                          "kind": "nkInfix",
-                                          "sons": [
-                                            {
-                                              "kind": "nkIdent",
-                                              "ident": "or"
-                                            },
-                                            {
-                                              "kind": "nkIdent",
-                                              "ident": "true"
-                                            },
-                                            {
-                                              "kind": "nkIdent",
-                                              "ident": "false"
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "kind": "nkElse",
-                              "sons": [
-                                {
-                                  "kind": "nkStmtList",
-                                  "sons": [
-                                    {
-                                      "kind": "nkIdent",
-                                      "ident": "false"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
       "kind": "nkForStmt",
       "sons": [
         {
@@ -456,7 +260,7 @@
     {
       "kind": "nkForStmt",
       "prefix": [
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# needs spaces\", line: 35, col: 0, offsetA: 428, offsetB: 442)"
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# needs spaces\", line: 14, col: 0, offsetA: 163, offsetB: 177)"
       ],
       "sons": [
         {
@@ -587,7 +391,7 @@
     {
       "kind": "nkDiscardStmt",
       "prefix": [
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# command syntax with colon\", line: 44, col: 0, offsetA: 521, offsetB: 548)"
+        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# command syntax with colon\", line: 23, col: 0, offsetA: 256, offsetB: 283)"
       ],
       "sons": [
         {
@@ -698,6 +502,1795 @@
                           "ident": "xxx"
                         }
                       ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkLetSection",
+      "sons": [
+        {
+          "kind": "nkIdentDefs",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "shortInfix"
+            },
+            {
+              "kind": "nkEmpty"
+            },
+            {
+              "kind": "nkInfix",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "+"
+                },
+                {
+                  "kind": "nkInfix",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "+"
+                    },
+                    {
+                      "kind": "nkInfix",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "*"
+                        },
+                        {
+                          "kind": "nkInfix",
+                          "sons": [
+                            {
+                              "kind": "nkIdent",
+                              "ident": "*"
+                            },
+                            {
+                              "kind": "nkIdent",
+                              "ident": "a"
+                            },
+                            {
+                              "kind": "nkIdent",
+                              "ident": "b"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "c"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "nkInfix",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "*"
+                        },
+                        {
+                          "kind": "nkInfix",
+                          "sons": [
+                            {
+                              "kind": "nkIdent",
+                              "ident": "*"
+                            },
+                            {
+                              "kind": "nkIdent",
+                              "ident": "d"
+                            },
+                            {
+                              "kind": "nkIdent",
+                              "ident": "e"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "f"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "nkInfix",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "*"
+                    },
+                    {
+                      "kind": "nkPar",
+                      "sons": [
+                        {
+                          "kind": "nkInfix",
+                          "sons": [
+                            {
+                              "kind": "nkIdent",
+                              "ident": "+"
+                            },
+                            {
+                              "kind": "nkIdent",
+                              "ident": "a"
+                            },
+                            {
+                              "kind": "nkIdent",
+                              "ident": "b"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "nkIdent",
+                      "ident": "g"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkLetSection",
+      "sons": [
+        {
+          "kind": "nkIdentDefs",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "longInfix"
+            },
+            {
+              "kind": "nkEmpty"
+            },
+            {
+              "kind": "nkPar",
+              "sons": [
+                {
+                  "kind": "nkInfix",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "+"
+                    },
+                    {
+                      "kind": "nkInfix",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "-"
+                        },
+                        {
+                          "kind": "nkInfix",
+                          "sons": [
+                            {
+                              "kind": "nkIdent",
+                              "ident": "-"
+                            },
+                            {
+                              "kind": "nkInfix",
+                              "sons": [
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "+"
+                                },
+                                {
+                                  "kind": "nkInfix",
+                                  "sons": [
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "+"
+                                    },
+                                    {
+                                      "kind": "nkInfix",
+                                      "sons": [
+                                        {
+                                          "kind": "nkIdent",
+                                          "ident": "-"
+                                        },
+                                        {
+                                          "kind": "nkInfix",
+                                          "sons": [
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "-"
+                                            },
+                                            {
+                                              "kind": "nkInfix",
+                                              "sons": [
+                                                {
+                                                  "kind": "nkIdent",
+                                                  "ident": "+"
+                                                },
+                                                {
+                                                  "kind": "nkInfix",
+                                                  "sons": [
+                                                    {
+                                                      "kind": "nkIdent",
+                                                      "ident": "+"
+                                                    },
+                                                    {
+                                                      "kind": "nkInfix",
+                                                      "sons": [
+                                                        {
+                                                          "kind": "nkIdent",
+                                                          "ident": "-"
+                                                        },
+                                                        {
+                                                          "kind": "nkInfix",
+                                                          "sons": [
+                                                            {
+                                                              "kind": "nkIdent",
+                                                              "ident": "-"
+                                                            },
+                                                            {
+                                                              "kind": "nkInfix",
+                                                              "sons": [
+                                                                {
+                                                                  "kind": "nkIdent",
+                                                                  "ident": "+"
+                                                                },
+                                                                {
+                                                                  "kind": "nkInfix",
+                                                                  "sons": [
+                                                                    {
+                                                                      "kind": "nkIdent",
+                                                                      "ident": "+"
+                                                                    },
+                                                                    {
+                                                                      "kind": "nkInfix",
+                                                                      "sons": [
+                                                                        {
+                                                                          "kind": "nkIdent",
+                                                                          "ident": "-"
+                                                                        },
+                                                                        {
+                                                                          "kind": "nkInfix",
+                                                                          "sons": [
+                                                                            {
+                                                                              "kind": "nkIdent",
+                                                                              "ident": "-"
+                                                                            },
+                                                                            {
+                                                                              "kind": "nkInfix",
+                                                                              "sons": [
+                                                                                {
+                                                                                  "kind": "nkIdent",
+                                                                                  "ident": "+"
+                                                                                },
+                                                                                {
+                                                                                  "kind": "nkInfix",
+                                                                                  "sons": [
+                                                                                    {
+                                                                                      "kind": "nkIdent",
+                                                                                      "ident": "+"
+                                                                                    },
+                                                                                    {
+                                                                                      "kind": "nkInfix",
+                                                                                      "sons": [
+                                                                                        {
+                                                                                          "kind": "nkIdent",
+                                                                                          "ident": "-"
+                                                                                        },
+                                                                                        {
+                                                                                          "kind": "nkInfix",
+                                                                                          "sons": [
+                                                                                            {
+                                                                                              "kind": "nkIdent",
+                                                                                              "ident": "-"
+                                                                                            },
+                                                                                            {
+                                                                                              "kind": "nkInfix",
+                                                                                              "sons": [
+                                                                                                {
+                                                                                                  "kind": "nkIdent",
+                                                                                                  "ident": "+"
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "nkInfix",
+                                                                                                  "sons": [
+                                                                                                    {
+                                                                                                      "kind": "nkIdent",
+                                                                                                      "ident": "+"
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "kind": "nkInfix",
+                                                                                                      "sons": [
+                                                                                                        {
+                                                                                                          "kind": "nkIdent",
+                                                                                                          "ident": "-"
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "nkInfix",
+                                                                                                          "sons": [
+                                                                                                            {
+                                                                                                              "kind": "nkIdent",
+                                                                                                              "ident": "-"
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "kind": "nkInfix",
+                                                                                                              "sons": [
+                                                                                                                {
+                                                                                                                  "kind": "nkIdent",
+                                                                                                                  "ident": "*"
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "nkInfix",
+                                                                                                                  "sons": [
+                                                                                                                    {
+                                                                                                                      "kind": "nkIdent",
+                                                                                                                      "ident": "*"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                      "kind": "nkInfix",
+                                                                                                                      "sons": [
+                                                                                                                        {
+                                                                                                                          "kind": "nkIdent",
+                                                                                                                          "ident": "*"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                          "kind": "nkIdent",
+                                                                                                                          "ident": "a30"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                          "kind": "nkIdent",
+                                                                                                                          "ident": "a21"
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                      "kind": "nkIdent",
+                                                                                                                      "ident": "a12"
+                                                                                                                    }
+                                                                                                                  ]
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "nkIdent",
+                                                                                                                  "ident": "a03"
+                                                                                                                }
+                                                                                                              ]
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "kind": "nkInfix",
+                                                                                                              "sons": [
+                                                                                                                {
+                                                                                                                  "kind": "nkIdent",
+                                                                                                                  "ident": "*"
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "nkInfix",
+                                                                                                                  "sons": [
+                                                                                                                    {
+                                                                                                                      "kind": "nkIdent",
+                                                                                                                      "ident": "*"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                      "kind": "nkInfix",
+                                                                                                                      "sons": [
+                                                                                                                        {
+                                                                                                                          "kind": "nkIdent",
+                                                                                                                          "ident": "*"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                          "kind": "nkIdent",
+                                                                                                                          "ident": "a20"
+                                                                                                                        },
+                                                                                                                        {
+                                                                                                                          "kind": "nkIdent",
+                                                                                                                          "ident": "a31"
+                                                                                                                        }
+                                                                                                                      ]
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                      "kind": "nkIdent",
+                                                                                                                      "ident": "a12"
+                                                                                                                    }
+                                                                                                                  ]
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "nkIdent",
+                                                                                                                  "ident": "a03"
+                                                                                                                }
+                                                                                                              ]
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "nkInfix",
+                                                                                                          "sons": [
+                                                                                                            {
+                                                                                                              "kind": "nkIdent",
+                                                                                                              "ident": "*"
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "kind": "nkInfix",
+                                                                                                              "sons": [
+                                                                                                                {
+                                                                                                                  "kind": "nkIdent",
+                                                                                                                  "ident": "*"
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "nkInfix",
+                                                                                                                  "sons": [
+                                                                                                                    {
+                                                                                                                      "kind": "nkIdent",
+                                                                                                                      "ident": "*"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                      "kind": "nkIdent",
+                                                                                                                      "ident": "a30"
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                      "kind": "nkIdent",
+                                                                                                                      "ident": "a11"
+                                                                                                                    }
+                                                                                                                  ]
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "nkIdent",
+                                                                                                                  "ident": "a22"
+                                                                                                                }
+                                                                                                              ]
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "kind": "nkIdent",
+                                                                                                              "ident": "a03"
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        }
+                                                                                                      ]
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "kind": "nkInfix",
+                                                                                                      "sons": [
+                                                                                                        {
+                                                                                                          "kind": "nkIdent",
+                                                                                                          "ident": "*"
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "nkInfix",
+                                                                                                          "sons": [
+                                                                                                            {
+                                                                                                              "kind": "nkIdent",
+                                                                                                              "ident": "*"
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "kind": "nkInfix",
+                                                                                                              "sons": [
+                                                                                                                {
+                                                                                                                  "kind": "nkIdent",
+                                                                                                                  "ident": "*"
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "nkIdent",
+                                                                                                                  "ident": "a10"
+                                                                                                                },
+                                                                                                                {
+                                                                                                                  "kind": "nkIdent",
+                                                                                                                  "ident": "a31"
+                                                                                                                }
+                                                                                                              ]
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "kind": "nkIdent",
+                                                                                                              "ident": "a22"
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "nkIdent",
+                                                                                                          "ident": "a03"
+                                                                                                        }
+                                                                                                      ]
+                                                                                                    }
+                                                                                                  ]
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "nkInfix",
+                                                                                                  "sons": [
+                                                                                                    {
+                                                                                                      "kind": "nkIdent",
+                                                                                                      "ident": "*"
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "kind": "nkInfix",
+                                                                                                      "sons": [
+                                                                                                        {
+                                                                                                          "kind": "nkIdent",
+                                                                                                          "ident": "*"
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "nkInfix",
+                                                                                                          "sons": [
+                                                                                                            {
+                                                                                                              "kind": "nkIdent",
+                                                                                                              "ident": "*"
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "kind": "nkIdent",
+                                                                                                              "ident": "a20"
+                                                                                                            },
+                                                                                                            {
+                                                                                                              "kind": "nkIdent",
+                                                                                                              "ident": "a11"
+                                                                                                            }
+                                                                                                          ]
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "nkIdent",
+                                                                                                          "ident": "a32"
+                                                                                                        }
+                                                                                                      ]
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "kind": "nkIdent",
+                                                                                                      "ident": "a03"
+                                                                                                    }
+                                                                                                  ]
+                                                                                                }
+                                                                                              ]
+                                                                                            },
+                                                                                            {
+                                                                                              "kind": "nkInfix",
+                                                                                              "sons": [
+                                                                                                {
+                                                                                                  "kind": "nkIdent",
+                                                                                                  "ident": "*"
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "nkInfix",
+                                                                                                  "sons": [
+                                                                                                    {
+                                                                                                      "kind": "nkIdent",
+                                                                                                      "ident": "*"
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "kind": "nkInfix",
+                                                                                                      "sons": [
+                                                                                                        {
+                                                                                                          "kind": "nkIdent",
+                                                                                                          "ident": "*"
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "nkIdent",
+                                                                                                          "ident": "a10"
+                                                                                                        },
+                                                                                                        {
+                                                                                                          "kind": "nkIdent",
+                                                                                                          "ident": "a21"
+                                                                                                        }
+                                                                                                      ]
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "kind": "nkIdent",
+                                                                                                      "ident": "a32"
+                                                                                                    }
+                                                                                                  ]
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "nkIdent",
+                                                                                                  "ident": "a03"
+                                                                                                }
+                                                                                              ]
+                                                                                            }
+                                                                                          ]
+                                                                                        },
+                                                                                        {
+                                                                                          "kind": "nkInfix",
+                                                                                          "sons": [
+                                                                                            {
+                                                                                              "kind": "nkIdent",
+                                                                                              "ident": "*"
+                                                                                            },
+                                                                                            {
+                                                                                              "kind": "nkInfix",
+                                                                                              "sons": [
+                                                                                                {
+                                                                                                  "kind": "nkIdent",
+                                                                                                  "ident": "*"
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "nkInfix",
+                                                                                                  "sons": [
+                                                                                                    {
+                                                                                                      "kind": "nkIdent",
+                                                                                                      "ident": "*"
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "kind": "nkIdent",
+                                                                                                      "ident": "a30"
+                                                                                                    },
+                                                                                                    {
+                                                                                                      "kind": "nkIdent",
+                                                                                                      "ident": "a21"
+                                                                                                    }
+                                                                                                  ]
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "nkIdent",
+                                                                                                  "ident": "a02"
+                                                                                                }
+                                                                                              ]
+                                                                                            },
+                                                                                            {
+                                                                                              "kind": "nkIdent",
+                                                                                              "ident": "a13"
+                                                                                            }
+                                                                                          ]
+                                                                                        }
+                                                                                      ]
+                                                                                    },
+                                                                                    {
+                                                                                      "kind": "nkInfix",
+                                                                                      "sons": [
+                                                                                        {
+                                                                                          "kind": "nkIdent",
+                                                                                          "ident": "*"
+                                                                                        },
+                                                                                        {
+                                                                                          "kind": "nkInfix",
+                                                                                          "sons": [
+                                                                                            {
+                                                                                              "kind": "nkIdent",
+                                                                                              "ident": "*"
+                                                                                            },
+                                                                                            {
+                                                                                              "kind": "nkInfix",
+                                                                                              "sons": [
+                                                                                                {
+                                                                                                  "kind": "nkIdent",
+                                                                                                  "ident": "*"
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "nkIdent",
+                                                                                                  "ident": "a20"
+                                                                                                },
+                                                                                                {
+                                                                                                  "kind": "nkIdent",
+                                                                                                  "ident": "a31"
+                                                                                                }
+                                                                                              ]
+                                                                                            },
+                                                                                            {
+                                                                                              "kind": "nkIdent",
+                                                                                              "ident": "a02"
+                                                                                            }
+                                                                                          ]
+                                                                                        },
+                                                                                        {
+                                                                                          "kind": "nkIdent",
+                                                                                          "ident": "a13"
+                                                                                        }
+                                                                                      ]
+                                                                                    }
+                                                                                  ]
+                                                                                },
+                                                                                {
+                                                                                  "kind": "nkInfix",
+                                                                                  "sons": [
+                                                                                    {
+                                                                                      "kind": "nkIdent",
+                                                                                      "ident": "*"
+                                                                                    },
+                                                                                    {
+                                                                                      "kind": "nkInfix",
+                                                                                      "sons": [
+                                                                                        {
+                                                                                          "kind": "nkIdent",
+                                                                                          "ident": "*"
+                                                                                        },
+                                                                                        {
+                                                                                          "kind": "nkInfix",
+                                                                                          "sons": [
+                                                                                            {
+                                                                                              "kind": "nkIdent",
+                                                                                              "ident": "*"
+                                                                                            },
+                                                                                            {
+                                                                                              "kind": "nkIdent",
+                                                                                              "ident": "a30"
+                                                                                            },
+                                                                                            {
+                                                                                              "kind": "nkIdent",
+                                                                                              "ident": "a01"
+                                                                                            }
+                                                                                          ]
+                                                                                        },
+                                                                                        {
+                                                                                          "kind": "nkIdent",
+                                                                                          "ident": "a22"
+                                                                                        }
+                                                                                      ]
+                                                                                    },
+                                                                                    {
+                                                                                      "kind": "nkIdent",
+                                                                                      "ident": "a13"
+                                                                                    }
+                                                                                  ]
+                                                                                }
+                                                                              ]
+                                                                            },
+                                                                            {
+                                                                              "kind": "nkInfix",
+                                                                              "sons": [
+                                                                                {
+                                                                                  "kind": "nkIdent",
+                                                                                  "ident": "*"
+                                                                                },
+                                                                                {
+                                                                                  "kind": "nkInfix",
+                                                                                  "sons": [
+                                                                                    {
+                                                                                      "kind": "nkIdent",
+                                                                                      "ident": "*"
+                                                                                    },
+                                                                                    {
+                                                                                      "kind": "nkInfix",
+                                                                                      "sons": [
+                                                                                        {
+                                                                                          "kind": "nkIdent",
+                                                                                          "ident": "*"
+                                                                                        },
+                                                                                        {
+                                                                                          "kind": "nkIdent",
+                                                                                          "ident": "a00"
+                                                                                        },
+                                                                                        {
+                                                                                          "kind": "nkIdent",
+                                                                                          "ident": "a31"
+                                                                                        }
+                                                                                      ]
+                                                                                    },
+                                                                                    {
+                                                                                      "kind": "nkIdent",
+                                                                                      "ident": "a22"
+                                                                                    }
+                                                                                  ]
+                                                                                },
+                                                                                {
+                                                                                  "kind": "nkIdent",
+                                                                                  "ident": "a13"
+                                                                                }
+                                                                              ]
+                                                                            }
+                                                                          ]
+                                                                        },
+                                                                        {
+                                                                          "kind": "nkInfix",
+                                                                          "sons": [
+                                                                            {
+                                                                              "kind": "nkIdent",
+                                                                              "ident": "*"
+                                                                            },
+                                                                            {
+                                                                              "kind": "nkInfix",
+                                                                              "sons": [
+                                                                                {
+                                                                                  "kind": "nkIdent",
+                                                                                  "ident": "*"
+                                                                                },
+                                                                                {
+                                                                                  "kind": "nkInfix",
+                                                                                  "sons": [
+                                                                                    {
+                                                                                      "kind": "nkIdent",
+                                                                                      "ident": "*"
+                                                                                    },
+                                                                                    {
+                                                                                      "kind": "nkIdent",
+                                                                                      "ident": "a20"
+                                                                                    },
+                                                                                    {
+                                                                                      "kind": "nkIdent",
+                                                                                      "ident": "a01"
+                                                                                    }
+                                                                                  ]
+                                                                                },
+                                                                                {
+                                                                                  "kind": "nkIdent",
+                                                                                  "ident": "a32"
+                                                                                }
+                                                                              ]
+                                                                            },
+                                                                            {
+                                                                              "kind": "nkIdent",
+                                                                              "ident": "a13"
+                                                                            }
+                                                                          ]
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "kind": "nkInfix",
+                                                                      "sons": [
+                                                                        {
+                                                                          "kind": "nkIdent",
+                                                                          "ident": "*"
+                                                                        },
+                                                                        {
+                                                                          "kind": "nkInfix",
+                                                                          "sons": [
+                                                                            {
+                                                                              "kind": "nkIdent",
+                                                                              "ident": "*"
+                                                                            },
+                                                                            {
+                                                                              "kind": "nkInfix",
+                                                                              "sons": [
+                                                                                {
+                                                                                  "kind": "nkIdent",
+                                                                                  "ident": "*"
+                                                                                },
+                                                                                {
+                                                                                  "kind": "nkIdent",
+                                                                                  "ident": "a00"
+                                                                                },
+                                                                                {
+                                                                                  "kind": "nkIdent",
+                                                                                  "ident": "a21"
+                                                                                }
+                                                                              ]
+                                                                            },
+                                                                            {
+                                                                              "kind": "nkIdent",
+                                                                              "ident": "a32"
+                                                                            }
+                                                                          ]
+                                                                        },
+                                                                        {
+                                                                          "kind": "nkIdent",
+                                                                          "ident": "a13"
+                                                                        }
+                                                                      ]
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "kind": "nkInfix",
+                                                                  "sons": [
+                                                                    {
+                                                                      "kind": "nkIdent",
+                                                                      "ident": "*"
+                                                                    },
+                                                                    {
+                                                                      "kind": "nkInfix",
+                                                                      "sons": [
+                                                                        {
+                                                                          "kind": "nkIdent",
+                                                                          "ident": "*"
+                                                                        },
+                                                                        {
+                                                                          "kind": "nkInfix",
+                                                                          "sons": [
+                                                                            {
+                                                                              "kind": "nkIdent",
+                                                                              "ident": "*"
+                                                                            },
+                                                                            {
+                                                                              "kind": "nkIdent",
+                                                                              "ident": "a30"
+                                                                            },
+                                                                            {
+                                                                              "kind": "nkIdent",
+                                                                              "ident": "a11"
+                                                                            }
+                                                                          ]
+                                                                        },
+                                                                        {
+                                                                          "kind": "nkIdent",
+                                                                          "ident": "a02"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "kind": "nkIdent",
+                                                                      "ident": "a23"
+                                                                    }
+                                                                  ]
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "kind": "nkInfix",
+                                                              "sons": [
+                                                                {
+                                                                  "kind": "nkIdent",
+                                                                  "ident": "*"
+                                                                },
+                                                                {
+                                                                  "kind": "nkInfix",
+                                                                  "sons": [
+                                                                    {
+                                                                      "kind": "nkIdent",
+                                                                      "ident": "*"
+                                                                    },
+                                                                    {
+                                                                      "kind": "nkInfix",
+                                                                      "sons": [
+                                                                        {
+                                                                          "kind": "nkIdent",
+                                                                          "ident": "*"
+                                                                        },
+                                                                        {
+                                                                          "kind": "nkIdent",
+                                                                          "ident": "a10"
+                                                                        },
+                                                                        {
+                                                                          "kind": "nkIdent",
+                                                                          "ident": "a31"
+                                                                        }
+                                                                      ]
+                                                                    },
+                                                                    {
+                                                                      "kind": "nkIdent",
+                                                                      "ident": "a02"
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "kind": "nkIdent",
+                                                                  "ident": "a23"
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "kind": "nkInfix",
+                                                          "sons": [
+                                                            {
+                                                              "kind": "nkIdent",
+                                                              "ident": "*"
+                                                            },
+                                                            {
+                                                              "kind": "nkInfix",
+                                                              "sons": [
+                                                                {
+                                                                  "kind": "nkIdent",
+                                                                  "ident": "*"
+                                                                },
+                                                                {
+                                                                  "kind": "nkInfix",
+                                                                  "sons": [
+                                                                    {
+                                                                      "kind": "nkIdent",
+                                                                      "ident": "*"
+                                                                    },
+                                                                    {
+                                                                      "kind": "nkIdent",
+                                                                      "ident": "a30"
+                                                                    },
+                                                                    {
+                                                                      "kind": "nkIdent",
+                                                                      "ident": "a01"
+                                                                    }
+                                                                  ]
+                                                                },
+                                                                {
+                                                                  "kind": "nkIdent",
+                                                                  "ident": "a12"
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "kind": "nkIdent",
+                                                              "ident": "a23"
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "kind": "nkInfix",
+                                                      "sons": [
+                                                        {
+                                                          "kind": "nkIdent",
+                                                          "ident": "*"
+                                                        },
+                                                        {
+                                                          "kind": "nkInfix",
+                                                          "sons": [
+                                                            {
+                                                              "kind": "nkIdent",
+                                                              "ident": "*"
+                                                            },
+                                                            {
+                                                              "kind": "nkInfix",
+                                                              "sons": [
+                                                                {
+                                                                  "kind": "nkIdent",
+                                                                  "ident": "*"
+                                                                },
+                                                                {
+                                                                  "kind": "nkIdent",
+                                                                  "ident": "a00"
+                                                                },
+                                                                {
+                                                                  "kind": "nkIdent",
+                                                                  "ident": "a31"
+                                                                }
+                                                              ]
+                                                            },
+                                                            {
+                                                              "kind": "nkIdent",
+                                                              "ident": "a12"
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "kind": "nkIdent",
+                                                          "ident": "a23"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "kind": "nkInfix",
+                                                  "sons": [
+                                                    {
+                                                      "kind": "nkIdent",
+                                                      "ident": "*"
+                                                    },
+                                                    {
+                                                      "kind": "nkInfix",
+                                                      "sons": [
+                                                        {
+                                                          "kind": "nkIdent",
+                                                          "ident": "*"
+                                                        },
+                                                        {
+                                                          "kind": "nkInfix",
+                                                          "sons": [
+                                                            {
+                                                              "kind": "nkIdent",
+                                                              "ident": "*"
+                                                            },
+                                                            {
+                                                              "kind": "nkIdent",
+                                                              "ident": "a10"
+                                                            },
+                                                            {
+                                                              "kind": "nkIdent",
+                                                              "ident": "a01"
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "kind": "nkIdent",
+                                                          "ident": "a32"
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "kind": "nkIdent",
+                                                      "ident": "a23"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "kind": "nkInfix",
+                                              "sons": [
+                                                {
+                                                  "kind": "nkIdent",
+                                                  "ident": "*"
+                                                },
+                                                {
+                                                  "kind": "nkInfix",
+                                                  "sons": [
+                                                    {
+                                                      "kind": "nkIdent",
+                                                      "ident": "*"
+                                                    },
+                                                    {
+                                                      "kind": "nkInfix",
+                                                      "sons": [
+                                                        {
+                                                          "kind": "nkIdent",
+                                                          "ident": "*"
+                                                        },
+                                                        {
+                                                          "kind": "nkIdent",
+                                                          "ident": "a00"
+                                                        },
+                                                        {
+                                                          "kind": "nkIdent",
+                                                          "ident": "a11"
+                                                        }
+                                                      ]
+                                                    },
+                                                    {
+                                                      "kind": "nkIdent",
+                                                      "ident": "a32"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "kind": "nkIdent",
+                                                  "ident": "a23"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "nkInfix",
+                                          "sons": [
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "*"
+                                            },
+                                            {
+                                              "kind": "nkInfix",
+                                              "sons": [
+                                                {
+                                                  "kind": "nkIdent",
+                                                  "ident": "*"
+                                                },
+                                                {
+                                                  "kind": "nkInfix",
+                                                  "sons": [
+                                                    {
+                                                      "kind": "nkIdent",
+                                                      "ident": "*"
+                                                    },
+                                                    {
+                                                      "kind": "nkIdent",
+                                                      "ident": "a20"
+                                                    },
+                                                    {
+                                                      "kind": "nkIdent",
+                                                      "ident": "a11"
+                                                    }
+                                                  ]
+                                                },
+                                                {
+                                                  "kind": "nkIdent",
+                                                  "ident": "a02"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "a33"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "nkInfix",
+                                      "sons": [
+                                        {
+                                          "kind": "nkIdent",
+                                          "ident": "*"
+                                        },
+                                        {
+                                          "kind": "nkInfix",
+                                          "sons": [
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "*"
+                                            },
+                                            {
+                                              "kind": "nkInfix",
+                                              "sons": [
+                                                {
+                                                  "kind": "nkIdent",
+                                                  "ident": "*"
+                                                },
+                                                {
+                                                  "kind": "nkIdent",
+                                                  "ident": "a10"
+                                                },
+                                                {
+                                                  "kind": "nkIdent",
+                                                  "ident": "a21"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "a02"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "nkIdent",
+                                          "ident": "a33"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "kind": "nkInfix",
+                                  "sons": [
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "*"
+                                    },
+                                    {
+                                      "kind": "nkInfix",
+                                      "sons": [
+                                        {
+                                          "kind": "nkIdent",
+                                          "ident": "*"
+                                        },
+                                        {
+                                          "kind": "nkInfix",
+                                          "sons": [
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "*"
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "a20"
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "a01"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "nkIdent",
+                                          "ident": "a12"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "a33"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "nkInfix",
+                              "sons": [
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "*"
+                                },
+                                {
+                                  "kind": "nkInfix",
+                                  "sons": [
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "*"
+                                    },
+                                    {
+                                      "kind": "nkInfix",
+                                      "sons": [
+                                        {
+                                          "kind": "nkIdent",
+                                          "ident": "*"
+                                        },
+                                        {
+                                          "kind": "nkIdent",
+                                          "ident": "a00"
+                                        },
+                                        {
+                                          "kind": "nkIdent",
+                                          "ident": "a21"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "a12"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "a33"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "nkInfix",
+                          "sons": [
+                            {
+                              "kind": "nkIdent",
+                              "ident": "*"
+                            },
+                            {
+                              "kind": "nkInfix",
+                              "sons": [
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "*"
+                                },
+                                {
+                                  "kind": "nkInfix",
+                                  "sons": [
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "*"
+                                    },
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "a10"
+                                    },
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "a01"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "a22"
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "nkIdent",
+                              "ident": "a33"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "nkInfix",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "*"
+                        },
+                        {
+                          "kind": "nkInfix",
+                          "sons": [
+                            {
+                              "kind": "nkIdent",
+                              "ident": "*"
+                            },
+                            {
+                              "kind": "nkInfix",
+                              "sons": [
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "*"
+                                },
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "a00"
+                                },
+                                {
+                                  "kind": "nkIdent",
+                                  "ident": "a11"
+                                }
+                              ]
+                            },
+                            {
+                              "kind": "nkIdent",
+                              "ident": "a22"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "a33"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkIfStmt",
+      "sons": [
+        {
+          "kind": "nkElifBranch",
+          "sons": [
+            {
+              "kind": "nkInfix",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "and"
+                },
+                {
+                  "kind": "nkInfix",
+                  "sons": [
+                    {
+                      "kind": "nkIdent",
+                      "ident": "and"
+                    },
+                    {
+                      "kind": "nkInfix",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "and"
+                        },
+                        {
+                          "kind": "nkInfix",
+                          "sons": [
+                            {
+                              "kind": "nkIdent",
+                              "ident": "and"
+                            },
+                            {
+                              "kind": "nkIdent",
+                              "ident": "aaaaaaaaaaaaaaaaaaaa"
+                            },
+                            {
+                              "kind": "nkIdent",
+                              "ident": "bbbbbbbbbbbbbbbbbbbbbbb"
+                            }
+                          ]
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "ccccccccccccccccccccccccc"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "nkIdent",
+                      "ident": "ddddddddddddddddd"
+                    }
+                  ]
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "fffffffffffffffff"
+                }
+              ]
+            },
+            {
+              "kind": "nkStmtList",
+              "sons": [
+                {
+                  "kind": "nkDiscardStmt",
+                  "sons": [
+                    {
+                      "kind": "nkEmpty"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkIfStmt",
+      "sons": [
+        {
+          "kind": "nkElifBranch",
+          "sons": [
+            {
+              "kind": "nkInfix",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "or"
+                },
+                {
+                  "kind": "nkPar",
+                  "sons": [
+                    {
+                      "kind": "nkInfix",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "and"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "aaaaaaaaaaaaaaaa"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "bbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "nkPar",
+                  "sons": [
+                    {
+                      "kind": "nkInfix",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "and"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "ccccccccccccccccccccccccccc"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "ddddddddddddddddddddd"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "nkStmtList",
+              "sons": [
+                {
+                  "kind": "nkDiscardStmt",
+                  "sons": [
+                    {
+                      "kind": "nkEmpty"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "nkElifBranch",
+          "sons": [
+            {
+              "kind": "nkInfix",
+              "sons": [
+                {
+                  "kind": "nkIdent",
+                  "ident": "and"
+                },
+                {
+                  "kind": "nkIdent",
+                  "ident": "aaaaaaaaa"
+                },
+                {
+                  "kind": "nkPar",
+                  "sons": [
+                    {
+                      "kind": "nkInfix",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "or"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "bbbbbbbbbb"
+                        },
+                        {
+                          "kind": "nkInfix",
+                          "sons": [
+                            {
+                              "kind": "nkIdent",
+                              "ident": "and"
+                            },
+                            {
+                              "kind": "nkIdent",
+                              "ident": "cccccccccccc"
+                            },
+                            {
+                              "kind": "nkPar",
+                              "sons": [
+                                {
+                                  "kind": "nkInfix",
+                                  "sons": [
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "or"
+                                    },
+                                    {
+                                      "kind": "nkInfix",
+                                      "sons": [
+                                        {
+                                          "kind": "nkIdent",
+                                          "ident": "or"
+                                        },
+                                        {
+                                          "kind": "nkInfix",
+                                          "sons": [
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "or"
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "dddddddddddddddd"
+                                            },
+                                            {
+                                              "kind": "nkIdent",
+                                              "ident": "eeeeeeeeeeeeeee"
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "kind": "nkIdent",
+                                          "ident": "fffffffffffffff"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "kind": "nkIdent",
+                                      "ident": "gggggggggggggg"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "kind": "nkStmtList",
+              "sons": [
+                {
+                  "kind": "nkDiscardStmt",
+                  "sons": [
+                    {
+                      "kind": "nkEmpty"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkCaseStmt",
+      "sons": [
+        {
+          "kind": "nkIdent",
+          "ident": "aaaaaaaaaa"
+        },
+        {
+          "kind": "nkOfBranch",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "bbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "ccccccccccccccccccccccc"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "ddddddddddddddddddddddd"
+            },
+            {
+              "kind": "nkStmtList",
+              "sons": [
+                {
+                  "kind": "nkDiscardStmt",
+                  "sons": [
+                    {
+                      "kind": "nkEmpty"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "nkOfBranch",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "aaaa"
+            },
+            {
+              "kind": "nkStmtList",
+              "sons": [
+                {
+                  "kind": "nkDiscardStmt",
+                  "sons": [
+                    {
+                      "kind": "nkEmpty"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "nkOfBranch",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "bbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "ccccccccccccccccccccccc"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "dddddddddddddddddddddd"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "bbbbbbbbbbbbbbbbbbbbbbbbbb"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "ccccccccccccccccccccccc"
+            },
+            {
+              "kind": "nkIdent",
+              "ident": "dddddddddddddddddddddd"
+            },
+            {
+              "kind": "nkStmtList",
+              "sons": [
+                {
+                  "kind": "nkDiscardStmt",
+                  "sons": [
+                    {
+                      "kind": "nkEmpty"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "nkElse",
+          "sons": [
+            {
+              "kind": "nkStmtList",
+              "sons": [
+                {
+                  "kind": "nkDiscardStmt",
+                  "sons": [
+                    {
+                      "kind": "nkEmpty"
                     }
                   ]
                 }

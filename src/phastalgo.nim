@@ -21,20 +21,19 @@ import
 
 import strutils except addf
 when defined(nimPreviewSlimSystem):
-  import
-    std/assertions
+  import std/assertions
 
 proc hashNode*(p: RootRef): Hash
 
 proc treeToYaml*(
-    conf: ConfigRef; n: PNode; indent: int = 0; maxRecDepth: int = -1
+  conf: ConfigRef; n: PNode; indent: int = 0; maxRecDepth: int = -1
 ): Rope
 
   # Convert a tree into its YAML representation; this is used by the
   # YAML code generator and it is invaluable for debugging purposes.
   # If maxRecDepht <> -1 then it won't print the whole graph.
 proc typeToYaml*(
-    conf: ConfigRef; n: PType; indent: int = 0; maxRecDepth: int = -1
+  conf: ConfigRef; n: PType; indent: int = 0; maxRecDepth: int = -1
 ): Rope
 
 proc symToYaml*(conf: ConfigRef; n: PSym; indent: int = 0; maxRecDepth: int = -1): Rope
@@ -115,8 +114,7 @@ proc mustRehash*(length, counter: int): bool
 
 proc nextTry*(h, maxHash: Hash): Hash {.inline.} # ------------- table[int, int] ---------------------------------------------
 
-const
-  InvalidKey* = low(int)
+const InvalidKey* = low(int)
 
 type
   TIIPair* {.final.} = object
@@ -321,8 +319,7 @@ proc makeYamlString*(s: string): Rope =
   # We have to split long strings into many ropes. Otherwise
   # this could trigger InternalError(111). See the ropes module for
   # further information.
-  const
-    MaxLineLength = 64000
+  const MaxLineLength = 64000
 
   result = ""
 
@@ -355,22 +352,23 @@ proc flagsToStr[T](flags: set[T]): Rope =
 
 proc lineInfoToStr(conf: ConfigRef; info: TLineInfo): Rope =
   result =
-    "[$1, $2, $3]" % [
+    "[$1, $2, $3]" %
+      [
         makeYamlString(toFilename(conf, info)),
         rope(toLinenumber(info)),
         rope(toColumn(info))
       ]
 
 proc treeToYamlAux(
-    conf: ConfigRef; n: PNode; marker: var IntSet; indent, maxRecDepth: int
+  conf: ConfigRef; n: PNode; marker: var IntSet; indent, maxRecDepth: int
 ): Rope
 
 proc symToYamlAux(
-    conf: ConfigRef; n: PSym; marker: var IntSet; indent, maxRecDepth: int
+  conf: ConfigRef; n: PSym; marker: var IntSet; indent, maxRecDepth: int
 ): Rope
 
 proc typeToYamlAux(
-    conf: ConfigRef; n: PType; marker: var IntSet; indent, maxRecDepth: int
+  conf: ConfigRef; n: PType; marker: var IntSet; indent, maxRecDepth: int
 ): Rope
 
 proc symToYamlAux(
@@ -394,7 +392,7 @@ proc symToYamlAux(
     if n.typ != nil:
       result.addf(
         "$N$1\"typ\": $2",
-        [istr, typeToYamlAux(conf, n.typ, marker, indent + 2, maxRecDepth - 1)]
+        [istr, typeToYamlAux(conf, n.typ, marker, indent + 2, maxRecDepth - 1)],
       )
     if conf != nil:
       # if we don't pass the config, we probably don't care about the line info
@@ -414,7 +412,7 @@ proc symToYamlAux(
     result.addf("$N$1\"r\": $2", [istr, n.loc.r])
     result.addf(
       "$N$1\"lode\": $2",
-      [istr, treeToYamlAux(conf, n.loc.lode, marker, indent + 2, maxRecDepth - 1)]
+      [istr, treeToYamlAux(conf, n.loc.lode, marker, indent + 2, maxRecDepth - 1)],
     )
     result.addf("$N$1}", [rspaces(indent)])
 
@@ -439,7 +437,7 @@ proc typeToYamlAux(
           [
             rspaces(indent + 4),
             typeToYamlAux(conf, n[i], marker, indent + 4, maxRecDepth - 1)
-          ]
+          ],
         )
 
       sonsRope.addf("$N$1]", [rspaces(indent + 2)])
@@ -453,11 +451,11 @@ proc typeToYamlAux(
     result.addf("$N$1\"kind\": $2", [istr, makeYamlString($n.kind)])
     result.addf(
       "$N$1\"sym\": $2",
-      [istr, symToYamlAux(conf, n.sym, marker, indent + 2, maxRecDepth - 1)]
+      [istr, symToYamlAux(conf, n.sym, marker, indent + 2, maxRecDepth - 1)],
     )
     result.addf(
       "$N$1\"n\": $2",
-      [istr, treeToYamlAux(conf, n.n, marker, indent + 2, maxRecDepth - 1)]
+      [istr, treeToYamlAux(conf, n.n, marker, indent + 2, maxRecDepth - 1)],
     )
     if card(n.flags) > 0:
       result.addf("$N$1\"flags\": $2", [istr, flagsToStr(n.flags)])
@@ -507,7 +505,7 @@ proc treeToYamlAux(
       of nkSym:
         result.addf(
           ",$N$1\"sym\": $2",
-          [istr, symToYamlAux(conf, n.sym, marker, indent + 2, maxRecDepth)]
+          [istr, symToYamlAux(conf, n.sym, marker, indent + 2, maxRecDepth)],
         )
       of nkIdent:
         if n.ident != nil:
@@ -528,14 +526,14 @@ proc treeToYamlAux(
               [
                 rspaces(indent + 4),
                 treeToYamlAux(conf, n[i], marker, indent + 4, maxRecDepth - 1)
-              ]
+              ],
             )
 
           result.addf("$N$1]", [istr])
       if n.typ != nil:
         result.addf(
           ",$N$1\"typ\": $2",
-          [istr, typeToYamlAux(conf, n.typ, marker, indent + 2, maxRecDepth)]
+          [istr, typeToYamlAux(conf, n.typ, marker, indent + 2, maxRecDepth)],
         )
       if n.postfix.len > 0:
         result.addf(",$N$1\"postfix\": [", [istr])
@@ -549,16 +547,12 @@ proc treeToYamlAux(
 
     result.addf("$N$1}", [rspaces(indent)])
 
-proc treeToYaml(
-    conf: ConfigRef; n: PNode; indent: int = 0; maxRecDepth: int = -1
-): Rope =
+proc treeToYaml(conf: ConfigRef; n: PNode; indent: int = 0; maxRecDepth: int = -1): Rope =
   var marker = initIntSet()
 
   result = treeToYamlAux(conf, n, marker, indent, maxRecDepth)
 
-proc typeToYaml(
-    conf: ConfigRef; n: PType; indent: int = 0; maxRecDepth: int = -1
-): Rope =
+proc typeToYaml(conf: ConfigRef; n: PType; indent: int = 0; maxRecDepth: int = -1): Rope =
   var marker = initIntSet()
 
   result = typeToYamlAux(conf, n, marker, indent, maxRecDepth)
@@ -570,27 +564,21 @@ proc symToYaml(conf: ConfigRef; n: PSym; indent: int = 0; maxRecDepth: int = -1)
 
 import tables
 
-const
-  backrefStyle = "\e[90m"
-const
-  enumStyle = "\e[34m"
-const
-  numberStyle = "\e[33m"
-const
-  stringStyle = "\e[32m"
-const
-  resetStyle = "\e[0m"
+const backrefStyle = "\e[90m"
+const enumStyle = "\e[34m"
+const numberStyle = "\e[33m"
+const stringStyle = "\e[32m"
+const resetStyle = "\e[0m"
 
-type
-  DebugPrinter = object
-    conf: ConfigRef
-    visited: Table[pointer, int]
-    renderSymType: bool
-    indent: int
-    currentLine: int
-    firstItem: bool
-    useColor: bool
-    res: string
+type DebugPrinter = object
+  conf: ConfigRef
+  visited: Table[pointer, int]
+  renderSymType: bool
+  indent: int
+  currentLine: int
+  firstItem: bool
+  useColor: bool
+  res: string
 
 proc indentMore(this: var DebugPrinter) =
   this.indent += 2
@@ -1043,10 +1031,9 @@ proc strTableGet*(t: TStrTable; name: PIdent): PSym =
 
     h = nextTry(h, high(t.data))
 
-type
-  TIdentIter* = object # iterator over all syms with same identifier
-    h*: Hash # current hash
-    name*: PIdent
+type TIdentIter* = object # iterator over all syms with same identifier
+  h*: Hash # current hash
+  name*: PIdent
 
 proc nextIdentIter*(ti: var TIdentIter; tab: TStrTable): PSym =
   # hot spots
@@ -1110,9 +1097,8 @@ proc firstIdentExcluding*(
   else:
     result = nextIdentExcluding(ti, tab, excluding)
 
-type
-  TTabIter* = object
-    h: Hash
+type TTabIter* = object
+  h: Hash
 
 proc nextIter*(ti: var TTabIter; tab: TStrTable): PSym =
   # usage:

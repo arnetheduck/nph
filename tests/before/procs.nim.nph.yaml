@@ -1773,6 +1773,184 @@
           ]
         }
       ]
+    },
+    {
+      "kind": "nkTypeSection",
+      "sons": [
+        {
+          "kind": "nkTypeDef",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "kind": "nkEmpty"
+            },
+            {
+              "kind": "nkProcTy",
+              "sons": [
+                {
+                  "kind": "nkFormalParams",
+                  "sons": [
+                    {
+                      "kind": "nkEmpty"
+                    },
+                    {
+                      "kind": "nkIdentDefs",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "aaaaaaaa"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "Bbbbbbb"
+                        },
+                        {
+                          "kind": "nkEmpty"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "nkIdentDefs",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "ccccccccc"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "Dddddddddddd"
+                        },
+                        {
+                          "kind": "nkEmpty"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "nkIdentDefs",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "eeeeee"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "Ffffff"
+                        },
+                        {
+                          "kind": "nkEmpty"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "nkEmpty"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "nkTypeSection",
+      "sons": [
+        {
+          "kind": "nkTypeDef",
+          "sons": [
+            {
+              "kind": "nkIdent",
+              "ident": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            },
+            {
+              "kind": "nkEmpty"
+            },
+            {
+              "kind": "nkProcTy",
+              "sons": [
+                {
+                  "kind": "nkFormalParams",
+                  "sons": [
+                    {
+                      "kind": "nkEmpty"
+                    },
+                    {
+                      "kind": "nkIdentDefs",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "aaaaaaaa"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "Bbbbbbb"
+                        },
+                        {
+                          "kind": "nkEmpty"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "nkIdentDefs",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "ccccccccc"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "Dddddddddddd"
+                        },
+                        {
+                          "kind": "nkEmpty"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "nkIdentDefs",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "eeeeeeeeeeeee"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "Ffffffffffffffff"
+                        },
+                        {
+                          "kind": "nkEmpty"
+                        }
+                      ]
+                    },
+                    {
+                      "kind": "nkIdentDefs",
+                      "sons": [
+                        {
+                          "kind": "nkIdent",
+                          "ident": "gggggggggggggg"
+                        },
+                        {
+                          "kind": "nkIdent",
+                          "ident": "Hhhhhhhhhhhhhhhhhhhh"
+                        },
+                        {
+                          "kind": "nkEmpty"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "kind": "nkEmpty"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ]
 }
