@@ -1,7 +1,7 @@
 {
   "name": "vscode-nph",
-  "displayName": "vscode-nph",
-  "description": "nph code formatter for Nim",
+  "displayName": "nph - Nim code formatter",
+  "description": "Opinionated code formatter for Nim",
   "version": "0.0.1",
   "publisher": "arnetheduck",
   "engines": {
@@ -17,6 +17,12 @@
   "categories": [
     "Programming Languages",
     "Formatters"
+  ],
+  "keywords": [
+    "nim",
+    "formatter",
+    "nph",
+    "opinionated"
   ],
   "activationEvents": [
     "onLanguage:nim"

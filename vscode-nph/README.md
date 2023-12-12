@@ -1,10 +1,10 @@
-# vscode-nph README
+# VSCode nph integration
 
 Format [Nim](https://nim-lang.org) code using [`nph`](https://github.com/arnetheduck/nph)
 
 ## Features
 
-Enables formatting of Nim code via `Format document` from the command palette.
+Enables formatting of Nim code via `Format document` from the command palette as well as format-on-save if enabled in settings.
 
 ## Requirements
 

@@ -42,6 +42,10 @@ nimble build
 For bonus points, replace `nimpretty` with a symlink to `nph` - similar
 command line options are supported ;)
 
+## Editor integration
+
+* [VSCode](https://marketplace.visualstudio.com/items?itemName=arnetheduck.vscode-nph) (`ext install arnetheduck.vscode-nph`)
+
 ## Priorities
 
 `nph` aims to format code in such way that:
