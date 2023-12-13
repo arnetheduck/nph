@@ -28,21 +28,26 @@ proc equivalent*(a, b: PNode): Outcome =
     if b.kind in {nkFormalParams, nkRecList, nkStmtList, nkStmtListExpr} and
         b.sons.len == 1:
       return equivalent(a, b.sons[0])
+
     if a.kind in {nkFormalParams, nkRecList, nkStmtList, nkStmtListExpr} and
         a.sons.len == 1:
       return equivalent(a.sons[0], b)
+
     if b.kind in {nkFormalParams, nkRecList, nkStmtList, nkStmtListExpr} and
         b.sons.len == 0 and a.kind == nkEmpty:
       return Outcome(kind: Same)
+
     if a.kind in {nkFormalParams, nkRecList, nkStmtList, nkStmtListExpr} and
         a.sons.len == 0 and b.kind == nkEmpty:
       return Outcome(kind: Same)
+
     if a.kind == nkPrefix and a.len == 2 and a[0].kind == nkIdent and a[0].ident.s == "-" and
         b.kind == a[1].kind:
       # `- 1` is transformed to `-1` which semantically is not exactly the same but close enough
       # TODO the positive and negative ranges of integers are not the same - is this a problem?
       #      what about more complex expressions?
       return Outcome(kind: Same)
+
     # runnableExamples: static: ... turns into a staticStmt when broken up in
     # lines (!)
     if a.kind == nkCall and b.kind == nkStaticStmt and a.sons.len > 1 and
@@ -68,6 +73,7 @@ proc equivalent*(a, b: PNode): Outcome =
       let
         af = a.sons.filterIt(it.kind != nkCommentStmt)
         bf = b.sons.filterIt(it.kind != nkCommentStmt)
+
       if af.len() != bf.len():
         false
       else:
@@ -77,6 +83,7 @@ proc equivalent*(a, b: PNode): Outcome =
             return eq
 
         true
+
   if not eq:
     Outcome(kind: Different, a: a, b: b)
   else:

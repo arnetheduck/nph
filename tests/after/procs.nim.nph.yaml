@@ -1,1956 +1,818 @@
-{
-  "kind": "nkStmtList",
-  "sons": [
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "aaaaaaaaaaaaaaaaaaaaaaa"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "bbbbbbbbbbbbbbbbbbbbbb"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "ccccccccccccccccccccccccccc"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "vvvvvvvvvvvvvvvvvvvvvv"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "string"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "aaaaaaaaaaaaaaaaaaaaaaa"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "bbbbbbbbbbbbbbbbbbbbbb"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "ccccccccccccccccccccccccccc"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "vvvvvvvvvvvvvvvvvvvvvv"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "string"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Ddddddddddddddddddddddddd"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "aaaaaaaaaaaaaaaaaaaaaaa"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "bbbbbbbbbbbbbbbbbbbbbb"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "cccccccccccccccc"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "string"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkPragma",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "nimcall"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkPragma",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "nimcall"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "pragma2"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "pragma3"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "praaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagma"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "rrr"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkPostfix",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "*"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "aaa"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "aaa"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkGenericParams",
-          "sons": [
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "A"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "B"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "C"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkPostfix",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "*"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "aaaa"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkGenericParams",
-          "sons": [
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "A"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "B"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "C"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaa"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkGenericParams",
-          "sons": [
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "A"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "B"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "C"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "aaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "bbbbbbbbbbbbbbbbbbb"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "cccccccccccccccc"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "ddddddddddddddddddd"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkPostfix",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "*"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "aaaa"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkGenericParams",
-          "sons": [
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "Aaaaaaaaaaaaaaaaaaaaaaaa"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "Bbbbbbbbbbbbbbbbbbbbbbbbbb"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "Cccccccccccccccccccccc"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "Dddddddddddddddddddddd"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkPostfix",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "*"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "aaaaaaaaa"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkGenericParams",
-          "sons": [
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "Aaaaaaaaaaaaaaaaaaaaaaaa"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "Bbbbbbbbbbbbbbbbbbbbbbbbbb"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "Cccccccccccccccccccccc"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "Dddddddddddddddddddddd"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "aaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "bbbbbbbbbbbbbbbbbbb"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "cccccccccccccccc"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "ddddddddddddddddddd"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaa"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkGenericParams",
-          "sons": [
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "T"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "Aaaa"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaa"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkGenericParams",
-          "sons": [
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "Tttttttttttttttttttttttttttttttttttttttttt"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaa"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkGenericParams",
-          "sons": [
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "T"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "Aaaa"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "S"
-                },
-                {
-                  "kind": "nkCommand",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "static"
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "int"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaa"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkGenericParams",
-          "sons": [
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "T"
-                },
-                {
-                  "kind": "nkInfix",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "|"
-                    },
-                    {
-                      "kind": "nkInfix",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "|"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Aaaaaaaaaaaaaaaaaaaaaaaa"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Bbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "Cccccccccccccccccccccccccc"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaa"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkInfix",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "|"
-                    },
-                    {
-                      "kind": "nkInfix",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "|"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "Cccccccccccccccccccccccccc"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkCommand",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        },
-        {
-          "kind": "nkInfix",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "+"
-            },
-            {
-              "kind": "nkInfix",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "+"
-                },
-                {
-                  "kind": "nkIntLit",
-                  "intVal": 42
-                },
-                {
-                  "kind": "nkIntLit",
-                  "intVal": 33
-                }
-              ]
-            },
-            {
-              "kind": "nkIntLit",
-              "intVal": 44
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkCall",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "functionCall"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaaaaaaaaaaa"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaaaaaaa"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaaaaaaaa"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaaaaaaaaaaaa"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaa"
-        }
-      ]
-    },
-    {
-      "kind": "nkCall",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaaaa"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaaaaaaaa"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaaaaaa"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "aaaaaaaaaaaaaaaaaaaaa"
-        }
-      ]
-    },
-    {
-      "kind": "nkCall",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "aasdcsaa"
-        },
-        {
-          "kind": "nkExprEqExpr",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "aaaaaaaaaa"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "bbbbbbbbbbb"
-            }
-          ]
-        },
-        {
-          "kind": "nkExprEqExpr",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "ccccccccccc"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "ddddddddddddd"
-            }
-          ]
-        },
-        {
-          "kind": "nkExprEqExpr",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "eeeeeeeeeeee"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "ffffffffffff"
-            }
-          ]
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "gggggg"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "hhhhhhhh"
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Ap"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkProcTy",
-              "sons": [
-                {
-                  "kind": "nkFormalParams",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Bp"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkProcTy"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Cp"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkProcTy",
-              "sons": [
-                {
-                  "kind": "nkFormalParams",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    },
-                    {
-                      "kind": "nkIdentDefs",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "v"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "int"
-                        },
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Dp"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkProcTy",
-              "sons": [
-                {
-                  "kind": "nkFormalParams",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkPragma",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "nimcall"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Ep"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkProcTy",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkPragma",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "nimcall"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkProcTy",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkPragma",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "bbbbbbbbbbbbbbbbbbbbbbbb"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkProcTy",
-              "sons": [
-                {
-                  "kind": "nkFormalParams",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    },
-                    {
-                      "kind": "nkIdentDefs",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "aaaaaaaa"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Bbbbbbb"
-                        },
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkIdentDefs",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "ccccccccc"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Dddddddddddd"
-                        },
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkIdentDefs",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "eeeeee"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Ffffff"
-                        },
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkProcTy",
-              "sons": [
-                {
-                  "kind": "nkFormalParams",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    },
-                    {
-                      "kind": "nkIdentDefs",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "aaaaaaaa"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Bbbbbbb"
-                        },
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkIdentDefs",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "ccccccccc"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Dddddddddddd"
-                        },
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkIdentDefs",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "eeeeeeeeeeeee"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Ffffffffffffffff"
-                        },
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkIdentDefs",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "gggggggggggggg"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Hhhhhhhhhhhhhhhhhhhh"
-                        },
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+kind: "nkStmtList"
+sons:
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "aaaaaaaaaaaaaaaaaaaaaaa"
+              - kind: "nkIdent"
+                ident: "bbbbbbbbbbbbbbbbbbbbbb"
+              - kind: "nkIdent"
+                ident: "ccccccccccccccccccccccccccc"
+              - kind: "nkIdent"
+                ident: "vvvvvvvvvvvvvvvvvvvvvv"
+              - kind: "nkIdent"
+                ident: "string"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "aaaaaaaaaaaaaaaaaaaaaaa"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "bbbbbbbbbbbbbbbbbbbbbb"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "ccccccccccccccccccccccccccc"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "vvvvvvvvvvvvvvvvvvvvvv"
+              - kind: "nkIdent"
+                ident: "string"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkIdent"
+            ident: "Ddddddddddddddddddddddddd"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "aaaaaaaaaaaaaaaaaaaaaaa"
+              - kind: "nkIdent"
+                ident: "bbbbbbbbbbbbbbbbbbbbbb"
+              - kind: "nkIdent"
+                ident: "cccccccccccccccc"
+              - kind: "nkIdent"
+                ident: "string"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkPragma"
+        sons:
+          - kind: "nkIdent"
+            ident: "nimcall"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkPragma"
+        sons:
+          - kind: "nkIdent"
+            ident: "nimcall"
+          - kind: "nkIdent"
+            ident: "pragma2"
+          - kind: "nkIdent"
+            ident: "pragma3"
+          - kind: "nkIdent"
+            ident: "praaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagma"
+          - kind: "nkIdent"
+            ident: "rrr"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkPostfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "*"
+          - kind: "nkIdent"
+            ident: "aaa"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "aaa"
+      - kind: "nkEmpty"
+      - kind: "nkGenericParams"
+        sons:
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "A"
+              - kind: "nkIdent"
+                ident: "B"
+              - kind: "nkIdent"
+                ident: "C"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkPostfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "*"
+          - kind: "nkIdent"
+            ident: "aaaa"
+      - kind: "nkEmpty"
+      - kind: "nkGenericParams"
+        sons:
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "A"
+              - kind: "nkIdent"
+                ident: "B"
+              - kind: "nkIdent"
+                ident: "C"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "aaaaa"
+      - kind: "nkEmpty"
+      - kind: "nkGenericParams"
+        sons:
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "A"
+              - kind: "nkIdent"
+                ident: "B"
+              - kind: "nkIdent"
+                ident: "C"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "aaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              - kind: "nkIdent"
+                ident: "bbbbbbbbbbbbbbbbbbb"
+              - kind: "nkIdent"
+                ident: "cccccccccccccccc"
+              - kind: "nkIdent"
+                ident: "ddddddddddddddddddd"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkPostfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "*"
+          - kind: "nkIdent"
+            ident: "aaaa"
+      - kind: "nkEmpty"
+      - kind: "nkGenericParams"
+        sons:
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "Aaaaaaaaaaaaaaaaaaaaaaaa"
+              - kind: "nkIdent"
+                ident: "Bbbbbbbbbbbbbbbbbbbbbbbbbb"
+              - kind: "nkIdent"
+                ident: "Cccccccccccccccccccccc"
+              - kind: "nkIdent"
+                ident: "Dddddddddddddddddddddd"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkPostfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "*"
+          - kind: "nkIdent"
+            ident: "aaaaaaaaa"
+      - kind: "nkEmpty"
+      - kind: "nkGenericParams"
+        sons:
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "Aaaaaaaaaaaaaaaaaaaaaaaa"
+              - kind: "nkIdent"
+                ident: "Bbbbbbbbbbbbbbbbbbbbbbbbbb"
+              - kind: "nkIdent"
+                ident: "Cccccccccccccccccccccc"
+              - kind: "nkIdent"
+                ident: "Dddddddddddddddddddddd"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "aaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              - kind: "nkIdent"
+                ident: "bbbbbbbbbbbbbbbbbbb"
+              - kind: "nkIdent"
+                ident: "cccccccccccccccc"
+              - kind: "nkIdent"
+                ident: "ddddddddddddddddddd"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "aaaaaaaa"
+      - kind: "nkEmpty"
+      - kind: "nkGenericParams"
+        sons:
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "T"
+              - kind: "nkIdent"
+                ident: "Aaaa"
+              - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "aaaaaaaa"
+      - kind: "nkEmpty"
+      - kind: "nkGenericParams"
+        sons:
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "Tttttttttttttttttttttttttttttttttttttttttt"
+              - kind: "nkIdent"
+                ident: "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+              - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "aaaaaaaa"
+      - kind: "nkEmpty"
+      - kind: "nkGenericParams"
+        sons:
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "T"
+              - kind: "nkIdent"
+                ident: "Aaaa"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "S"
+              - kind: "nkCommand"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "static"
+                  - kind: "nkIdent"
+                    ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "aaaaaaaa"
+      - kind: "nkEmpty"
+      - kind: "nkGenericParams"
+        sons:
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "T"
+              - kind: "nkInfix"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "|"
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "|"
+                      - kind: "nkIdent"
+                        ident: "Aaaaaaaaaaaaaaaaaaaaaaaa"
+                      - kind: "nkIdent"
+                        ident: "Bbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  - kind: "nkIdent"
+                    ident: "Cccccccccccccccccccccccccc"
+              - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaa"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+              - kind: "nkInfix"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "|"
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "|"
+                      - kind: "nkIdent"
+                        ident: "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                      - kind: "nkIdent"
+                        ident: "Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                  - kind: "nkIdent"
+                    ident: "Cccccccccccccccccccccccccc"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "+"
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "+"
+              - kind: "nkIntLit"
+                intVal: 42
+              - kind: "nkIntLit"
+                intVal: 33
+          - kind: "nkIntLit"
+            intVal: 44
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "functionCall"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaaaaa"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaa"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaa"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaaaaaa"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaa"
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaa"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaa"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaa"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaaaa"
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "aasdcsaa"
+      - kind: "nkExprEqExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "aaaaaaaaaa"
+          - kind: "nkIdent"
+            ident: "bbbbbbbbbbb"
+      - kind: "nkExprEqExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "ccccccccccc"
+          - kind: "nkIdent"
+            ident: "ddddddddddddd"
+      - kind: "nkExprEqExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "eeeeeeeeeeee"
+          - kind: "nkIdent"
+            ident: "ffffffffffff"
+      - kind: "nkIdent"
+        ident: "gggggg"
+      - kind: "nkIdent"
+        ident: "hhhhhhhh"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "Ap"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+            sons:
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+              - kind: "nkEmpty"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "Bp"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "Cp"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+            sons:
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "v"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+              - kind: "nkEmpty"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "Dp"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+            sons:
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+              - kind: "nkPragma"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "nimcall"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "Ep"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkPragma"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "nimcall"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkPragma"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "bbbbbbbbbbbbbbbbbbbbbbbb"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+            sons:
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "aaaaaaaa"
+                      - kind: "nkIdent"
+                        ident: "Bbbbbbb"
+                      - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "ccccccccc"
+                      - kind: "nkIdent"
+                        ident: "Dddddddddddd"
+                      - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "eeeeee"
+                      - kind: "nkIdent"
+                        ident: "Ffffff"
+                      - kind: "nkEmpty"
+              - kind: "nkEmpty"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+            sons:
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "aaaaaaaa"
+                      - kind: "nkIdent"
+                        ident: "Bbbbbbb"
+                      - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "ccccccccc"
+                      - kind: "nkIdent"
+                        ident: "Dddddddddddd"
+                      - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "eeeeeeeeeeeee"
+                      - kind: "nkIdent"
+                        ident: "Ffffffffffffffff"
+                      - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "gggggggggggggg"
+                      - kind: "nkIdent"
+                        ident: "Hhhhhhhhhhhhhhhhhhhh"
+                      - kind: "nkEmpty"
+              - kind: "nkEmpty"

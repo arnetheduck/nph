@@ -12,6 +12,7 @@
 import
   std/[os, strutils, strtabs, sets, tables],
   "$nim"/compiler/[platform, prefixmatches, pathutils, nimpaths]
+
 import ./phlineinfos
 
 from std/terminal import isatty
@@ -147,7 +148,8 @@ const
   DocConfig* = RelativeFile"nimdoc.cfg"
   DocTexConfig* = RelativeFile"nimdoc.tex.cfg"
   htmldocsDir* = htmldocsDirname.RelativeDir
-  docRootDefault* = "@default" # using `@` instead of `$` to avoid shell quoting complications
+  docRootDefault* = "@default"
+    # using `@` instead of `$` to avoid shell quoting complications
   oKeepVariableNames* = true
   spellSuggestSecretSauce* = -1
 
@@ -399,10 +401,12 @@ type
     ideCmd*: IdeCmd
     oldNewlines*: bool
     cCompiler*: TSystemCC # the used compiler
-    modifiedyNotes*: TNoteKinds # notes that have been set/unset from either cmdline/configs
+    modifiedyNotes*: TNoteKinds
+      # notes that have been set/unset from either cmdline/configs
     cmdlineNotes*: TNoteKinds # notes that have been set/unset from cmdline
     foreignPackageNotes*: TNoteKinds
-    notes*: TNoteKinds # notes after resolving all logic(defaults, verbosity)/cmdline/configs
+    notes*: TNoteKinds
+      # notes after resolving all logic(defaults, verbosity)/cmdline/configs
     warningAsErrors*: TNoteKinds
     mainPackageNotes*: TNoteKinds
     mainPackageId*: int
@@ -463,9 +467,10 @@ type
     suggestMaxResults*: int
     lastLineInfo*: TLineInfo
     writelnHook*: proc(output: string) {.closure, gcsafe.}
-    structuredErrorHook*: proc(
-      config: ConfigRef; info: TLineInfo; msg: string; severity: Severity
-    ) {.closure, gcsafe.}
+    structuredErrorHook*:
+      proc(config: ConfigRef; info: TLineInfo; msg: string; severity: Severity) {.
+        closure, gcsafe
+      .}
     cppCustomNamespace*: string
     nimMainPrefix*: string
     vmProfileData*: ProfileData
@@ -550,7 +555,8 @@ const
   DefaultOptions* =
     {
       optObjCheck, optFieldCheck, optRangeCheck, optBoundsCheck, optOverflowCheck,
-      optAssert, optWarns, optRefCheck, optHints, optStackTrace, optLineTrace, # consider adding `optStackTraceMsgs`
+      optAssert, optWarns, optRefCheck, optHints, optStackTrace, optLineTrace,
+        # consider adding `optStackTraceMsgs`
       optTrMacros, optStyleCheck, optCursorInference
     }
   DefaultGlobalOptions* = {optThreadAnalysis, optExcessiveStackTrace, optJsBigInt64}
@@ -663,9 +669,11 @@ proc newConfigRef*(): ConfigRef =
 
   initConfigRefCommon(result)
   setTargetFromSystem(result.target)
+
   # enable colors by default on terminals
   if terminal.isatty(stderr):
     incl(result.globalOptions, optUseColors)
+
   when defined(nimDebugUtils):
     onNewConfigRef(result)
 
@@ -853,6 +861,7 @@ proc setDefaultLibpath*(conf: ConfigRef) =
     # Special rule to support other tools (nimble) which import the compiler
     # modules and make use of them.
     let realNimPath = findExe("nim")
+
     # Find out if $nim/../../lib/system.nim exists.
     let parentNimLibPath = realNimPath.parentDir.parentDir / "lib"
     if not fileExists(conf.libpath.string / "system.nim") and
@@ -1017,6 +1026,7 @@ const stdlibDirs* =
     "impure", "wrappers", "wrappers/linenoise", "windows", "posix", "js",
     "deprecated/pure"
   ]
+
 const
   pkgPrefix = "pkg/"
   stdPrefix = "std/"
@@ -1080,6 +1090,7 @@ proc findModule*(conf: ConfigRef; modulename, currentModule: string): AbsoluteFi
       if m.startsWith('.') and not fileExists(result):
         result = AbsoluteFile ""
         hasRelativeDot = true
+
     if not fileExists(result) and not hasRelativeDot:
       result = findFile(conf, m)
 
@@ -1103,9 +1114,11 @@ proc findProjectNimFile*(conf: ConfigRef; pkg: string): string =
           let x = changeFileExt(dir / name, ".nim")
           if fileExists(x):
             candidates.add x
+
           if ext == ".nimble":
             if nimblepkg.len == 0:
               nimblepkg = name
+
               # Since nimble packages can have their source in a subfolder,
               # check the last folder we were in for a possible match.
               if dir != prev:
@@ -1123,9 +1136,11 @@ proc findProjectNimFile*(conf: ConfigRef; pkg: string): string =
         nimblepkg
       else:
         pkgname
+
     for c in candidates:
       if pkgname in c.extractFilename():
         return c
+
     if candidates.len > 0:
       return candidates[0]
 
@@ -1148,6 +1163,7 @@ proc canonicalImportAux*(conf: ConfigRef; file: AbsoluteFile): string =
     let relPath = relativeTo(file, dir)
     if not relPath.isEmpty and (ret.isEmpty or relPath.string.len < ret.string.len):
       ret = relPath
+
   if ret.isEmpty:
     ret = relativeTo(file, conf.projectPath)
 
@@ -1164,6 +1180,7 @@ proc canonDynlibName(s: string): string =
       3
     else:
       0
+
   let ende = strutils.find(s, {'(', ')', '.'})
   if ende >= 0:
     result = s.substr(start, ende - 1)

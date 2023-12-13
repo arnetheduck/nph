@@ -62,6 +62,7 @@ type
     field: int # Field comment
     # comment between fields
     field2: int ## Field comment again
+    fiiiiiiiiiiiiiiiiiiiiiiiieeeeeeeeeld: int # loooooooooooooooooooong comment past the max line length
   # and here
 
   Inherited = object of RootObj # inherited eol comment
@@ -296,3 +297,10 @@ proc f: bool =
       (true or false)
     else:
       false
+
+
+command "a", "b", "c" # command eol comment
+
+command "first arg", # first arg comment
+  "second arg", # second arg comment
+  "third arg" # third arg comment

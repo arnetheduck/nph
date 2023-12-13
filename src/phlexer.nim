@@ -29,6 +29,7 @@ import
   "$nim"/compiler/[idents, platform, nimlexbase, llstream, pathutils, wordrecg],
   "."/[phoptions, phmsgs, phlineinfos],
   std/[hashes, strutils, parseutils]
+
 when defined(nimPreviewSlimSystem):
   import std/[assertions, formatfloat]
 
@@ -238,6 +239,7 @@ proc isNimIdentifier*(s: string): bool =
     while i < sLen:
       if s[i] == '_':
         inc(i)
+
       if i < sLen and s[i] notin SymChars:
         return false
 
@@ -268,6 +270,9 @@ proc prettyTok*(tok: Token): string =
     "keyword " & tok.ident.s
   else:
     $tok
+
+proc debug*(tok: Token): string =
+  $tok.tokType & "(" & $tok & ")" & $tok.line & ":" & $tok.col & ":" & $tok.indent
 
 proc printTok*(conf: ConfigRef; tok: Token) =
   # xxx factor with toLocation
@@ -370,6 +375,7 @@ proc getNumber(L: var Lexer; result: var Token) =
         inc(result)
       else:
         break
+
       if L.buf[pos] == '_':
         if L.buf[pos + 1] notin chars:
           lexMessage(
@@ -407,11 +413,13 @@ proc getNumber(L: var Lexer; result: var Token) =
     L.bufpos = startpos # Use L.bufpos as pos because of matchChars
 
     matchChars(L, t, literalishChars)
+
     # We must verify +/- specifically so that we're not past the literal
     if L.buf[L.bufpos] in {'+', '-'} and L.buf[L.bufpos - 1] in {'e', 'E'}:
       t.literal.add(L.buf[L.bufpos])
       inc(L.bufpos)
       matchChars(L, t, literalishChars)
+
     if L.buf[L.bufpos] in literalishChars:
       t.literal.add(L.buf[L.bufpos])
       inc(L.bufpos)
@@ -468,6 +476,7 @@ proc getNumber(L: var Lexer; result: var Token) =
         startpos,
         warnDeprecated,
       )
+
       eatChar(L, result, 'c')
 
       numDigits = matchUnderscoreChars(L, result, {'0' .. '7'})
@@ -491,6 +500,7 @@ proc getNumber(L: var Lexer; result: var Token) =
       numDigits = matchUnderscoreChars(L, result, {'0' .. '1'})
     else:
       internalError(L.config, getLineInfo(L), "getNumber")
+
     if numDigits == 0:
       lexMessageLitNum(L, "invalid number: '$1'", startpos)
   else:
@@ -501,6 +511,7 @@ proc getNumber(L: var Lexer; result: var Token) =
       eatChar(L, result, '.')
 
       discard matchUnderscoreChars(L, result, {'0' .. '9'})
+
     if L.buf[L.bufpos] in {'e', 'E'}:
       result.tokType = tkFloatLit
 
@@ -522,6 +533,7 @@ proc getNumber(L: var Lexer; result: var Token) =
       inc(postPos)
 
       customLitPossible = true
+
     if L.buf[postPos] in SymChars:
       var suffix = newStringOfCap(10)
       while true:
@@ -569,10 +581,12 @@ proc getNumber(L: var Lexer; result: var Token) =
         lexMessageLitNum(L, "invalid number suffix: '$1'", errPos)
     else:
       lexMessageLitNum(L, "invalid number suffix: '$1'", errPos)
+
   # Is there still a literalish char awaiting? Then it's an error!
   if L.buf[postPos] in literalishChars or
       (L.buf[postPos] == '.' and L.buf[postPos + 1] in {'0' .. '9'}):
     lexMessageLitNum(L, "invalid number: '$1'", startpos)
+
   if result.tokType != tkCustomLit:
     # Third stage, extract actual number
     L.bufpos = startpos # restore position
@@ -620,6 +634,7 @@ proc getNumber(L: var Lexer; result: var Token) =
               break
         else:
           internalError(L.config, getLineInfo(L), "getNumber")
+
         case result.tokType
         of tkIntLit, tkInt64Lit:
           setNumber result.iNumber, xi
@@ -643,6 +658,7 @@ proc getNumber(L: var Lexer; result: var Token) =
           setNumber result.fNumber, (cast[ptr float64](addr(xi)))[]
         else:
           internalError(L.config, getLineInfo(L), "getNumber")
+
         if result.tokType notin floatTypes:
           let outOfRange =
             case result.tokType
@@ -656,6 +672,7 @@ proc getNumber(L: var Lexer; result: var Token) =
               (xi > BiggestInt(uint32.high))
             else:
               false
+
           if outOfRange:
             #echo "out of range num: ", result.iNumber, " vs ", xi
             lexMessageLitNum(L, "number out of range: '$1'", startpos)
@@ -670,6 +687,7 @@ proc getNumber(L: var Lexer; result: var Token) =
             len = parseBiggestUInt(result.literal, iNumber)
           except ValueError:
             raise newException(OverflowDefect, "number out of range: " & result.literal)
+
           if len != result.literal.len:
             raise newException(ValueError, "invalid integer: " & result.literal)
 
@@ -681,6 +699,7 @@ proc getNumber(L: var Lexer; result: var Token) =
             len = parseBiggestInt(result.literal, iNumber)
           except ValueError:
             raise newException(OverflowDefect, "number out of range: " & result.literal)
+
           if len != result.literal.len:
             raise newException(ValueError, "invalid integer: " & result.literal)
 
@@ -702,8 +721,10 @@ proc getNumber(L: var Lexer; result: var Token) =
             result.iNumber > BiggestInt(uint32.high) or result.iNumber < 0
           else:
             false
+
         if outOfRange:
           lexMessageLitNum(L, "number out of range: '$1'", startpos)
+
       # Promote int literal to int64? Not always necessary, but more consistent
       if result.tokType == tkIntLit:
         if result.iNumber > high(int32) or result.iNumber < low(int32):
@@ -741,11 +762,13 @@ proc handleHexChar(L: var Lexer; xi: var int; position: range[0 .. 4]) =
   of '"', '\'':
     if position <= 1:
       invalid()
+
     # do not progress the bufpos here.
     if position == 0:
       inc(L.bufpos)
   else:
     invalid()
+
     # Need to progress for `nim check`
     inc(L.bufpos)
 
@@ -757,6 +780,7 @@ proc handleDecChars(L: var Lexer; xi: var int) =
 
 proc addUnicodeCodePoint(s: var string; i: int) =
   let i = cast[uint](i)
+
   # inlined toUTF-8 to avoid unicode and strutils dependencies.
   let pos = s.len
   if i <= 127:
@@ -862,6 +886,7 @@ proc getEscapedChar(L: var Lexer; tok: var Token) =
       var start = L.bufpos
       while L.buf[L.bufpos] != '}':
         handleHexChar(L, xi, 0)
+
       if start == L.bufpos:
         lexMessage(L, errGenerated, "Unicode codepoint cannot be empty")
 
@@ -920,11 +945,13 @@ proc getString(L: var Lexer; tok: var Token; mode: StringMode) =
     tok.tokType = tkTripleStrLit # long string literal:
 
     inc(pos, 2) # skip ""
+
     # skip leading newline:
     if L.buf[pos] in {' ', '\t'}:
       var newpos = pos + 1
       while L.buf[newpos] in {' ', '\t'}:
         inc newpos
+
       if L.buf[newpos] in {CR, LF}:
         pos = newpos
 
@@ -974,6 +1001,7 @@ proc getString(L: var Lexer; tok: var Token; mode: StringMode) =
       tok.tokType = tkRStrLit
     else:
       tok.tokType = tkStrLit
+
     while true:
       var c = L.buf[pos]
       if c == '\"':
@@ -1021,6 +1049,7 @@ proc getCharacter(L: var Lexer; tok: var Token) =
     tok.literal = $c
 
     inc(L.bufpos)
+
   if L.buf[L.bufpos] == '\'':
     tokenEndIgnore(tok, L.bufpos)
     inc(L.bufpos) # skip '
@@ -1182,6 +1211,7 @@ proc getOperator(L: var Lexer; tok: var Token) =
       let oprLen = unicodeOprLen(L.buf, pos)[0]
       if oprLen == 0:
         break
+
       for i in 0 ..< oprLen:
         h = h !& ord(L.buf[pos])
 
@@ -1201,6 +1231,7 @@ proc getOperator(L: var Lexer; tok: var Token) =
     inc pos
 
     trailing = true
+
   if L.buf[pos] in {CR, LF, nimlexbase.EndOfFile}:
     tok.spacing.incl(tsEof)
   elif trailing:
@@ -1211,9 +1242,11 @@ proc getPrecedence*(tok: Token): int =
   const
     MulPred = 9
     PlusPred = 8
+
   case tok.tokType
   of tkOpr:
     let relevantChar = tok.ident.s[0]
+
     # arrow like?
     if tok.ident.s.len > 1 and tok.ident.s[^1] == '>' and
         tok.ident.s[^2] in {'-', '~', '='}:
@@ -1294,6 +1327,7 @@ proc scanMultiLineComment(L: var Lexer; tok: var Token; start: int; isDoc: bool)
       lexMessagePos(L, errGenerated, pos, "end of multiline comment expected")
 
       break
+
     if isDoc:
       if L.bufMatches(pos, "##["):
         nesting += 1

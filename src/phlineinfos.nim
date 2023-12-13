@@ -280,6 +280,7 @@ const MsgKindToStr*: array[TMsgKind, string] =
     hintMsgOrigin: "$1",
     hintDeclaredLoc: "$1"
   ]
+
 const
   fatalMsgs* = {errUnknown .. errInternal}
   errMin* = errUnknown
@@ -298,9 +299,11 @@ proc computeNotesVerbosity(): array[0 .. 3, TNoteKinds] =
   result[3] =
     {low(TNoteKind) .. high(TNoteKind)} -
       {warnObservableStores, warnResultUsed, warnAnyEnumConv, warnBareExcept}
+
   result[2] =
     result[3] -
       {hintStackTrace, hintExtendedContext, hintDeclaredLoc, hintProcessingStmt}
+
   result[1] =
     result[2] -
       {
@@ -308,6 +311,7 @@ proc computeNotesVerbosity(): array[0 .. 3, TNoteKinds] =
         hintCodeBegin, hintCodeEnd, hintSource, hintGlobalVar, hintGCStats,
         hintMsgOrigin, hintPerformance
       }
+
   result[0] =
     result[1] -
       {
@@ -386,8 +390,8 @@ type Severity* {.pure.} = enum ## VS Code only supports these three
 
 const
   trackPosInvalidFileIdx* = FileIndex(-2)
-      # special marker so that no suggestions
-      # are produced within comments and string literals
+    # special marker so that no suggestions
+    # are produced within comments and string literals
   commandLineIdx* = FileIndex(-3)
 
 type MsgConfig* = object ## does not need to be stored in the incremental cache

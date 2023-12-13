@@ -4,6 +4,7 @@
 
 import
   "."/[astcmp, phast, phastalgo, phmsgs, phlineinfos, phoptions, phparser, phrenderer]
+
 import "$nim"/compiler/idents
 
 from "$nim"/compiler/astalgo import nil
@@ -57,7 +58,8 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool
       else:
         readFile(infile)
     node = parse(input, infile, printTokens, conf)
-    output = renderTree(node, {}, conf) & "\n"
+    output = renderTree(node, conf) & "\n"
+
   if infile != "-":
     if debug:
       # Always write file in debug mode
@@ -83,6 +85,7 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool
         outfile
       ,
     )
+
   if eq.kind == Different:
     stderr.writeLine "--- Input ---"
     stderr.writeLine input
@@ -103,6 +106,7 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool
           writeFile(outfile, input)
 
     quit 2
+
   if check:
     false # We failed the equivalence check above
   else:
@@ -123,6 +127,7 @@ proc main() =
     debug = false
     check = false
     printTokens = false
+
   for kind, key, val in getopt():
     case kind
     of cmdArgument:
@@ -149,10 +154,13 @@ proc main() =
         writeHelp()
     of cmdEnd:
       assert(false) # cannot happen
+
   if infiles.len == 0:
     quit "[Error] no input file.", 3
+
   if outfile.len != 0 and outdir.len != 0:
     quit "[Error] out and outDir cannot both be specified", 3
+
   if outfile.len == 0 and outdir.len == 0:
     outfiles = infiles
   elif outfile.len != 0 and infiles.len > 1:
@@ -165,6 +173,7 @@ proc main() =
     outfiles = @[outfile]
   elif outdir.len != 0:
     outfiles = infiles.mapIt($(joinPath(outdir, it)))
+
   for (infile, outfile) in zip(infiles, outfiles):
     let (dir, _, _) = splitFile(outfile)
 

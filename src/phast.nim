@@ -369,6 +369,7 @@ const
   sfBase* = sfDiscriminant
   sfCustomPragma* = sfRegister # symbol is custom pragma template
   sfTemplateRedefinition* = sfExportc # symbol is a redefinition of an earlier template
+
 const
   # getting ready for the future expr/stmt merge
   nkWhen* = nkWhenStmt
@@ -382,7 +383,8 @@ const
   pragmasEffects* = 4 # not an effect, but a slot for pragmas in proc type
   forbiddenEffects* = 5 # list of illegal effects
   effectListLen* = 6 # list of effects list
-  nkLastBlockStmts* = {nkRaiseStmt, nkReturnStmt, nkBreakStmt, nkContinueStmt} # these must be last statements in a block
+  nkLastBlockStmts* = {nkRaiseStmt, nkReturnStmt, nkBreakStmt, nkContinueStmt}
+    # these must be last statements in a block
 
 type TTypeKind* = enum
   # order is important!
@@ -991,7 +993,8 @@ const
       mLeStr, mLtStr, mEqSet, mLeSet, mLtSet, mMulSet, mPlusSet, mMinusSet, mConStrStr,
       mAppendStrCh, mAppendStrStr, mAppendSeqElem, mInSet, mRepr, mOpenArrayToSeq
     }
-  generatedMagics* = {mNone, mIsolate, mFinished, mOpenArrayToSeq} ## magics that are generated as normal procs in the backend
+  generatedMagics* = {mNone, mIsolate, mFinished, mOpenArrayToSeq}
+    ## magics that are generated as normal procs in the backend
 
 type ItemId* = object
   module*: int32
@@ -1364,7 +1367,8 @@ const
       tyUInt .. tyUInt64
     } # weird name because it contains tyFloat
   ConstantDataTypes*: TTypeKinds = {tyArray, tySet, tyTuple, tySequence}
-  NilableTypes*: TTypeKinds = {tyPointer, tyCstring, tyRef, tyPtr, tyProc, tyError} # TODO
+  NilableTypes*: TTypeKinds = {tyPointer, tyCstring, tyRef, tyPtr, tyProc, tyError}
+    # TODO
   PtrLikeKinds*: TTypeKinds = {tyPointer, tyPtr} # for VM
   PersistentNodeFlags*: TNodeFlags =
     {
@@ -1561,6 +1565,7 @@ proc getDeclPragma*(n: PNode): PNode =
   else:
     # support as needed for `nkIdentDefs` etc.
     result = nil
+
   if result != nil:
     assert result.kind == nkPragma, $(result.kind, n.kind)
 
@@ -1909,6 +1914,7 @@ proc newType*(kind: TTypeKind; id: ItemId; owner: PSym): PType =
       itemId: id,
       uniqueId: id,
     )
+
   when false:
     if result.itemId.module == 55 and result.itemId.item == 2:
       echo "KNID ", kind
@@ -1918,12 +1924,14 @@ proc newType*(kind: TTypeKind; id: ItemId; owner: PSym): PType =
 proc mergeLoc(a: var TLoc; b: TLoc) =
   if a.k == low(typeof(a.k)):
     a.k = b.k
+
   if a.storage == low(typeof(a.storage)):
     a.storage = b.storage
 
   a.flags.incl b.flags
   if a.lode == nil:
     a.lode = b.lode
+
   if a.r == "":
     a.r = b.r
 
@@ -1937,6 +1945,7 @@ proc assignType*(dest, src: PType) =
   dest.n = src.n
   dest.size = src.size
   dest.align = src.align
+
   # this fixes 'type TLock = TSysLock':
   if src.sym != nil:
     if dest.sym != nil:
@@ -1964,6 +1973,7 @@ proc exactReplica*(t: PType): PType =
 
 proc copySym*(s: PSym; idgen: IdGenerator): PSym =
   result = newSym(s.kind, s.name, idgen, s.owner, s.info, s.options)
+
   #result.ast = nil            # BUGFIX; was: s.ast which made problems
   result.typ = s.typ
   result.flags = s.flags
@@ -1982,8 +1992,10 @@ proc createModuleAlias*(
     s: PSym; idgen: IdGenerator; newIdent: PIdent; info: TLineInfo; options: TOptions
 ): PSym =
   result = newSym(s.kind, newIdent, idgen, s.owner, info, options)
+
   # keep ID!
   result.ast = s.ast
+
   #result.id = s.id # XXX figure out what to do with the ID.
   result.flags = s.flags
   result.options = s.options
@@ -2059,6 +2071,7 @@ proc propagateToOwner*(owner, elem: PType; propagateHasAsgn = true) =
   if tfNotNil in elem.flags:
     if owner.kind in {tyGenericInst, tyGenericBody, tyGenericInvocation}:
       owner.flags.incl tfNotNil
+
   if elem.isMetaType:
     owner.flags.incl tfHasMeta
 
@@ -2068,6 +2081,7 @@ proc propagateToOwner*(owner, elem: PType; propagateHasAsgn = true) =
     if o2.kind in {tyTuple, tyObject, tyArray, tySequence, tySet, tyDistinct}:
       o2.flags.incl mask
       owner.flags.incl mask
+
   if owner.kind notin {tyProc, tyGenericInst, tyGenericBody, tyGenericInvocation, tyPtr}:
     let elemB = elem.skipTypes({tyGenericInst, tyAlias, tySink})
     if elemB.isGCedMem or tfHasGCedMem in elemB.flags:
@@ -2089,6 +2103,7 @@ proc addSonNilAllowed*(father, son: PNode) =
 proc delSon*(father: PNode; idx: int) =
   if father.len == 0:
     return
+
   for i in idx ..< father.len - 1:
     father[i] = father[i + 1]
 
@@ -2107,6 +2122,7 @@ proc copyNode*(src: PNode): PNode =
   when defined(useNodeIds):
     if result.id == nodeIdToDebug:
       echo "COMES FROM ", src.id
+
   case src.kind
   of nkCharLit .. nkUInt64Lit:
     result.intVal = src.intVal
@@ -2120,6 +2136,7 @@ proc copyNode*(src: PNode): PNode =
     result.strVal = src.strVal
   else:
     discard
+
   when defined(nimsuggest):
     result.endInfo = src.endInfo
 
@@ -2136,6 +2153,7 @@ template transitionNodeKindCommon(k: TNodeKind) =
       mid: obj.mid,
       postfix: obj.postfix,
     )
+
   # n.comment = obj.comment # shouldn't be needed, the address doesnt' change
   when defined(useNodeIds):
     n.id = obj.id
@@ -2179,8 +2197,10 @@ template transitionSymKindCommon*(k: TSymKind) =
       annex: obj.annex,
       constraint: obj.constraint,
     )
+
   when hasFFI:
     s.cname = obj.cname
+
   when defined(nimsuggest):
     s.allUsages = obj.allUsages
 
@@ -2215,6 +2235,7 @@ template copyNodeImpl(dst, src, processSonsStmt) =
   when defined(useNodeIds):
     if dst.id == nodeIdToDebug:
       echo "COMES FROM ", src.id
+
   case src.kind
   of nkCharLit .. nkUInt64Lit:
     dst.intVal = src.intVal
@@ -2267,6 +2288,7 @@ proc hasNilSon*(n: PNode): bool =
 proc containsNode*(n: PNode; kinds: TNodeKinds): bool =
   if n == nil:
     return
+
   case n.kind
   of nkEmpty .. nkNilLit:
     result = n.kind in kinds
@@ -2496,6 +2518,7 @@ proc findUnresolvedStatic*(n: PNode): PNode =
   # n.typ == nil: see issue #14802
   if n.kind == nkSym and n.typ != nil and n.typ.kind == tyStatic and n.typ.n == nil:
     return n
+
   for son in n:
     let n = son.findUnresolvedStatic
     if n != nil:
@@ -2508,6 +2531,7 @@ when false:
     # only for debugging
     if n.isNil:
       return true
+
     for i in 0 ..< n.safeLen:
       if n[i].containsNil:
         return true

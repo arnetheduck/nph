@@ -309,6 +309,17 @@ proc splitLookahead(p: var Parser; n: PNode; commentLoc: CommentLoc) =
 
   p.skipped = splitComments(comments, n, p.tok.indent, commentLoc)
 
+proc addSkipped(p: var Parser; n: PNode) =
+  var tmp = move(p.skipped)
+  var i = 0
+  while i < tmp.len and tmp[i].indent >= p.currInd:
+    let c = newNodeI(nkCommentStmt, getLineInfo(p.lex, tmp[i]))
+    c.comment = tmp[i].literal
+    n.add c
+    i += 1
+
+  p.skipped = tmp[i ..^ 1]
+
 proc indAndComment(
     p: var Parser; n: PNode; commentLoc = clPostfix; maybeMissEquals = false
 ) =
@@ -461,6 +472,7 @@ proc parseSymbol(p: var Parser; mode = smNormal): PNode =
     result = newNodeP(nkAccQuoted, p)
 
     getTok(p)
+
     # progress guaranteed
     while true:
       case p.tok.tokType
@@ -507,7 +519,7 @@ proc equals(p: var Parser; a: PNode): PNode =
 
     getTok(p)
 
-    p.skipped = commentLookahead(p)
+    p.skipped.add commentLookahead(p)
 
     result.add(a)
     result.add(parseExpr(p))
@@ -522,9 +534,6 @@ proc colonOrEquals(p: var Parser; a: PNode): PNode =
     getTok(p)
     splitLookahead(p, result, clPostfix) # TODO mid?
 
-    p.skipped = commentLookahead(p)
-
-    #optInd(p, result)
     result.add(a)
     result.add(parseExpr(p))
     splitLookahead(p, result, clPostfix)
@@ -580,6 +589,7 @@ proc optionalExprList(p: var Parser; endTok: TokType; result: PNode) =
   p.skipped.add commentLookahead(p)
 
   skipInd(p)
+
   # progress guaranteed
   while (p.tok.tokType != endTok) and (p.tok.tokType != tkEof):
     var a = parseExpr(p)
@@ -597,6 +607,7 @@ proc exprColonEqExprListAux(p: var Parser; endTok: TokType; result: PNode) =
   getTok(p)
   splitLookahead(p, result, clMid)
   optPar(p)
+
   # progress guaranteed
   while p.tok.tokType != endTok and p.tok.tokType != tkEof:
     var a = exprColonEqExpr(p)
@@ -632,6 +643,7 @@ proc dotExpr(p: var Parser; a: PNode): PNode =
   skipInd(p)
   result.add(a)
   result.add(parseSymbol(p, smAfterDot))
+
   # TODO non-line-ending comments?
   # splitLookahead(p, result[^1], clPostfix)
   if p.tok.tokType == tkBracketLeColon and tsLeading notin p.tok.spacing:
@@ -681,7 +693,8 @@ proc setOrTableConstr(p: var Parser): PNode =
   result = newNodeP(nkCurly, p)
 
   getTok(p) # skip '{'
-  optInd(p, result)
+  p.skipped.add commentLookahead(p)
+  skipInd(p)
   if p.tok.tokType == tkColon:
     getTok(p) # skip ':'
     result.transitionSonsKind(nkTableConstr)
@@ -710,18 +723,22 @@ proc parseCast(p: var Parser): PNode =
   getTok(p)
   if p.tok.tokType == tkBracketLe:
     getTok(p)
-    optInd(p, result)
+    p.skipped.add commentLookahead(p)
+    skipInd(p)
     result.add(parseTypeDesc(p))
     optPar(p)
     eat(p, tkBracketRi)
     eat(p, tkParLe)
-    optInd(p, result)
+    p.skipped.add commentLookahead(p)
+    skipInd(p)
     result.add(parseExpr(p))
   else:
     result.add p.emptyNode
 
     eat(p, tkParLe)
-    optInd(p, result)
+    p.skipped.add commentLookahead(p)
+
+    skipInd(p)
     result.add(exprColonEqExpr(p))
 
   optPar(p)
@@ -781,6 +798,7 @@ proc semiStmtList(p: var Parser; result: PNode) =
     while p.tok.tokType != tkEof:
       if p.tok.tokType == tkSemiColon:
         getTok(p)
+
       if p.tok.tokType == tkParRi:
         break
       elif not (sameInd(p) or realInd(p)):
@@ -818,7 +836,7 @@ proc parsePar(p: var Parser): PNode =
 
   getTok(p)
 
-  p.skipped = commentLookahead(p)
+  p.skipped.add commentLookahead(p)
 
   skipInd(p)
   if p.tok.tokType in
@@ -832,7 +850,8 @@ proc parsePar(p: var Parser): PNode =
   elif p.tok.tokType == tkSemiColon:
     # '(;' enforces 'stmt' context:
     getTok(p)
-    optInd(p, result)
+    p.skipped.add commentLookahead(p)
+    skipInd(p)
     semiStmtList(p, result)
   elif p.tok.tokType == tkCurlyDotLe:
     result.add(parseStmtPragma(p))
@@ -848,7 +867,8 @@ proc parsePar(p: var Parser): PNode =
       let asgn = newNodeP(nkAsgn, p)
 
       getTok(p)
-      optInd(p, result)
+      p.skipped.add commentLookahead(p)
+      skipInd(p)
 
       let b = parseExpr(p)
 
@@ -871,8 +891,10 @@ proc parsePar(p: var Parser): PNode =
       if p.tok.tokType == tkComma:
         getTok(p)
         skipComment(p, a)
+
         # (1,) produces a tuple expression:
         result.transitionSonsKind(nkTupleConstr)
+
         # progress guaranteed
         while p.tok.tokType != tkParRi and p.tok.tokType != tkEof:
           var a = exprColonEqExpr(p)
@@ -1041,6 +1063,7 @@ proc namedParams(p: var Parser; callee: PNode; kind: TNodeKind; endTok: TokType)
   result = newNodeP(kind, p)
 
   result.add(a)
+
   # progress guaranteed
   exprColonEqExprListAux(p, endTok, result)
 
@@ -1070,6 +1093,7 @@ proc commandExpr(p: var Parser; r: PNode; mode: PrimaryMode): PNode =
     p.hasProgress = false
 
     result.add commandParam(p, isFirstParam, mode)
+    splitLookahead(p, result[^1], clPostfix)
 
 proc isDotLike(tok: Token): bool =
   result =
@@ -1084,6 +1108,7 @@ proc primarySuffix(p: var Parser; r: PNode; baseIndent: int; mode: PrimaryMode):
   #|       | '{' optInd exprColonEqExprList optPar '}'
   # XXX strong spaces need to be reflected above
   result = r
+
   # progress guaranteed
   while p.tok.indent < 0 or (p.tok.tokType == tkDot and p.tok.indent >= baseIndent):
     case p.tok.tokType
@@ -1096,7 +1121,10 @@ proc primarySuffix(p: var Parser; r: PNode; baseIndent: int; mode: PrimaryMode):
 
       result = namedParams(p, result, nkCall, tkParRi)
 
-      splitLookahead(p, result, clPostfix)
+      # After a parLe, it's tricky to inject doc comments so we'll move them to
+      # the next token
+      # TODO investigate non-doc-comments
+      p.skipped.add commentLookahead(p)
       if result.len > 1 and result[1].kind == nkExprColonExpr:
         result.transitionSonsKind(nkObjConstr)
     of tkDot:
@@ -1153,6 +1181,7 @@ proc primarySuffix(p: var Parser; r: PNode; baseIndent: int; mode: PrimaryMode):
             p, warnDotLikeOps,
             "dot-like operators will be parsed differently with `-d:nimPreviewDotLikeOps`"
           )
+
         if p.inPragma == 0 and (isUnary(p.tok) or p.tok.tokType notin {tkOpr, tkDotDot}):
           # actually parsing {.push hints:off.} as {.push(hints:off).} is a sweet
           # solution, but pragmas.nim can't handle that
@@ -1175,6 +1204,7 @@ proc parseOperators(
       pmTypeDesc
     else:
       mode
+
   # the operator itself must not start on a new line:
   # progress guaranteed
   while opPrec >= limit and p.tok.indent < 0 and not isUnary(p.tok):
@@ -1207,6 +1237,7 @@ proc simpleExprAux(p: var Parser; limit: int; mode: PrimaryMode): PNode =
   result = primary(p, mode)
   if mode == pmTrySimple:
     mode = pmNormal
+
   if p.tok.tokType == tkCurlyDotLe and (p.tok.indent < 0 or realInd(p)) and
       mode == pmNormal:
     var pragmaExp = newNodeP(nkPragmaExpr, p)
@@ -1299,6 +1330,7 @@ proc parseIdentColonEquals(p: var Parser; flags: DeclaredIdentFlags): PNode =
   var a: PNode
 
   result = newNodeP(nkIdentDefs, p)
+
   # progress guaranteed
   while true:
     case p.tok.tokType
@@ -1307,6 +1339,7 @@ proc parseIdentColonEquals(p: var Parser; flags: DeclaredIdentFlags): PNode =
         a = identWithPragma(p, allowDot = withDot in flags)
       else:
         a = parseSymbol(p)
+
       if a.kind == nkEmpty:
         return
     else:
@@ -1320,6 +1353,7 @@ proc parseIdentColonEquals(p: var Parser; flags: DeclaredIdentFlags): PNode =
     getTok(p)
     splitLookahead(p, a, clPostfix)
     skipInd(p)
+
   if p.tok.tokType == tkColon:
     getTok(p)
     splitLookahead(p, result, clMid)
@@ -1329,6 +1363,7 @@ proc parseIdentColonEquals(p: var Parser; flags: DeclaredIdentFlags): PNode =
     result.add(newNodeP(nkEmpty, p))
     if p.tok.tokType != tkEquals and withBothOptional notin flags:
       parMessage(p, "':' or '=' expected, but got '$1'", p.tok)
+
   if p.tok.tokType == tkEquals:
     getTok(p)
     splitLookahead(p, result, clMid)
@@ -1351,9 +1386,10 @@ proc parseTuple(p: var Parser; indentAllowed = false): PNode =
   if p.tok.tokType == tkBracketLe:
     getTok(p)
 
-    p.skipped = commentLookahead(p)
+    p.skipped.add commentLookahead(p)
 
     skipInd(p)
+
     # progress guaranteed
     while p.tok.tokType in {tkSymbol, tkAccent}:
       var a = parseIdentColonEquals(p, {})
@@ -1373,6 +1409,7 @@ proc parseTuple(p: var Parser; indentAllowed = false): PNode =
     if realInd(p):
       withInd(p):
         splitLookahead(p, result, clMid)
+
         # progress guaranteed
         while true:
           case p.tok.tokType
@@ -1386,6 +1423,7 @@ proc parseTuple(p: var Parser; indentAllowed = false): PNode =
             parMessage(p, errIdentifierExpected, p.tok)
 
             break
+
           if not sameInd(p):
             break
 
@@ -1416,6 +1454,7 @@ proc parseParamList(p: var Parser; retColon = true): PNode =
     getTok(p)
     splitLookahead(p, result, clMid)
     skipInd(p)
+
     # progress guaranteed
     while true:
       case p.tok.tokType
@@ -1450,9 +1489,11 @@ proc parseParamList(p: var Parser; retColon = true): PNode =
       p.tok.tokType == tkColon
     else:
       p.tok.tokType == tkOpr and p.tok.ident.s == "->"
+
   if hasRet and p.tok.indent < 0:
     getTok(p)
-    optInd(p, result)
+    p.skipped.add commentLookahead(p)
+    skipInd(p)
 
     result[0] = parseTypeDesc(p)
   elif not retColon and not hasParLe:
@@ -1528,6 +1569,7 @@ proc parseProcExpr(p: var Parser; isExpr: bool; kind: TNodeKind): PNode =
         pragmas = pragmas,
         exceptions = p.emptyNode,
       )
+
     result[bodyPos] = parseComStmt(p, result, clMid)
   else:
     result =
@@ -1539,11 +1581,13 @@ proc parseProcExpr(p: var Parser; isExpr: bool; kind: TNodeKind): PNode =
         ,
         info,
       )
+
     if hasSignature or pragmas.kind != nkEmpty:
       if hasSignature:
         result.add(params)
       else: # pragmas but no param list, implies typeclass with pragmas
         result.add(p.emptyNode)
+
       if kind == nkFuncDef:
         parMessage(
           p,
@@ -1613,7 +1657,8 @@ proc parseTypeDescKAux(p: var Parser; kind: TNodeKind; mode: PrimaryMode): PNode
   if p.tok.indent != -1 and p.tok.indent <= p.currInd:
     return
 
-  optInd(p, result)
+  p.skipped.add commentLookahead(p)
+  skipInd(p)
 
   let isTypedef = mode == pmTypeDef and p.tok.tokType in {tkObject, tkTuple}
   if not isOperator(p.tok) and isExprStart(p):
@@ -1621,6 +1666,7 @@ proc parseTypeDescKAux(p: var Parser; kind: TNodeKind; mode: PrimaryMode): PNode
       result.add(parseTypeDefValue(p))
     else:
       result.add(primary(p, mode))
+
   if kind == nkDistinctTy and p.tok.tokType == tkSymbol:
     # XXX document this feature!
     var nodeKind: TNodeKind
@@ -1638,6 +1684,7 @@ proc parseTypeDescKAux(p: var Parser; kind: TNodeKind; mode: PrimaryMode): PNode
     result.add list
 
     parseSymbolList(p, list)
+
   if mode == pmTypeDef and not isTypedef:
     result = parseOperators(p, result, -1, mode)
 
@@ -1659,7 +1706,8 @@ proc parseFor(p: var Parser): PNode =
     result.add(a)
     while p.tok.tokType == tkComma:
       getTok(p)
-      optInd(p, a)
+      splitLookahead(p, a, clPostfix)
+      skipInd(p)
       if p.tok.tokType == tkParLe:
         result.add(parseVarTuple(p))
 
@@ -1674,9 +1722,6 @@ proc parseFor(p: var Parser): PNode =
   result.add(parseColComStmt(p, result, clMid))
   setEndInfo()
 
-template nimprettyDontTouch(body) =
-  body # TODO nimpretty leftover
-
 proc parseExpr(p: var Parser): PNode =
   #| expr = (blockExpr
   #|       | ifExpr
@@ -1687,25 +1732,20 @@ proc parseExpr(p: var Parser): PNode =
   #|       / simpleExpr
   case p.tok.tokType
   of tkBlock:
-    nimprettyDontTouch:
-      result = parseBlock(p)
+    result = parseBlock(p)
   of tkIf:
-    nimprettyDontTouch:
-      result = parseIfOrWhenExpr(p, nkIfExpr)
+    result = parseIfOrWhenExpr(p, nkIfExpr)
   of tkFor:
-    nimprettyDontTouch:
-      result = parseFor(p)
+    result = parseFor(p)
   of tkWhen:
-    nimprettyDontTouch:
-      result = parseIfOrWhenExpr(p, nkWhenExpr)
+    result = parseIfOrWhenExpr(p, nkWhenExpr)
   of tkCase:
     # Currently we think nimpretty is good enough with case expressions,
     # so it is allowed to touch them:
     #nimprettyDontTouch:
     result = parseCase(p)
   of tkTry:
-    nimprettyDontTouch:
-      result = parseTry(p, isExpr = true)
+    result = parseTry(p, isExpr = true)
   else:
     result = simpleExpr(p)
 
@@ -1755,6 +1795,7 @@ proc primary(p: var Parser; mode: PrimaryMode): PNode =
           tkBracketLe,
           tkCurlyLe
         }
+
     if isSigil and p.tok.tokType in identOrLiteralKinds:
       let baseInd = p.lex.currLineIndent
 
@@ -1765,6 +1806,7 @@ proc primary(p: var Parser; mode: PrimaryMode): PNode =
       result.add(primary(p, pmNormal))
 
     return
+
   case p.tok.tokType
   of tkProc:
     getTok(p)
@@ -1783,7 +1825,8 @@ proc primary(p: var Parser; mode: PrimaryMode): PNode =
     result = newNodeP(nkBind, p)
 
     getTok(p)
-    optInd(p, result)
+    splitLookahead(p, result, clPostfix) # TODO mid
+    skipInd(p)
     result.add(primary(p, pmNormal))
   of tkTuple, tkEnum, tkObject, tkConcept, tkVar, tkOut, tkRef, tkPtr, tkDistinct:
     result = parseTypeDesc(p)
@@ -1798,7 +1841,9 @@ proc binaryNot(p: var Parser; a: PNode): PNode =
     let notOpr = newIdentNodeP(p.tok.ident, p)
 
     getTok(p)
-    optInd(p, notOpr)
+    p.skipped.add commentLookahead(p)
+
+    skipInd(p)
 
     let b = primary(p, pmTypeDesc)
 
@@ -1887,8 +1932,13 @@ proc parseTypeDefValue(p: var Parser): PNode =
         var isFirstParam = false
         while p.tok.tokType == tkComma:
           getTok(p)
-          optInd(p, result)
+          assert result.len > 0
+          splitLookahead(p, result[^1], clPostfix)
+          skipInd(p)
+
           result.add(commandParam(p, isFirstParam, pmTypeDef))
+
+        splitLookahead(p, result[^1], clPostfix)
 
       result = postExprBlocks(p, result)
 
@@ -1920,11 +1970,13 @@ proc postExprBlocks(p: var Parser; x: PNode): PNode =
   var
     openingParams = p.emptyNode
     openingPragmas = p.emptyNode
+
   if p.tok.tokType == tkDo:
     getTok(p)
 
     openingParams = parseParamList(p, retColon = false)
     openingPragmas = optPragmas(p)
+
   if p.tok.tokType == tkColon:
     result = makeCall(result)
 
@@ -1934,6 +1986,7 @@ proc postExprBlocks(p: var Parser; x: PNode): PNode =
       var stmtList = newNodeP(nkStmtList, p)
 
       stmtList.add parseStmt(p)
+
       # to keep backwards compatibility (see tests/vm/tstringnil)
       if stmtList[0].kind == nkStmtList:
         stmtList = stmtList[0]
@@ -1960,6 +2013,7 @@ proc postExprBlocks(p: var Parser; x: PNode): PNode =
         result[^1].mid = move(result.mid)
       else:
         result.add stmtList
+
     while sameInd(p):
       var nextBlock: PNode
 
@@ -1980,7 +2034,8 @@ proc postExprBlocks(p: var Parser; x: PNode): PNode =
           nextBlock = newNodeP(nkElifBranch, p)
 
           getTok(p)
-          optInd(p, nextBlock)
+          splitLookahead(p, nextBlock, clMid)
+          skipInd(p)
 
           nextBlock.add parseExpr(p)
         of tkExcept:
@@ -2015,11 +2070,14 @@ proc parseExprStmt(p: var Parser): PNode =
   #|          / simplePrimary (exprEqExpr ^+ comma) postExprBlocks?
   #|          / simpleExpr '=' optInd (expr postExprBlocks?)
   var a = simpleExpr(p, pmTrySimple)
+  p.skipped.add commentLookahead(p)
+
   if p.tok.tokType == tkEquals:
     result = newNodeP(nkAsgn, p)
 
     getTok(p)
-    optInd(p, result)
+    splitLookahead(p, result, clMid)
+    skipInd(p)
 
     var b = parseExpr(p)
 
@@ -2029,19 +2087,27 @@ proc parseExprStmt(p: var Parser): PNode =
     result.add(b)
   else:
     var isFirstParam = false
+
     # if an expression is starting here, a simplePrimary was parsed and
     # this is the start of a command
     if p.tok.indent < 0 and isExprStart(p):
       result = newTreeI(nkCommand, a.info, a)
 
       let baseIndent = p.currInd
+      splitLookahead(p, result[^1], clPostfix)
       while true:
         result.add(commandParam(p, isFirstParam, pmNormal))
         if p.tok.tokType != tkComma or (p.tok.indent >= 0 and p.tok.indent < baseIndent):
           break
 
         getTok(p)
-        optInd(p, result)
+        splitLookahead(p, result[^1], clPostfix)
+        skipInd(p)
+
+      # This attaches any eol comments to the last argument instead of the
+      # command which may or may not be a good idea, specially if those comments
+      # are doc comments
+      splitLookahead(p, result[^1], clPostfix)
     else:
       result = a
 
@@ -2065,7 +2131,7 @@ proc parseImport(p: var Parser; kind: TNodeKind): PNode =
 
   getTok(p) # skip `import` or `export`
 
-  p.skipped = commentLookahead(p) # TODO `mid` for import?
+  splitLookahead(p, result, clMid)
 
   skipInd(p)
 
@@ -2104,7 +2170,8 @@ proc parseIncludeStmt(p: var Parser): PNode =
 
   getTok(p) # skip `import` or `include`
 
-  p.skipped = commentLookahead(p) # TODO `mid` for include?
+  splitLookahead(p, result, clMid)
+
   while true:
     # was: while p.tok.tokType notin {tkEof, tkSad, tkDed}:
     p.hasProgress = false
@@ -2131,7 +2198,7 @@ proc parseFromStmt(p: var Parser): PNode =
 
   getTok(p) # skip `from`
 
-  p.skipped = commentLookahead(p)
+  p.skipped.add commentLookahead(p)
 
   skipInd(p)
 
@@ -2141,7 +2208,7 @@ proc parseFromStmt(p: var Parser): PNode =
   result.add(a) #optInd(p, a);
   eat(p, tkImport)
 
-  p.skipped = commentLookahead(p)
+  p.skipped.add commentLookahead(p)
 
   skipInd(p)
   while true:
@@ -2177,7 +2244,7 @@ proc parseReturnOrRaise(p: var Parser; kind: TNodeKind): PNode =
   # We don't split lookahead here because it might be that we end up with no
   # expression - in this case, we don't want the comments attached to
   # the discard midpoint - question is, what to do with them?
-  p.skipped = commentLookahead(p)
+  p.skipped.add commentLookahead(p)
   if p.tok.indent >= 0 and p.tok.indent <= p.currInd or not isExprStart(p):
     # NL terminates:
     result.add(p.emptyNode)
@@ -2214,6 +2281,7 @@ proc parseIfOrWhen(p: var Parser; kind: TNodeKind): PNode =
     splitLookahead(p, branch, clPostfix)
     if p.tok.tokType != tkElif or not sameOrNoInd(p):
       break
+
   if p.tok.tokType == tkElse and sameOrNoInd(p):
     var branch = newNodeP(nkElse, p)
 
@@ -2243,6 +2311,7 @@ proc parseIfOrWhenExpr(p: var Parser; kind: TNodeKind): PNode =
     splitLookahead(p, branch, clPostfix)
     if p.tok.tokType != tkElif:
       break
+
   if p.tok.tokType == tkElse:
     var branch = newNodeP(nkElseExpr, p)
 
@@ -2289,6 +2358,7 @@ proc parseCase(p: var Parser): PNode =
   if realInd(p):
     p.currInd = p.tok.indent
     wasIndented = true
+
   while sameInd(p):
     case p.tok.tokType
     of tkOf:
@@ -2304,28 +2374,29 @@ proc parseCase(p: var Parser): PNode =
 
       getTok(p)
 
-      p.skipped = commentLookahead(p)
+      p.skipped.add commentLookahead(p)
 
       skipInd(p)
       b.add(parseExpr(p))
 
-      p.skipped = commentLookahead(p)
+      p.skipped.add commentLookahead(p)
     of tkElse:
       b = newNodeP(nkElse, p)
 
       getTok(p)
 
-      p.skipped = commentLookahead(p)
+      p.skipped.add commentLookahead(p)
     else:
       break
 
     b.add(parseColComStmt(p, b, clMid))
 
-    p.skipped = commentLookahead(p)
+    p.skipped.add commentLookahead(p)
 
     result.add(b)
     if b.kind == nkElse:
       break
+
   if wasIndented:
     p.currInd = oldInd
 
@@ -2361,6 +2432,7 @@ proc parseTry(p: var Parser; isExpr: bool): PNode =
 
     b.add(parseColComStmt(p, b, clMid))
     result.add(b)
+
   if b == nil:
     parMessage(p, "expected 'except'")
 
@@ -2405,6 +2477,7 @@ proc parseAsm(p: var Parser): PNode =
     result.add(parsePragma(p))
   else:
     result.add(p.emptyNode)
+
   case p.tok.tokType
   of tkStrLit:
     result.add(newStrNodeP(nkStrLit, p.tok.literal, p))
@@ -2426,6 +2499,7 @@ proc parseGenericParam(p: var Parser): PNode =
   var a: PNode
 
   result = newNodeP(nkIdentDefs, p)
+
   # progress guaranteed
   while true:
     case p.tok.tokType
@@ -2460,6 +2534,7 @@ proc parseGenericParam(p: var Parser): PNode =
     getTok(p)
     splitLookahead(p, a, clPostfix)
     skipInd(p)
+
   if p.tok.tokType == tkColon:
     getTok(p)
     splitLookahead(p, result, clPostfix) # TODO mid?
@@ -2467,6 +2542,7 @@ proc parseGenericParam(p: var Parser): PNode =
     result.add(parseExpr(p))
   else:
     result.add(p.emptyNode)
+
   if p.tok.tokType == tkEquals:
     getTok(p)
     splitLookahead(p, result, clPostfix) # TODO mid?
@@ -2484,9 +2560,10 @@ proc parseGenericParamList(p: var Parser): PNode =
 
   getTok(p)
 
-  p.skipped = commentLookahead(p)
+  p.skipped.add commentLookahead(p)
 
   skipInd(p)
+
   # progress guaranteed
   while p.tok.tokType in {tkSymbol, tkAccent, tkIn, tkOut}:
     var a = parseGenericParam(p)
@@ -2541,6 +2618,7 @@ proc parseRoutine(p: var Parser; kind: TNodeKind): PNode =
     result.add(p.parsePattern)
   else:
     result.add(p.emptyNode)
+
   if p.tok.tokType == tkBracketLe and p.validInd:
     result.add(p.parseGenericParamList)
   else:
@@ -2559,6 +2637,7 @@ proc parseRoutine(p: var Parser; kind: TNodeKind): PNode =
   if (not maybeMissEquals) and p.validInd:
     getTok(p)
     splitLookahead(p, result, clMid)
+
     # debugEcho 333, p.tok.tokType
     result.add(parseStmt(p))
   else:
@@ -2614,6 +2693,7 @@ proc parseSection(
           parMessage(p, errIdentifierExpected, p.tok)
 
           break
+
     if result.len == 0:
       parMessage(p, errIdentifierExpected, p.tok)
   elif p.tok.tokType in {tkSymbol, tkAccent, tkParLe} and p.tok.indent < 0:
@@ -2631,6 +2711,7 @@ proc parseEnum(p: var Parser): PNode =
   getTok(p)
   result.add(p.emptyNode)
   splitLookahead(p, result, clMid)
+
   # progress guaranteed
   while true:
     var a = parseSymbol(p)
@@ -2651,11 +2732,12 @@ proc parseEnum(p: var Parser): PNode =
 
     let symInd = p.currInd
     if p.tok.indent >= 0 and p.tok.indent <= p.currInd:
-      p.skipped = splitComments(comments, symPragma, symInd, clPostfix)
+      p.skipped.add splitComments(comments, symPragma, symInd, clPostfix)
 
       result.add(symPragma)
 
       break
+
     if p.tok.tokType == tkEquals and p.tok.indent < 0:
       getTok(p)
 
@@ -2671,16 +2753,18 @@ proc parseEnum(p: var Parser): PNode =
       symPragma.add(parseExpr(p))
 
       comments.add commentLookahead(p)
+
     if p.tok.tokType == tkComma and p.tok.indent < 0:
       getTok(p)
 
       comments.add commentLookahead(p)
 
-    p.skipped = splitComments(comments, symPragma, symInd, clPostfix)
+    p.skipped.add splitComments(comments, symPragma, symInd, clPostfix)
 
     result.add(symPragma)
     if p.tok.indent >= 0 and p.tok.indent <= p.currInd or p.tok.tokType == tkEof:
       break
+
   if result.len <= 1:
     parMessage(p, errIdentifierExpected, p.tok)
 
@@ -2693,6 +2777,7 @@ proc parseObjectWhen(p: var Parser): PNode =
   #|             ('elif' expr colcom objectPart COMMENT?)*
   #|             ('else' colcom objectPart COMMENT?)?
   result = newNodeP(nkRecWhen, p)
+
   # progress guaranteed
   while sameInd(p):
     getTok(p) # skip `when`, `elif`
@@ -2708,12 +2793,13 @@ proc parseObjectWhen(p: var Parser): PNode =
     result.add(branch)
     if p.tok.tokType != tkElif:
       break
+
   if p.tok.tokType == tkElse and sameInd(p):
     var branch = newNodeP(nkElse, p)
 
     eat(p, tkElse)
 
-    p.skipped = commentLookahead(p)
+    p.skipped.add commentLookahead(p)
 
     eat(p, tkColon)
     splitLookahead(p, branch, clMid)
@@ -2749,6 +2835,7 @@ proc parseObjectCase(p: var Parser): PNode =
   if realInd(p):
     p.currInd = p.tok.indent
     wasIndented = true
+
   # progress guaranteed
   while sameInd(p):
     var b: PNode
@@ -2777,6 +2864,7 @@ proc parseObjectCase(p: var Parser): PNode =
     result.add(b)
     if b.kind == nkElse:
       break
+
   if wasIndented:
     p.currInd = oldInd
 
@@ -2833,6 +2921,7 @@ proc parseObject(p: var Parser): PNode =
     result.add(p.emptyNode)
 
   splitLookahead(p, result, clMid)
+
   # an initial IND{>} HAS to follow:
   if not realInd(p):
     result.add(p.emptyNode)
@@ -2860,6 +2949,7 @@ proc parseTypeClassParam(p: var Parser): PNode =
       nkTypeOfExpr
     else:
       nkEmpty
+
   if modifier != nkEmpty:
     result = newNodeP(modifier, p)
 
@@ -2879,6 +2969,7 @@ proc parseTypeClass(p: var Parser): PNode =
   getTok(p)
   if p.tok.tokType == tkComment:
     skipComment(p, result)
+
   if p.tok.indent < 0:
     var args = newNodeP(nkArgList, p)
 
@@ -2889,14 +2980,17 @@ proc parseTypeClass(p: var Parser): PNode =
       args.add(p.parseTypeClassParam)
   else:
     result.add(p.emptyNode) # see ast.isNewStyleConcept
+
   if p.tok.tokType == tkCurlyDotLe and p.validInd:
     result.add(parsePragma(p))
   else:
     result.add(p.emptyNode)
+
   if p.tok.tokType == tkOf and p.tok.indent < 0:
     var a = newNodeP(nkOfInherit, p)
 
     getTok(p)
+
     # progress guaranteed
     while true:
       a.add(parseTypeDesc(p))
@@ -2908,8 +3002,10 @@ proc parseTypeClass(p: var Parser): PNode =
     result.add(a)
   else:
     result.add(p.emptyNode)
+
   if p.tok.tokType == tkComment:
     skipComment(p, result)
+
   # an initial IND{>} HAS to follow:
   if not realInd(p):
     if result.isNewStyleConcept:
@@ -2936,22 +3032,24 @@ proc parseTypeDef(p: var Parser): PNode =
   var pragma: PNode
   var genericParam: PNode
   var next = identifier
-  var comments = commentLookahead(p)
+  p.skipped.add commentLookahead(p)
   if p.tok.tokType == tkBracketLe and p.validInd:
-    p.skipped = splitComments(comments, identifier, p.tok.indent, clPostfix)
+    p.skipped = splitComments(p.skipped, identifier, p.tok.indent, clPostfix)
     genericParam = parseGenericParamList(p)
-    comments = commentLookahead(p)
+    p.skipped.add commentLookahead(p)
     next = genericParam
   else:
     genericParam = p.emptyNode
+
   # pragma = optPragmas(p)
   if p.tok.tokType == tkCurlyDotLe and (p.tok.indent < 0 or realInd(p)):
-    p.skipped = splitComments(comments, next, p.tok.indent, clPostfix)
+    p.skipped = splitComments(p.skipped, next, p.tok.indent, clPostfix)
     pragma = parsePragma(p)
-    comments = commentLookahead(p)
+    p.skipped.add commentLookahead(p)
     next = pragma
   else:
     pragma = p.emptyNode
+
   if pragma.kind != nkEmpty:
     identPragma = newNodeP(nkPragmaExpr, p)
 
@@ -2965,16 +3063,14 @@ proc parseTypeDef(p: var Parser): PNode =
 
     getTok(p)
 
-    comments.add commentLookahead(p)
+    p.skipped.add commentLookahead(p)
 
     skipInd(p)
 
-    p.skipped = comments
-
     result.add(parseTypeDefValue(p))
 
-    comments = commentLookahead(p)
-    p.skipped = splitComments(comments, result[^1], p.currInd, clPostfix)
+    p.skipped.add commentLookahead(p)
+    p.skipped = splitComments(p.skipped, result[^1], p.currInd, clPostfix)
   else:
     result.add(p.emptyNode)
 
@@ -2987,7 +3083,8 @@ proc parseVarTuple(p: var Parser): PNode =
 
   getTok(p) # skip '('
 
-  p.skipped = commentLookahead(p)
+  p.skipped.add commentLookahead(p)
+
   # progress guaranteed
   while p.tok.tokType in {tkSymbol, tkAccent, tkParLe}:
     var a: PNode
@@ -3048,6 +3145,7 @@ proc parseConstant(p: var Parser): PNode =
   eat(p, tkEquals)
   splitLookahead(p, result, clMid)
   skipInd(p)
+
   #add(result, parseStmtListExpr(p))
   result.add(parseExpr(p))
 
@@ -3061,7 +3159,9 @@ proc parseBind(p: var Parser; k: TNodeKind): PNode =
   result = newNodeP(k, p)
 
   getTok(p)
-  optInd(p, result)
+  p.skipped.add commentLookahead(p) # TODO mid?
+  skipInd(p)
+
   # progress guaranteed
   while true:
     var a = qualifiedIdent(p)
@@ -3241,12 +3341,13 @@ proc parseStmt(p: var Parser): PNode =
           # TODO this hack causes reindentation of the comment to the "current"
           # level when the comment is indented more than the last statement
           if p.tok.indent > p.currInd and p.tok.tokType notin {tkDot, tkComment}:
-            debugEcho p.currInd
-
             printTok(p.lex.config, p.tok)
             parMessage(p, errInvalidIndentation % "parseStmt")
 
+          addSkipped(p, result)
+
           break
+
         if p.tok.tokType in {tkCurlyRi, tkParRi, tkCurlyDotRi, tkBracketRi}:
           # XXX this ensures tnamedparamanonproc still compiles;
           # deprecate this syntax later
@@ -3267,9 +3368,8 @@ proc parseStmt(p: var Parser): PNode =
         else:
           result.add a
 
-        let comments = commentLookahead(p)
-
-        p.skipped.add splitComments(comments, a, p.currInd, clPostfix)
+        p.skipped.add commentLookahead(p)
+        p.skipped = splitComments(p.skipped, a, p.currInd, clPostfix)
         if not p.hasProgress and p.tok.tokType == tkEof:
           break
   else:
@@ -3324,18 +3424,17 @@ proc parseAll(p: var Parser): PNode =
       debugEcho 6
 
       parMessage(p, errExprExpected, p.tok)
+
       # bugfix: consume a token here to prevent an endless loop:
       getTok(p)
+
     if p.tok.indent != 0 and p.tok.tokType != tkComment:
       debugEcho p.tok.tokType, " ", p.tok.indent
 
       parMessage(p, errInvalidIndentation % "parseAll")
-  for c in p.skipped:
-    let n = newNodeI(nkCommentStmt, getLineInfo(p.lex, c))
 
-    n.comment = c.literal
-
-    result.add n
+  addSkipped(p, result)
+  doAssert p.skipped.len == 0, "leftover comments and end of parse, report bug"
 
   setEndInfo()
 
