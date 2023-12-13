@@ -1,2491 +1,1184 @@
-{
-  "kind": "nkStmtList",
-  "sons": [
-    {
-      "kind": "nkCommentStmt",
-      "comment": "#"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "#"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "# Some commentary"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "## A doc comment"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "##"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "##"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "## More doc comments"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "##"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "#"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "# Comment"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "#"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "#[ a multiline comment\u000Athis is also part of it\u000Aand this\u000A]#"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "##[\u000A  these also come in doc variants\u000A]##"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "#[\u000A  #[\u000A    they can be nested\u000A  ]#\u000A]#"
-    },
-    {
-      "kind": "nkCommand",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "x"
-        },
-        {
-          "kind": "nkIntLit",
-          "intVal": 324
-        }
-      ]
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "# A comment after"
-    },
-    {
-      "kind": "nkTemplateDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "x"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## A template doc comment\", line: 37, col: 2, offsetA: 274, offsetB: 299)"
-          ],
-          "sons": [
-            {
-              "kind": "nkTryStmt",
-              "sons": [
-                {
-                  "kind": "nkStmtList",
-                  "sons": [
-                    {
-                      "kind": "nkDiscardStmt",
-                      "sons": [
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkExceptBranch",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "Exception"
-                    },
-                    {
-                      "kind": "nkStmtList",
-                      "sons": [
-                        {
-                          "kind": "nkMixinStmt",
-                          "sons": [
-                            {
-                              "kind": "nkAccQuoted",
-                              "sons": [
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "$"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "kind": "nkCommand",
-                          "sons": [
-                            {
-                              "kind": "nkIdent",
-                              "ident": "echo"
-                            },
-                            {
-                              "kind": "nkIntLit",
-                              "intVal": 4
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkPragmaExpr",
-              "sons": [
-                {
-                  "kind": "nkPostfix",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "*"
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "SingleValueSetting"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkPragma",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "pure"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkEnumTy",
-              "mid": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## \\\\\", line: 45, col: 38, offsetA: 432, offsetB: 436)",
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 22, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## settings resulting in a single string value\", line: 46, col: 22, offsetA: 459, offsetB: 505)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "arguments",
-                  "postfix": [
-                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## experimental: the arguments passed after \\\'-r\\\'\", line: 47, col: 22, offsetA: 528, offsetB: 576)"
-                  ]
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "backend",
-                  "postfix": [
-                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## the backend (eg: c|cpp|objc|js); both `nim doc --backend:js`\", line: 48, col: 22, offsetA: 599, offsetB: 662)",
-                    "(tokType: tkComment, base: base10, spacing: {}, indent: 22, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## and `nim js` would imply backend=js\", line: 49, col: 22, offsetA: 685, offsetB: 723)"
-                  ]
-                },
-                {
-                  "kind": "nkPragmaExpr",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "gc"
-                    },
-                    {
-                      "kind": "nkPragma",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "deprecated"
-                        }
-                      ]
-                    }
-                  ],
-                  "postfix": [
-                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## gc selected\", line: 50, col: 22, offsetA: 746, offsetB: 760)"
-                  ]
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "mm",
-                  "postfix": [
-                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## memory management selected\", line: 51, col: 22, offsetA: 783, offsetB: 812)"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkPostfix",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "*"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "FileSeekPos"
-                }
-              ]
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkEnumTy",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "fspEnd",
-                  "postfix": [
-                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Seek relative to end\", line: 54, col: 11, offsetA: 847, offsetB: 870)",
-                    "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# text file handling:\", line: 55, col: 4, offsetA: 875, offsetB: 896)"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Object"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkObjectTy",
-              "mid": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment\", line: 60, col: 18, offsetA: 1075, offsetB: 1084)",
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## more comment\", line: 61, col: 4, offsetA: 1089, offsetB: 1104)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkRecList",
-                  "sons": [
-                    {
-                      "kind": "nkIdentDefs",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "field"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "int"
-                        },
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ],
-                      "postfix": [
-                        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# Field comment\", line: 62, col: 15, offsetA: 1120, offsetB: 1135)"
-                      ]
-                    },
-                    {
-                      "kind": "nkIdentDefs",
-                      "prefix": [
-                        "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment between fields\", line: 63, col: 4, offsetA: 1140, offsetB: 1164)"
-                      ],
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "field2"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "int"
-                        },
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ],
-                      "postfix": [
-                        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Field comment again\", line: 64, col: 16, offsetA: 1181, offsetB: 1203)"
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Inherited"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkObjectTy",
-              "mid": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# inherited eol comment\", line: 67, col: 32, offsetA: 1250, offsetB: 1273)",
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 32, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# inherited next line indent comments\", line: 68, col: 32, offsetA: 1306, offsetB: 1343)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkOfInherit",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "RootObj"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkRecList",
-                  "sons": [
-                    {
-                      "kind": "nkIdentDefs",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "f"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "int"
-                        },
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "CaseObject"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkObjectTy",
-              "mid": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# caseobj eol\", line: 71, col: 22, offsetA: 1378, offsetB: 1391)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkRecList",
-                  "sons": [
-                    {
-                      "kind": "nkRecCase",
-                      "sons": [
-                        {
-                          "kind": "nkIdentDefs",
-                          "sons": [
-                            {
-                              "kind": "nkIdent",
-                              "ident": "k"
-                            },
-                            {
-                              "kind": "nkIdent",
-                              "ident": "bool"
-                            },
-                            {
-                              "kind": "nkEmpty"
-                            }
-                          ],
-                          "postfix": [
-                            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# casetype eol\", line: 72, col: 17, offsetA: 1409, offsetB: 1423)"
-                          ]
-                        },
-                        {
-                          "kind": "nkOfBranch",
-                          "mid": [
-                            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# of eol\", line: 73, col: 20, offsetA: 1444, offsetB: 1452)"
-                          ],
-                          "sons": [
-                            {
-                              "kind": "nkIdent",
-                              "ident": "true"
-                            },
-                            {
-                              "kind": "nkIdent",
-                              "ident": "false"
-                            },
-                            {
-                              "kind": "nkRecList",
-                              "sons": [
-                                {
-                                  "kind": "nkIdentDefs",
-                                  "sons": [
-                                    {
-                                      "kind": "nkIdent",
-                                      "ident": "v"
-                                    },
-                                    {
-                                      "kind": "nkIdent",
-                                      "ident": "string"
-                                    },
-                                    {
-                                      "kind": "nkEmpty"
-                                    }
-                                  ],
-                                  "postfix": [
-                                    "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case field eol\", line: 74, col: 16, offsetA: 1469, offsetB: 1485)"
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkPostfix",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "*"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "SomeAlias"
-                }
-              ]
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "int",
-              "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## alias eol\", line: 76, col: 19, offsetA: 1506, offsetB: 1518)",
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## alias next\", line: 77, col: 4, offsetA: 1523, offsetB: 1536)"
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkPragmaExpr",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "SomeAlias2"
-                },
-                {
-                  "kind": "nkPragma",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "nodecl"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdent",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after pragma\", line: 79, col: 24, offsetA: 1562, offsetB: 1576)"
-              ],
-              "ident": "int",
-              "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## alias2 eol\", line: 80, col: 10, offsetA: 1587, offsetB: 1600)"
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "SomeAlias3",
-              "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# alias after symbol\", line: 82, col: 13, offsetA: 1615, offsetB: 1635)"
-              ]
-            },
-            {
-              "kind": "nkGenericParams",
-              "sons": [
-                {
-                  "kind": "nkIdentDefs",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "T"
-                    },
-                    {
-                      "kind": "nkEmpty"
-                    },
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "kind": "nkIdent",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# alias after equals\", line: 83, col: 10, offsetA: 1646, offsetB: 1666)"
-              ],
-              "ident": "int",
-              "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# alias after type\", line: 84, col: 8, offsetA: 1675, offsetB: 1693)"
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "SomeAlias4"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkBracketExpr",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "SomeAlias3"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                }
-              ],
-              "postfix": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## after alias4\", line: 86, col: 31, offsetA: 1726, offsetB: 1741)",
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## more after alias4\", line: 87, col: 4, offsetA: 1746, offsetB: 1766)"
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkTypeDef",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Some comment before whenobj\", line: 89, col: 2, offsetA: 1770, offsetB: 1800)"
-          ],
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "WhenObject"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkObjectTy",
-              "mid": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# whenobject object line\", line: 90, col: 22, offsetA: 1823, offsetB: 1847)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkRecList",
-                  "sons": [
-                    {
-                      "kind": "nkRecWhen",
-                      "sons": [
-                        {
-                          "kind": "nkElifBranch",
-                          "mid": [
-                            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# when object false line\", line: 91, col: 16, offsetA: 1864, offsetB: 1888)"
-                          ],
-                          "sons": [
-                            {
-                              "kind": "nkIdent",
-                              "ident": "false"
-                            },
-                            {
-                              "kind": "nkRecList",
-                              "sons": [
-                                {
-                                  "kind": "nkNilLit"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkPostfix",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "*"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "NoField0"
-                }
-              ]
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkObjectTy",
-              "mid": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment eol\", line: 94, col: 32, offsetA: 1936, offsetB: 1950)",
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 32, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment nl\", line: 95, col: 32, offsetA: 1983, offsetB: 1996)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkOfInherit",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "RootObj"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkPostfix",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "*"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "NoField1"
-                }
-              ]
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkObjectTy",
-              "mid": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment nofield1 eol\", line: 97, col: 32, offsetA: 2030, offsetB: 2053)",
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 32, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment nl\", line: 98, col: 32, offsetA: 2086, offsetB: 2099)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkOfInherit",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "RootObj"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkWhenStmt",
-      "sons": [
-        {
-          "kind": "nkElifBranch",
-          "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# when colon line\", line: 101, col: 24, offsetA: 2126, offsetB: 2143)"
-          ],
-          "sons": [
-            {
-              "kind": "nkCall",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "defined"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "somecond"
-                }
-              ]
-            },
-            {
-              "kind": "nkStmtList",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# when first line\", line: 102, col: 2, offsetA: 2146, offsetB: 2163)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkElse",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment\", line: 104, col: 0, offsetA: 2174, offsetB: 2183)"
-          ],
-          "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else colon line\", line: 105, col: 6, offsetA: 2190, offsetB: 2207)"
-          ],
-          "sons": [
-            {
-              "kind": "nkStmtList",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else first line\", line: 106, col: 2, offsetA: 2210, offsetB: 2227)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkIfStmt",
-      "sons": [
-        {
-          "kind": "nkElifBranch",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "true"
-            },
-            {
-              "kind": "nkStmtList",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# if next line\", line: 110, col: 2, offsetA: 2250, offsetB: 2264)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkElse",
-          "sons": [
-            {
-              "kind": "nkStmtList",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else next line\", line: 113, col: 2, offsetA: 2283, offsetB: 2299)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkIfStmt",
-      "sons": [
-        {
-          "kind": "nkElifBranch",
-          "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# if colon line\", line: 116, col: 9, offsetA: 2320, offsetB: 2335)"
-          ],
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "true"
-            },
-            {
-              "kind": "nkStmtList",
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkElse",
-          "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else colon line\", line: 118, col: 6, offsetA: 2352, offsetB: 2369)"
-          ],
-          "sons": [
-            {
-              "kind": "nkStmtList",
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkIfStmt",
-      "sons": [
-        {
-          "kind": "nkElifBranch",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "true"
-            },
-            {
-              "kind": "nkStmtList",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# if dedented colon line\", line: 122, col: 0, offsetA: 2390, offsetB: 2414)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkElse",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# before else dedented\", line: 124, col: 0, offsetA: 2425, offsetB: 2447)"
-          ],
-          "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# else colon line\", line: 125, col: 6, offsetA: 2454, offsetB: 2471)"
-          ],
-          "sons": [
-            {
-              "kind": "nkStmtList",
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after proc before indented name\", line: 128, col: 5, offsetA: 2488, offsetB: 2521)"
-      ],
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "xxx"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# proc eq line\", line: 131, col: 12, offsetA: 2551, offsetB: 2565)"
-      ],
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "xxxx"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# proc first line\", line: 132, col: 2, offsetA: 2568, offsetB: 2585)"
-          ],
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "x"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## A proc doc comment\", line: 136, col: 2, offsetA: 2608, offsetB: 2629)"
-          ],
-          "sons": [
-            {
-              "kind": "nkIfStmt",
-              "sons": [
-                {
-                  "kind": "nkElifBranch",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "true"
-                    },
-                    {
-                      "kind": "nkStmtList",
-                      "sons": [
-                        {
-                          "kind": "nkInfix",
-                          "sons": [
-                            {
-                              "kind": "nkIdent",
-                              "ident": "-="
-                            },
-                            {
-                              "kind": "nkIdent",
-                              "ident": "numberOfCharsRead"
-                            },
-                            {
-                              "kind": "nkIntLit",
-                              "intVal": 2
-                            }
-                          ],
-                          "postfix": [
-                            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# handle Ctrl+Z as EOF\", line: 138, col: 27, offsetA: 2668, offsetB: 2690)"
-                          ]
-                        },
-                        {
-                          "kind": "nkForStmt",
-                          "sons": [
-                            {
-                              "kind": "nkIdent",
-                              "ident": "i"
-                            },
-                            {
-                              "kind": "nkInfix",
-                              "sons": [
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "..<"
-                                },
-                                {
-                                  "kind": "nkIntLit",
-                                  "intVal": 0
-                                },
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "numberOfCharsRead"
-                                }
-                              ]
-                            },
-                            {
-                              "kind": "nkStmtList",
-                              "sons": [
-                                {
-                                  "kind": "nkDiscardStmt",
-                                  "sons": [
-                                    {
-                                      "kind": "nkEmpty"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "x"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkImportStmt",
-      "prefix": [
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## indented doc comment for proc\", line: 144, col: 2, offsetA: 2764, offsetB: 2796)",
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## that is long\", line: 145, col: 2, offsetA: 2799, offsetB: 2814)",
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# before module\", line: 147, col: 0, offsetA: 2816, offsetB: 2831)"
-      ],
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "module"
-        }
-      ]
-    },
-    {
-      "kind": "nkImportStmt",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "module"
-        }
-      ]
-    },
-    {
-      "kind": "nkTryStmt",
-      "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try colon line\", line: 151, col: 5, offsetA: 2901, offsetB: 2917)"
-      ],
-      "sons": [
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try first line\", line: 152, col: 2, offsetA: 2920, offsetB: 2936)"
-          ],
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkExceptBranch",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try last line\", line: 154, col: 2, offsetA: 2949, offsetB: 2964)"
-          ],
-          "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except colon line\", line: 155, col: 8, offsetA: 2973, offsetB: 2992)"
-          ],
-          "sons": [
-            {
-              "kind": "nkStmtList",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except first line\", line: 156, col: 2, offsetA: 2995, offsetB: 3014)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkFinally",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except last line\", line: 158, col: 2, offsetA: 3027, offsetB: 3045)"
-          ],
-          "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# Finally colon line\", line: 159, col: 9, offsetA: 3055, offsetB: 3075)"
-          ],
-          "sons": [
-            {
-              "kind": "nkStmtList",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally first line\", line: 160, col: 2, offsetA: 3078, offsetB: 3098)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTryStmt",
-      "prefix": [
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally last line\", line: 162, col: 2, offsetA: 3111, offsetB: 3130)"
-      ],
-      "sons": [
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try first dedent line\", line: 165, col: 0, offsetA: 3137, offsetB: 3160)"
-          ],
-          "sons": [
-            {
-              "kind": "nkCall",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "f"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkExceptBranch",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# try last dedent line\", line: 167, col: 0, offsetA: 3167, offsetB: 3189)"
-          ],
-          "sons": [
-            {
-              "kind": "nkStmtList",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except dedent first line\", line: 169, col: 0, offsetA: 3198, offsetB: 3224)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkFinally",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# except dedent last line\", line: 171, col: 0, offsetA: 3235, offsetB: 3260)"
-          ],
-          "sons": [
-            {
-              "kind": "nkStmtList",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally first dedent line\", line: 173, col: 0, offsetA: 3270, offsetB: 3297)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkForStmt",
-      "prefix": [
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# finally last dedent line\", line: 175, col: 0, offsetA: 3308, offsetB: 3334)"
-      ],
-      "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# for colon line\", line: 178, col: 15, offsetA: 3352, offsetB: 3368)"
-      ],
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "i"
-        },
-        {
-          "kind": "nkInfix",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": ".."
-            },
-            {
-              "kind": "nkIntLit",
-              "intVal": 0
-            },
-            {
-              "kind": "nkIntLit",
-              "intVal": 1
-            }
-          ]
-        },
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# for first line\", line: 179, col: 2, offsetA: 3371, offsetB: 3387)"
-          ],
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkCaseStmt",
-      "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case line\", line: 182, col: 7, offsetA: 3406, offsetB: 3417)"
-      ],
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkOfBranch",
-          "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# of colon line\", line: 183, col: 9, offsetA: 3427, offsetB: 3442)"
-          ],
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "true"
-            },
-            {
-              "kind": "nkStmtList",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# of first line\", line: 184, col: 2, offsetA: 3445, offsetB: 3460)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkElse",
-          "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case else colon line\", line: 186, col: 6, offsetA: 3477, offsetB: 3499)"
-          ],
-          "sons": [
-            {
-              "kind": "nkStmtList",
-              "prefix": [
-                "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# case else first line\", line: 187, col: 2, offsetA: 3502, offsetB: 3524)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkCall",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "f"
-        },
-        {
-          "kind": "nkDo",
-          "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# do colon line\", line: 190, col: 13, offsetA: 3549, offsetB: 3564)"
-          ],
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkFormalParams",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                }
-              ]
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkStmtList",
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkBlockStmt",
-      "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# block colon line\", line: 195, col: 7, offsetA: 3611, offsetB: 3629)"
-      ],
-      "sons": [
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# block first line\", line: 196, col: 2, offsetA: 3632, offsetB: 3650)"
-          ],
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            },
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkLetSection",
-      "sons": [
-        {
-          "kind": "nkIdentDefs",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "x"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkLambda",
-              "mid": [
-                "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# lambda eq line\", line: 200, col: 22, offsetA: 3694, offsetB: 3710)"
-              ],
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkFormalParams",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "int"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkStmtList",
-                  "prefix": [
-                    "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# lambda first line\", line: 201, col: 2, offsetA: 3713, offsetB: 3732)"
-                  ],
-                  "sons": [
-                    {
-                      "kind": "nkDiscardStmt",
-                      "sons": [
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkDiscardStmt",
-                      "sons": [
-                        {
-                          "kind": "nkEmpty"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkWhileStmt",
-      "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# while colon line\", line: 204, col: 13, offsetA: 3766, offsetB: 3784)"
-      ],
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "false"
-        },
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# while first line\", line: 205, col: 2, offsetA: 3787, offsetB: 3805)"
-          ],
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkStaticStmt",
-      "mid": [
-        "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# static colon line\", line: 208, col: 8, offsetA: 3825, offsetB: 3844)"
-      ],
-      "sons": [
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# static first line\", line: 209, col: 2, offsetA: 3847, offsetB: 3866)"
-          ],
-          "sons": [
-            {
-              "kind": "nkDiscardStmt",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkDiscardStmt",
-      "sons": [
-        {
-          "kind": "nkObjConstr",
-          "mid": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# object eol\", line: 212, col: 16, offsetA: 3894, offsetB: 3906)"
-          ],
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Object"
-            },
-            {
-              "kind": "nkExprColonExpr",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "prefix": [
-                    "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# object first line\", line: 213, col: 2, offsetA: 3909, offsetB: 3928)"
-                  ],
-                  "ident": "field"
-                },
-                {
-                  "kind": "nkIntLit",
-                  "intVal": 0
-                }
-              ]
-            },
-            {
-              "kind": "nkExprColonExpr",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "field2"
-                },
-                {
-                  "kind": "nkIntLit",
-                  "intVal": 42
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkAsgn",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "b"
-        }
-      ]
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "## Doc comment after assignment"
-    },
-    {
-      "kind": "nkCommentStmt",
-      "comment": "## needs to be double"
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "ffff"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkCall",
-              "sons": [
-                {
-                  "kind": "nkDotExpr",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "result"
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "add"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkInfix",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "and"
-        },
-        {
-          "kind": "nkIdent",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Doc comment after indented statement\", line: 227, col: 0, offsetA: 4110, offsetB: 4149)",
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## needs to be double\", line: 228, col: 0, offsetA: 4150, offsetB: 4171)"
-          ],
-          "ident": "abc"
-        },
-        {
-          "kind": "nkIdent",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# dedented comment in infix\", line: 231, col: 0, offsetA: 4181, offsetB: 4208)"
-          ],
-          "ident": "def"
-        }
-      ]
-    },
-    {
-      "kind": "nkInfix",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "and"
-        },
-        {
-          "kind": "nkIdent",
-          "ident": "abc"
-        },
-        {
-          "kind": "nkIdent",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# indented comment in infix\", line: 235, col: 2, offsetA: 4226, offsetB: 4253)"
-          ],
-          "ident": "def"
-        }
-      ]
-    },
-    {
-      "kind": "nkIfStmt",
-      "sons": [
-        {
-          "kind": "nkElifBranch",
-          "sons": [
-            {
-              "kind": "nkInfix",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "and"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "abc"
-                },
-                {
-                  "kind": "nkIdent",
-                  "prefix": [
-                    "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# dedented comment in infix\", line: 239, col: 0, offsetA: 4272, offsetB: 4299)"
-                  ],
-                  "ident": "def"
-                }
-              ]
-            },
-            {
-              "kind": "nkStmtList",
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkIfStmt",
-      "sons": [
-        {
-          "kind": "nkElifBranch",
-          "sons": [
-            {
-              "kind": "nkInfix",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "and"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "abc"
-                },
-                {
-                  "kind": "nkIdent",
-                  "prefix": [
-                    "(tokType: tkComment, base: base10, spacing: {}, indent: 3, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# indented comment in infix\", line: 243, col: 3, offsetA: 4331, offsetB: 4358)"
-                  ],
-                  "ident": "def"
-                }
-              ]
-            },
-            {
-              "kind": "nkStmtList",
-              "sons": [
-                {
-                  "kind": "nkDiscardStmt",
-                  "sons": [
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkCall",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkExprEqExpr",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "b"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "c"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkCall",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkExprEqExpr",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "b"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "c"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkPragma",
-      "prefix": [
-        "(tokType: tkComment, base: base10, spacing: {}, indent: 0, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# dedented comment after keyword parameter\", line: 252, col: 0, offsetA: 4435, offsetB: 4477)"
-      ],
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "pragma"
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "a"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "v"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "abc"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "int"
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkLetSection",
-      "sons": [
-        {
-          "kind": "nkIdentDefs",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# let first line indented\", line: 261, col: 2, offsetA: 4551, offsetB: 4576)"
-          ],
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "v"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIntLit",
-              "intVal": 53
-            }
-          ],
-          "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after v\", line: 262, col: 9, offsetA: 4586, offsetB: 4595)"
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkVarSection",
-      "sons": [
-        {
-          "kind": "nkIdentDefs",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# var first line indented\", line: 265, col: 2, offsetA: 4603, offsetB: 4628)"
-          ],
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "v"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIntLit",
-              "intVal": 53
-            }
-          ],
-          "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# after v\", line: 266, col: 9, offsetA: 4638, offsetB: 4647)"
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkDiscardStmt",
-      "sons": [
-        {
-          "kind": "nkIntLit",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# discard eol\", line: 268, col: 8, offsetA: 4657, offsetB: 4670)",
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# discard first line\", line: 269, col: 2, offsetA: 4673, offsetB: 4693)"
-          ],
-          "intVal": 54,
-          "postfix": [
-            "(tokType: tkComment, base: base10, spacing: {tsLeading}, indent: -1, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# discard value\", line: 270, col: 5, offsetA: 4699, offsetB: 4714)"
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkBlockStmt",
-      "sons": [
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "sons": [
-            {
-              "kind": "nkCall",
-              "sons": [
-                {
-                  "kind": "nkDotExpr",
-                  "prefix": [
-                    "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# also after call\", line: 277, col: 2, offsetA: 4770, offsetB: 4787)"
-                  ],
-                  "sons": [
-                    {
-                      "kind": "nkCall",
-                      "sons": [
-                        {
-                          "kind": "nkDotExpr",
-                          "prefix": [
-                            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"# comment between the dots\", line: 275, col: 2, offsetA: 4734, offsetB: 4760)"
-                          ],
-                          "sons": [
-                            {
-                              "kind": "nkDotExpr",
-                              "sons": [
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "f"
-                                },
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "x"
-                                }
-                              ]
-                            },
-                            {
-                              "kind": "nkIdent",
-                              "ident": "z"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "d"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "f"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "bool"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Comment here\", line: 281, col: 2, offsetA: 4813, offsetB: 4828)",
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## another\", line: 282, col: 2, offsetA: 4831, offsetB: 4841)"
-          ],
-          "sons": [
-            {
-              "kind": "nkPar",
-              "sons": [
-                {
-                  "kind": "nkInfix",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "or"
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "true"
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "false"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "f"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "bool"
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkStmtList",
-          "prefix": [
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## Comment here\", line: 286, col: 2, offsetA: 4878, offsetB: 4893)",
-            "(tokType: tkComment, base: base10, spacing: {}, indent: 2, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## another\", line: 287, col: 2, offsetA: 4896, offsetB: 4906)"
-          ],
-          "sons": [
-            {
-              "kind": "nkIfStmt",
-              "sons": [
-                {
-                  "kind": "nkElifBranch",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "true"
-                    },
-                    {
-                      "kind": "nkStmtList",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "false"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkElse",
-                  "sons": [
-                    {
-                      "kind": "nkStmtList",
-                      "prefix": [
-                        "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 291, col: 4, offsetA: 4940, offsetB: 4950)",
-                        "(tokType: tkComment, base: base10, spacing: {}, indent: 4, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment 2\", line: 292, col: 4, offsetA: 4955, offsetB: 4967)"
-                      ],
-                      "sons": [
-                        {
-                          "kind": "nkIfStmt",
-                          "sons": [
-                            {
-                              "kind": "nkElifBranch",
-                              "sons": [
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "true"
-                                },
-                                {
-                                  "kind": "nkStmtList",
-                                  "prefix": [
-                                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment\", line: 294, col: 6, offsetA: 4987, offsetB: 4997)",
-                                    "(tokType: tkComment, base: base10, spacing: {}, indent: 6, ident: ..., iNumber: 0, fNumber: 0.0, literal: \"## comment 2\", line: 295, col: 6, offsetA: 5004, offsetB: 5016)"
-                                  ],
-                                  "sons": [
-                                    {
-                                      "kind": "nkPar",
-                                      "sons": [
-                                        {
-                                          "kind": "nkInfix",
-                                          "sons": [
-                                            {
-                                              "kind": "nkIdent",
-                                              "ident": "or"
-                                            },
-                                            {
-                                              "kind": "nkIdent",
-                                              "ident": "true"
-                                            },
-                                            {
-                                              "kind": "nkIdent",
-                                              "ident": "false"
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "kind": "nkElse",
-                              "sons": [
-                                {
-                                  "kind": "nkStmtList",
-                                  "sons": [
-                                    {
-                                      "kind": "nkIdent",
-                                      "ident": "false"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+kind: "nkStmtList"
+sons:
+  - kind: "nkCommentStmt"
+    "comment": "#"
+  - kind: "nkCommentStmt"
+    "comment": "#"
+  - kind: "nkCommentStmt"
+    "comment": "# Some commentary"
+  - kind: "nkCommentStmt"
+    "comment": "## A doc comment"
+  - kind: "nkCommentStmt"
+    "comment": "##"
+  - kind: "nkCommentStmt"
+    "comment": "##"
+  - kind: "nkCommentStmt"
+    "comment": "## More doc comments"
+  - kind: "nkCommentStmt"
+    "comment": "##"
+  - kind: "nkCommentStmt"
+    "comment": "#"
+  - kind: "nkCommentStmt"
+    "comment": "# Comment"
+  - kind: "nkCommentStmt"
+    "comment": "#"
+  - kind: "nkCommentStmt"
+    "comment": "#[ a multiline comment\u000Athis is also part of it\u000Aand this\u000A]#"
+  - kind: "nkCommentStmt"
+    "comment": "##[\u000A  these also come in doc variants\u000A]##"
+  - kind: "nkCommentStmt"
+    "comment": "#[\u000A  #[\u000A    they can be nested\u000A  ]#\u000A]#"
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "x"
+      - kind: "nkIntLit"
+        intVal: 324
+        postfix:
+          - "# A comment after"
+  - kind: "nkTemplateDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "x"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        prefix:
+          - "## A template doc comment"
+        sons:
+          - kind: "nkTryStmt"
+            sons:
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkDiscardStmt"
+                    sons:
+                      - kind: "nkEmpty"
+              - kind: "nkExceptBranch"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "Exception"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkMixinStmt"
+                        sons:
+                          - kind: "nkAccQuoted"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "$"
+                            postfix:
+                              - "# A comment after mixin"
+                      - kind: "nkCommand"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "echo"
+                          - kind: "nkIntLit"
+                            intVal: 4
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkPragmaExpr"
+            sons:
+              - kind: "nkPostfix"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "*"
+                  - kind: "nkIdent"
+                    ident: "SingleValueSetting"
+              - kind: "nkPragma"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "pure"
+          - kind: "nkEmpty"
+          - kind: "nkEnumTy"
+            mid:
+              - "## \\"
+              - "## settings resulting in a single string value"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkIdent"
+                ident: "arguments"
+                postfix:
+                  - "## experimental: the arguments passed after \'-r\'"
+              - kind: "nkIdent"
+                ident: "backend"
+                postfix:
+                  - "## the backend (eg: c|cpp|objc|js); both `nim doc --backend:js`"
+                  - "## and `nim js` would imply backend=js"
+              - kind: "nkPragmaExpr"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "gc"
+                  - kind: "nkPragma"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "deprecated"
+                postfix:
+                  - "## gc selected"
+              - kind: "nkIdent"
+                ident: "mm"
+                postfix:
+                  - "## memory management selected"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkPostfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "*"
+              - kind: "nkIdent"
+                ident: "FileSeekPos"
+          - kind: "nkEmpty"
+          - kind: "nkEnumTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkIdent"
+                ident: "fspEnd"
+                postfix:
+                  - "## Seek relative to end"
+                  - "# text file handling:"
+      - kind: "nkTypeDef"
+        prefix:
+          - "## Position relative to which seek should happen."
+          - "# The values are ordered so that they match with stdio"
+          - "# SEEK_SET, SEEK_CUR and SEEK_END respectively."
+        sons:
+          - kind: "nkIdent"
+            ident: "Object"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            mid:
+              - "# comment"
+              - "## more comment"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkRecList"
+                sons:
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "field"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+                    postfix:
+                      - "# Field comment"
+                  - kind: "nkIdentDefs"
+                    prefix:
+                      - "# comment between fields"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "field2"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+                    postfix:
+                      - "## Field comment again"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "fiiiiiiiiiiiiiiiiiiiiiiiieeeeeeeeeld"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+                    postfix:
+                      - "# loooooooooooooooooooong comment past the max line length"
+      - kind: "nkTypeDef"
+        prefix:
+          - "# and here"
+        sons:
+          - kind: "nkIdent"
+            ident: "Inherited"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            mid:
+              - "# inherited eol comment"
+              - "# inherited next line indent comments"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkOfInherit"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "RootObj"
+              - kind: "nkRecList"
+                sons:
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "f"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "CaseObject"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            mid:
+              - "# caseobj eol"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkRecList"
+                sons:
+                  - kind: "nkRecCase"
+                    sons:
+                      - kind: "nkIdentDefs"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "k"
+                          - kind: "nkIdent"
+                            ident: "bool"
+                          - kind: "nkEmpty"
+                        postfix:
+                          - "# casetype eol"
+                      - kind: "nkOfBranch"
+                        mid:
+                          - "# of eol"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "true"
+                          - kind: "nkIdent"
+                            ident: "false"
+                          - kind: "nkRecList"
+                            sons:
+                              - kind: "nkIdentDefs"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "v"
+                                  - kind: "nkIdent"
+                                    ident: "string"
+                                  - kind: "nkEmpty"
+                                postfix:
+                                  - "# case field eol"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkPostfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "*"
+              - kind: "nkIdent"
+                ident: "SomeAlias"
+          - kind: "nkEmpty"
+          - kind: "nkIdent"
+            ident: "int"
+            postfix:
+              - "## alias eol"
+              - "## alias next"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkPragmaExpr"
+            prefix:
+              - "# after pragma"
+            sons:
+              - kind: "nkIdent"
+                ident: "SomeAlias2"
+              - kind: "nkPragma"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "nodecl"
+          - kind: "nkEmpty"
+          - kind: "nkIdent"
+            ident: "int"
+            postfix:
+              - "## alias2 eol"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "SomeAlias3"
+            postfix:
+              - "# alias after symbol"
+          - kind: "nkGenericParams"
+            sons:
+              - kind: "nkIdentDefs"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "T"
+                  - kind: "nkEmpty"
+                  - kind: "nkEmpty"
+          - kind: "nkIdent"
+            prefix:
+              - "# alias after equals"
+            ident: "int"
+            postfix:
+              - "# alias after type"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "SomeAlias4"
+          - kind: "nkEmpty"
+          - kind: "nkBracketExpr"
+            sons:
+              - kind: "nkIdent"
+                ident: "SomeAlias3"
+              - kind: "nkIdent"
+                ident: "int"
+            postfix:
+              - "## after alias4"
+              - "## more after alias4"
+      - kind: "nkTypeDef"
+        prefix:
+          - "## Some comment before whenobj"
+        sons:
+          - kind: "nkIdent"
+            ident: "WhenObject"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            mid:
+              - "# whenobject object line"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkRecList"
+                sons:
+                  - kind: "nkRecWhen"
+                    sons:
+                      - kind: "nkElifBranch"
+                        mid:
+                          - "# when object false line"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "false"
+                          - kind: "nkRecList"
+                            sons:
+                              - kind: "nkNilLit"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkPostfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "*"
+              - kind: "nkIdent"
+                ident: "NoField0"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            mid:
+              - "## comment eol"
+              - "## comment nl"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkOfInherit"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "RootObj"
+              - kind: "nkEmpty"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkPostfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "*"
+              - kind: "nkIdent"
+                ident: "NoField1"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            mid:
+              - "## comment nofield1 eol"
+              - "## comment nl"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkOfInherit"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "RootObj"
+              - kind: "nkEmpty"
+  - kind: "nkWhenStmt"
+    sons:
+      - kind: "nkElifBranch"
+        mid:
+          - "# when colon line"
+        sons:
+          - kind: "nkCall"
+            sons:
+              - kind: "nkIdent"
+                ident: "defined"
+              - kind: "nkIdent"
+                ident: "somecond"
+          - kind: "nkStmtList"
+            prefix:
+              - "# when first line"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+      - kind: "nkElse"
+        prefix:
+          - "# comment"
+        mid:
+          - "# else colon line"
+        sons:
+          - kind: "nkStmtList"
+            prefix:
+              - "# else first line"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkIdent"
+            ident: "true"
+          - kind: "nkStmtList"
+            prefix:
+              - "# if next line"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+      - kind: "nkElse"
+        sons:
+          - kind: "nkStmtList"
+            prefix:
+              - "# else next line"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        mid:
+          - "# if colon line"
+        sons:
+          - kind: "nkIdent"
+            ident: "true"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+      - kind: "nkElse"
+        mid:
+          - "# else colon line"
+        sons:
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkIdent"
+            ident: "true"
+          - kind: "nkStmtList"
+            prefix:
+              - "# if dedented colon line"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+      - kind: "nkElse"
+        prefix:
+          - "# before else dedented"
+        mid:
+          - "# else colon line"
+        sons:
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    mid:
+      - "# after proc before indented name"
+    sons:
+      - kind: "nkIdent"
+        ident: "xxx"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    mid:
+      - "# proc eq line"
+    sons:
+      - kind: "nkIdent"
+        ident: "xxxx"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        prefix:
+          - "# proc first line"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "x"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        prefix:
+          - "## A proc doc comment"
+        sons:
+          - kind: "nkIfStmt"
+            sons:
+              - kind: "nkElifBranch"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "true"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "-="
+                          - kind: "nkIdent"
+                            ident: "numberOfCharsRead"
+                          - kind: "nkIntLit"
+                            intVal: 2
+                        postfix:
+                          - "# handle Ctrl+Z as EOF"
+                      - kind: "nkForStmt"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "i"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "..<"
+                              - kind: "nkIntLit"
+                                intVal: 0
+                              - kind: "nkIdent"
+                                ident: "numberOfCharsRead"
+                          - kind: "nkStmtList"
+                            sons:
+                              - kind: "nkDiscardStmt"
+                                sons:
+                                  - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "x"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkImportStmt"
+    prefix:
+      - "## indented doc comment for proc"
+      - "## that is long"
+      - "# before module"
+    sons:
+      - kind: "nkIdent"
+        ident: "module"
+        postfix:
+          - "# with a comment"
+  - kind: "nkImportStmt"
+    sons:
+      - kind: "nkIdent"
+        ident: "module"
+        postfix:
+          - "## with a comment"
+  - kind: "nkTryStmt"
+    mid:
+      - "# try colon line"
+    sons:
+      - kind: "nkStmtList"
+        prefix:
+          - "# try first line"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+          - kind: "nkCommentStmt"
+            "comment": "# try last line"
+      - kind: "nkExceptBranch"
+        mid:
+          - "# except colon line"
+        sons:
+          - kind: "nkStmtList"
+            prefix:
+              - "# except first line"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+              - kind: "nkCommentStmt"
+                "comment": "# except last line"
+      - kind: "nkFinally"
+        mid:
+          - "# Finally colon line"
+        sons:
+          - kind: "nkStmtList"
+            prefix:
+              - "# finally first line"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+              - kind: "nkCommentStmt"
+                "comment": "# finally last line"
+  - kind: "nkTryStmt"
+    sons:
+      - kind: "nkStmtList"
+        prefix:
+          - "# try first dedent line"
+        sons:
+          - kind: "nkCall"
+            sons:
+              - kind: "nkIdent"
+                ident: "f"
+      - kind: "nkExceptBranch"
+        prefix:
+          - "# try last dedent line"
+        sons:
+          - kind: "nkStmtList"
+            prefix:
+              - "# except dedent first line"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+      - kind: "nkFinally"
+        prefix:
+          - "# except dedent last line"
+        sons:
+          - kind: "nkStmtList"
+            prefix:
+              - "# finally first dedent line"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+  - kind: "nkForStmt"
+    prefix:
+      - "# finally last dedent line"
+    mid:
+      - "# for colon line"
+    sons:
+      - kind: "nkIdent"
+        ident: "i"
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: ".."
+          - kind: "nkIntLit"
+            intVal: 0
+          - kind: "nkIntLit"
+            intVal: 1
+      - kind: "nkStmtList"
+        prefix:
+          - "# for first line"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkCaseStmt"
+    mid:
+      - "# case line"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkOfBranch"
+        mid:
+          - "# of colon line"
+        sons:
+          - kind: "nkIdent"
+            ident: "true"
+          - kind: "nkStmtList"
+            prefix:
+              - "# of first line"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+      - kind: "nkElse"
+        mid:
+          - "# case else colon line"
+        sons:
+          - kind: "nkStmtList"
+            prefix:
+              - "# case else first line"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "f"
+      - kind: "nkDo"
+        mid:
+          - "# do colon line"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkFormalParams"
+            sons:
+              - kind: "nkIdent"
+                ident: "int"
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+  - kind: "nkBlockStmt"
+    mid:
+      - "# block colon line"
+    sons:
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        prefix:
+          - "# block first line"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "x"
+          - kind: "nkEmpty"
+          - kind: "nkLambda"
+            mid:
+              - "# lambda eq line"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "int"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkStmtList"
+                prefix:
+                  - "# lambda first line"
+                sons:
+                  - kind: "nkDiscardStmt"
+                    sons:
+                      - kind: "nkEmpty"
+                  - kind: "nkDiscardStmt"
+                    sons:
+                      - kind: "nkEmpty"
+  - kind: "nkWhileStmt"
+    mid:
+      - "# while colon line"
+    sons:
+      - kind: "nkIdent"
+        ident: "false"
+      - kind: "nkStmtList"
+        prefix:
+          - "# while first line"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkStaticStmt"
+    mid:
+      - "# static colon line"
+    sons:
+      - kind: "nkStmtList"
+        prefix:
+          - "# static first line"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkObjConstr"
+        mid:
+          - "# object eol"
+        sons:
+          - kind: "nkIdent"
+            ident: "Object"
+          - kind: "nkExprColonExpr"
+            sons:
+              - kind: "nkIdent"
+                prefix:
+                  - "# object first line"
+                ident: "field"
+              - kind: "nkIntLit"
+                intVal: 0
+            postfix:
+              - "# field line"
+          - kind: "nkExprColonExpr"
+            sons:
+              - kind: "nkIdent"
+                ident: "field2"
+              - kind: "nkIntLit"
+                prefix:
+                  - "# Field colon next line"
+                intVal: 42
+            postfix:
+              - "# field colon line"
+  - kind: "nkAsgn"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkIdent"
+        ident: "b"
+  - kind: "nkCommentStmt"
+    "comment": "## Doc comment after assignment"
+  - kind: "nkCommentStmt"
+    "comment": "## needs to be double"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "ffff"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkCall"
+            sons:
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "result"
+                  - kind: "nkIdent"
+                    ident: "add"
+  - kind: "nkInfix"
+    sons:
+      - kind: "nkIdent"
+        ident: "and"
+      - kind: "nkIdent"
+        prefix:
+          - "## Doc comment after indented statement"
+          - "## needs to be double"
+        ident: "abc"
+      - kind: "nkIdent"
+        prefix:
+          - "# dedented comment in infix"
+        ident: "def"
+  - kind: "nkInfix"
+    sons:
+      - kind: "nkIdent"
+        ident: "and"
+      - kind: "nkIdent"
+        ident: "abc"
+      - kind: "nkIdent"
+        prefix:
+          - "# indented comment in infix"
+        ident: "def"
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "and"
+              - kind: "nkIdent"
+                ident: "abc"
+              - kind: "nkIdent"
+                prefix:
+                  - "# dedented comment in infix"
+                ident: "def"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "and"
+              - kind: "nkIdent"
+                ident: "abc"
+              - kind: "nkIdent"
+                prefix:
+                  - "# indented comment in infix"
+                ident: "def"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkExprEqExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "b"
+          - kind: "nkIdent"
+            ident: "c"
+        postfix:
+          - "# comment after keyword parameter"
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkExprEqExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "b"
+          - kind: "nkIdent"
+            ident: "c"
+  - kind: "nkPragma"
+    prefix:
+      - "# dedented comment after keyword parameter"
+    sons:
+      - kind: "nkIdent"
+        ident: "pragma"
+        postfix:
+          - "# comment here"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+                postfix:
+                  - "#[block]#"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "abc"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        prefix:
+          - "# let first line indented"
+        sons:
+          - kind: "nkIdent"
+            ident: "v"
+          - kind: "nkEmpty"
+          - kind: "nkIntLit"
+            intVal: 53
+        postfix:
+          - "# after v"
+  - kind: "nkVarSection"
+    sons:
+      - kind: "nkIdentDefs"
+        prefix:
+          - "# var first line indented"
+        sons:
+          - kind: "nkIdent"
+            ident: "v"
+          - kind: "nkEmpty"
+          - kind: "nkIntLit"
+            intVal: 53
+        postfix:
+          - "# after v"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkIntLit"
+        prefix:
+          - "# discard eol"
+          - "# discard first line"
+        intVal: 54
+        postfix:
+          - "# discard value"
+  - kind: "nkBlockStmt"
+    sons:
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkCall"
+            sons:
+              - kind: "nkDotExpr"
+                prefix:
+                  - "# also after call"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkDotExpr"
+                        prefix:
+                          - "# comment between the dots"
+                        sons:
+                          - kind: "nkDotExpr"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "f"
+                              - kind: "nkIdent"
+                                ident: "x"
+                          - kind: "nkIdent"
+                            ident: "z"
+                  - kind: "nkIdent"
+                    ident: "d"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "f"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkIdent"
+            ident: "bool"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        prefix:
+          - "## Comment here"
+          - "## another"
+        sons:
+          - kind: "nkPar"
+            sons:
+              - kind: "nkInfix"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "or"
+                  - kind: "nkIdent"
+                    ident: "true"
+                  - kind: "nkIdent"
+                    ident: "false"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "f"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkIdent"
+            ident: "bool"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        prefix:
+          - "## Comment here"
+          - "## another"
+        sons:
+          - kind: "nkIfStmt"
+            sons:
+              - kind: "nkElifBranch"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "true"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "false"
+              - kind: "nkElse"
+                sons:
+                  - kind: "nkStmtList"
+                    prefix:
+                      - "## comment"
+                      - "## comment 2"
+                    sons:
+                      - kind: "nkIfStmt"
+                        sons:
+                          - kind: "nkElifBranch"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "true"
+                              - kind: "nkStmtList"
+                                prefix:
+                                  - "## comment"
+                                  - "## comment 2"
+                                sons:
+                                  - kind: "nkPar"
+                                    sons:
+                                      - kind: "nkInfix"
+                                        sons:
+                                          - kind: "nkIdent"
+                                            ident: "or"
+                                          - kind: "nkIdent"
+                                            ident: "true"
+                                          - kind: "nkIdent"
+                                            ident: "false"
+                          - kind: "nkElse"
+                            sons:
+                              - kind: "nkStmtList"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "false"
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkStrLit"
+        strVal: "a"
+      - kind: "nkStrLit"
+        strVal: "b"
+      - kind: "nkStrLit"
+        strVal: "c"
+        postfix:
+          - "# command eol comment"
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkStrLit"
+        strVal: "first arg"
+        postfix:
+          - "# first arg comment"
+      - kind: "nkStrLit"
+        strVal: "second arg"
+        postfix:
+          - "# second arg comment"
+      - kind: "nkStrLit"
+        strVal: "third arg"
+        postfix:
+          - "# third arg comment"

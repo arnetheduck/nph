@@ -1,30 +1,35 @@
 #
 #
+
 # Some commentary
+
 ## A doc comment
 ##
 ##
+
 ## More doc comments
 ##
+
 #
 # Comment
 #
+
 #[ a multiline comment
 this is also part of it
 and this
 ]#
+
 ##[
   these also come in doc variants
 ]##
+
 #[
   #[
     they can be nested
   ]#
 ]#
 
-x 324
-
-# A comment after
+x 324 # A comment after
 
 template x() =
   ## A template doc comment
@@ -32,7 +37,6 @@ template x() =
     discard
   except Exception:
     mixin `$` # A comment after mixin
-
     echo 4
 
 type
@@ -51,13 +55,19 @@ type
       ## Seek relative to end
       # text file handling:
 
+  ## Position relative to which seek should happen.
+  # The values are ordered so that they match with stdio
+  # SEEK_SET, SEEK_CUR and SEEK_END respectively.
   Object = object
     # comment
     ## more comment
     field: int # Field comment
     # comment between fields
     field2: int ## Field comment again
+    fiiiiiiiiiiiiiiiiiiiiiiiieeeeeeeeeld: int
+      # loooooooooooooooooooong comment past the max line length
 
+  # and here
   Inherited = object of RootObj
     # inherited eol comment
     # inherited next line indent comments
@@ -71,8 +81,7 @@ type
   SomeAlias* = int
       ## alias eol
       ## alias next
-  SomeAlias2 {.nodecl.} = # after pragma
-    int ## alias2 eol
+  SomeAlias2 {.nodecl.} = int ## alias2 eol
   SomeAlias3 # alias after symbol
     [T] = # alias after equals
       int # alias after type
@@ -99,16 +108,19 @@ when defined(somecond): # when colon line
 else: # else colon line
   # else first line
   discard
+
 if true:
   # if next line
   discard
 else:
   # else next line
   discard
+
 if true: # if colon line
   discard
 else: # else colon line
   discard
+
 if true:
   # if dedented colon line
   discard
@@ -127,6 +139,7 @@ proc x() =
   ## A proc doc comment
   if true:
     numberOfCharsRead -= 2 # handle Ctrl+Z as EOF
+
     for i in 0 ..< numberOfCharsRead:
       discard
 
@@ -138,18 +151,20 @@ proc x() =
 # before module
 import module # with a comment
 import module ## with a comment
+
 try: # try colon line
   # try first line
   discard
-# try last line
-except:
+  # try last line
+except: # except colon line
   # except first line
   discard
-# except last line
-finally:
+  # except last line
+finally: # Finally colon line
   # finally first line
   discard
-# finally last line
+  # finally last line
+
 try:
   # try first dedent line
   f()
@@ -161,10 +176,12 @@ except:
 finally:
   # finally first dedent line
   discard
+
 # finally last dedent line
 for i in 0 .. 1: # for colon line
   # for first line
   discard
+
 case a # case line
 of true: # of colon line
   # of first line
@@ -187,7 +204,8 @@ let x =
       # lambda first line
       discard
       discard
-while false:
+
+while false: # while colon line
   # while first line
   discard
 
@@ -199,11 +217,11 @@ discard Object(
     # object eol
     # object first line
     field: 0, # field line
-    field2: 42 # field colon line
+    field2: # Field colon next line
+      42 # field colon line
   )
 
 a = b
-
 ## Doc comment after assignment
 ## needs to be double
 
@@ -214,17 +232,21 @@ proc ffff() =
 ## needs to be double
 abc and # dedented comment in infix
 def
+
 abc and # indented comment in infix
 def
+
 if abc and # dedented comment in infix
 def:
   discard
+
 if abc and # indented comment in infix
 def:
   discard
 
 a(b = c # comment after keyword parameter
   )
+
 a(b = c)
 
 # dedented comment after keyword parameter
@@ -271,3 +293,9 @@ proc f(): bool =
       (true or false)
     else:
       false
+
+command "a", "b", "c" # command eol comment
+
+command "first arg", # first arg comment
+  "second arg", # second arg comment
+  "third arg" # third arg comment

@@ -1,434 +1,189 @@
-{
-  "kind": "nkStmtList",
-  "sons": [
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "A"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdent",
-              "ident": "int"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "B"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkInfix",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "|"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "A"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "B"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkInfix",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "|"
-                },
-                {
-                  "kind": "nkInfix",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "|"
-                    },
-                    {
-                      "kind": "nkInfix",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "|"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Aaaaaaaaaaaaaa"
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Bbbbbbbbbbbbbbbbb"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "Cccccccccccccccccccccc"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "Dddddddddddddddddddddd"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "A"
-            },
-            {
-              "kind": "nkGenericParams",
-              "sons": [
-                {
-                  "kind": "nkIdentDefs",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "T"
-                    },
-                    {
-                      "kind": "nkInfix",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "|"
-                        },
-                        {
-                          "kind": "nkInfix",
-                          "sons": [
-                            {
-                              "kind": "nkIdent",
-                              "ident": "|"
-                            },
-                            {
-                              "kind": "nkInfix",
-                              "sons": [
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "|"
-                                },
-                                {
-                                  "kind": "nkInfix",
-                                  "sons": [
-                                    {
-                                      "kind": "nkIdent",
-                                      "ident": "|"
-                                    },
-                                    {
-                                      "kind": "nkIdent",
-                                      "ident": "Aaaaaaaaaaaaaaaaaaa"
-                                    },
-                                    {
-                                      "kind": "nkIdent",
-                                      "ident": "Bbbbbbbbbbbbbbbbbbbbbbbb"
-                                    }
-                                  ]
-                                },
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "Cccccccccccccccccccc"
-                                }
-                              ]
-                            },
-                            {
-                              "kind": "nkIdent",
-                              "ident": "Dddddddddddddddd"
-                            }
-                          ]
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Eeeeeeeeeeeeeeeeeee"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkEmpty"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "kind": "nkBracketExpr",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "Bbbbbbbbbbbbbbbbbb"
-                },
-                {
-                  "kind": "nkIdent",
-                  "ident": "T"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "nkProcDef",
-      "sons": [
-        {
-          "kind": "nkIdent",
-          "ident": "f"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkFormalParams",
-          "sons": [
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkIdentDefs",
-              "sons": [
-                {
-                  "kind": "nkIdent",
-                  "ident": "a"
-                },
-                {
-                  "kind": "nkInfix",
-                  "sons": [
-                    {
-                      "kind": "nkIdent",
-                      "ident": "|"
-                    },
-                    {
-                      "kind": "nkInfix",
-                      "sons": [
-                        {
-                          "kind": "nkIdent",
-                          "ident": "|"
-                        },
-                        {
-                          "kind": "nkInfix",
-                          "sons": [
-                            {
-                              "kind": "nkIdent",
-                              "ident": "|"
-                            },
-                            {
-                              "kind": "nkInfix",
-                              "sons": [
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "|"
-                                },
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "Aaaaaaaaaaaaaaaaaaaaaaa"
-                                },
-                                {
-                                  "kind": "nkIdent",
-                                  "ident": "Bbbbbbbbbbbbbbbbbbbbbb"
-                                }
-                              ]
-                            },
-                            {
-                              "kind": "nkIdent",
-                              "ident": "Ccccccccccccccccccccccccccc"
-                            }
-                          ]
-                        },
-                        {
-                          "kind": "nkIdent",
-                          "ident": "Ddddddddddddddddddddddddd"
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "nkIdent",
-                      "ident": "Eeeeeeeeeeeeeeeee"
-                    }
-                  ]
-                },
-                {
-                  "kind": "nkEmpty"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        },
-        {
-          "kind": "nkEmpty"
-        }
-      ]
-    },
-    {
-      "kind": "nkTypeSection",
-      "sons": [
-        {
-          "kind": "nkTypeDef",
-          "sons": [
-            {
-              "kind": "nkIdent",
-              "ident": "CaseObject"
-            },
-            {
-              "kind": "nkEmpty"
-            },
-            {
-              "kind": "nkObjectTy",
-              "sons": [
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkEmpty"
-                },
-                {
-                  "kind": "nkRecList",
-                  "sons": [
-                    {
-                      "kind": "nkRecCase",
-                      "sons": [
-                        {
-                          "kind": "nkIdentDefs",
-                          "sons": [
-                            {
-                              "kind": "nkIdent",
-                              "ident": "f"
-                            },
-                            {
-                              "kind": "nkIdent",
-                              "ident": "bool"
-                            },
-                            {
-                              "kind": "nkEmpty"
-                            }
-                          ]
-                        },
-                        {
-                          "kind": "nkOfBranch",
-                          "sons": [
-                            {
-                              "kind": "nkIdent",
-                              "ident": "false"
-                            },
-                            {
-                              "kind": "nkRecList",
-                              "sons": [
-                                {
-                                  "kind": "nkIdentDefs",
-                                  "sons": [
-                                    {
-                                      "kind": "nkIdent",
-                                      "ident": "vfalse"
-                                    },
-                                    {
-                                      "kind": "nkIdent",
-                                      "ident": "int"
-                                    },
-                                    {
-                                      "kind": "nkEmpty"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "kind": "nkOfBranch",
-                          "sons": [
-                            {
-                              "kind": "nkIdent",
-                              "ident": "true"
-                            },
-                            {
-                              "kind": "nkRecList",
-                              "sons": [
-                                {
-                                  "kind": "nkIdentDefs",
-                                  "sons": [
-                                    {
-                                      "kind": "nkIdent",
-                                      "ident": "vtrue"
-                                    },
-                                    {
-                                      "kind": "nkIdent",
-                                      "ident": "int"
-                                    },
-                                    {
-                                      "kind": "nkEmpty"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
+kind: "nkStmtList"
+sons:
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "A"
+          - kind: "nkEmpty"
+          - kind: "nkIdent"
+            ident: "int"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "B"
+          - kind: "nkEmpty"
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "|"
+              - kind: "nkIdent"
+                ident: "A"
+              - kind: "nkIdent"
+                ident: "B"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+          - kind: "nkEmpty"
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "|"
+              - kind: "nkInfix"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "|"
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "|"
+                      - kind: "nkIdent"
+                        ident: "Aaaaaaaaaaaaaa"
+                      - kind: "nkIdent"
+                        ident: "Bbbbbbbbbbbbbbbbb"
+                  - kind: "nkIdent"
+                    ident: "Cccccccccccccccccccccc"
+              - kind: "nkIdent"
+                ident: "Dddddddddddddddddddddd"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "A"
+          - kind: "nkGenericParams"
+            sons:
+              - kind: "nkIdentDefs"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "T"
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "|"
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "|"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "|"
+                              - kind: "nkInfix"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "|"
+                                  - kind: "nkIdent"
+                                    ident: "Aaaaaaaaaaaaaaaaaaa"
+                                  - kind: "nkIdent"
+                                    ident: "Bbbbbbbbbbbbbbbbbbbbbbbb"
+                              - kind: "nkIdent"
+                                ident: "Cccccccccccccccccccc"
+                          - kind: "nkIdent"
+                            ident: "Dddddddddddddddd"
+                      - kind: "nkIdent"
+                        ident: "Eeeeeeeeeeeeeeeeeee"
+                  - kind: "nkEmpty"
+          - kind: "nkBracketExpr"
+            sons:
+              - kind: "nkIdent"
+                ident: "Bbbbbbbbbbbbbbbbbb"
+              - kind: "nkIdent"
+                ident: "T"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "f"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "a"
+              - kind: "nkInfix"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "|"
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "|"
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "|"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "|"
+                              - kind: "nkIdent"
+                                ident: "Aaaaaaaaaaaaaaaaaaaaaaa"
+                              - kind: "nkIdent"
+                                ident: "Bbbbbbbbbbbbbbbbbbbbbb"
+                          - kind: "nkIdent"
+                            ident: "Ccccccccccccccccccccccccccc"
+                      - kind: "nkIdent"
+                        ident: "Ddddddddddddddddddddddddd"
+                  - kind: "nkIdent"
+                    ident: "Eeeeeeeeeeeeeeeee"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "CaseObject"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkRecList"
+                sons:
+                  - kind: "nkRecCase"
+                    sons:
+                      - kind: "nkIdentDefs"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "f"
+                          - kind: "nkIdent"
+                            ident: "bool"
+                          - kind: "nkEmpty"
+                      - kind: "nkOfBranch"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "false"
+                          - kind: "nkRecList"
+                            sons:
+                              - kind: "nkIdentDefs"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "vfalse"
+                                  - kind: "nkIdent"
+                                    ident: "int"
+                                  - kind: "nkEmpty"
+                      - kind: "nkOfBranch"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "true"
+                          - kind: "nkRecList"
+                            sons:
+                              - kind: "nkIdentDefs"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "vtrue"
+                                  - kind: "nkIdent"
+                                    ident: "int"
+                                  - kind: "nkEmpty"

@@ -245,6 +245,20 @@ were originally written.
 Improvements in this area are much welcome - the compiler AST was not really
 written with comment preservation in mind and `nph`'s handling is not great.
 
+### How are blank lines handled?
+
+Coming up with a fully automatic rendering of blank lines is tricky because they
+are often used to signal logical groupings of code for which no other mechanism
+exists to represent them.
+
+`nph` current will:
+
+* generally retain blank space in code but normalise it to a single line
+* insert blanks around complex statements
+
+This strategy is expected to evolve over time, including the meaning of
+"complex".
+
 ### What features will likely not be added?
 
 * formatting options - things that change the way the formatting is done for

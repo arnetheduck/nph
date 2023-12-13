@@ -6,13 +6,15 @@ type Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb =
   Aaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbb | Cccccccccccccccccccccc | Dddddddddddddddddddddd
 
 type A[
-  T: Aaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccc |
-    Dddddddddddddddd | Eeeeeeeeeeeeeeeeeee
+  T:
+    Aaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccc |
+      Dddddddddddddddd | Eeeeeeeeeeeeeeeeeee
 ] = Bbbbbbbbbbbbbbbbbb[T]
 
 proc f(
-  a: Aaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbb | Ccccccccccccccccccccccccccc |
-    Ddddddddddddddddddddddddd | Eeeeeeeeeeeeeeeee;
+  a:
+    Aaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbb | Ccccccccccccccccccccccccccc |
+      Ddddddddddddddddddddddddd | Eeeeeeeeeeeeeeeee;
 )
 
 type CaseObject = object

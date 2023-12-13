@@ -38,6 +38,7 @@ proc flushDot*(conf: ConfigRef) =
       stdout
     else:
       stderr
+
   let stdOrrKind = toStdOrrKind(stdOrr)
   if stdOrrKind in conf.lastMsgWasDot:
     conf.lastMsgWasDot.excl stdOrrKind
@@ -71,8 +72,10 @@ proc makeCString*(s: string): Rope =
 
 proc newFileInfo(fullPath: AbsoluteFile; projPath: RelativeFile): TFileInfo =
   result.fullPath = fullPath
+
   #shallow(result.fullPath)
   result.projPath = projPath
+
   #shallow(result.projPath)
   result.shortName = fullPath.extractFilename
   result.quotedName = result.shortName.makeCString
@@ -120,10 +123,12 @@ proc fileInfoIdx*(
   var
     canon: AbsoluteFile
     pseudoPath = false
+
   try:
     canon = canonicalizePath(conf, filename)
   except OSError:
     canon = filename
+
     # The compiler uses "filenames" such as `command line` or `stdin`
     # This flag indicates that we are working with such a path here
     pseudoPath = true
@@ -172,6 +177,7 @@ proc newLineInfo*(fileInfoIdx: FileIndex; line, col: int): TLineInfo =
     result.line = uint16(line)
   else:
     result.line = high(uint16)
+
   if col < int high(int16):
     result.col = int16(col)
   else:
@@ -245,6 +251,7 @@ proc getInfoContext*(conf: ConfigRef; index: int): TLineInfo =
       conf.m.msgContext.len + index
     else:
       index
+
   if i >=% conf.m.msgContext.len:
     result = unknownLineInfo
   else:
@@ -403,6 +410,7 @@ proc msgWriteln*(conf: ConfigRef; s: string; flags: MsgFlags = {}) =
       conf.unitSep
     else:
       ""
+
   if not isNil(conf.writelnHook) and msgSkipHook notin flags:
     conf.writelnHook(s & sep)
   elif optStdout in conf.globalOptions or msgStdout in flags:
@@ -420,6 +428,7 @@ proc msgWriteln*(conf: ConfigRef; s: string; flags: MsgFlags = {}) =
       write stderr, s
 
       writeLine(stderr, sep)
+
       # On Windows stderr is fully-buffered when piped, regardless of C std.
       when defined(windows):
         flushFile(stderr)
@@ -433,6 +442,7 @@ macro callIgnoringStyle(theProc: typed; first: typed; args: varargs[typed]): unt
   result = newCall(theProc)
   if first.kind != nnkNilLit:
     result.add(first)
+
   for arg in children(args[0][1]):
     if arg.kind == nnkNilLit:
       continue
@@ -449,6 +459,7 @@ macro callStyledWriteLineStderr(args: varargs[typed]): untyped =
   result.add(bindSym"stderr")
   for arg in children(args[0][1]):
     result.add(arg)
+
   when false:
     # not needed because styledWriteLine already ends with resetAttributes
     result = newStmtList(result, newCall(bindSym"resetAttributes", bindSym"stderr"))
@@ -483,6 +494,7 @@ template styledMsgWriteln(args: varargs[typed]) =
       callStyledWriteLineStderr(args)
     else:
       callIgnoringStyle(writeLine, stderr, args)
+
     # On Windows stderr is fully-buffered when piped, regardless of C std.
     when defined(windows):
       flushFile(stderr)
@@ -532,6 +544,7 @@ proc handleError(
       log(s)
 
     quit(conf, msg)
+
   if msg >= errMin and msg <= errMax or
       (msg in warnMin .. hintMax and msg in conf.warningAsErrors and not ignoreMsg):
     inc(conf.errorCounter)
@@ -602,6 +615,7 @@ proc sourceLine*(conf: ConfigRef; i: TLineInfo): string =
     return ""
 
   let num = numLines(conf, i.fileIndex)
+
   # can happen if the error points to EOF:
   if i.line.int > num:
     return ""
@@ -656,6 +670,7 @@ proc liMessage*(
     else:
       ""
     # xxx not sure why hintUserRaw is special
+
   case msg
   of errMin .. errMax:
     sev = Severity.Error
@@ -669,6 +684,7 @@ proc liMessage*(
       # in the same file and line are produced:
       # xxx `lastError` is only used in this disabled code; but could be useful to revive
       ignoreMsg = conf.m.lastError == info and info != unknownLineInfo and eh != doAbort
+
     if info != unknownLineInfo:
       conf.m.lastError = info
   of warnMin .. warnMax:
@@ -680,6 +696,7 @@ proc liMessage*(
     else:
       title = WarningTitle
       color = WarningColor
+
     if not ignoreMsg:
       writeContext(conf, info)
 
@@ -701,6 +718,7 @@ proc liMessage*(
       arg
     else:
       getMessageStr(msg, arg)
+
   if not ignoreMsg:
     let loc =
       if info != unknownLineInfo:
@@ -714,8 +732,10 @@ proc liMessage*(
         KindFormat % kind
       else:
         ""
+
     if conf.structuredErrorHook != nil:
       conf.structuredErrorHook(conf, info, s & kindmsg, sev)
+
     if not ignoreMsgBecauseOfIdeTools(conf, msg):
       if msg == hintProcessing and conf.hintProcessingDots:
         msgWrite(conf, ".")
@@ -734,6 +754,7 @@ proc liMessage*(
           conf.getSurroundingSrc(info),
           conf.unitSep,
         )
+
         if hintMsgOrigin in conf.mainPackageNotes:
           # xxx needs a bit of refactoring to honor `conf.filenameOption`
           styledMsgWriteln(
@@ -746,8 +767,10 @@ proc liMessage*(
             resetStyle,
             conf.unitSep,
           )
+
   if not ignoreError:
     handleError(conf, msg, eh, s, ignoreMsg)
+
   if msg in fatalMsgs:
     # most likely would have died here but just in case, we restore state
     conf.m.errorOutputs = errorOutputsOld
@@ -870,6 +893,7 @@ proc uniqueModuleName*(conf: ConfigRef; fid: FileIndex): string =
       relativeTo(path, conf.libpath).string
     else:
       relativeTo(path, conf.projectPath).string
+
   let trunc =
     if rel.endsWith(".nim"):
       rel.len - len(".nim")
@@ -897,6 +921,7 @@ proc genSuccessX*(conf: ConfigRef) =
       formatSize(getMaxMem()) & " peakmem"
     else:
       formatSize(getTotalMem()) & " totmem"
+
   let loc = $conf.linesCompiled
 
   var build = ""
@@ -916,6 +941,7 @@ proc genSuccessX*(conf: ConfigRef) =
         build.add "size"
       else:
         build.add debugModeHints
+
       # pending https://github.com/timotheecour/Nim/issues/752, point to optimization.html
       if isDefined(conf, "danger"):
         flags.add " -d:danger"
@@ -931,6 +957,7 @@ proc genSuccessX*(conf: ConfigRef) =
         flags.add " -d:release"
       else:
         build.add debugModeHints
+
     if flags.len > 0:
       build.add "; options:" & flags
 
@@ -949,8 +976,10 @@ proc genSuccessX*(conf: ConfigRef) =
     output = "unknownOutput"
   else:
     output = $conf.absOutFile
+
   if conf.filenameOption != foAbs:
-    output = output.AbsoluteFile.extractFilename # xxx honor filenameOption more accurately
+    output = output.AbsoluteFile.extractFilename
+        # xxx honor filenameOption more accurately
 
   rawMessage(
     conf,

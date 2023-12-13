@@ -7,17 +7,20 @@ import
   ccccccccccccc as dddddddddddddd,
   eeeeeeeeeeeee as fffffffffffffff,
   gggggggggggggggggg as hhhhhhhhhhhhhhhh
+
 import
   "."/
     [
       tables, sets, long, modules, even, more, more, a_really_long_module_here, more,
       more, more, more, more
     ]
+
 import tables, sets
 
 from tables import Xxx, yyy
 
 export a, b, c
+
 export
   aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc,
   dddddddddddddddddd
@@ -32,8 +35,9 @@ import
   "ccccccccccccccccccccccccc"/dddddddddddddddddddddd
 
 from a import a, b, c
+
 from aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa import
   aaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbb, cccccccccccccccc, ddddddddddddddd,
   eeeeeeeeeeeeeeeeeeeeeee, ffffffffffffff
 
-{.push, raises: [].}
+{.push raises: [].}

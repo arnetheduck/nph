@@ -38,21 +38,16 @@ proc aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   discard
 
 proc aaa*(v: int)
-
 proc aaa[A, B, C](v: int)
-
 proc aaaa*[A, B, C](v: int)
-
 proc aaaaa[A, B, C](
   aaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbb, cccccccccccccccc,
   ddddddddddddddddddd: int;
 )
-
 proc aaaa*[
   Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc,
   Dddddddddddddddddddddd
 ](v: int)
-
 proc aaaaaaaaa*[
   Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc,
   Dddddddddddddddddddddd
@@ -62,20 +57,19 @@ proc aaaaaaaaa*[
 )
 
 proc aaaaaaaa[T: Aaaa](v: int)
-
 proc aaaaaaaa[
   Tttttttttttttttttttttttttttttttttttttttttt: Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 ](v: int)
-
 proc aaaaaaaa[T: Aaaa; S: static int](v: int)
-
 proc aaaaaaaa[
-  T: Aaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccccccccc
+  T:
+    Aaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccccccccc
 ](v: int)
 
 proc aaaaaaaaaaa(
-  v: Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb |
-    Cccccccccccccccccccccccccc;
+  v:
+    Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb |
+      Cccccccccccccccccccccccccc;
 )
 
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 42 + 33 +
@@ -85,9 +79,11 @@ functionCall(
   aaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaa,
   aaaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaa
 )
+
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(
   aaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaaaa
 )
+
 aasdcsaa(
   aaaaaaaaaa = bbbbbbbbbbb,
   ccccccccccc = ddddddddddddd,

@@ -15,7 +15,7 @@
 # * yaml formatting for the nph-specific fields
 
 import
-  "."/[phast, phoptions, phlineinfos, phmsgs],
+  "."/[phast, phlexer, phoptions, phlineinfos, phmsgs],
   std/[hashes, intsets],
   "$nim"/compiler/[ropes, idents, rodutils]
 
@@ -28,10 +28,10 @@ proc hashNode*(p: RootRef): Hash
 proc treeToYaml*(
   conf: ConfigRef; n: PNode; indent: int = 0; maxRecDepth: int = -1
 ): Rope
-
   # Convert a tree into its YAML representation; this is used by the
   # YAML code generator and it is invaluable for debugging purposes.
   # If maxRecDepht <> -1 then it won't print the whole graph.
+
 proc typeToYaml*(
   conf: ConfigRef; n: PType; indent: int = 0; maxRecDepth: int = -1
 ): Rope
@@ -39,9 +39,9 @@ proc typeToYaml*(
 proc symToYaml*(conf: ConfigRef; n: PSym; indent: int = 0; maxRecDepth: int = -1): Rope
 
 proc lineInfoToStr*(conf: ConfigRef; info: TLineInfo): Rope
-
   # these are for debugging only: They are not really deprecated, but I want
   # the warning so that release versions do not contain debugging statements:
+
 proc debug*(n: PSym; conf: ConfigRef = nil) {.deprecated.}
 
 proc debug*(n: PType; conf: ConfigRef = nil) {.deprecated.}
@@ -101,18 +101,20 @@ proc idTableGet*(t: TIdTable; key: int): RootRef
 proc idTablePut*(t: var TIdTable; key: PIdObj; val: RootRef)
 
 proc idTableHasObjectAsKey*(t: TIdTable; key: PIdObj): bool
-
   # checks if `t` contains the `key` (compared by the pointer value, not only
   # `key`'s id)
+
 proc idNodeTableGet*(t: TIdNodeTable; key: PIdObj): PNode
 
-proc idNodeTablePut*(t: var TIdNodeTable; key: PIdObj; val: PNode) # ---------------------------------------------------------------------------
+proc idNodeTablePut*(t: var TIdNodeTable; key: PIdObj; val: PNode)
+  # ---------------------------------------------------------------------------
 
 proc lookupInRecord*(n: PNode; field: PIdent): PSym
 
 proc mustRehash*(length, counter: int): bool
 
-proc nextTry*(h, maxHash: Hash): Hash {.inline.} # ------------- table[int, int] ---------------------------------------------
+proc nextTry*(h, maxHash: Hash): Hash {.inline.}
+  # ------------- table[int, int] ---------------------------------------------
 
 const InvalidKey* = low(int)
 
@@ -202,6 +204,7 @@ proc lookupInRecord(n: PNode; field: PIdent): PSym =
     result = lookupInRecord(n[0], field)
     if result != nil:
       return
+
     for i in 1 ..< n.len:
       case n[i].kind
       of nkOfBranch, nkElse:
@@ -244,6 +247,7 @@ proc sameIgnoreBacktickGensymInfo(a, b: string): bool =
   var alen = a.len - 1
   while alen > 0 and a[alen] != '`':
     dec(alen)
+
   if alen <= 0:
     alen = a.len
 
@@ -252,6 +256,7 @@ proc sameIgnoreBacktickGensymInfo(a, b: string): bool =
   while true:
     while i < alen and a[i] == '_':
       inc i
+
     while j < b.len and b[j] == '_':
       inc j
 
@@ -260,13 +265,16 @@ proc sameIgnoreBacktickGensymInfo(a, b: string): bool =
         toLowerAscii(a[i])
       else:
         '\0'
+
     var bb =
       if j < b.len:
         toLowerAscii(b[j])
       else:
         '\0'
+
     if aa != bb:
       return false
+
     # the characters are identical:
     if i >= alen:
       # both cursors at the end:
@@ -380,8 +388,8 @@ proc symToYamlAux(
     result = "\"$1\"" % [rope(n.name.s)]
   else:
     var ast = treeToYamlAux(conf, n.ast, marker, indent + 2, maxRecDepth - 1)
-        #rope("typ"), typeToYamlAux(conf, n.typ, marker,
-        #  indent + 2, maxRecDepth - 1),
+      #rope("typ"), typeToYamlAux(conf, n.typ, marker,
+      #  indent + 2, maxRecDepth - 1),
 
     let istr = rspaces(indent + 2)
 
@@ -394,9 +402,11 @@ proc symToYamlAux(
         "$N$1\"typ\": $2",
         [istr, typeToYamlAux(conf, n.typ, marker, indent + 2, maxRecDepth - 1)],
       )
+
     if conf != nil:
       # if we don't pass the config, we probably don't care about the line info
       result.addf("$N$1\"info\": $2", [istr, lineInfoToStr(conf, n.info)])
+
     if card(n.flags) > 0:
       result.addf("$N$1\"flags\": $2", [istr, flagsToStr(n.flags)])
 
@@ -414,6 +424,7 @@ proc symToYamlAux(
       "$N$1\"lode\": $2",
       [istr, treeToYamlAux(conf, n.loc.lode, marker, indent + 2, maxRecDepth - 1)],
     )
+
     result.addf("$N$1}", [rspaces(indent)])
 
 proc typeToYamlAux(
@@ -453,10 +464,12 @@ proc typeToYamlAux(
       "$N$1\"sym\": $2",
       [istr, symToYamlAux(conf, n.sym, marker, indent + 2, maxRecDepth - 1)],
     )
+
     result.addf(
       "$N$1\"n\": $2",
       [istr, treeToYamlAux(conf, n.n, marker, indent + 2, maxRecDepth - 1)],
     )
+
     if card(n.flags) > 0:
       result.addf("$N$1\"flags\": $2", [istr, flagsToStr(n.flags)])
 
@@ -471,81 +484,61 @@ proc treeToYamlAux(
   if n == nil:
     result = rope("null")
   else:
-    var istr = rspaces(indent + 2)
+    var istr = rspaces(indent)
 
-    result = "{$N$1\"kind\": $2" % [istr, makeYamlString($n.kind)]
+    result = "kind: $1" % [makeYamlString($n.kind)]
     if maxRecDepth != 0:
       if conf != nil:
-        result.addf(",$N$1\"info\": $2", [istr, lineInfoToStr(conf, n.info)])
+        result.addf("$N$1info: $2", [istr, lineInfoToStr(conf, n.info)])
+
       if n.prefix.len > 0:
-        result.addf(",$N$1\"prefix\": [", [istr])
+        result.addf("$N$1prefix:", [istr])
         for i in 0 ..< n.prefix.len:
-          if i > 0:
-            result.add(",")
+          result.addf("$N$1  - $2", [istr, makeYamlString($(n.prefix[i]))])
 
-          result.addf("$N$1$2", [rspaces(indent + 4), makeYamlString($n.prefix[i])])
-
-        result.addf("$N$1]", [istr])
       if n.mid.len > 0:
-        result.addf(",$N$1\"mid\": [", [istr])
+        result.addf("$N$1mid:", [istr])
         for i in 0 ..< n.mid.len:
-          if i > 0:
-            result.add(",")
+          result.addf("$N$1  - $2", [istr, makeYamlString($(n.mid[i]))])
 
-          result.addf("$N$1$2", [rspaces(indent + 4), makeYamlString($n.mid[i])])
-
-        result.addf("$N$1]", [istr])
       case n.kind
       of nkCharLit .. nkUInt64Lit:
-        result.addf(",$N$1\"intVal\": $2", [istr, rope(n.intVal)])
+        result.addf("$N$1intVal: $2", [istr, rope(n.intVal)])
       of nkFloatLit .. nkFloat128Lit:
-        result.addf(",$N$1\"floatVal\": $2", [istr, rope(n.floatVal.toStrMaxPrecision)])
+        result.addf("$N$1floatVal: $2", [istr, rope(n.floatVal.toStrMaxPrecision)])
       of nkStrLit .. nkTripleStrLit:
-        result.addf(",$N$1\"strVal\": $2", [istr, makeYamlString(n.strVal)])
+        result.addf("$N$1strVal: $2", [istr, makeYamlString(n.strVal)])
       of nkSym:
         result.addf(
-          ",$N$1\"sym\": $2",
+          "N$1\"sym\": $2",
           [istr, symToYamlAux(conf, n.sym, marker, indent + 2, maxRecDepth)],
         )
       of nkIdent:
         if n.ident != nil:
-          result.addf(",$N$1\"ident\": $2", [istr, makeYamlString(n.ident.s)])
+          result.addf("$N$1ident: $2", [istr, makeYamlString(n.ident.s)])
         else:
-          result.addf(",$N$1\"ident\": null", [istr])
+          result.addf("$N$1ident: null", [istr])
       of nkCommentStmt:
-        result.addf(",$N$1\"comment\": $2", [istr, makeYamlString(n.comment)])
+        result.addf("$N$1\"comment\": $2", [istr, makeYamlString(n.comment)])
       else:
         if n.len > 0:
-          result.addf(",$N$1\"sons\": [", [istr])
+          result.addf("$N$1sons:", [istr])
           for i in 0 ..< n.len:
-            if i > 0:
-              result.add(",")
-
             result.addf(
-              "$N$1$2",
-              [
-                rspaces(indent + 4),
-                treeToYamlAux(conf, n[i], marker, indent + 4, maxRecDepth - 1)
-              ],
+              "$N$1  - $2",
+              [istr, treeToYamlAux(conf, n[i], marker, indent + 4, maxRecDepth - 1)],
             )
 
-          result.addf("$N$1]", [istr])
       if n.typ != nil:
         result.addf(
-          ",$N$1\"typ\": $2",
+          "$N$1\"typ\": $2",
           [istr, typeToYamlAux(conf, n.typ, marker, indent + 2, maxRecDepth)],
         )
+
       if n.postfix.len > 0:
-        result.addf(",$N$1\"postfix\": [", [istr])
+        result.addf("$N$1postfix:", [istr])
         for i in 0 ..< n.postfix.len:
-          if i > 0:
-            result.add(",")
-
-          result.addf("$N$1$2", [rspaces(indent + 4), makeYamlString($n.postfix[i])])
-
-        result.addf("$N$1]", [istr])
-
-    result.addf("$N$1}", [rspaces(indent)])
+          result.addf("$N$1  - $2", [istr, makeYamlString($n.postfix[i])])
 
 proc treeToYaml(conf: ConfigRef; n: PNode; indent: int = 0; maxRecDepth: int = -1): Rope =
   var marker = initIntSet()
@@ -713,9 +706,11 @@ proc value(this: var DebugPrinter; value: PSym) =
   if value.kind in {skField, skEnumField, skParam}:
     this.key("position")
     this.value(value.position)
+
   if card(value.flags) > 0:
     this.key("flags")
     this.value(value.flags)
+
   if this.renderSymType and value.typ != nil:
     this.key "typ"
 
@@ -735,12 +730,15 @@ proc value(this: var DebugPrinter; value: PType) =
   if value.sym != nil:
     this.key "sym"
     this.value value.sym #this.value value.sym.name.s
+
   if card(value.flags) > 0:
     this.key "flags"
     this.value value.flags
+
   if value.kind in IntegralTypes and value.n != nil:
     this.key "n"
     this.value value.n
+
   if value.len > 0:
     this.key "sons"
 
@@ -751,6 +749,7 @@ proc value(this: var DebugPrinter; value: PType) =
         this.comma
 
     this.closeBracket
+
   if value.n != nil:
     this.key "n"
     this.value value.n
@@ -767,21 +766,26 @@ proc value(this: var DebugPrinter; value: PNode) =
   if value.comment.len > 0:
     this.key "comment"
     this.value value.comment
+
   when defined(useNodeIds):
     this.key "id"
     this.value value.id
+
   if this.conf != nil:
     this.key "info"
     this.value $lineInfoToStr(this.conf, value.info)
+
   if value.flags != {}:
     this.key "flags"
     this.value value.flags
+
   if value.typ != nil:
     this.key "typ"
     this.value value.typ.kind
   else:
     this.key "typ"
     this.value "nil"
+
   case value.kind
   of nkCharLit .. nkUInt64Lit:
     this.key "intVal"
@@ -803,6 +807,7 @@ proc value(this: var DebugPrinter; value: PNode) =
     if this.renderSymType and value.typ != nil:
       this.key "typ"
       this.value value.typ
+
     if value.len > 0:
       this.key "sons"
 
@@ -840,6 +845,7 @@ proc debug(n: PNode; conf: ConfigRef) =
   var this: DebugPrinter
 
   this.visited = initTable[pointer, int]()
+
   #this.renderSymType = true
   this.useColor = not defined(windows)
 
@@ -898,10 +904,12 @@ proc objectSetContainsOrIncl*(t: var TObjectSet; obj: RootRef): bool =
     var it = t.data[h]
     if it == nil:
       break
+
     if it == obj:
       return true # found it
 
     h = nextTry(h, high(t.data))
+
   if mustRehash(t.data.len, t.counter):
     objectSetEnlarge(t)
     objectSetRawInsert(t.data, obj)
@@ -986,6 +994,7 @@ proc strTableInclReportConflict*(
     var it = t.data[h]
     if it == nil:
       break
+
     # Semantic checking can happen multiple times thanks to templates
     # and overloading: (var x=@[]; x).mapIt(it).
     # So it is possible the very same sym is added multiple
@@ -997,6 +1006,7 @@ proc strTableInclReportConflict*(
       replaceSlot = h
 
     h = nextTry(h, high(t.data))
+
   if replaceSlot >= 0:
     result = t.data[replaceSlot] # found it
     if not onConflictKeepOld:
@@ -1026,6 +1036,7 @@ proc strTableGet*(t: TStrTable; name: PIdent): PSym =
     result = t.data[h]
     if result == nil:
       break
+
     if result.name.id == name.id:
       break
 
@@ -1051,6 +1062,7 @@ proc nextIdentIter*(ti: var TIdentIter; tab: TStrTable): PSym =
       break
 
     p = tab.data[h]
+
   if p != nil:
     result = p # increase the count
   else:
@@ -1333,6 +1345,7 @@ proc iiTablePut(t: var TIITable; key, val: int) =
       newSeq(n, t.data.len * GrowthFactor)
       for i in 0 .. high(n):
         n[i].key = InvalidKey
+
       for i in 0 .. high(t.data):
         if t.data[i].key != InvalidKey:
           iiTableRawInsert(n, t.data[i].key, t.data[i].val)
