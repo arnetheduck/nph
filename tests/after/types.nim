@@ -1,7 +1,6 @@
 type A = int
 
 type B = A | B
-
 type Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb =
   Aaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbb | Cccccccccccccccccccccc | Dddddddddddddddddddddd
 

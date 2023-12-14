@@ -72,10 +72,8 @@ proc makeCString*(s: string): Rope =
 
 proc newFileInfo(fullPath: AbsoluteFile; projPath: RelativeFile): TFileInfo =
   result.fullPath = fullPath
-
   #shallow(result.fullPath)
   result.projPath = projPath
-
   #shallow(result.projPath)
   result.shortName = fullPath.extractFilename
   result.quotedName = result.shortName.makeCString
@@ -128,7 +126,6 @@ proc fileInfoIdx*(
     canon = canonicalizePath(conf, filename)
   except OSError:
     canon = filename
-
     # The compiler uses "filenames" such as `command line` or `stdin`
     # This flag indicates that we are working with such a path here
     pseudoPath = true
@@ -428,7 +425,6 @@ proc msgWriteln*(conf: ConfigRef; s: string; flags: MsgFlags = {}) =
       write stderr, s
 
       writeLine(stderr, sep)
-
       # On Windows stderr is fully-buffered when piped, regardless of C std.
       when defined(windows):
         flushFile(stderr)
@@ -494,7 +490,6 @@ template styledMsgWriteln(args: varargs[typed]) =
       callStyledWriteLineStderr(args)
     else:
       callIgnoringStyle(writeLine, stderr, args)
-
     # On Windows stderr is fully-buffered when piped, regardless of C std.
     when defined(windows):
       flushFile(stderr)
@@ -615,7 +610,6 @@ proc sourceLine*(conf: ConfigRef; i: TLineInfo): string =
     return ""
 
   let num = numLines(conf, i.fileIndex)
-
   # can happen if the error points to EOF:
   if i.line.int > num:
     return ""
@@ -725,7 +719,6 @@ proc liMessage*(
         conf.toFileLineCol(info) & " "
       else:
         ""
-
     # we could also show `conf.cmdInput` here for `projectIsCmd`
     var kindmsg =
       if kind.len > 0:
@@ -941,7 +934,6 @@ proc genSuccessX*(conf: ConfigRef) =
         build.add "size"
       else:
         build.add debugModeHints
-
       # pending https://github.com/timotheecour/Nim/issues/752, point to optimization.html
       if isDefined(conf, "danger"):
         flags.add " -d:danger"

@@ -28,6 +28,7 @@ const
   longIndentWid = IndentWidth * 2
   MaxLineLen = 88
   LineCommentColumn = 30
+  blankAfterComplex = {nkObjectTy, nkEnumTy, nkTypeSection, nkProcDef .. nkIteratorDef}
 
 type
   TRenderTok* = object
@@ -43,6 +44,7 @@ type
   TSrcGen* = object
     indent*: int
     lineLen*: int
+    line: int # The line where a token was last output
     col: int
     pos*: int # current position for iteration over the buffer
     idx*: int # current token index for iteration over the buffer
@@ -51,6 +53,7 @@ type
     pendingNL*: int
       # negative if not active; else contains the
       # indentation value
+
     pendingWhitespace: int
     comStack*: seq[PNode] # comment stack
     inside: set[Section] # Keeps track of contexts we are in
@@ -171,6 +174,15 @@ proc addTok(g: var TSrcGen; kind: TokType; s: string; sym: PSym = nil) =
   if kind != tkSpaces:
     inc g.col, s.len
 
+  g.line += count(s, "\n")
+
+proc outputLine(g: TSrcGen): int =
+  ## The line it would be added if we were to add a token
+  g.line +
+    (if g.pendingNL >= 0: 1 + ord(g.pendingNewline)
+    else: 0
+    )
+
 proc addPendingNL(g: var TSrcGen) =
   if g.pendingNL >= 0:
     let newlines = repeat("\n", 1 + ord(g.pendingNewline))
@@ -200,10 +212,10 @@ proc optNL(g: var TSrcGen; a, b: PNode) =
   g.lineLen = g.indent
   g.col = g.indent
 
-  g.pendingNewline = g.pendingNewline or a.info.line + 1 < b.info.line
+  g.pendingNewline = g.pendingNewline or a.endInfo.line + 1 < b.info.line
 
-proc blankLine(g: var TSrcGen) =
-  g.pendingNewline = true
+proc blankLine(g: var TSrcGen; v = true) =
+  g.pendingNewline = v or g.pendingNewline
 
 proc indentNL(g: var TSrcGen; wid = IndentWidth) =
   inc(g.indent, wid)
@@ -244,7 +256,6 @@ proc put(g: var TSrcGen; kind: TokType; s: string; sym: PSym = nil) =
 proc putComment(g: var TSrcGen; s: string) =
   if s.len == 0:
     return
-
   # var i = 0
   # let hi = s.len - 1
   # let isCode = (s.len >= 2) and (s[1] != ' ')
@@ -381,7 +392,6 @@ proc litAux(g: TSrcGen; n: PNode; x: BiggestInt; size: int): string =
       result = typ.sym.name.s & '.'
 
     let enumfields = typ.n
-
     # we need a slow linear search because of enums with holes:
     for e in items(enumfields):
       if e.sym.position == x:
@@ -495,7 +505,6 @@ proc atom(g: TSrcGen; n: PNode): string =
 
 proc lcomma(g: TSrcGen; n: PNode; start: int = 0; theEnd: int = -1): int =
   assert(theEnd < 0)
-
   # if n.prefix.len > 0 or n.mid.len > 0 or n.postfix.len > 0:
   #   return MaxLineLen + 1
   result = 0
@@ -512,7 +521,6 @@ proc lsons(g: TSrcGen; n: PNode; start: int = 0; theEnd: int = -1): int =
   assert(theEnd < 0)
 
   result = 0
-
   # if n.prefix.len > 0 or n.mid.len > 0 or n.postfix.len > 0:
   #   return MaxLineLen + 1
   for i in start .. n.len + theEnd:
@@ -541,7 +549,6 @@ proc lsub(g: TSrcGen; n: PNode): int =
   # computes the length of a tree
   if isNil(n):
     return 0
-
   # if n.prefix.len > 0 or n.mid.len > 0 or n.postfix.len > 0:
   #   return MaxLineLen + 1
   if shouldRenderComment(g, n):
@@ -885,7 +892,6 @@ proc gcommaAux(
   let oldInd = g.indent
 
   g.indent = ind
-
   # If a full, comma-separate list fits on one line, go for it. If not, we put
   # each element on its own line unless it's a list of trivial things (so as to
   # avoid wasting significant vertical space on lists of numbers and the like)
@@ -1036,7 +1042,6 @@ proc glist(
 proc gsection(g: var TSrcGen; n: PNode; kind: TokType; k: string) =
   if n.len == 0:
     return
-
   # empty var sections are possible
   putWithSpace(g, kind, k)
   if n.len > 1 or n.mid.len > 0 or n[0].prefix.len > 0:
@@ -1068,7 +1073,6 @@ proc gstmts(g: var TSrcGen; n: PNode; flags: SubFlags = {}; doIndent = true) =
       flags + {sfNoIndent}
     else:
       flags
-
   # The original version tried to normalize newlines but this turned out to be
   # difficult to do whole-sale - we will thus retain some of the original
   # new-lines, normalizing only where a clear rule can be established
@@ -1082,7 +1086,6 @@ proc gstmts(g: var TSrcGen; n: PNode; flags: SubFlags = {}; doIndent = true) =
       #      probably add a newline even before control flow
       if i > 0:
         optNL(g, n[i - 1], n[i])
-
       # else:
       #   optNL(g)
       if n[i].kind in {nkStmtList, nkStmtListExpr, nkStmtListType}:
@@ -1204,7 +1207,6 @@ proc gproc(g: var TSrcGen; n: PNode) =
 
   if n[patternPos].kind != nkEmpty:
     gpattern(g, n[patternPos])
-
   # If there is no body, we don't need to indent the parameters as much
   let flags =
     if n[bodyPos].kind != nkEmpty:
@@ -1225,7 +1227,6 @@ proc gproc(g: var TSrcGen; n: PNode) =
       gcoms(g)
 
     gstmts(g, n[bodyPos], flags)
-    blankLine(g)
   else:
     withIndent(g):
       gmids(g, n)
@@ -1256,7 +1257,6 @@ proc gblock(g: var TSrcGen; n: PNode) =
     gsub(g, n[0])
   else:
     put(g, tkBlock, "block")
-
   # block stmt should have two children
   if n.len == 1:
     return
@@ -1440,7 +1440,8 @@ proc gsub(g: var TSrcGen; n: PNode; flags: SubFlags; fromStmtList = false) =
     gstmts(g, n)
 
     return
-
+  # When adding blanks after certain nodes, we only do so if there's a body
+  let currLine = g.outputLine()
   gprefixes(g, n)
   if shouldRenderComment(g, n):
     pushCom(g, n)
@@ -1561,7 +1562,6 @@ proc gsub(g: var TSrcGen; n: PNode; flags: SubFlags; fromStmtList = false) =
 
       if i > 1:
         gcomma(g, n, 1, i - 1 - n.len, indentNL = IndentWidth, flags = {lfFirstSticky})
-
       # when parsing nkCommand, the compiler inserts `nkCall` to arguments if
       # ":" is present so it looks like we can skip the `do` here :/ this needs
       # deeper investigation - see also `nkPar` which sometimes removes the
@@ -1603,9 +1603,16 @@ proc gsub(g: var TSrcGen; n: PNode; flags: SubFlags; fromStmtList = false) =
   of nkDotExpr:
     if isCustomLit(n):
       put(g, tkCustomLit, n[0].strVal)
+      gmids(g, n)
       gsub(g, n[1])
     else:
       gsub(g, n[0])
+      # Mids here are put on a new line, then the dot follows on yet another new
+      # line as dot parsing continues after a comment on a new line too! see
+      # clMid pickup point in phparser.dotExpr
+      if n.mid.len > 0:
+        g.optNL()
+        gmids(g, n)
       put(g, tkDot, ".")
 
       assert n.len == 2, $n.len
@@ -1647,7 +1654,6 @@ proc gsub(g: var TSrcGen; n: PNode; flags: SubFlags; fromStmtList = false) =
       if n.len >= 1 and n[^1].kind != nkEmpty:
         put(g, tkSpaces, Space)
         putWithSpace(g, tkEquals, "=")
-
         # TODO this is a hack to make `valueOr` in `let ... ` drop the `do` but
         #      it is dubious if it is correct - there's a parsing ambiguity
         #      in nkPar / nkCommand / nkCall that needs resolving
@@ -1885,15 +1891,13 @@ proc gsub(g: var TSrcGen; n: PNode; flags: SubFlags; fromStmtList = false) =
     if n.len > 0:
       putWithSpace(g, tkObject, "object")
       g.inside(ObjectDef):
-        gsub(g, n[0])
-        gsub(g, n[1])
+        gsub(g, n[0]) # nkEmpty (unused)
+        gsub(g, n[1]) # nkOfInherit / nkEmpty
         withIndent(g):
           gmids(g, n)
 
         gcoms(g)
-        gsub(g, n[2])
-
-      blankLine(g)
+        gsub(g, n[2]) # fields
     else:
       put(g, tkObject, "object")
   of nkRecList:
@@ -1902,7 +1906,15 @@ proc gsub(g: var TSrcGen; n: PNode; flags: SubFlags; fromStmtList = false) =
 
     gmids(g, n)
     for i in 0 ..< n.len:
-      optNL(g)
+      # The prefix check is here because if the previous line has a postfix
+      # and the next has a prefix and they are both doc comments,
+      # this might generate an invalid doc comment
+      # TODO this should only apply to doc comments and maybe needs deep
+      # comment inspection
+      if i > 0 and n[i].prefix.len == 0:
+        optNL(g, n[i - 1], n[i])
+      else:
+        optNL(g)
       gsub(g, n[i])
       gcoms(g)
 
@@ -1944,7 +1956,6 @@ proc gsub(g: var TSrcGen; n: PNode; flags: SubFlags; fromStmtList = false) =
       gsonsNL(g, n, 1)
       gcoms(g) # BUGFIX: comment for the last enum field
       dedent(g)
-      blankLine(g)
     else:
       put(g, tkEnum, "enum")
   of nkEnumFieldDef:
@@ -2004,7 +2015,6 @@ proc gsub(g: var TSrcGen; n: PNode; flags: SubFlags; fromStmtList = false) =
     gproc(g, n)
   of nkTypeSection:
     gsection(g, n, tkType, "type")
-    blankLine(g)
   of nkConstSection:
     gsection(g, n, tkConst, "const")
   of nkVarSection:
@@ -2202,7 +2212,6 @@ proc gsub(g: var TSrcGen; n: PNode; flags: SubFlags; fromStmtList = false) =
           len(": ") + lsub(g, n[0])
         else:
           0
-
       # Semi-colon here is ugly but necessary for semantic equality, else we
       # get different groupings of nkIdentDefs and their descendants
       # TODO relaxing this to semantic equivalence would allow the use of `,`
@@ -2242,6 +2251,9 @@ proc gsub(g: var TSrcGen; n: PNode; flags: SubFlags; fromStmtList = false) =
   if sfSkipPostfix notin flags:
     gpostfixes(g, n)
 
+  if n.kind in blankAfterComplex and currLine < g.line:
+    g.blankLine()
+
 proc renderTree*(n: PNode; conf: ConfigRef = nil): string =
   if n == nil:
     return "<nil tree>"
@@ -2256,7 +2268,6 @@ proc renderTree*(n: PNode; conf: ConfigRef = nil): string =
       conf
     ,
   )
-
   # do not indent the initial statement list so that
   # writeFile("file.nim", repr n)
   # produces working Nim code:

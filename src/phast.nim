@@ -1040,8 +1040,7 @@ type
       ident*: PIdent
     else:
       sons*: TNodeSeq
-    when defined(nimsuggest):
-      endInfo*: TLineInfo
+    endInfo*: TLineInfo
     prefix*: seq[Token] # comments leading up to this node
     mid*: seq[Token] # comments in the middle of the node
     postfix*: seq[Token] # comments after the node
@@ -1156,6 +1155,7 @@ type
       # for modules, it's a placeholder for compiler
       # generated code that will be appended to the
       # module after the sem pass (see appendToModule)
+
     options*: TOptions
     position*: int
       # used for many different things:
@@ -1168,14 +1168,17 @@ type
       # for modules, an unique index corresponding
       # to the module's fileIdx
       # for variables a slot index for the evaluator
+
     offset*: int32 # offset of record field
     disamb*: int32
       # disambiguation number; the basic idea is that
       # `<procname>__<module>_<disamb>`
+
     loc*: TLoc
     annex*: PLib
       # additional fields (seldom used, so we use a
       # reference to another object to save space)
+
     when hasFFI:
       cname*: string
         # resolved C declaration name in importc decl, e.g.:
@@ -1186,6 +1189,7 @@ type
       # it won't cause problems
       # for skModule the string literal to output for
       # deprecated modules.
+
     when defined(nimsuggest):
       allUsages*: seq[TLineInfo]
 
@@ -1219,19 +1223,23 @@ type
       # formal param list
       # for concepts, the concept body
       # else: unused
+
     owner*: PSym # the 'owner' of the type
     sym*: PSym
       # types have the sym associated with them
       # it is used for converting types to strings
+
     size*: BiggestInt
       # the size of the type in bytes
       # -1 means that the size is unkwown
+
     align*: int16 # the type's alignment requirements
     paddingAtEnd*: int16 #
     loc*: TLoc
     typeInst*: PType
       # for generic instantiations the tyGenericInst that led to this
       # type.
+
     uniqueId*: ItemId
       # due to a design mistake, we need to keep the real ID here as it
       # is required by the --incremental:on mode.
@@ -1560,6 +1568,7 @@ proc getDeclPragma*(n: PNode): PNode =
         Empty
         Ident "int"
     ]#
+
     if n[0].kind == nkPragmaExpr:
       result = n[0][1]
   else:
@@ -1945,7 +1954,6 @@ proc assignType*(dest, src: PType) =
   dest.n = src.n
   dest.size = src.size
   dest.align = src.align
-
   # this fixes 'type TLock = TSysLock':
   if src.sym != nil:
     if dest.sym != nil:
@@ -1973,7 +1981,6 @@ proc exactReplica*(t: PType): PType =
 
 proc copySym*(s: PSym; idgen: IdGenerator): PSym =
   result = newSym(s.kind, s.name, idgen, s.owner, s.info, s.options)
-
   #result.ast = nil            # BUGFIX; was: s.ast which made problems
   result.typ = s.typ
   result.flags = s.flags
@@ -1992,10 +1999,8 @@ proc createModuleAlias*(
     s: PSym; idgen: IdGenerator; newIdent: PIdent; info: TLineInfo; options: TOptions
 ): PSym =
   result = newSym(s.kind, newIdent, idgen, s.owner, info, options)
-
   # keep ID!
   result.ast = s.ast
-
   #result.id = s.id # XXX figure out what to do with the ID.
   result.flags = s.flags
   result.options = s.options
@@ -2021,7 +2026,6 @@ proc newIdTable*(): TIdTable =
 
 proc resetIdTable*(x: var TIdTable) =
   x.counter = 0
-
   # clear and set to old initial size:
   setLen(x.data, 0)
   setLen(x.data, StartSize)
@@ -2153,7 +2157,6 @@ template transitionNodeKindCommon(k: TNodeKind) =
       mid: obj.mid,
       postfix: obj.postfix,
     )
-
   # n.comment = obj.comment # shouldn't be needed, the address doesnt' change
   when defined(useNodeIds):
     n.id = obj.id
@@ -2487,6 +2490,7 @@ proc toObjectFromRefPtrGeneric*(typ: PType): PType =
     A3 = ref object f2: int
     A4 = object f3: int
   ]#
+
   result = typ
   while true:
     case result.kind
@@ -2571,7 +2575,6 @@ proc newProcType*(info: TLineInfo; id: ItemId; owner: PSym): PType =
   result.n = newNodeI(nkFormalParams, info)
 
   rawAddSon(result, nil) # return type
-
   # result.n[0] used to be `nkType`, but now it's `nkEffectList` because
   # the effects are now stored in there too ... this is a bit hacky, but as
   # usual we desperately try to save memory:

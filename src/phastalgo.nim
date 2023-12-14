@@ -274,13 +274,11 @@ proc sameIgnoreBacktickGensymInfo(a, b: string): bool =
 
     if aa != bb:
       return false
-
     # the characters are identical:
     if i >= alen:
       # both cursors at the end:
       if j >= b.len:
         return true
-
       # not yet at the end of 'b':
       return false
     elif j >= b.len:
@@ -845,7 +843,6 @@ proc debug(n: PNode; conf: ConfigRef) =
   var this: DebugPrinter
 
   this.visited = initTable[pointer, int]()
-
   #this.renderSymType = true
   this.useColor = not defined(windows)
 
@@ -994,7 +991,6 @@ proc strTableInclReportConflict*(
     var it = t.data[h]
     if it == nil:
       break
-
     # Semantic checking can happen multiple times thanks to templates
     # and overloading: (var x=@[]; x).mapIt(it).
     # So it is possible the very same sym is added multiple

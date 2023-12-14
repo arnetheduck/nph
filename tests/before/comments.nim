@@ -30,9 +30,6 @@ and this
   ]#
 ]#
 
-x 324
-  # A comment after
-
 template x =
   ## A template doc comment
   try:
@@ -40,6 +37,10 @@ template x =
   except Exception:
     mixin `$` # A comment after mixin
     echo 4
+
+type
+  # comment after type keyword
+  LonelyObject* = object
 
 type
   SingleValueSetting* {.pure.} = enum ## \
@@ -64,6 +65,12 @@ type
     field2: int ## Field comment again
     fiiiiiiiiiiiiiiiiiiiiiiiieeeeeeeeeld: int # loooooooooooooooooooong comment past the max line length
   # and here
+
+  NewlineObject = object
+    field: int ## doc comment after field
+    ## doc comment continues, though not as a postfix - empty line after
+
+    field2: int ## just a doc again
 
   Inherited = object of RootObj # inherited eol comment
                                 # inherited next line indent comments
@@ -270,14 +277,6 @@ discard # discard eol
   # discard first line
   54 # discard value
 
-block:
-  f
-  .x
-  # comment between the dots
-  .z()
-  # also after call
-  .d()
-
 proc f: bool =
   ## Comment here
   ## another
@@ -298,9 +297,60 @@ proc f: bool =
     else:
       false
 
-
 command "a", "b", "c" # command eol comment
 
 command "first arg", # first arg comment
   "second arg", # second arg comment
   "third arg" # third arg comment
+
+command "first arg"
+# comment after command
+
+command 234
+  # command after ind
+
+when false:
+  command "first arg"
+  # comment after command nest
+
+when false:
+  command a.b
+  # comment after command dotexpr nest
+
+call() # call eol
+
+echo dotexpr.dot # after dotexpr in command
+
+# between two dotepxrs
+
+dotexpr
+# between dotexpr and dotonnewline
+.dotonnewline
+
+if true:
+  echo dotexpr.dot # after dotexpr in command ind
+  # between two dotepxrs ind
+  dotexpr
+  # between dotexpr and dotonnewline ind
+  .dotonnewline
+
+block:
+  f
+  .x
+  # comment between the dots
+  .z()
+  # also after call
+  .d() # far eol of dotexpr
+
+  # after dotexpr ind
+
+
+
+block:
+  # no whitespace between the next two multilines
+  functionCall(
+    param
+  )
+  functionCall(
+    param
+  )

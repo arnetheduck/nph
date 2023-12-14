@@ -44,10 +44,12 @@ proc aaaaa[A, B, C](
   aaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbb, cccccccccccccccc,
   ddddddddddddddddddd: int;
 )
+
 proc aaaa*[
   Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc,
   Dddddddddddddddddddddd
 ](v: int)
+
 proc aaaaaaaaa*[
   Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc,
   Dddddddddddddddddddddd
@@ -60,6 +62,7 @@ proc aaaaaaaa[T: Aaaa](v: int)
 proc aaaaaaaa[
   Tttttttttttttttttttttttttttttttttttttttttt: Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 ](v: int)
+
 proc aaaaaaaa[T: Aaaa; S: static int](v: int)
 proc aaaaaaaa[
   T:
@@ -93,17 +96,11 @@ aasdcsaa(
 )
 
 type Ap = proc()
-
 type Bp = proc
-
 type Cp = proc(v: int)
-
 type Dp = proc() {.nimcall.}
-
 type Ep = proc {.nimcall.}
-
 type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc {.bbbbbbbbbbbbbbbbbbbbbbbb.}
-
 type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =
   proc(aaaaaaaa: Bbbbbbb; ccccccccc: Dddddddddddd; eeeeee: Ffffff)
 

@@ -112,9 +112,9 @@ sons:
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
+  - kind: "nkCommentStmt"
+    "comment": "# needs spaces"
   - kind: "nkForStmt"
-    prefix:
-      - "# needs spaces"
     sons:
       - kind: "nkIdent"
         ident: "a"
@@ -168,9 +168,9 @@ sons:
                         sons:
                           - kind: "nkIdent"
                             ident: "xxx"
+  - kind: "nkCommentStmt"
+    "comment": "# command syntax with colon"
   - kind: "nkDiscardStmt"
-    prefix:
-      - "# command syntax with colon"
     sons:
       - kind: "nkCommand"
         sons:
@@ -182,6 +182,10 @@ sons:
             sons:
               - kind: "nkIdent"
                 ident: "yyy"
+  - kind: "nkCommentStmt"
+    "comment": "# TODO"
+  - kind: "nkCommentStmt"
+    "comment": "# (try: (discard rOk.tryError(); false) except ResultError[int]: true)"
   - kind: "nkCommand"
     sons:
       - kind: "nkDotExpr"
@@ -200,11 +204,13 @@ sons:
                 sons:
                   - kind: "nkIdent"
                     ident: "yy"
+  - kind: "nkCommentStmt"
+    "comment": "# we don\'t what `do` in let but need it in the above commend - this needs"
+  - kind: "nkCommentStmt"
+    "comment": "# more investigation - this is important for templates calls like Result.valueOr"
+  - kind: "nkCommentStmt"
+    "comment": "# which become ugly otherwise"
   - kind: "nkLetSection"
-    prefix:
-      - "# we don\'t what `do` in let but need it in the above commend - this needs"
-      - "# more investigation - this is important for templates calls like Result.valueOr"
-      - "# which become ugly otherwise"
     sons:
       - kind: "nkIdentDefs"
         sons:

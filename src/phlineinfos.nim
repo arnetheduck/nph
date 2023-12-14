@@ -14,7 +14,6 @@
 import "$nim"/compiler/[ropes, pathutils], std/[hashes, tables]
 
 const explanationsBaseUrl* = "https://nim-lang.github.io/Nim"
-
 # was: "https://nim-lang.org/docs" but we're now usually showing devel docs
 # instead of latest release docs.
 
@@ -333,18 +332,22 @@ type
     quotedName*: Rope
       # cached quoted short name for codegen
       # purposes
+
     quotedFullName*: Rope
       # cached quoted full name for codegen
       # purposes
+
     lines*: seq[string]
       # the source code of the module
       #   used for better error messages and
       #   embedding the original source in the
       #   generated code
+
     dirtyFile*: AbsoluteFile
       # the file that is actually read into memory
       # and parsed; usually "" but is used
       # for 'nimsuggest'
+
     hash*: string # the checksum of the file
     dirty*: bool # for 'nimpretty' like tooling
     fullContent*: string
@@ -368,7 +371,6 @@ type
 
   TErrorOutputs* = set[TErrorOutput]
   ERecoverableError* = object of ValueError
-
   ESuggestDone* = object of ValueError
 
 proc `==`*(a, b: FileIndex): bool {.borrow.}
@@ -399,6 +401,7 @@ type MsgConfig* = object ## does not need to be stored in the incremental cache
   trackPosAttached*: bool
     ## whether the tracking position was attached to
     ## some close token.
+
   errorOutputs*: TErrorOutputs
   msgContext*: seq[tuple[info: TLineInfo, detail: string]]
   lastError*: TLineInfo
