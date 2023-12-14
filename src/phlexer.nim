@@ -43,8 +43,8 @@ const
       '@', '~', ':'
     }
   UnaryMinusWhitelist = {' ', '\t', '\n', '\r', ',', ';', '(', '[', '{'}
-
 # don't forget to update the 'highlite' module if these charsets should change
+
 type
   TokType* = enum
     tkInvalid = "tkInvalid"
@@ -192,16 +192,20 @@ type
     base*: NumericalBase
       # the numerical base; only valid for int
       # or float literals
+
     spacing*: set[TokenSpacing] # spaces around token
     indent*: int
       # the indentation; != -1 if the token has been
       # preceded with indentation
+
     ident*: PIdent # the parsed identifier
     iNumber*: BiggestInt # the parsed integer literal
     fNumber*: BiggestFloat # the parsed floating point literal
     literal*: string
       # the parsed (string) literal; and
       # documentation comments are here too
+
+    prevLine*: uint16 # line at which the previous token ended
     line*, col*: int
     offsetA*, offsetB*: int
       # used for pretty printing so that literals
@@ -214,9 +218,12 @@ type
       # if > 0 an indentation has already been read
       # this is needed because scanning comments
       # needs so much look-ahead
+
     currLineIndent*: int
     errorHandler*: ErrorHandler
     cache*: IdentCache
+    tokenEnd*: TLineInfo
+    previousTokenEnd*: TLineInfo
     config*: ConfigRef
     printTokens: bool
 
@@ -232,6 +239,7 @@ template ones(n): untyped =
   ((1 shl n) - 1)
 
 # for utf-8 conversion
+
 proc isNimIdentifier*(s: string): bool =
   let sLen = s.len
   if sLen > 0 and s[0] in SymStartChars:
@@ -413,7 +421,6 @@ proc getNumber(L: var Lexer; result: var Token) =
     L.bufpos = startpos # Use L.bufpos as pos because of matchChars
 
     matchChars(L, t, literalishChars)
-
     # We must verify +/- specifically so that we're not past the literal
     if L.buf[L.bufpos] in {'+', '-'} and L.buf[L.bufpos - 1] in {'e', 'E'}:
       t.literal.add(L.buf[L.bufpos])
@@ -522,7 +529,6 @@ proc getNumber(L: var Lexer; result: var Token) =
       discard matchUnderscoreChars(L, result, {'0' .. '9'})
 
   let endpos = L.bufpos
-
   # Second stage, find out if there's a datatype suffix and handle it
   var postPos = endpos
   if L.buf[postPos] in {'\'', 'f', 'F', 'd', 'D', 'i', 'I', 'u', 'U'}:
@@ -581,7 +587,6 @@ proc getNumber(L: var Lexer; result: var Token) =
         lexMessageLitNum(L, "invalid number suffix: '$1'", errPos)
     else:
       lexMessageLitNum(L, "invalid number suffix: '$1'", errPos)
-
   # Is there still a literalish char awaiting? Then it's an error!
   if L.buf[postPos] in literalishChars or
       (L.buf[postPos] == '.' and L.buf[postPos + 1] in {'0' .. '9'}):
@@ -724,7 +729,6 @@ proc getNumber(L: var Lexer; result: var Token) =
 
         if outOfRange:
           lexMessageLitNum(L, "number out of range: '$1'", startpos)
-
       # Promote int literal to int64? Not always necessary, but more consistent
       if result.tokType == tkIntLit:
         if result.iNumber > high(int32) or result.iNumber < low(int32):
@@ -762,13 +766,11 @@ proc handleHexChar(L: var Lexer; xi: var int; position: range[0 .. 4]) =
   of '"', '\'':
     if position <= 1:
       invalid()
-
     # do not progress the bufpos here.
     if position == 0:
       inc(L.bufpos)
   else:
     invalid()
-
     # Need to progress for `nim check`
     inc(L.bufpos)
 
@@ -780,7 +782,6 @@ proc handleDecChars(L: var Lexer; xi: var int) =
 
 proc addUnicodeCodePoint(s: var string; i: int) =
   let i = cast[uint](i)
-
   # inlined toUTF-8 to avoid unicode and strutils dependencies.
   let pos = s.len
   if i <= 127:
@@ -945,7 +946,6 @@ proc getString(L: var Lexer; tok: var Token; mode: StringMode) =
     tok.tokType = tkTripleStrLit # long string literal:
 
     inc(pos, 2) # skip ""
-
     # skip leading newline:
     if L.buf[pos] in {' ', '\t'}:
       var newpos = pos + 1
@@ -1063,7 +1063,6 @@ proc getCharacter(L: var Lexer; tok: var Token) =
     tokenEndIgnore(tok, L.bufpos - 1)
 
 const UnicodeOperatorStartChars = {'\226', '\194', '\195'}
-
 # the allowed unicode characters ("∙ ∘ × ★ ⊗ ⊘ ⊙ ⊛ ⊠ ⊡ ∩ ∧ ⊓ ± ⊕ ⊖ ⊞ ⊟ ∪ ∨ ⊔")
 # all start with one of these.
 
@@ -1221,7 +1220,6 @@ proc getOperator(L: var Lexer; tok: var Token) =
 
   endOperator(L, tok, pos, h)
   tokenEnd(tok, pos - 1)
-
   # advance pos but don't store it in L.bufpos so the next token (which might
   # be an operator too) gets the preceding spaces:
   tok.spacing = tok.spacing - {tsTrailing, tsEof}
@@ -1246,7 +1244,6 @@ proc getPrecedence*(tok: Token): int =
   case tok.tokType
   of tkOpr:
     let relevantChar = tok.ident.s[0]
-
     # arrow like?
     if tok.ident.s.len > 1 and tok.ident.s[^1] == '>' and
         tok.ident.s[^2] in {'-', '~', '='}:
@@ -1426,10 +1423,13 @@ proc skip(L: var Lexer; tok: var Token) =
 
 proc rawGetTok*(L: var Lexer; tok: var Token) =
   template atTokenEnd() {.dirty.} =
-    discard
+    L.previousTokenEnd.line = L.tokenEnd.line
+    L.previousTokenEnd.col = L.tokenEnd.col
+    L.tokenEnd.line = tok.line.uint16
+    L.tokenEnd.col = getColNumber(L, L.bufpos).int16
 
-  # TODO nimsuggest leftover
   reset(tok)
+  tok.prevLine = L.tokenEnd.line
 
   tok.indent = -1
 

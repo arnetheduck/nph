@@ -31,6 +31,9 @@ template ttt*(): untyped =
 discard xxxx "arg":
     yyy
 
+# TODO
+# (try: (discard rOk.tryError(); false) except ResultError[int]: true)
+
 res.add fff do:
     yy()
 

@@ -47,7 +47,6 @@ proc equivalent*(a, b: PNode): Outcome =
       # TODO the positive and negative ranges of integers are not the same - is this a problem?
       #      what about more complex expressions?
       return Outcome(kind: Same)
-
     # runnableExamples: static: ... turns into a staticStmt when broken up in
     # lines (!)
     if a.kind == nkCall and b.kind == nkStaticStmt and a.sons.len > 1 and

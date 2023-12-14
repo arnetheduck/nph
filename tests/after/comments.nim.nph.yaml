@@ -28,14 +28,6 @@ sons:
     "comment": "##[\u000A  these also come in doc variants\u000A]##"
   - kind: "nkCommentStmt"
     "comment": "#[\u000A  #[\u000A    they can be nested\u000A  ]#\u000A]#"
-  - kind: "nkCommand"
-    sons:
-      - kind: "nkIdent"
-        ident: "x"
-      - kind: "nkIntLit"
-        intVal: 324
-        postfix:
-          - "# A comment after"
   - kind: "nkTemplateDef"
     sons:
       - kind: "nkIdent"
@@ -48,9 +40,9 @@ sons:
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkStmtList"
-        prefix:
-          - "## A template doc comment"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "## A template doc comment"
           - kind: "nkTryStmt"
             sons:
               - kind: "nkStmtList"
@@ -78,6 +70,24 @@ sons:
                             ident: "echo"
                           - kind: "nkIntLit"
                             intVal: 4
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        prefix:
+          - "# comment after type keyword"
+        sons:
+          - kind: "nkPostfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "*"
+              - kind: "nkIdent"
+                ident: "LonelyObject"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
   - kind: "nkTypeSection"
     sons:
       - kind: "nkTypeDef"
@@ -140,9 +150,9 @@ sons:
                 ident: "fspEnd"
                 postfix:
                   - "## Seek relative to end"
-                  - "# text file handling:"
       - kind: "nkTypeDef"
         prefix:
+          - "# text file handling:"
           - "## Position relative to which seek should happen."
           - "# The values are ordered so that they match with stdio"
           - "# SEEK_SET, SEEK_CUR and SEEK_END respectively."
@@ -193,6 +203,37 @@ sons:
           - "# and here"
         sons:
           - kind: "nkIdent"
+            ident: "NewlineObject"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkRecList"
+                sons:
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "field"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+                    postfix:
+                      - "## doc comment after field"
+                  - kind: "nkIdentDefs"
+                    prefix:
+                      - "## doc comment continues, though not as a postfix - empty line after"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "field2"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+                    postfix:
+                      - "## just a doc again"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
             ident: "Inherited"
           - kind: "nkEmpty"
           - kind: "nkObjectTy"
@@ -228,6 +269,8 @@ sons:
               - kind: "nkRecList"
                 sons:
                   - kind: "nkRecCase"
+                    mid:
+                      - "# casetype eol"
                     sons:
                       - kind: "nkIdentDefs"
                         sons:
@@ -236,8 +279,6 @@ sons:
                           - kind: "nkIdent"
                             ident: "bool"
                           - kind: "nkEmpty"
-                        postfix:
-                          - "# casetype eol"
                       - kind: "nkOfBranch"
                         mid:
                           - "# of eol"
@@ -399,9 +440,9 @@ sons:
               - kind: "nkIdent"
                 ident: "somecond"
           - kind: "nkStmtList"
-            prefix:
-              - "# when first line"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# when first line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
@@ -412,9 +453,9 @@ sons:
           - "# else colon line"
         sons:
           - kind: "nkStmtList"
-            prefix:
-              - "# else first line"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# else first line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
@@ -425,18 +466,18 @@ sons:
           - kind: "nkIdent"
             ident: "true"
           - kind: "nkStmtList"
-            prefix:
-              - "# if next line"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# if next line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
       - kind: "nkElse"
         sons:
           - kind: "nkStmtList"
-            prefix:
-              - "# else next line"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# else next line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
@@ -469,9 +510,9 @@ sons:
           - kind: "nkIdent"
             ident: "true"
           - kind: "nkStmtList"
-            prefix:
-              - "# if dedented colon line"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# if dedented colon line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
@@ -518,9 +559,9 @@ sons:
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkStmtList"
-        prefix:
-          - "# proc first line"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "# proc first line"
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
@@ -536,9 +577,9 @@ sons:
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkStmtList"
-        prefix:
-          - "## A proc doc comment"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "## A proc doc comment"
           - kind: "nkIfStmt"
             sons:
               - kind: "nkElifBranch"
@@ -590,11 +631,13 @@ sons:
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
+          - kind: "nkCommentStmt"
+            "comment": "## indented doc comment for proc"
+          - kind: "nkCommentStmt"
+            "comment": "## that is long"
+  - kind: "nkCommentStmt"
+    "comment": "# before module"
   - kind: "nkImportStmt"
-    prefix:
-      - "## indented doc comment for proc"
-      - "## that is long"
-      - "# before module"
     sons:
       - kind: "nkIdent"
         ident: "module"
@@ -611,9 +654,9 @@ sons:
       - "# try colon line"
     sons:
       - kind: "nkStmtList"
-        prefix:
-          - "# try first line"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "# try first line"
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
@@ -624,9 +667,9 @@ sons:
           - "# except colon line"
         sons:
           - kind: "nkStmtList"
-            prefix:
-              - "# except first line"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# except first line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
@@ -637,9 +680,9 @@ sons:
           - "# Finally colon line"
         sons:
           - kind: "nkStmtList"
-            prefix:
-              - "# finally first line"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# finally first line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
@@ -648,9 +691,9 @@ sons:
   - kind: "nkTryStmt"
     sons:
       - kind: "nkStmtList"
-        prefix:
-          - "# try first dedent line"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "# try first dedent line"
           - kind: "nkCall"
             sons:
               - kind: "nkIdent"
@@ -660,9 +703,9 @@ sons:
           - "# try last dedent line"
         sons:
           - kind: "nkStmtList"
-            prefix:
-              - "# except dedent first line"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# except dedent first line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
@@ -671,15 +714,15 @@ sons:
           - "# except dedent last line"
         sons:
           - kind: "nkStmtList"
-            prefix:
-              - "# finally first dedent line"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# finally first dedent line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
+  - kind: "nkCommentStmt"
+    "comment": "# finally last dedent line"
   - kind: "nkForStmt"
-    prefix:
-      - "# finally last dedent line"
     mid:
       - "# for colon line"
     sons:
@@ -694,9 +737,9 @@ sons:
           - kind: "nkIntLit"
             intVal: 1
       - kind: "nkStmtList"
-        prefix:
-          - "# for first line"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "# for first line"
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
@@ -713,9 +756,9 @@ sons:
           - kind: "nkIdent"
             ident: "true"
           - kind: "nkStmtList"
-            prefix:
-              - "# of first line"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# of first line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
@@ -724,9 +767,9 @@ sons:
           - "# case else colon line"
         sons:
           - kind: "nkStmtList"
-            prefix:
-              - "# case else first line"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# case else first line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
@@ -749,6 +792,8 @@ sons:
           - kind: "nkEmpty"
           - kind: "nkStmtList"
             sons:
+              - kind: "nkCommentStmt"
+                "comment": "# do first line"
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
@@ -761,9 +806,9 @@ sons:
     sons:
       - kind: "nkEmpty"
       - kind: "nkStmtList"
-        prefix:
-          - "# block first line"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "# block first line"
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
@@ -791,9 +836,9 @@ sons:
               - kind: "nkEmpty"
               - kind: "nkEmpty"
               - kind: "nkStmtList"
-                prefix:
-                  - "# lambda first line"
                 sons:
+                  - kind: "nkCommentStmt"
+                    "comment": "# lambda first line"
                   - kind: "nkDiscardStmt"
                     sons:
                       - kind: "nkEmpty"
@@ -807,9 +852,9 @@ sons:
       - kind: "nkIdent"
         ident: "false"
       - kind: "nkStmtList"
-        prefix:
-          - "# while first line"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "# while first line"
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
@@ -818,9 +863,9 @@ sons:
       - "# static colon line"
     sons:
       - kind: "nkStmtList"
-        prefix:
-          - "# static first line"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "# static first line"
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
@@ -846,10 +891,10 @@ sons:
               - kind: "nkIdent"
                 ident: "field2"
               - kind: "nkIntLit"
+                prefix:
+                  - "# field colon line"
+                  - "# Field colon next line"
                 intVal: 42
-            postfix:
-              - "# Field colon next line"
-              - "# field colon line"
   - kind: "nkAsgn"
     sons:
       - kind: "nkIdent"
@@ -881,6 +926,10 @@ sons:
                     ident: "result"
                   - kind: "nkIdent"
                     ident: "add"
+  - kind: "nkCommentStmt"
+    "comment": "## Doc comment after indented statement"
+  - kind: "nkCommentStmt"
+    "comment": "## needs to be double"
   - kind: "nkInfix"
     sons:
       - kind: "nkIdent"
@@ -888,9 +937,6 @@ sons:
         postfix:
           - "# dedented comment in infix"
       - kind: "nkIdent"
-        prefix:
-          - "## Doc comment after indented statement"
-          - "## needs to be double"
         ident: "abc"
       - kind: "nkIdent"
         ident: "def"
@@ -964,9 +1010,9 @@ sons:
             ident: "b"
           - kind: "nkIdent"
             ident: "c"
+  - kind: "nkCommentStmt"
+    "comment": "# dedented comment after keyword parameter"
   - kind: "nkPragma"
-    prefix:
-      - "# dedented comment after keyword parameter"
     sons:
       - kind: "nkIdent"
         ident: "pragma"
@@ -1035,32 +1081,6 @@ sons:
         intVal: 54
         postfix:
           - "# discard value"
-  - kind: "nkBlockStmt"
-    sons:
-      - kind: "nkEmpty"
-      - kind: "nkStmtList"
-        prefix:
-          - "# also after call"
-          - "# comment between the dots"
-        sons:
-          - kind: "nkCall"
-            sons:
-              - kind: "nkDotExpr"
-                sons:
-                  - kind: "nkCall"
-                    sons:
-                      - kind: "nkDotExpr"
-                        sons:
-                          - kind: "nkDotExpr"
-                            sons:
-                              - kind: "nkIdent"
-                                ident: "f"
-                              - kind: "nkIdent"
-                                ident: "x"
-                          - kind: "nkIdent"
-                            ident: "z"
-                  - kind: "nkIdent"
-                    ident: "d"
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
@@ -1074,10 +1094,11 @@ sons:
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkStmtList"
-        prefix:
-          - "## Comment here"
-          - "## another"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "## Comment here"
+          - kind: "nkCommentStmt"
+            "comment": "## another"
           - kind: "nkPar"
             sons:
               - kind: "nkInfix"
@@ -1101,10 +1122,11 @@ sons:
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkStmtList"
-        prefix:
-          - "## Comment here"
-          - "## another"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "## Comment here"
+          - kind: "nkCommentStmt"
+            "comment": "## another"
           - kind: "nkIfStmt"
             sons:
               - kind: "nkElifBranch"
@@ -1118,10 +1140,11 @@ sons:
               - kind: "nkElse"
                 sons:
                   - kind: "nkStmtList"
-                    prefix:
-                      - "## comment"
-                      - "## comment 2"
                     sons:
+                      - kind: "nkCommentStmt"
+                        "comment": "## comment"
+                      - kind: "nkCommentStmt"
+                        "comment": "## comment 2"
                       - kind: "nkIfStmt"
                         sons:
                           - kind: "nkElifBranch"
@@ -1129,10 +1152,11 @@ sons:
                               - kind: "nkIdent"
                                 ident: "true"
                               - kind: "nkStmtList"
-                                prefix:
-                                  - "## comment"
-                                  - "## comment 2"
                                 sons:
+                                  - kind: "nkCommentStmt"
+                                    "comment": "## comment"
+                                  - kind: "nkCommentStmt"
+                                    "comment": "## comment 2"
                                   - kind: "nkPar"
                                     sons:
                                       - kind: "nkInfix"
@@ -1177,3 +1201,163 @@ sons:
         strVal: "third arg"
         postfix:
           - "# third arg comment"
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkStrLit"
+        strVal: "first arg"
+  - kind: "nkCommentStmt"
+    "comment": "# comment after command"
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkIntLit"
+        intVal: 234
+        postfix:
+          - "# command after ind"
+  - kind: "nkWhenStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkIdent"
+            ident: "false"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkCommand"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "command"
+                  - kind: "nkStrLit"
+                    strVal: "first arg"
+              - kind: "nkCommentStmt"
+                "comment": "# comment after command nest"
+  - kind: "nkWhenStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkIdent"
+            ident: "false"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkCommand"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "command"
+                  - kind: "nkDotExpr"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "a"
+                      - kind: "nkIdent"
+                        ident: "b"
+              - kind: "nkCommentStmt"
+                "comment": "# comment after command dotexpr nest"
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "call"
+    postfix:
+      - "# call eol"
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "echo"
+      - kind: "nkDotExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "dotexpr"
+          - kind: "nkIdent"
+            ident: "dot"
+        postfix:
+          - "# after dotexpr in command"
+  - kind: "nkCommentStmt"
+    "comment": "# between two dotepxrs"
+  - kind: "nkDotExpr"
+    mid:
+      - "# between dotexpr and dotonnewline"
+    sons:
+      - kind: "nkIdent"
+        ident: "dotexpr"
+      - kind: "nkIdent"
+        ident: "dotonnewline"
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkIdent"
+            ident: "true"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkCommand"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "echo"
+                  - kind: "nkDotExpr"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "dotexpr"
+                      - kind: "nkIdent"
+                        ident: "dot"
+                    postfix:
+                      - "# after dotexpr in command ind"
+              - kind: "nkCommentStmt"
+                "comment": "# between two dotepxrs ind"
+              - kind: "nkDotExpr"
+                mid:
+                  - "# between dotexpr and dotonnewline ind"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "dotexpr"
+                  - kind: "nkIdent"
+                    ident: "dotonnewline"
+  - kind: "nkBlockStmt"
+    sons:
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkCall"
+            sons:
+              - kind: "nkDotExpr"
+                mid:
+                  - "# also after call"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkDotExpr"
+                        mid:
+                          - "# comment between the dots"
+                        sons:
+                          - kind: "nkDotExpr"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "f"
+                              - kind: "nkIdent"
+                                ident: "x"
+                          - kind: "nkIdent"
+                            ident: "z"
+                  - kind: "nkIdent"
+                    ident: "d"
+            postfix:
+              - "# far eol of dotexpr"
+          - kind: "nkCommentStmt"
+            "comment": "# after dotexpr ind"
+  - kind: "nkBlockStmt"
+    sons:
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkCommentStmt"
+            "comment": "# no whitespace between the next two multilines"
+          - kind: "nkCall"
+            sons:
+              - kind: "nkIdent"
+                ident: "functionCall"
+              - kind: "nkIdent"
+                ident: "param"
+          - kind: "nkCall"
+            sons:
+              - kind: "nkIdent"
+                ident: "functionCall"
+              - kind: "nkIdent"
+                ident: "param"

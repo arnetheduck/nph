@@ -29,11 +29,14 @@ task self, "Format nph itself":
       echo file
       exec "./nph " & file
 
+import std/algorithm
 task f, "Format":
   build()
 
   cd "tests/before"
-  for file in listFiles("."):
+  # Sort tests so that 00_empty always is first, which makes it a convenient
+  # experimentation ground :)
+  for file in sorted(listFiles(".")):
     if file.len > 4 and file[^4..^1] == ".nim":
       echo file
       exec "../../nph " & file & " --outDir:../after --debug"

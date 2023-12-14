@@ -29,8 +29,6 @@ and this
   ]#
 ]#
 
-x 324 # A comment after
-
 template x() =
   ## A template doc comment
   try:
@@ -38,6 +36,10 @@ template x() =
   except Exception:
     mixin `$` # A comment after mixin
     echo 4
+
+type
+  # comment after type keyword
+  LonelyObject* = object
 
 type
   SingleValueSetting* {.pure.} = enum
@@ -51,9 +53,8 @@ type
     mm ## memory management selected
 
   FileSeekPos* = enum
-    fspEnd
-      ## Seek relative to end
-      # text file handling:
+    fspEnd ## Seek relative to end
+  # text file handling:
 
   ## Position relative to which seek should happen.
   # The values are ordered so that they match with stdio
@@ -68,6 +69,11 @@ type
       # loooooooooooooooooooong comment past the max line length
 
   # and here
+  NewlineObject = object
+    field: int ## doc comment after field
+    ## doc comment continues, though not as a postfix - empty line after
+    field2: int ## just a doc again
+
   Inherited = object of RootObj
     # inherited eol comment
     # inherited next line indent comments
@@ -145,9 +151,9 @@ proc x() =
 
 proc x() =
   discard
+  ## indented doc comment for proc
+  ## that is long
 
-## indented doc comment for proc
-## that is long
 # before module
 import module # with a comment
 import module ## with a comment
@@ -176,8 +182,8 @@ except:
 finally:
   # finally first dedent line
   discard
-
 # finally last dedent line
+
 for i in 0 .. 1: # for colon line
   # for first line
   discard
@@ -191,6 +197,7 @@ else: # case else colon line
   discard
 
 f do -> int: # do colon line
+  # do first line
   discard
   discard
 
@@ -204,7 +211,6 @@ let x =
       # lambda first line
       discard
       discard
-
 while false: # while colon line
   # while first line
   discard
@@ -217,8 +223,10 @@ discard Object(
     # object eol
     # object first line
     field: 0, # field line
-    field2: # Field colon next line
-      42 # field colon line
+    field2:
+      # field colon line
+      # Field colon next line
+      42
   )
 
 a = b
@@ -230,6 +238,7 @@ proc ffff() =
 
 ## Doc comment after indented statement
 ## needs to be double
+
 abc and # dedented comment in infix
 def
 
@@ -248,8 +257,8 @@ a(b = c # comment after keyword parameter
   )
 
 a(b = c)
-
 # dedented comment after keyword parameter
+
 {.pragma # comment here
   .}
 
@@ -268,11 +277,6 @@ discard
   # discard eol
   # discard first line
   54 # discard value
-
-block:
-  # also after call
-  # comment between the dots
-  f.x.z().d()
 
 proc f(): bool =
   ## Comment here
@@ -299,3 +303,48 @@ command "a", "b", "c" # command eol comment
 command "first arg", # first arg comment
   "second arg", # second arg comment
   "third arg" # third arg comment
+
+command "first arg"
+# comment after command
+
+command 234 # command after ind
+
+when false:
+  command "first arg"
+  # comment after command nest
+
+when false:
+  command a.b
+  # comment after command dotexpr nest
+
+call() # call eol
+
+echo dotexpr.dot # after dotexpr in command
+
+# between two dotepxrs
+
+dotexpr
+# between dotexpr and dotonnewline
+.dotonnewline
+
+if true:
+  echo dotexpr.dot # after dotexpr in command ind
+  # between two dotepxrs ind
+
+  dotexpr
+  # between dotexpr and dotonnewline ind
+  .dotonnewline
+
+block:
+  f.x
+  # comment between the dots
+  .z()
+  # also after call
+  .d() # far eol of dotexpr
+
+  # after dotexpr ind
+
+block:
+  # no whitespace between the next two multilines
+  functionCall(param)
+  functionCall(param)

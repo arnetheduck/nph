@@ -324,6 +324,7 @@ type
     name*: ptr string
       # not used beyond sorting purposes; name is also
       # part of 'qualifiedPath'
+
     filePath*: string
     line*: int # Starts at 1
     column*: int # Starts at 0
@@ -398,15 +399,18 @@ type
     arguments*: string
       ## the arguments to be passed to the program that
       ## should be run
+
     ideCmd*: IdeCmd
     oldNewlines*: bool
     cCompiler*: TSystemCC # the used compiler
     modifiedyNotes*: TNoteKinds
       # notes that have been set/unset from either cmdline/configs
+
     cmdlineNotes*: TNoteKinds # notes that have been set/unset from cmdline
     foreignPackageNotes*: TNoteKinds
     notes*: TNoteKinds
       # notes after resolving all logic(defaults, verbosity)/cmdline/configs
+
     warningAsErrors*: TNoteKinds
     mainPackageNotes*: TNoteKinds
     mainPackageId*: int
@@ -421,6 +425,7 @@ type
       ## We need to use a StringTableRef here as defined
       ## symbols are always guaranteed to be style
       ## insensitive. Otherwise hell would break lose.
+
     packageCache*: StringTableRef
     nimblePaths*: seq[AbsoluteDir]
     searchPaths*: seq[AbsoluteDir]
@@ -456,6 +461,7 @@ type
     externalToLink*: seq[string]
       # files to link in addition to the file
       # we compiled (*)
+
     linkOptionsCmd*: string
     compileOptionsCmd*: seq[string]
     linkOptions*: string # (*)
@@ -556,7 +562,7 @@ const
     {
       optObjCheck, optFieldCheck, optRangeCheck, optBoundsCheck, optOverflowCheck,
       optAssert, optWarns, optRefCheck, optHints, optStackTrace, optLineTrace,
-        # consider adding `optStackTraceMsgs`
+      # consider adding `optStackTraceMsgs`
       optTrMacros, optStyleCheck, optCursorInference
     }
   DefaultGlobalOptions* = {optThreadAnalysis, optExcessiveStackTrace, optJsBigInt64}
@@ -669,7 +675,6 @@ proc newConfigRef*(): ConfigRef =
 
   initConfigRefCommon(result)
   setTargetFromSystem(result.target)
-
   # enable colors by default on terminals
   if terminal.isatty(stderr):
     incl(result.globalOptions, optUseColors)
@@ -857,11 +862,9 @@ proc setDefaultLibpath*(conf: ConfigRef) =
     var prefix = getPrefixDir(conf)
 
     conf.libpath = prefix / RelativeDir"lib"
-
     # Special rule to support other tools (nimble) which import the compiler
     # modules and make use of them.
     let realNimPath = findExe("nim")
-
     # Find out if $nim/../../lib/system.nim exists.
     let parentNimLibPath = realNimPath.parentDir.parentDir / "lib"
     if not fileExists(conf.libpath.string / "system.nim") and
@@ -1118,7 +1121,6 @@ proc findProjectNimFile*(conf: ConfigRef; pkg: string): string =
           if ext == ".nimble":
             if nimblepkg.len == 0:
               nimblepkg = name
-
               # Since nimble packages can have their source in a subfolder,
               # check the last folder we were in for a possible match.
               if dir != prev:
@@ -1156,6 +1158,7 @@ proc canonicalImportAux*(conf: ConfigRef; file: AbsoluteFile): string =
   Shows the canonical module import, e.g.:
   system, std/tables, fusion/pointers, system/assertions, std/private/asciitables
   ]##
+
   var ret = getRelativePathFromConfigPath(conf, file, isTitle = true)
 
   let dir = getNimbleFile(conf, $file).parentDir.AbsoluteDir
