@@ -3,11 +3,13 @@
 ## Opinionated source code formatter
 
 import
-  "."/[astcmp, phast, phastalgo, phmsgs, phlineinfos, phoptions, phparser, phrenderer]
+  "."/
+    [
+      astcmp, astyaml, phast, phastalgo, phmsgs, phlineinfos, phoptions, phparser,
+      phrenderer
+    ]
 
 import "$nim"/compiler/idents
-
-from "$nim"/compiler/astalgo import nil
 
 import std/[parseopt, strutils, os, sequtils]
 
@@ -92,9 +94,9 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool
     stderr.writeLine "--- Formatted ---"
     stderr.writeLine output
     stderr.writeLine "--- PRE ---"
-    stderr.writeLine astalgo.treeToYaml(nil, eq.a)
+    stderr.writeLine treeToYaml(nil, eq.a)
     stderr.writeLine "--- POST ---"
-    stderr.writeLine astAlgo.treeToYaml(nil, eq.b)
+    stderr.writeLine treeToYaml(nil, eq.b)
 
     rawMessage(conf, errGenerated, "Formatted output does not match input, report bug!")
     if infile != outfile or infile == "-":

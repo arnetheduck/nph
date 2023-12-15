@@ -1032,7 +1032,7 @@ type
       intVal*: BiggestInt
     of nkFloatLit .. nkFloat128Lit:
       floatVal*: BiggestFloat
-    of nkStrLit .. nkTripleStrLit:
+    of nkStrLit .. nkTripleStrLit, nkCommentStmt:
       strVal*: string
     of nkSym:
       sym*: PSym
@@ -1294,35 +1294,12 @@ template nodeId(n: PNode): int =
 type Gconfig = object
   # we put comments in a side channel to avoid increasing `sizeof(TNode)`, which
   # reduces memory usage given that `PNode` is the most allocated type by far.
-  comments: Table[int, string] # nodeId => comment
   useIc*: bool
 
 var gconfig {.threadvar.}: Gconfig
 
 proc setUseIc*(useIc: bool) =
   gconfig.useIc = useIc
-
-proc comment*(n: PNode): string =
-  if nfHasComment in n.flags and not gconfig.useIc:
-    # IC doesn't track comments, see `packed_ast`, so this could fail
-    result = gconfig.comments[n.nodeId]
-
-proc `comment=`*(n: PNode; a: string) =
-  let id = n.nodeId
-  if a.len > 0:
-    # if needed, we could periodically cleanup gconfig.comments when its size increases,
-    # to ensure only live nodes (and with nfHasComment) have an entry in gconfig.comments;
-    # for compiling compiler, the waste is very small:
-    # num calls to newNodeImpl: 14984160 (num of PNode allocations)
-    # size of gconfig.comments: 33585
-    # num of nodes with comments that were deleted and hence wasted: 3081
-    n.flags.incl nfHasComment
-
-    gconfig.comments[id] = a
-  elif nfHasComment in n.flags:
-    n.flags.excl nfHasComment
-
-    gconfig.comments.del(id)
 
 # BUGFIX: a module is overloadable so that a proc can have the
 # same name as an imported module. This is necessary because of
@@ -1613,13 +1590,6 @@ when defined(useNodeIds):
 
 template newNodeImpl(info2) =
   result = PNode(kind: kind, info: info2)
-  when false:
-    # this would add overhead, so we skip it; it results in a small amount of leaked entries
-    # for old PNode that gets re-allocated at the same address as a PNode that
-    # has `nfHasComment` set (and an entry in that table). Only `nfHasComment`
-    # should be used to test whether a PNode has a comment; gconfig.comments
-    # can contain extra entries for deleted PNode's with comments.
-    gconfig.comments.del(cast[int](result))
 
 template setIdMaybe() =
   when defined(useNodeIds):
@@ -2113,37 +2083,6 @@ proc delSon*(father: PNode; idx: int) =
 
   father.sons.setLen(father.len - 1)
 
-proc copyNode*(src: PNode): PNode =
-  # does not copy its sons!
-  if src == nil:
-    return nil
-
-  result = newNode(src.kind)
-  result.info = src.info
-  result.typ = src.typ
-  result.flags = src.flags * PersistentNodeFlags
-  result.comment = src.comment
-  when defined(useNodeIds):
-    if result.id == nodeIdToDebug:
-      echo "COMES FROM ", src.id
-
-  case src.kind
-  of nkCharLit .. nkUInt64Lit:
-    result.intVal = src.intVal
-  of nkFloatLiterals:
-    result.floatVal = src.floatVal
-  of nkSym:
-    result.sym = src.sym
-  of nkIdent:
-    result.ident = src.ident
-  of nkStrLit .. nkTripleStrLit:
-    result.strVal = src.strVal
-  else:
-    discard
-
-  when defined(nimsuggest):
-    result.endInfo = src.endInfo
-
 template transitionNodeKindCommon(k: TNodeKind) =
   let obj {.inject.} = n[]
 
@@ -2222,55 +2161,6 @@ proc transitionToLet*(s: PSym) =
   s.guard = obj.guard
   s.bitsize = obj.bitsize
   s.alignment = obj.alignment
-
-template copyNodeImpl(dst, src, processSonsStmt) =
-  if src == nil:
-    return
-
-  dst = newNode(src.kind)
-  dst.info = src.info
-  when defined(nimsuggest):
-    result.endInfo = src.endInfo
-
-  dst.typ = src.typ
-  dst.flags = src.flags * PersistentNodeFlags
-  dst.comment = src.comment
-  when defined(useNodeIds):
-    if dst.id == nodeIdToDebug:
-      echo "COMES FROM ", src.id
-
-  case src.kind
-  of nkCharLit .. nkUInt64Lit:
-    dst.intVal = src.intVal
-  of nkFloatLiterals:
-    dst.floatVal = src.floatVal
-  of nkSym:
-    dst.sym = src.sym
-  of nkIdent:
-    dst.ident = src.ident
-  of nkStrLit .. nkTripleStrLit:
-    dst.strVal = src.strVal
-  else:
-    processSonsStmt
-
-proc shallowCopy*(src: PNode): PNode =
-  # does not copy its sons, but provides space for them:
-  copyNodeImpl(result, src):
-    newSeq(result.sons, src.len)
-
-proc copyTree*(src: PNode): PNode =
-  # copy a whole syntax tree; performs deep copying
-  copyNodeImpl(result, src):
-    newSeq(result.sons, src.len)
-    for i in 0 ..< src.len:
-      result[i] = copyTree(src[i])
-
-proc copyTreeWithoutNode*(src, skippedNode: PNode): PNode =
-  copyNodeImpl(result, src):
-    result.sons = newSeqOfCap[PNode](src.len)
-    for n in src.sons:
-      if n != skippedNode:
-        result.sons.add copyTreeWithoutNode(n, skippedNode)
 
 proc hasSonWith*(n: PNode; kind: TNodeKind): bool =
   for i in 0 ..< n.len:

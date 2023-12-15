@@ -1373,6 +1373,8 @@ proc scanComment(L: var Lexer; tok: var Token) =
 
     return
 
+  # tok.literal.add '#'
+
   tokenBegin(tok, pos)
   while L.buf[pos] notin {CR, LF, nimlexbase.EndOfFile}:
     tok.literal.add(L.buf[pos])
