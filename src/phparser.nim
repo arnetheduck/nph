@@ -269,7 +269,7 @@ proc addSkipped(p: var Parser; n: PNode) =
     let c = newNodeI(nkCommentStmt, getLineInfo(p.lex, tmp[i]))
     p.lineNumberPrevious = int tmp[i].prevLine
     setEndInfo(c)
-    c.comment = tmp[i].literal
+    c.strVal = tmp[i].literal
     n.add c
     i += 1
 
@@ -2519,24 +2519,12 @@ proc parseRoutine(p: var Parser; kind: TNodeKind): PNode =
 
   indAndComment(p, result, maybeMissEquals = maybeMissEquals) # no comments really
 
-  let body = result[^1]
-  if body.kind == nkStmtList and body.len > 0 and body[0].comment.len > 0 and
-      body[0].kind != nkCommentStmt:
-    if result.comment.len == 0:
-      # proc fn*(a: int): int = a ## foo
-      # => moves comment `foo` to `fn`
-      result.comment = body[0].comment
-      body[0].comment = ""
-      #else:
-      #  assert false, p.lex.config$body.info # avoids hard to track bugs, fail early.
-      # Yeah, that worked so well. There IS a bug in this logic, now what?
-
   setEndInfo()
 
 proc parseCommentStmt(p: var Parser): PNode =
   #| commentStmt = COMMENT
   result = newNodeP(nkCommentStmt, p)
-  result.comment = p.tok.literal
+  result.strVal = p.tok.literal
   setEndInfo()
 
   getTok(p)

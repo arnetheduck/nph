@@ -205,7 +205,7 @@ sons:
                   - kind: "nkIdent"
                     ident: "yy"
   - kind: "nkCommentStmt"
-    "comment": "# we don\'t what `do` in let but need it in the above commend - this needs"
+    "comment": "# we don't what `do` in let but need it in the above commend - this needs"
   - kind: "nkCommentStmt"
     "comment": "# more investigation - this is important for templates calls like Result.valueOr"
   - kind: "nkCommentStmt"

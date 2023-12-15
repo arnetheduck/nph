@@ -316,7 +316,7 @@ proc toYamlChar(c: char): string =
   case c
   of '\0' .. '\x1F', '\x7F' .. '\xFF':
     result = "\\u" & strutils.toHex(ord(c), 4)
-  of '\'', '\"', '\\':
+  of '\"', '\\':
     result = '\\' & c
   else:
     result = $c
@@ -517,7 +517,7 @@ proc treeToYamlAux(
         else:
           result.addf("$N$1ident: null", [istr])
       of nkCommentStmt:
-        result.addf("$N$1\"comment\": $2", [istr, makeYamlString(n.comment)])
+        result.addf("$N$1\"comment\": $2", [istr, makeYamlString(n.strVal)])
       else:
         if n.len > 0:
           result.addf("$N$1sons:", [istr])
@@ -761,9 +761,9 @@ proc value(this: var DebugPrinter; value: PNode) =
 
   this.key "kind"
   this.value value.kind
-  if value.comment.len > 0:
-    this.key "comment"
-    this.value value.comment
+  # if value.strVal.len > 0:
+  #   this.key "comment"
+  #   this.value value.comment
 
   when defined(useNodeIds):
     this.key "id"

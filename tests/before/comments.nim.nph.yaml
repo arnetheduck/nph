@@ -114,7 +114,7 @@ sons:
               - kind: "nkIdent"
                 ident: "arguments"
                 postfix:
-                  - "## experimental: the arguments passed after \'-r\'"
+                  - "## experimental: the arguments passed after '-r'"
               - kind: "nkIdent"
                 ident: "backend"
                 postfix:
