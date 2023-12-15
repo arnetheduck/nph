@@ -1,0 +1,500 @@
+kind: "nkStmtList"
+sons:
+  - kind: "nkCommentStmt"
+    "comment": "# How do is parsed is a bit of a mystery, so here are some test cases..."
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkDo"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkFormalParams"
+            sons:
+              - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 0
+  - kind: "nkCommentStmt"
+    "comment": "# These two forms _generally_ generate the same AST, significantly different from the one above"
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 1
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 2
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkStrLit"
+            strVal: "param"
+          - kind: "nkDo"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkDiscardStmt"
+                    sons:
+                      - kind: "nkIntLit"
+                        intVal: 3
+  - kind: "nkCommentStmt"
+    "comment": "# for some reason, this comes with an extra nkCall in the AST"
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkStrLit"
+            strVal: "param"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 4
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkStrLit"
+        strVal: "param"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 5
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "call"
+      - kind: "nkDo"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkFormalParams"
+            sons:
+              - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 6
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "call"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 7
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "call"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 8
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "call"
+      - kind: "nkStrLit"
+        strVal: "param"
+      - kind: "nkDo"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkFormalParams"
+            sons:
+              - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 9
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "call"
+      - kind: "nkStrLit"
+        strVal: "param"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 10
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "call"
+      - kind: "nkStrLit"
+        strVal: "param"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 11
+  - kind: "nkCall"
+    sons:
+      - kind: "nkDotExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "call"
+          - kind: "nkIdent"
+            ident: "dotExpr"
+      - kind: "nkDo"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkFormalParams"
+            sons:
+              - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkEmpty"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 12
+  - kind: "nkCall"
+    sons:
+      - kind: "nkDotExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "call"
+          - kind: "nkIdent"
+            ident: "dotExpr"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 13
+  - kind: "nkCall"
+    sons:
+      - kind: "nkDotExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "call"
+          - kind: "nkIdent"
+            ident: "dotExpr"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 14
+  - kind: "nkAsgn"
+    sons:
+      - kind: "nkIdent"
+        ident: "asgn"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkDo"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkDiscardStmt"
+                    sons:
+                      - kind: "nkIntLit"
+                        intVal: 15
+  - kind: "nkAsgn"
+    sons:
+      - kind: "nkIdent"
+        ident: "asgn"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 16
+  - kind: "nkAsgn"
+    sons:
+      - kind: "nkIdent"
+        ident: "asgn"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 17
+  - kind: "nkAsgn"
+    sons:
+      - kind: "nkIdent"
+        ident: "asgn"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkDo"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkDiscardStmt"
+                    sons:
+                      - kind: "nkIntLit"
+                        intVal: 18
+  - kind: "nkAsgn"
+    sons:
+      - kind: "nkIdent"
+        ident: "asgn"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 19
+  - kind: "nkAsgn"
+    sons:
+      - kind: "nkIdent"
+        ident: "asgn"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 20
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkIdent"
+            ident: "false"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkReturnStmt"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "command"
+                      - kind: "nkDo"
+                        sons:
+                          - kind: "nkEmpty"
+                          - kind: "nkEmpty"
+                          - kind: "nkEmpty"
+                          - kind: "nkFormalParams"
+                            sons:
+                              - kind: "nkEmpty"
+                          - kind: "nkEmpty"
+                          - kind: "nkEmpty"
+                          - kind: "nkStmtList"
+                            sons:
+                              - kind: "nkDiscardStmt"
+                                sons:
+                                  - kind: "nkIntLit"
+                                    intVal: 21
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkIdent"
+            ident: "false"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkReturnStmt"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "command"
+                      - kind: "nkStmtList"
+                        sons:
+                          - kind: "nkDiscardStmt"
+                            sons:
+                              - kind: "nkIntLit"
+                                intVal: 22
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkIdent"
+            ident: "false"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkReturnStmt"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "command"
+                      - kind: "nkStmtList"
+                        sons:
+                          - kind: "nkDiscardStmt"
+                            sons:
+                              - kind: "nkIntLit"
+                                intVal: 23
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkDo"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkDiscardStmt"
+                    sons:
+                      - kind: "nkIntLit"
+                        intVal: 24
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 25
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 26
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "call"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkDo"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 27
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "call"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 28
+  - kind: "nkObjConstr"
+    sons:
+      - kind: "nkIdent"
+        ident: "call"
+      - kind: "nkExprColonExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "command"
+          - kind: "nkIntLit"
+            intVal: 29

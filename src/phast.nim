@@ -499,24 +499,21 @@ const
   tyError* = tyProxy # as an errornous node should match everything
   tyUnknown* = tyFromExpr
   tyUnknownTypes* = {tyError, tyFromExpr}
-  tyTypeClasses* =
-    {
-      tyBuiltInTypeClass, tyCompositeTypeClass, tyUserTypeClass, tyUserTypeClassInst,
-      tyAnd, tyOr, tyNot, tyAnything
-    }
+  tyTypeClasses* = {
+    tyBuiltInTypeClass, tyCompositeTypeClass, tyUserTypeClass, tyUserTypeClassInst,
+    tyAnd, tyOr, tyNot, tyAnything
+  }
   tyMetaTypes* = {tyGenericParam, tyTypeDesc, tyUntyped} + tyTypeClasses
   tyUserTypeClasses* = {tyUserTypeClass, tyUserTypeClassInst}
   # consider renaming as `tyAbstractVarRange`
-  abstractVarRange* =
-    {
-      tyGenericInst, tyRange, tyVar, tyDistinct, tyOrdinal, tyTypeDesc, tyAlias,
-      tyInferred, tySink, tyOwned
-    }
-  abstractInst* =
-    {
-      tyGenericInst, tyDistinct, tyOrdinal, tyTypeDesc, tyAlias, tyInferred, tySink,
-      tyOwned
-    } # xxx what about tyStatic?
+  abstractVarRange* = {
+    tyGenericInst, tyRange, tyVar, tyDistinct, tyOrdinal, tyTypeDesc, tyAlias,
+    tyInferred, tySink, tyOwned
+  }
+  abstractInst* = {
+    tyGenericInst, tyDistinct, tyOrdinal, tyTypeDesc, tyAlias, tyInferred, tySink,
+    tyOwned
+  } # xxx what about tyStatic?
 
 type
   TTypeKinds* = set[TTypeKind]
@@ -679,8 +676,9 @@ type
   TSymKinds* = set[TSymKind]
 
 const
-  routineKinds* =
-    {skProc, skFunc, skMethod, skIterator, skConverter, skMacro, skTemplate}
+  routineKinds* = {
+    skProc, skFunc, skMethod, skIterator, skConverter, skMacro, skTemplate
+  }
   ExportableSymKinds* =
     {skVar, skLet, skConst, skType, skEnumField, skStub} + routineKinds
   tfUnion* = tfNoSideEffect
@@ -689,8 +687,9 @@ const
   tfReturnsNew* = tfInheritable
   skError* = skUnknown
 
-var eqTypeFlags* =
-  {tfIterator, tfNotNil, tfVarIsPtr, tfGcSafe, tfNoSideEffect, tfIsOutParam, tfSendable}
+var eqTypeFlags* = {
+  tfIterator, tfNotNil, tfVarIsPtr, tfGcSafe, tfNoSideEffect, tfIsOutParam, tfSendable
+}
   ## type flags that are essential for type equality.
   ## This is now a variable because for emulation of version:1.0 we
   ## might exclude {tfGcSafe, tfNoSideEffect}.
@@ -979,20 +978,19 @@ type TMagic* = enum # symbols that require compiler magic:
 
 const
   # things that we can evaluate safely at compile time, even if not asked for it:
-  ctfeWhitelist* =
-    {
-      mNone, mSucc, mPred, mInc, mDec, mOrd, mLengthOpenArray, mLengthStr, mLengthArray,
-      mLengthSeq, mArrGet, mArrPut, mAsgn, mDestroy, mIncl, mExcl, mCard, mChr, mAddI,
-      mSubI, mMulI, mDivI, mModI, mAddF64, mSubF64, mMulF64, mDivF64, mShrI, mShlI,
-      mBitandI, mBitorI, mBitxorI, mMinI, mMaxI, mAddU, mSubU, mMulU, mDivU, mModU,
-      mEqI, mLeI, mLtI, mEqF64, mLeF64, mLtF64, mLeU, mLtU, mEqEnum, mLeEnum, mLtEnum,
-      mEqCh, mLeCh, mLtCh, mEqB, mLeB, mLtB, mEqRef, mEqProc, mLePtr, mLtPtr,
-      mEqCString, mXor, mUnaryMinusI, mUnaryMinusI64, mAbsI, mNot, mUnaryPlusI,
-      mBitnotI, mUnaryPlusF64, mUnaryMinusF64, mCharToStr, mBoolToStr, mIntToStr,
-      mInt64ToStr, mFloatToStr, mCStrToStr, mStrToStr, mEnumToStr, mAnd, mOr, mEqStr,
-      mLeStr, mLtStr, mEqSet, mLeSet, mLtSet, mMulSet, mPlusSet, mMinusSet, mConStrStr,
-      mAppendStrCh, mAppendStrStr, mAppendSeqElem, mInSet, mRepr, mOpenArrayToSeq
-    }
+  ctfeWhitelist* = {
+    mNone, mSucc, mPred, mInc, mDec, mOrd, mLengthOpenArray, mLengthStr, mLengthArray,
+    mLengthSeq, mArrGet, mArrPut, mAsgn, mDestroy, mIncl, mExcl, mCard, mChr, mAddI,
+    mSubI, mMulI, mDivI, mModI, mAddF64, mSubF64, mMulF64, mDivF64, mShrI, mShlI,
+    mBitandI, mBitorI, mBitxorI, mMinI, mMaxI, mAddU, mSubU, mMulU, mDivU, mModU, mEqI,
+    mLeI, mLtI, mEqF64, mLeF64, mLtF64, mLeU, mLtU, mEqEnum, mLeEnum, mLtEnum, mEqCh,
+    mLeCh, mLtCh, mEqB, mLeB, mLtB, mEqRef, mEqProc, mLePtr, mLtPtr, mEqCString, mXor,
+    mUnaryMinusI, mUnaryMinusI64, mAbsI, mNot, mUnaryPlusI, mBitnotI, mUnaryPlusF64,
+    mUnaryMinusF64, mCharToStr, mBoolToStr, mIntToStr, mInt64ToStr, mFloatToStr,
+    mCStrToStr, mStrToStr, mEnumToStr, mAnd, mOr, mEqStr, mLeStr, mLtStr, mEqSet,
+    mLeSet, mLtSet, mMulSet, mPlusSet, mMinusSet, mConStrStr, mAppendStrCh,
+    mAppendStrStr, mAppendSeqElem, mInSet, mRepr, mOpenArrayToSeq
+  }
   generatedMagics* = {mNone, mIsolate, mFinished, mOpenArrayToSeq}
     ## magics that are generated as normal procs in the backend
 
@@ -1028,11 +1026,11 @@ type
     info*: TLineInfo
     flags*: TNodeFlags
     case kind*: TNodeKind
-    of nkCharLit .. nkUInt64Lit:
+    of nkCharLit..nkUInt64Lit:
       intVal*: BiggestInt
-    of nkFloatLit .. nkFloat128Lit:
+    of nkFloatLit..nkFloat128Lit:
       floatVal*: BiggestFloat
-    of nkStrLit .. nkTripleStrLit, nkCommentStmt:
+    of nkStrLit..nkTripleStrLit, nkCommentStmt:
       strVal*: string
     of nkSym:
       sym*: PSym
@@ -1288,9 +1286,6 @@ type
     impNo
     impYes
 
-template nodeId(n: PNode): int =
-  cast[int](n)
-
 type Gconfig = object
   # we put comments in a side channel to avoid increasing `sizeof(TNode)`, which
   # reduces memory usage given that `PNode` is the most allocated type by far.
@@ -1305,62 +1300,52 @@ proc setUseIc*(useIc: bool) =
 # same name as an imported module. This is necessary because of
 # the poor naming choices in the standard library.
 const
-  OverloadableSyms* =
-    {
-      skProc, skFunc, skMethod, skIterator, skConverter, skModule, skTemplate, skMacro,
-      skEnumField
-    }
+  OverloadableSyms* = {
+    skProc, skFunc, skMethod, skIterator, skConverter, skModule, skTemplate, skMacro,
+    skEnumField
+  }
   GenericTypes*: TTypeKinds = {tyGenericInvocation, tyGenericBody, tyGenericParam}
-  StructuralEquivTypes*: TTypeKinds =
-    {
-      tyNil, tyTuple, tyArray, tySet, tyRange, tyPtr, tyRef, tyVar, tyLent, tySequence,
-      tyProc, tyOpenArray, tyVarargs
-    }
-  ConcreteTypes*: TTypeKinds =
-    {
-      tyBool,
-      tyChar,
-      tyEnum,
-      tyArray,
-      tyObject,
-      tySet,
-      tyTuple,
-      tyRange,
-      tyPtr,
-      tyRef,
-      tyVar,
-      tyLent,
-      tySequence,
-      tyProc,
-      tyPointer,
-      tyOpenArray,
-      tyString,
-      tyCstring,
-      tyInt .. tyInt64,
-      tyFloat .. tyFloat128,
-      tyUInt .. tyUInt64
-    }
+  StructuralEquivTypes*: TTypeKinds = {
+    tyNil, tyTuple, tyArray, tySet, tyRange, tyPtr, tyRef, tyVar, tyLent, tySequence,
+    tyProc, tyOpenArray, tyVarargs
+  }
+  ConcreteTypes*: TTypeKinds = {
+    tyBool,
+    tyChar,
+    tyEnum,
+    tyArray,
+    tyObject,
+    tySet,
+    tyTuple,
+    tyRange,
+    tyPtr,
+    tyRef,
+    tyVar,
+    tyLent,
+    tySequence,
+    tyProc,
+    tyPointer,
+    tyOpenArray,
+    tyString,
+    tyCstring,
+    tyInt..tyInt64,
+    tyFloat..tyFloat128,
+    tyUInt..tyUInt64
+  }
     # types of the expr that may occur in::
     # var x = expr
-  IntegralTypes* =
-    {
-      tyBool,
-      tyChar,
-      tyEnum,
-      tyInt .. tyInt64,
-      tyFloat .. tyFloat128,
-      tyUInt .. tyUInt64
-    } # weird name because it contains tyFloat
+  IntegralTypes* = {
+    tyBool, tyChar, tyEnum, tyInt..tyInt64, tyFloat..tyFloat128, tyUInt..tyUInt64
+  } # weird name because it contains tyFloat
   ConstantDataTypes*: TTypeKinds = {tyArray, tySet, tyTuple, tySequence}
   NilableTypes*: TTypeKinds = {tyPointer, tyCstring, tyRef, tyPtr, tyProc, tyError}
     # TODO
   PtrLikeKinds*: TTypeKinds = {tyPointer, tyPtr} # for VM
-  PersistentNodeFlags*: TNodeFlags =
-    {
-      nfBase2, nfBase8, nfBase16, nfDotSetter, nfDotField, nfIsRef, nfIsPtr,
-      nfPreventCg, nfLL, nfFromTemplate, nfDefaultRefsParam, nfExecuteOnReload,
-      nfLastRead, nfFirstWrite, nfSkipFieldChecking
-    }
+  PersistentNodeFlags*: TNodeFlags = {
+    nfBase2, nfBase8, nfBase16, nfDotSetter, nfDotField, nfIsRef, nfIsPtr, nfPreventCg,
+    nfLL, nfFromTemplate, nfDefaultRefsParam, nfExecuteOnReload, nfLastRead,
+    nfFirstWrite, nfSkipFieldChecking
+  }
   namePos* = 0
   patternPos* = 1 # empty except for term rewriting macros
   genericParamsPos* = 2
@@ -1371,22 +1356,24 @@ const
   resultPos* = 7
   dispatcherPos* = 8
   nfAllFieldsSet* = nfBase2
-  nkCallKinds* =
-    {nkCall, nkInfix, nkPrefix, nkPostfix, nkCommand, nkCallStrLit, nkHiddenCallConv}
+  nkCallKinds* = {
+    nkCall, nkInfix, nkPrefix, nkPostfix, nkCommand, nkCallStrLit, nkHiddenCallConv
+  }
   nkIdentKinds* = {nkIdent, nkSym, nkAccQuoted, nkOpenSymChoice, nkClosedSymChoice}
   nkPragmaCallKinds* = {nkExprColonExpr, nkCall, nkCallStrLit}
-  nkLiterals* = {nkCharLit .. nkTripleStrLit}
-  nkFloatLiterals* = {nkFloatLit .. nkFloat128Lit}
+  nkLiterals* = {nkCharLit..nkTripleStrLit}
+  nkFloatLiterals* = {nkFloatLit..nkFloat128Lit}
   nkLambdaKinds* = {nkLambda, nkDo}
   declarativeDefs* = {nkProcDef, nkFuncDef, nkMethodDef, nkIteratorDef, nkConverterDef}
   routineDefs* = declarativeDefs + {nkMacroDef, nkTemplateDef}
   procDefs* = nkLambdaKinds + declarativeDefs
   callableDefs* = nkLambdaKinds + routineDefs
   nkSymChoices* = {nkClosedSymChoice, nkOpenSymChoice}
-  nkStrKinds* = {nkStrLit .. nkTripleStrLit}
+  nkStrKinds* = {nkStrLit..nkTripleStrLit}
   skLocalVars* = {skVar, skLet, skForVar, skParam, skResult}
-  skProcKinds* =
-    {skProc, skFunc, skTemplate, skMacro, skIterator, skMethod, skConverter}
+  skProcKinds* = {
+    skProc, skFunc, skTemplate, skMacro, skIterator, skMethod, skConverter
+  }
   defaultSize = -1
   defaultAlignment = -1
   defaultOffset* = -1
@@ -1487,16 +1474,16 @@ proc len*(n: Indexable): int {.inline.} =
 
 proc safeLen*(n: PNode): int {.inline.} =
   ## works even for leaves.
-  if n.kind in {nkNone .. nkNilLit}:
+  if n.kind in {nkNone..nkNilLit}:
     result = 0
   else:
     result = n.len
 
 proc safeArrLen*(n: PNode): int {.inline.} =
   ## works for array-like objects (strings passed as openArray in VM).
-  if n.kind in {nkStrLit .. nkTripleStrLit}:
+  if n.kind in {nkStrLit..nkTripleStrLit}:
     result = n.strVal.len
-  elif n.kind in {nkNone .. nkFloat128Lit}:
+  elif n.kind in {nkNone..nkFloat128Lit}:
     result = 0
   else:
     result = n.len
@@ -1578,7 +1565,7 @@ proc skipPragmaExpr*(n: PNode): PNode =
 proc setInfoRecursive*(n: PNode; info: TLineInfo) =
   ## set line info recursively
   if n != nil:
-    for i in 0 ..< n.safeLen:
+    for i in 0..<n.safeLen:
       setInfoRecursive(n[i], info)
 
     n.info = info
@@ -1751,21 +1738,21 @@ proc copyStrTable*(dest: var TStrTable; src: TStrTable) =
   dest.counter = src.counter
 
   setLen(dest.data, src.data.len)
-  for i in 0 .. high(src.data):
+  for i in 0..high(src.data):
     dest.data[i] = src.data[i]
 
 proc copyIdTable*(dest: var TIdTable; src: TIdTable) =
   dest.counter = src.counter
 
   newSeq(dest.data, src.data.len)
-  for i in 0 .. high(src.data):
+  for i in 0..high(src.data):
     dest.data[i] = src.data[i]
 
 proc copyObjectSet*(dest: var TObjectSet; src: TObjectSet) =
   dest.counter = src.counter
 
   setLen(dest.data, src.data.len)
-  for i in 0 .. high(src.data):
+  for i in 0..high(src.data):
     dest.data[i] = src.data[i]
 
 proc discardSons*(father: PNode) =
@@ -1874,8 +1861,9 @@ proc newProcNode*(
   result = newNodeI(kind, info)
   result.sons = @[name, pattern, genericParams, params, pragmas, exceptions, body]
 
-const AttachedOpToStr*: array[TTypeAttachedOp, string] =
-  ["=wasMoved", "=destroy", "=copy", "=dup", "=sink", "=trace", "=deepcopy"]
+const AttachedOpToStr*: array[TTypeAttachedOp, string] = [
+  "=wasMoved", "=destroy", "=copy", "=dup", "=sink", "=trace", "=deepcopy"
+]
 
 proc `$`*(s: PSym): string =
   if s != nil:
@@ -1936,7 +1924,7 @@ proc assignType*(dest, src: PType) =
       dest.sym = src.sym
 
   newSons(dest, src.len)
-  for i in 0 ..< src.len:
+  for i in 0..<src.len:
     dest[i] = src[i]
 
 proc copyType*(t: PType; id: ItemId; owner: PSym): PType =
@@ -2078,7 +2066,7 @@ proc delSon*(father: PNode; idx: int) =
   if father.len == 0:
     return
 
-  for i in idx ..< father.len - 1:
+  for i in idx..<father.len - 1:
     father[i] = father[i + 1]
 
   father.sons.setLen(father.len - 1)
@@ -2100,17 +2088,17 @@ template transitionNodeKindCommon(k: TNodeKind) =
   when defined(useNodeIds):
     n.id = obj.id
 
-proc transitionSonsKind*(n: PNode; kind: range[nkComesFrom .. nkTupleConstr]) =
+proc transitionSonsKind*(n: PNode; kind: range[nkComesFrom..nkTupleConstr]) =
   transitionNodeKindCommon(kind)
 
   n.sons = obj.sons
 
-proc transitionIntKind*(n: PNode; kind: range[nkCharLit .. nkUInt64Lit]) =
+proc transitionIntKind*(n: PNode; kind: range[nkCharLit..nkUInt64Lit]) =
   transitionNodeKindCommon(kind)
 
   n.intVal = obj.intVal
 
-proc transitionIntToFloatKind*(n: PNode; kind: range[nkFloatLit .. nkFloat128Lit]) =
+proc transitionIntToFloatKind*(n: PNode; kind: range[nkFloatLit..nkFloat128Lit]) =
   transitionNodeKindCommon(kind)
 
   n.floatVal = BiggestFloat(obj.intVal)
@@ -2149,7 +2137,7 @@ template transitionSymKindCommon*(k: TSymKind) =
 proc transitionGenericParamToType*(s: PSym) =
   transitionSymKindCommon(skType)
 
-proc transitionRoutineSymKind*(s: PSym; kind: range[skProc .. skTemplate]) =
+proc transitionRoutineSymKind*(s: PSym; kind: range[skProc..skTemplate]) =
   transitionSymKindCommon(kind)
 
   s.gcUnsafetyReason = obj.gcUnsafetyReason
@@ -2163,14 +2151,14 @@ proc transitionToLet*(s: PSym) =
   s.alignment = obj.alignment
 
 proc hasSonWith*(n: PNode; kind: TNodeKind): bool =
-  for i in 0 ..< n.len:
+  for i in 0..<n.len:
     if n[i].kind == kind:
       return true
 
   result = false
 
 proc hasNilSon*(n: PNode): bool =
-  for i in 0 ..< n.safeLen:
+  for i in 0..<n.safeLen:
     if n[i] == nil:
       return true
     elif hasNilSon(n[i]):
@@ -2183,19 +2171,19 @@ proc containsNode*(n: PNode; kinds: TNodeKinds): bool =
     return
 
   case n.kind
-  of nkEmpty .. nkNilLit:
+  of nkEmpty..nkNilLit:
     result = n.kind in kinds
   else:
-    for i in 0 ..< n.len:
+    for i in 0..<n.len:
       if n.kind in kinds or containsNode(n[i], kinds):
         return true
 
 proc hasSubnodeWith*(n: PNode; kind: TNodeKind): bool =
   case n.kind
-  of nkEmpty .. nkNilLit, nkFormalParams:
+  of nkEmpty..nkNilLit, nkFormalParams:
     result = n.kind == kind
   else:
-    for i in 0 ..< n.len:
+    for i in 0..<n.len:
       if (n[i].kind == kind) or hasSubnodeWith(n[i], kind):
         return true
 
@@ -2203,9 +2191,9 @@ proc hasSubnodeWith*(n: PNode; kind: TNodeKind): bool =
 
 proc getInt*(a: PNode): Int128 =
   case a.kind
-  of nkCharLit, nkUIntLit .. nkUInt64Lit:
+  of nkCharLit, nkUIntLit..nkUInt64Lit:
     result = toInt128(cast[uint64](a.intVal))
-  of nkInt8Lit .. nkInt64Lit:
+  of nkInt8Lit..nkInt64Lit:
     result = toInt128(a.intVal)
   of nkIntLit:
     # XXX: enable this assert
@@ -2216,7 +2204,7 @@ proc getInt*(a: PNode): Int128 =
 
 proc getInt64*(a: PNode): int64 {.deprecated: "use getInt".} =
   case a.kind
-  of nkCharLit, nkUIntLit .. nkUInt64Lit, nkIntLit .. nkInt64Lit:
+  of nkCharLit, nkUIntLit..nkUInt64Lit, nkIntLit..nkInt64Lit:
     result = a.intVal
   else:
     raiseRecoverableError("cannot extract number from invalid AST node")
@@ -2225,7 +2213,7 @@ proc getFloat*(a: PNode): BiggestFloat =
   case a.kind
   of nkFloatLiterals:
     result = a.floatVal
-  of nkCharLit, nkUIntLit .. nkUInt64Lit, nkIntLit .. nkInt64Lit:
+  of nkCharLit, nkUIntLit..nkUInt64Lit, nkIntLit..nkInt64Lit:
     result = BiggestFloat a.intVal
   else:
     raiseRecoverableError("cannot extract number from invalid AST node")
@@ -2235,7 +2223,7 @@ proc getFloat*(a: PNode): BiggestFloat =
 
 proc getStr*(a: PNode): string =
   case a.kind
-  of nkStrLit .. nkTripleStrLit:
+  of nkStrLit..nkTripleStrLit:
     result = a.strVal
   of nkNilLit:
     # let's hope this fixes more problems than it creates:
@@ -2248,9 +2236,9 @@ proc getStr*(a: PNode): string =
 
 proc getStrOrChar*(a: PNode): string =
   case a.kind
-  of nkStrLit .. nkTripleStrLit:
+  of nkStrLit..nkTripleStrLit:
     result = a.strVal
-  of nkCharLit .. nkUInt64Lit:
+  of nkCharLit..nkUInt64Lit:
     result = $chr(int(a.intVal))
   else:
     raiseRecoverableError("cannot extract string from invalid AST node")
@@ -2309,11 +2297,11 @@ proc hasPattern*(s: PSym): bool {.inline.} =
   result = isRoutine(s) and s.ast[patternPos].kind != nkEmpty
 
 iterator items*(n: PNode): PNode =
-  for i in 0 ..< n.safeLen:
+  for i in 0..<n.safeLen:
     yield n[i]
 
 iterator pairs*(n: PNode): tuple[i: int, n: PNode] =
-  for i in 0 ..< n.safeLen:
+  for i in 0..<n.safeLen:
     yield (i, n[i])
 
 proc isAtom*(n: PNode): bool {.inline.} =
@@ -2333,7 +2321,7 @@ proc makeStmtList*(n: PNode): PNode =
 
 proc skipStmtList*(n: PNode): PNode =
   if n.kind in {nkStmtList, nkStmtListExpr}:
-    for i in 0 ..< n.len - 1:
+    for i in 0..<n.len - 1:
       if n[i].kind notin {nkEmpty, nkCommentStmt}:
         return n
 
@@ -2426,7 +2414,7 @@ when false:
     if n.isNil:
       return true
 
-    for i in 0 ..< n.safeLen:
+    for i in 0..<n.safeLen:
       if n[i].containsNil:
         return true
 
@@ -2477,8 +2465,9 @@ proc addParam*(procType: PType; param: PSym) =
 
   rawAddSon(procType, param.typ)
 
-const magicsThatCanRaise =
-  {mNone, mSlurp, mStaticExec, mParseExprToAst, mParseStmtToAst, mEcho}
+const magicsThatCanRaise = {
+  mNone, mSlurp, mStaticExec, mParseExprToAst, mParseStmtToAst, mEcho
+}
 
 proc canRaiseConservative*(fn: PNode): bool =
   if fn.kind == nkSym and fn.sym.magic notin magicsThatCanRaise:
@@ -2487,12 +2476,11 @@ proc canRaiseConservative*(fn: PNode): bool =
     result = true
 
 proc canRaise*(fn: PNode): bool =
-  if fn.kind == nkSym and
-      (
-        fn.sym.magic notin magicsThatCanRaise or
-        {sfImportc, sfInfixCall} * fn.sym.flags == {sfImportc} or
-        sfGeneratedOp in fn.sym.flags
-      ):
+  if fn.kind == nkSym and (
+    fn.sym.magic notin magicsThatCanRaise or
+    {sfImportc, sfInfixCall} * fn.sym.flags == {sfImportc} or
+    sfGeneratedOp in fn.sym.flags
+  ):
     result = false
   elif fn.kind == nkSym and fn.sym.magic == mEcho:
     result = true
@@ -2502,18 +2490,16 @@ proc canRaise*(fn: PNode): bool =
       result = false
     else:
       result =
-        fn.typ != nil and fn.typ.n != nil and
-          (
-            (fn.typ.n[0].len < effectListLen) or
-            (
-              fn.typ.n[0][exceptionEffects] != nil and
-              fn.typ.n[0][exceptionEffects].safeLen > 0
-            )
+        fn.typ != nil and fn.typ.n != nil and (
+          (fn.typ.n[0].len < effectListLen) or (
+            fn.typ.n[0][exceptionEffects] != nil and
+            fn.typ.n[0][exceptionEffects].safeLen > 0
           )
+        )
 
 proc toHumanStrImpl[T](kind: T; num: static int): string =
   result = $kind
-  result = result[num ..^ 1]
+  result = result[num..^1]
   result[0] = result[0].toLowerAscii
 
 proc toHumanStr*(kind: TSymKind): string =
@@ -2538,29 +2524,28 @@ proc isNewStyleConcept*(n: PNode): bool {.inline.} =
 proc isOutParam*(t: PType): bool {.inline.} =
   tfIsOutParam in t.flags
 
-const nodesToIgnoreSet* =
-  {
-    nkNone .. pred(nkSym),
-    succ(nkSym) .. nkNilLit,
-    nkTypeSection,
-    nkProcDef,
-    nkConverterDef,
-    nkMethodDef,
-    nkIteratorDef,
-    nkMacroDef,
-    nkTemplateDef,
-    nkLambda,
-    nkDo,
-    nkFuncDef,
-    nkConstSection,
-    nkConstDef,
-    nkIncludeStmt,
-    nkImportStmt,
-    nkExportStmt,
-    nkPragma,
-    nkCommentStmt,
-    nkBreakState,
-    nkTypeOfExpr,
-    nkMixinStmt,
-    nkBindStmt
-  }
+const nodesToIgnoreSet* = {
+  nkNone..pred(nkSym),
+  succ(nkSym)..nkNilLit,
+  nkTypeSection,
+  nkProcDef,
+  nkConverterDef,
+  nkMethodDef,
+  nkIteratorDef,
+  nkMacroDef,
+  nkTemplateDef,
+  nkLambda,
+  nkDo,
+  nkFuncDef,
+  nkConstSection,
+  nkConstDef,
+  nkIncludeStmt,
+  nkImportStmt,
+  nkExportStmt,
+  nkPragma,
+  nkCommentStmt,
+  nkBreakState,
+  nkTypeOfExpr,
+  nkMixinStmt,
+  nkBindStmt
+}

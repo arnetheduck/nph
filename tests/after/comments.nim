@@ -146,7 +146,7 @@ proc x() =
   if true:
     numberOfCharsRead -= 2 # handle Ctrl+Z as EOF
 
-    for i in 0 ..< numberOfCharsRead:
+    for i in 0..<numberOfCharsRead:
       discard
 
 proc x() =
@@ -184,7 +184,7 @@ finally:
   discard
 # finally last dedent line
 
-for i in 0 .. 1: # for colon line
+for i in 0..1: # for colon line
   # for first line
   discard
 
@@ -196,7 +196,7 @@ else: # case else colon line
   # case else first line
   discard
 
-f do -> int: # do colon line
+f do () -> int: # do colon line
   # do first line
   discard
   discard

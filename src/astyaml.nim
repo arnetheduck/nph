@@ -19,7 +19,7 @@ proc addYamlString*(res: var string; s: string) =
   res.add "\""
   for c in s:
     case c
-    of '\0' .. '\x1F', '\x7F' .. '\xFF':
+    of '\0'..'\x1F', '\x7F'..'\xFF':
       res.add("\\u" & strutils.toHex(ord(c), 4))
     of '\"', '\\':
       res.add '\\' & c
@@ -156,11 +156,11 @@ proc treeToYamlAux(
       if conf != nil:
         res.addf("\n$1info: $2", [istr, lineInfoToStr(conf, n.info)])
       case n.kind
-      of nkCharLit .. nkInt64Lit:
+      of nkCharLit..nkInt64Lit:
         res.addf("\n$1intVal: $2", [istr, $(n.intVal)])
       of nkFloatLit, nkFloat32Lit, nkFloat64Lit:
         res.addf("\n$1floatVal: $2", [istr, n.floatVal.toStrMaxPrecision])
-      of nkStrLit .. nkTripleStrLit:
+      of nkStrLit..nkTripleStrLit:
         res.addf("\n$1strVal: $2", [istr, makeYamlString(n.strVal)])
       of nkSym:
         res.addf("\n$1sym: ", [istr])
@@ -173,7 +173,7 @@ proc treeToYamlAux(
       else:
         if n.len > 0:
           res.addf("\n$1sons: ", [istr])
-          for i in 0 ..< n.len:
+          for i in 0..<n.len:
             res.addf("\n$1  - ", [istr])
             res.treeToYamlAux(conf, n[i], marker, indent + 1, maxRecDepth - 1)
       if n.typ != nil:

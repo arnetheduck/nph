@@ -9,11 +9,10 @@ import
   gggggggggggggggggg as hhhhhhhhhhhhhhhh
 
 import
-  "."/
-    [
-      tables, sets, long, modules, even, more, more, a_really_long_module_here, more,
-      more, more, more, more
-    ]
+  "."/[
+    tables, sets, long, modules, even, more, more, a_really_long_module_here, more,
+    more, more, more, more
+  ]
 
 import tables, sets
 

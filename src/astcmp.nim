@@ -18,8 +18,9 @@ type
       a*, b*: PNode
 
 proc similarKinds(ak, bk: TNodeKind): bool =
-  ak == bk or (ak in {nkElseExpr, nkElse} and bk in {nkElseExpr, nkElse}) or
-    (ak in {nkElifExpr, nkElifBranch} and bk in {nkElifExpr, nkElifBranch})
+  ak == bk or (ak in {nkElseExpr, nkElse} and bk in {nkElseExpr, nkElse}) or (
+    ak in {nkElifExpr, nkElifBranch} and bk in {nkElifExpr, nkElifBranch}
+  )
 
 proc equivalent*(a, b: PNode): Outcome =
   if not similarKinds(a.kind, b.kind):
@@ -57,11 +58,11 @@ proc equivalent*(a, b: PNode): Outcome =
 
   let eq =
     case a.kind
-    of nkCharLit .. nkUInt64Lit:
+    of nkCharLit..nkUInt64Lit:
       a.intVal == b.intVal
-    of nkFloatLit .. nkFloat128Lit:
+    of nkFloatLit..nkFloat128Lit:
       a.floatVal == b.floatVal
-    of nkStrLit .. nkTripleStrLit:
+    of nkStrLit..nkTripleStrLit:
       a.strVal == b.strVal
     of nkSym:
       raiseAssert "Shouldn't eixst in parser"
