@@ -52,7 +52,7 @@ proc parse(input, filename: string; printTokens: bool; conf: ConfigRef): PNode =
 func isNimFile(file: string): bool =
   ## Check if a file is a Nim file (i.e. ends in .nim/nims/nimble)
   let (_, _, ext) = file.splitFile()
-  ext in ["nim", "nims", "nimble"]
+  ext in [".nim", ".nims", ".nimble"]
 
 
 proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool =
