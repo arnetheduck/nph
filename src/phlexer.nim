@@ -1463,9 +1463,12 @@ proc rawGetTok*(L: var Lexer; tok: var Token) =
       else:
         getOperator(L, tok)
     of ',':
+      tokenBegin(tok, L.bufpos)
       tok.tokType = tkComma
 
       inc(L.bufpos)
+
+      tokenEnd(tok, L.bufpos - 1)
     of 'r', 'R':
       if L.buf[L.bufpos + 1] == '\"':
         inc(L.bufpos)
@@ -1473,6 +1476,7 @@ proc rawGetTok*(L: var Lexer; tok: var Token) =
       else:
         getSymbol(L, tok)
     of '(':
+      tokenBegin(tok, L.bufpos)
       inc(L.bufpos)
       if L.buf[L.bufpos] == '.' and L.buf[L.bufpos + 1] != '.':
         tok.tokType = tkParDotLe
@@ -1480,11 +1484,17 @@ proc rawGetTok*(L: var Lexer; tok: var Token) =
         inc(L.bufpos)
       else:
         tok.tokType = tkParLe
+
+      tokenEnd(tok, L.bufpos - 1)
     of ')':
+      tokenBegin(tok, L.bufpos)
       tok.tokType = tkParRi
 
       inc(L.bufpos)
+
+      tokenEnd(tok, L.bufpos - 1)
     of '[':
+      tokenBegin(tok, L.bufpos)
       inc(L.bufpos)
       if L.buf[L.bufpos] == '.' and L.buf[L.bufpos + 1] != '.':
         tok.tokType = tkBracketDotLe
@@ -1496,26 +1506,38 @@ proc rawGetTok*(L: var Lexer; tok: var Token) =
         inc(L.bufpos)
       else:
         tok.tokType = tkBracketLe
+
+      tokenEnd(tok, L.bufpos - 1)
     of ']':
+      tokenBegin(tok, L.bufpos)
       tok.tokType = tkBracketRi
 
       inc(L.bufpos)
+      tokenEnd(tok, L.bufpos - 1)
     of '.':
       if L.buf[L.bufpos + 1] == ']':
+        tokenBegin(tok, L.bufpos)
         tok.tokType = tkBracketDotRi
 
         inc(L.bufpos, 2)
+
+        tokenEnd(tok, L.bufpos - 1)
       elif L.buf[L.bufpos + 1] == '}':
+        tokenBegin(tok, L.bufpos)
         tok.tokType = tkCurlyDotRi
 
         inc(L.bufpos, 2)
+        tokenEnd(tok, L.bufpos - 1)
       elif L.buf[L.bufpos + 1] == ')':
+        tokenBegin(tok, L.bufpos)
         tok.tokType = tkParDotRi
 
         inc(L.bufpos, 2)
+        tokenEnd(tok, L.bufpos - 1)
       else:
         getOperator(L, tok)
     of '{':
+      tokenBegin(tok, L.bufpos)
       inc(L.bufpos)
       if L.buf[L.bufpos] == '.' and L.buf[L.bufpos + 1] != '.':
         tok.tokType = tkCurlyDotLe
@@ -1523,18 +1545,25 @@ proc rawGetTok*(L: var Lexer; tok: var Token) =
         inc(L.bufpos)
       else:
         tok.tokType = tkCurlyLe
+      tokenEnd(tok, L.bufpos - 1)
     of '}':
+      tokenBegin(tok, L.bufpos)
       tok.tokType = tkCurlyRi
 
       inc(L.bufpos)
+      tokenEnd(tok, L.bufpos - 1)
     of ';':
+      tokenBegin(tok, L.bufpos)
       tok.tokType = tkSemiColon
 
       inc(L.bufpos)
+      tokenEnd(tok, L.bufpos - 1)
     of '`':
+      tokenBegin(tok, L.bufpos)
       tok.tokType = tkAccent
 
       inc(L.bufpos)
+      tokenEnd(tok, L.bufpos - 1)
     of '_':
       tokenBegin(tok, L.bufpos)
       inc(L.bufpos)

@@ -156,7 +156,7 @@ proc treeToYamlAux(
       if conf != nil:
         res.addf("\n$1info: $2", [istr, lineInfoToStr(conf, n.info)])
       case n.kind
-      of nkCharLit..nkInt64Lit:
+      of nkCharLit..nkUInt64Lit:
         res.addf("\n$1intVal: $2", [istr, $(n.intVal)])
       of nkFloatLit, nkFloat32Lit, nkFloat64Lit:
         res.addf("\n$1floatVal: $2", [istr, n.floatVal.toStrMaxPrecision])

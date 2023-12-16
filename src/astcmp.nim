@@ -5,6 +5,8 @@
 
 import "$nim"/compiler/[ast, parser, idents, options], std/sequtils
 
+from std/math import isNaN
+
 type
   Equivalence* = enum
     Same
@@ -61,7 +63,7 @@ proc equivalent*(a, b: PNode): Outcome =
     of nkCharLit..nkUInt64Lit:
       a.intVal == b.intVal
     of nkFloatLit..nkFloat128Lit:
-      a.floatVal == b.floatVal
+      (isNaN(a.floatVal) and isNaN(b.floatVal)) or a.floatVal == b.floatVal
     of nkStrLit..nkTripleStrLit:
       a.strVal == b.strVal
     of nkSym:

@@ -273,6 +273,20 @@ var
   # var first line indented
   v = 53 # after v
 
+let # let eol
+  v # let ident after symbol
+ : # let ident after colon
+    int # let ident after type
+ = # let ident after equals
+    42 # let ident after value
+
+const # const eol
+  v # const ident after symbol
+ : # const ident after colon
+    int # const ident after type
+ = # const ident after equals
+    42 # const ident after value
+
 discard # discard eol
   # discard first line
   54 # discard value
@@ -296,6 +310,13 @@ proc f: bool =
       (true or false)
     else:
       false
+
+proc f =
+  ## Doc comment only
+
+proc f =
+  ## Doc comment only
+  ## even two lines
 
 command "a", "b", "c" # command eol comment
 

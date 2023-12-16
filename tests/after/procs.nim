@@ -111,3 +111,12 @@ type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =
     eeeeeeeeeeeee: Ffffffffffffffff;
     gggggggggggggg: Hhhhhhhhhhhhhhhhhhhh;
   )
+
+proc `.()`() =
+  discard
+
+proc `[]`() =
+  discard
+
+proc `[`() =
+  discard

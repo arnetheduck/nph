@@ -816,3 +816,57 @@ sons:
                         ident: "Hhhhhhhhhhhhhhhhhhhh"
                       - kind: "nkEmpty"
               - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkAccQuoted"
+        sons:
+          - kind: "nkIdent"
+            ident: ".()"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkAccQuoted"
+        sons:
+          - kind: "nkIdent"
+            ident: "[]"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkAccQuoted"
+        sons:
+          - kind: "nkIdent"
+            ident: "["
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
