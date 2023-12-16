@@ -19,6 +19,9 @@ nph file0.nim file1.nim
 # Format the given files, writing the formatted code to /tmp
 nph file0.nim file1.nim --outdir:/tmp
 
+# Format an entire directory
+nph src/
+
 # Use --check to verify that a file is formatted correctly - useful in CI
 nph --check somefile.nim || echo "Not formatted!"
 

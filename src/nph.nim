@@ -50,6 +50,12 @@ proc parse(input, filename: string; printTokens: bool; conf: ConfigRef): PNode =
 
   parseString(input, newIdentCache(), conf, fn, printTokens = printTokens)
 
+func isNimFile(file: string): bool =
+  ## Check if a file is a Nim file (i.e. ends in .nim/nims/nimble)
+  let (_, _, ext) = file.splitFile()
+  ext in [".nim", ".nims", ".nimble"]
+
+
 proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool =
   let
     conf = newConfigRef()
@@ -128,11 +134,18 @@ proc main() =
     debug = false
     check = false
     printTokens = false
+    usesDir = false
 
   for kind, key, val in getopt():
     case kind
     of cmdArgument:
-      infiles.add(key.addFileExt(".nim"))
+      if dirExists(key):
+        usesDir = true
+        for file in walkDirRec(key):
+          if file.isNimFile:
+            inFiles &= file
+      else:
+        infiles.add(key.addFileExt(".nim"))
     of cmdLongOption, cmdShortOption:
       case normalize(key)
       of "help", "h":
@@ -161,6 +174,9 @@ proc main() =
 
   if outfile.len != 0 and outdir.len != 0:
     quit "[Error] out and outDir cannot both be specified", 3
+
+  if outfile.len != 0 and usesDir:
+    quit "[Error] out cannot be used alongside directories", 3
 
   if outfile.len == 0 and outdir.len == 0:
     outfiles = infiles
