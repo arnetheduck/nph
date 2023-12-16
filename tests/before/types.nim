@@ -13,3 +13,18 @@ type CaseObject = object
     vfalse: int
   of true:
     vtrue: int
+
+type CaseObject = object
+  case f {.aaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc, ddddddddddddddddddddd, eeeeeeeeeeeeeeeeeee.}: bool
+  of false:
+    vfalse: int
+  of true:
+    vtrue: int
+
+type PragmaObject {.objectPragma, aaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccccccc, dddddddddddddddddddd.} = object
+  vfalse {.fieldPragma.}: int
+  vpublic* {.fieldPragma.}: int
+
+  vfalse {.fieldPragma, aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccccccccccc, dddddddddddddddddddddd.}: int
+  vpublic* {.fieldPragma.}: int
+

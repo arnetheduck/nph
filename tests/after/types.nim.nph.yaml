@@ -187,3 +187,160 @@ sons:
                                   - kind: "nkIdent"
                                     ident: "int"
                                   - kind: "nkEmpty"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "CaseObject"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkRecList"
+                sons:
+                  - kind: "nkRecCase"
+                    sons:
+                      - kind: "nkIdentDefs"
+                        sons:
+                          - kind: "nkPragmaExpr"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "f"
+                              - kind: "nkPragma"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "aaaaaaaaaaaaaaaaaaaaaaaaa"
+                                  - kind: "nkIdent"
+                                    ident: "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+                                  - kind: "nkIdent"
+                                    ident: "cccccccccccccccccccc"
+                                  - kind: "nkIdent"
+                                    ident: "ddddddddddddddddddddd"
+                                  - kind: "nkIdent"
+                                    ident: "eeeeeeeeeeeeeeeeeee"
+                          - kind: "nkIdent"
+                            ident: "bool"
+                          - kind: "nkEmpty"
+                      - kind: "nkOfBranch"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "false"
+                          - kind: "nkRecList"
+                            sons:
+                              - kind: "nkIdentDefs"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "vfalse"
+                                  - kind: "nkIdent"
+                                    ident: "int"
+                                  - kind: "nkEmpty"
+                      - kind: "nkOfBranch"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "true"
+                          - kind: "nkRecList"
+                            sons:
+                              - kind: "nkIdentDefs"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "vtrue"
+                                  - kind: "nkIdent"
+                                    ident: "int"
+                                  - kind: "nkEmpty"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkPragmaExpr"
+            sons:
+              - kind: "nkIdent"
+                ident: "PragmaObject"
+              - kind: "nkPragma"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "objectPragma"
+                  - kind: "nkIdent"
+                    ident: "aaaaaaaaaaaaaaaa"
+                  - kind: "nkIdent"
+                    ident: "bbbbbbbbbbbbbbbbbb"
+                  - kind: "nkIdent"
+                    ident: "cccccccccccccccccccccc"
+                  - kind: "nkIdent"
+                    ident: "dddddddddddddddddddd"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkRecList"
+                sons:
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkPragmaExpr"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "vfalse"
+                          - kind: "nkPragma"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "fieldPragma"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkPragmaExpr"
+                        sons:
+                          - kind: "nkPostfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "*"
+                              - kind: "nkIdent"
+                                ident: "vpublic"
+                          - kind: "nkPragma"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "fieldPragma"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkPragmaExpr"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "vfalse"
+                          - kind: "nkPragma"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "fieldPragma"
+                              - kind: "nkIdent"
+                                ident: "aaaaaaaaaaaaaaaaaaaaaaaa"
+                              - kind: "nkIdent"
+                                ident: "bbbbbbbbbbbbbbbbbbbbbbbb"
+                              - kind: "nkIdent"
+                                ident: "cccccccccccccccccccccccccccc"
+                              - kind: "nkIdent"
+                                ident: "dddddddddddddddddddddd"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkPragmaExpr"
+                        sons:
+                          - kind: "nkPostfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "*"
+                              - kind: "nkIdent"
+                                ident: "vpublic"
+                          - kind: "nkPragma"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "fieldPragma"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"

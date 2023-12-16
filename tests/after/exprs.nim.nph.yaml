@@ -169,6 +169,100 @@ sons:
                           - kind: "nkIdent"
                             ident: "xxx"
   - kind: "nkCommentStmt"
+    "comment": "# single-line expressions with varying amounts of pars"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "x0"
+          - kind: "nkEmpty"
+          - kind: "nkStmtListExpr"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+              - kind: "nkIdent"
+                ident: "false"
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "x1"
+          - kind: "nkEmpty"
+          - kind: "nkIfExpr"
+            sons:
+              - kind: "nkElifExpr"
+                sons:
+                  - kind: "nkStmtListExpr"
+                    sons:
+                      - kind: "nkDiscardStmt"
+                        sons:
+                          - kind: "nkEmpty"
+                      - kind: "nkIdent"
+                        ident: "false"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkIntLit"
+                        intVal: 0
+              - kind: "nkElseExpr"
+                sons:
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkIntLit"
+                        intVal: 1
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "x2"
+          - kind: "nkEmpty"
+          - kind: "nkStmtListExpr"
+            sons:
+              - kind: "nkIfStmt"
+                sons:
+                  - kind: "nkElifExpr"
+                    sons:
+                      - kind: "nkStmtListExpr"
+                        sons:
+                          - kind: "nkDiscardStmt"
+                            sons:
+                              - kind: "nkEmpty"
+                          - kind: "nkIdent"
+                            ident: "false"
+                      - kind: "nkIntLit"
+                        intVal: 0
+                  - kind: "nkElseExpr"
+                    sons:
+                      - kind: "nkIntLit"
+                        intVal: 1
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "x3"
+          - kind: "nkEmpty"
+          - kind: "nkStmtListExpr"
+            sons:
+              - kind: "nkIfStmt"
+                sons:
+                  - kind: "nkElifExpr"
+                    sons:
+                      - kind: "nkStmtListExpr"
+                        sons:
+                          - kind: "nkDiscardStmt"
+                            sons:
+                              - kind: "nkEmpty"
+                          - kind: "nkIdent"
+                            ident: "false"
+                      - kind: "nkPar"
+                        sons:
+                          - kind: "nkIntLit"
+                            intVal: 0
+                  - kind: "nkElseExpr"
+                    sons:
+                      - kind: "nkPar"
+                        sons:
+                          - kind: "nkIntLit"
+                            intVal: 1
+  - kind: "nkCommentStmt"
     "comment": "# command syntax with colon"
   - kind: "nkDiscardStmt"
     sons:
@@ -182,51 +276,36 @@ sons:
             sons:
               - kind: "nkIdent"
                 ident: "yyy"
-  - kind: "nkCommentStmt"
-    "comment": "# TODO"
-  - kind: "nkCommentStmt"
-    "comment": "# (try: (discard rOk.tryError(); false) except ResultError[int]: true)"
-  - kind: "nkCommand"
+  - kind: "nkStmtListExpr"
     sons:
-      - kind: "nkDotExpr"
+      - kind: "nkTryStmt"
         sons:
-          - kind: "nkIdent"
-            ident: "res"
-          - kind: "nkIdent"
-            ident: "add"
-      - kind: "nkCall"
-        sons:
-          - kind: "nkIdent"
-            ident: "fff"
-          - kind: "nkStmtList"
+          - kind: "nkStmtListExpr"
             sons:
-              - kind: "nkCall"
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkDotExpr"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "rOk"
+                          - kind: "nkIdent"
+                            ident: "tryError"
+              - kind: "nkIdent"
+                ident: "false"
+          - kind: "nkExceptBranch"
+            sons:
+              - kind: "nkBracketExpr"
                 sons:
                   - kind: "nkIdent"
-                    ident: "yy"
-  - kind: "nkCommentStmt"
-    "comment": "# we don't what `do` in let but need it in the above commend - this needs"
-  - kind: "nkCommentStmt"
-    "comment": "# more investigation - this is important for templates calls like Result.valueOr"
-  - kind: "nkCommentStmt"
-    "comment": "# which become ugly otherwise"
-  - kind: "nkLetSection"
-    sons:
-      - kind: "nkIdentDefs"
-        sons:
-          - kind: "nkIdent"
-            ident: "xxx"
-          - kind: "nkEmpty"
-          - kind: "nkCall"
-            sons:
-              - kind: "nkIdent"
-                ident: "implicitdo"
+                    ident: "ResultError"
+                  - kind: "nkIdent"
+                    ident: "int"
               - kind: "nkStmtList"
                 sons:
-                  - kind: "nkReturnStmt"
-                    sons:
-                      - kind: "nkIdent"
-                        ident: "xxx"
+                  - kind: "nkIdent"
+                    ident: "true"
   - kind: "nkLetSection"
     sons:
       - kind: "nkIdentDefs"
@@ -1042,3 +1121,115 @@ sons:
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: ".."
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkIdent"
+            ident: "b"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "..<"
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkIdent"
+            ident: "b"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "..^"
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkIdent"
+            ident: "b"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: ".."
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkIdent"
+            ident: "b"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "..^"
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkIdent"
+            ident: "b"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "..<"
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkIdent"
+            ident: "b"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: ".."
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkPrefix"
+            sons:
+              - kind: "nkIdent"
+                ident: "^"
+              - kind: "nkIdent"
+                ident: "b"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: ".."
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkPrefix"
+            sons:
+              - kind: "nkIdent"
+                ident: "<"
+              - kind: "nkIdent"
+                ident: "b"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: ".."
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkPrefix"
+            sons:
+              - kind: "nkIdent"
+                ident: "-"
+              - kind: "nkIdent"
+                ident: "b"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: ".."
+          - kind: "nkIntLit"
+            intVal: -1
+          - kind: "nkIntLit"
+            intVal: -2

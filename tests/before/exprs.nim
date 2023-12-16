@@ -19,23 +19,19 @@ template ttt*: untyped =
   (block:
     xxx)[]
 
+# single-line expressions with varying amounts of pars
+
+let
+  x0 = (discard; false)
+  x1 = if (discard; false): 0 else: 1
+  x2 = (if (discard; false): 0 else: 1)
+  x3 = (if (discard; false): (0) else: (1))
 
 # command syntax with colon
 discard xxxx "arg":
   yyy
 
-# TODO
-# (try: (discard rOk.tryError(); false) except ResultError[int]: true)
-
-res.add (
-  fff() do:
-    yy() )
-
-# we don't what `do` in let but need it in the above commend - this needs
-# more investigation - this is important for templates calls like Result.valueOr
-# which become ugly otherwise
-let xxx = implicitdo:
-    return xxx
+(try: (discard rOk.tryError(); false) except ResultError[int]: true)
 
 let shortInfix = a*b*c+d*e*f+(a+b)*g
 
@@ -65,3 +61,13 @@ of aaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccc
 else:
   discard
 
+discard a..b
+discard a..<b
+discard a..^b
+discard a .. b
+discard a ..^ b
+discard a ..< b
+discard a .. ^b
+discard a .. <b
+discard a .. -b
+discard -1.. -2

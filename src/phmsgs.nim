@@ -47,7 +47,7 @@ proc flushDot*(conf: ConfigRef) =
 
 proc toCChar*(c: char; result: var string) {.inline.} =
   case c
-  of '\0' .. '\x1F', '\x7F' .. '\xFF':
+  of '\0'..'\x1F', '\x7F'..'\xFF':
     result.add '\\'
     result.add toOctal(c)
   of '\'', '\"', '\\', '?':
@@ -60,7 +60,7 @@ proc makeCString*(s: string): Rope =
   result = newStringOfCap(int(s.len.toFloat * 1.1) + 1)
 
   result.add("\"")
-  for i in 0 ..< s.len:
+  for i in 0..<s.len:
     # line wrapping of string litterals in cgen'd code was a bad idea, e.g. causes: bug #16265
     # It also makes reading c sources or grepping harder, for zero benefit.
     # const MaxLineLength = 64
@@ -274,11 +274,11 @@ proc toProjPath*(conf: ConfigRef; fileIdx: FileIndex): string =
 
 proc toFullPath*(conf: ConfigRef; fileIdx: FileIndex): string =
   if fileIdx.int32 < 0 or conf == nil:
-    result =
-      (if fileIdx == commandLineIdx:
+    result = (
+      if fileIdx == commandLineIdx:
         commandLineDesc
       else: "???"
-      )
+    )
   else:
     result = conf.m.fileInfos[fileIdx.int32].fullPath.string
 
@@ -525,7 +525,7 @@ proc quit(conf: ConfigRef; msg: TMsgKind) {.gcsafe.} =
           """
 No stack traceback available
 To create a stacktrace, rerun compilation with './koch temp $1 <file>', see $2 for details""" %
-            [conf.command, "intern.html#debugging-the-compiler".createDocLink],
+          [conf.command, "intern.html#debugging-the-compiler".createDocLink],
           conf.unitSep,
         )
 
@@ -540,8 +540,9 @@ proc handleError(
 
     quit(conf, msg)
 
-  if msg >= errMin and msg <= errMax or
-      (msg in warnMin .. hintMax and msg in conf.warningAsErrors and not ignoreMsg):
+  if msg >= errMin and msg <= errMax or (
+    msg in warnMin..hintMax and msg in conf.warningAsErrors and not ignoreMsg
+  ):
     inc(conf.errorCounter)
 
     conf.exitcode = 1'i8
@@ -565,7 +566,7 @@ proc writeContext(conf: ConfigRef; lastinfo: TLineInfo) =
   const instantiationOfFrom = "template/generic instantiation of `$1` from here"
 
   var info = lastinfo
-  for i in 0 ..< conf.m.msgContext.len:
+  for i in 0..<conf.m.msgContext.len:
     let context = conf.m.msgContext[i]
     if context.info != lastinfo and context.info != info:
       if conf.structuredErrorHook != nil:
@@ -627,9 +628,9 @@ proc getSurroundingSrc(conf: ConfigRef; info: TLineInfo): string =
 proc formatMsg*(conf: ConfigRef; info: TLineInfo; msg: TMsgKind; arg: string): string =
   let title =
     case msg
-    of warnMin .. warnMax:
+    of warnMin..warnMax:
       WarningTitle
-    of hintMin .. hintMax:
+    of hintMin..hintMax:
       HintTitle
     else:
       ErrorTitle
@@ -659,14 +660,14 @@ proc liMessage*(
     conf.m.errorOutputs = {eStdOut, eStdErr}
 
   let kind =
-    if msg in warnMin .. hintMax and msg != hintUserRaw:
+    if msg in warnMin..hintMax and msg != hintUserRaw:
       $msg
     else:
       ""
     # xxx not sure why hintUserRaw is special
 
   case msg
-  of errMin .. errMax:
+  of errMin..errMax:
     sev = Severity.Error
 
     writeContext(conf, info)
@@ -681,7 +682,7 @@ proc liMessage*(
 
     if info != unknownLineInfo:
       conf.m.lastError = info
-  of warnMin .. warnMax:
+  of warnMin..warnMax:
     sev = Severity.Warning
     ignoreMsg = not conf.hasWarn(msg)
     if not ignoreMsg and msg in conf.warningAsErrors:
@@ -695,7 +696,7 @@ proc liMessage*(
       writeContext(conf, info)
 
     inc(conf.warnCounter)
-  of hintMin .. hintMax:
+  of hintMin..hintMax:
     sev = Severity.Hint
     ignoreMsg = not conf.hasHint(msg)
     if not ignoreMsg and msg in conf.warningAsErrors:
@@ -859,23 +860,22 @@ template listMsg(title, r) =
   for a in r:
     msgWriteln(
       conf,
-      "  [$1] $2" %
-        [
-          if a in conf.notes:
-            "x"
-          else:
-            " "
-          ,
-          $a
-        ],
+      "  [$1] $2" % [
+        if a in conf.notes:
+          "x"
+        else:
+          " "
+        ,
+        $a
+      ],
       {msgNoUnitSep},
     )
 
 proc listWarnings*(conf: ConfigRef) =
-  listMsg("Warnings:", warnMin .. warnMax)
+  listMsg("Warnings:", warnMin..warnMax)
 
 proc listHints*(conf: ConfigRef) =
-  listMsg("Hints:", hintMin .. hintMax)
+  listMsg("Hints:", hintMin..hintMax)
 
 proc uniqueModuleName*(conf: ConfigRef; fid: FileIndex): string =
   ## The unique module name is guaranteed to only contain {'A'..'Z', 'a'..'z', '0'..'9', '_'}
@@ -894,10 +894,10 @@ proc uniqueModuleName*(conf: ConfigRef; fid: FileIndex): string =
       rel.len
 
   result = newStringOfCap(trunc)
-  for i in 0 ..< trunc:
+  for i in 0..<trunc:
     let c = rel[i]
     case c
-    of 'a' .. 'z':
+    of 'a'..'z':
       result.add c
     of {os.DirSep, os.AltSep}:
       result.add 'Z' # because it looks a bit like '/'

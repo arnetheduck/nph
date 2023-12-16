@@ -238,7 +238,7 @@ proc drainSkipped(p: var Parser; indent: int): seq[Token] =
         result.add(c)
         p.lineNumberPrevious = int c.prevLine
 
-    p.skipped.delete(0 .. result.high)
+    p.skipped.delete(0..result.high)
 
 proc splitComments(
     comments: openArray[Token]; a: PNode; ind: int; commentLoc: CommentLoc
@@ -273,7 +273,7 @@ proc addSkipped(p: var Parser; n: PNode) =
     n.add c
     i += 1
 
-  p.skipped = tmp[i ..^ 1]
+  p.skipped = tmp[i..^1]
 
 proc indAndComment(
     p: var Parser; n: PNode; commentLoc = clPostfix; maybeMissEquals = false
@@ -370,11 +370,10 @@ proc isOperator(tok: Token): bool =
   #| operatorB = OP0 | OP1 | OP2 | OP3 | OP4 | OP5 | OP6 | OP7 | OP8 | OP9 |
   #|             'div' | 'mod' | 'shl' | 'shr' | 'in' | 'notin' |
   #|             'is' | 'isnot' | 'not' | 'of' | 'as' | 'from' | '..' | 'and' | 'or' | 'xor'
-  tok.tokType in
-    {
-      tkOpr, tkDiv, tkMod, tkShl, tkShr, tkIn, tkNotin, tkIs, tkIsnot, tkNot, tkOf,
-      tkAs, tkFrom, tkDotDot, tkAnd, tkOr, tkXor
-    }
+  tok.tokType in {
+    tkOpr, tkDiv, tkMod, tkShl, tkShr, tkIn, tkNotin, tkIs, tkIsnot, tkNot, tkOf, tkAs,
+    tkFrom, tkDotDot, tkAnd, tkOr, tkXor
+  }
 
 proc parseComStmt(p: var Parser; n: PNode; commentLoc = clPostfix): PNode =
   splitLookahead(p, n, commentLoc)
@@ -405,7 +404,7 @@ proc parseSymbol(p: var Parser; mode = smNormal): PNode =
     result = newIdentNodeP(p.tok.ident, p)
 
     getTok(p)
-  of tokKeywordLow .. tokKeywordHigh:
+  of tokKeywordLow..tokKeywordHigh:
     if p.tok.tokType in tkBuiltInMagics or mode == smAfterDot:
       # for backwards compatibility these 2 are always valid:
       result = newIdentNodeP(p.tok.ident, p)
@@ -431,10 +430,10 @@ proc parseSymbol(p: var Parser; mode = smNormal): PNode =
           parMessage(p, errIdentifierExpected, p.tok)
 
         break
-      of tkOpr, tkDot, tkDotDot, tkEquals, tkParLe .. tkParDotRi:
+      of tkOpr, tkDot, tkDotDot, tkEquals, tkParLe..tkParDotRi:
         var lineinfo = parLineInfo(p)
         var accm = ""
-        while p.tok.tokType in {tkOpr, tkDot, tkDotDot, tkEquals, tkParLe .. tkParDotRi}:
+        while p.tok.tokType in {tkOpr, tkDot, tkDotDot, tkEquals, tkParLe..tkParDotRi}:
           accm.add($p.tok)
           getTok(p)
 
@@ -443,7 +442,7 @@ proc parseSymbol(p: var Parser; mode = smNormal): PNode =
         node.ident = p.lex.cache.getIdent(accm)
 
         result.add(node)
-      of tokKeywordLow .. tokKeywordHigh, tkSymbol, tkIntLit .. tkCustomLit:
+      of tokKeywordLow..tokKeywordHigh, tkSymbol, tkIntLit..tkCustomLit:
         result.add(newIdentNodeP(p.lex.cache.getIdent($p.tok), p))
         getTok(p)
       else:
@@ -705,9 +704,7 @@ proc parseGStrLit(p: var Parser; a: PNode): PNode =
   setEndInfo()
 
 proc complexOrSimpleStmt(p: var Parser): PNode
-
 proc simpleExpr(p: var Parser; mode = pmNormal): PNode
-
 proc parseIfOrWhenExpr(p: var Parser; kind: TNodeKind): PNode
 
 proc semiStmtList(p: var Parser; result: PNode) =
@@ -764,11 +761,10 @@ proc parsePar(p: var Parser): PNode =
   getTok(p)
   optInd(p, result)
 
-  if p.tok.tokType in
-      {
-        tkDiscard, tkInclude, tkIf, tkWhile, tkCase, tkTry, tkDefer, tkFinally,
-        tkExcept, tkBlock, tkConst, tkLet, tkWhen, tkVar, tkFor, tkMixin
-      }:
+  if p.tok.tokType in {
+    tkDiscard, tkInclude, tkIf, tkWhile, tkCase, tkTry, tkDefer, tkFinally, tkExcept,
+    tkBlock, tkConst, tkLet, tkWhen, tkVar, tkFor, tkMixin
+  }:
     # XXX 'bind' used to be an expression, so we exclude it here;
     # tests/reject/tbind2 fails otherwise.
     semiStmtList(p, result)
@@ -1063,7 +1059,7 @@ proc primarySuffix(p: var Parser; r: PNode; baseIndent: int; mode: PrimaryMode):
     of
         tkSymbol,
         tkAccent,
-        tkIntLit .. tkCustomLit,
+        tkIntLit..tkCustomLit,
         tkNil,
         tkCast,
         tkOpr,
@@ -1521,7 +1517,7 @@ proc isExprStart(p: Parser): bool =
       tkParLe,
       tkBracketLe,
       tkCurlyLe,
-      tkIntLit .. tkCustomLit,
+      tkIntLit..tkCustomLit,
       tkVar,
       tkRef,
       tkPtr,
@@ -1655,9 +1651,7 @@ proc parseExpr(p: var Parser): PNode =
   setEndInfo()
 
 proc parseEnum(p: var Parser): PNode
-
 proc parseObject(p: var Parser): PNode
-
 proc parseTypeClass(p: var Parser): PNode
 
 proc primary(p: var Parser; mode: PrimaryMode): PNode =
@@ -1687,18 +1681,17 @@ proc primary(p: var Parser; mode: PrimaryMode): PNode =
     optInd(p, a)
 
     const identOrLiteralKinds =
-      tkBuiltInMagics +
-        {
-          tkSymbol,
-          tkAccent,
-          tkNil,
-          tkIntLit .. tkCustomLit,
-          tkCast,
-          tkOut,
-          tkParLe,
-          tkBracketLe,
-          tkCurlyLe
-        }
+      tkBuiltInMagics + {
+        tkSymbol,
+        tkAccent,
+        tkNil,
+        tkIntLit..tkCustomLit,
+        tkCast,
+        tkOut,
+        tkParLe,
+        tkBracketLe,
+        tkCurlyLe
+      }
 
     if isSigil and p.tok.tokType in identOrLiteralKinds:
       let baseInd = p.lex.currLineIndent
@@ -2473,7 +2466,7 @@ proc parseRoutine(p: var Parser; kind: TNodeKind): PNode =
   splitLookahead(p, result, clMid)
   optInd(p, result)
   if kind in {nkProcDef, nkLambda, nkIteratorDef, nkFuncDef} and
-      p.tok.tokType notin {tkSymbol, tokKeywordLow .. tokKeywordHigh, tkAccent}:
+      p.tok.tokType notin {tkSymbol, tokKeywordLow..tokKeywordHigh, tkAccent}:
     # no name; lambda or proc type
     # in every context that we can parse a routine, we can also parse these
     result =

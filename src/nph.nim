@@ -3,11 +3,10 @@
 ## Opinionated source code formatter
 
 import
-  "."/
-    [
-      astcmp, astyaml, phast, phastalgo, phmsgs, phlineinfos, phoptions, phparser,
-      phrenderer
-    ]
+  "."/[
+    astcmp, astyaml, phast, phastalgo, phmsgs, phlineinfos, phoptions, phparser,
+    phrenderer
+  ]
 
 import "$nim"/compiler/idents
 

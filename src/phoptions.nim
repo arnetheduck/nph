@@ -197,10 +197,12 @@ type
       # old unused: cmdInterpret, cmdDef: def feature (find definition for IDEs)
 
 const
-  cmdBackends* =
-    {cmdCompileToC, cmdCompileToCpp, cmdCompileToOC, cmdCompileToJS, cmdCrun}
-  cmdDocLike* =
-    {cmdDoc0, cmdDoc, cmdDoc2tex, cmdJsondoc0, cmdJsondoc, cmdCtags, cmdBuildindex}
+  cmdBackends* = {
+    cmdCompileToC, cmdCompileToCpp, cmdCompileToOC, cmdCompileToJS, cmdCrun
+  }
+  cmdDocLike* = {
+    cmdDoc0, cmdDoc, cmdDoc2tex, cmdJsondoc0, cmdJsondoc, cmdCtags, cmdBuildindex
+  }
 
 type
   NimVer* = tuple[major: int, minor: int, patch: int]
@@ -330,7 +332,7 @@ type
     column*: int # Starts at 0
     doc*: string # Not escaped (yet)
     forth*: string # type
-    quality*: range[0 .. 100] # matching quality
+    quality*: range[0..100] # matching quality
     isGlobal*: bool # is a global variable
     contextFits*: bool # type/non-type context matches
     prefix*: PrefixMatch
@@ -553,18 +555,16 @@ when false:
 
 const oldExperimentalFeatures* = {dotOperators, callOperator, parallel}
 const
-  ChecksOptions* =
-    {
-      optObjCheck, optFieldCheck, optRangeCheck, optOverflowCheck, optBoundsCheck,
-      optAssert, optNaNCheck, optInfCheck, optStyleCheck
-    }
-  DefaultOptions* =
-    {
-      optObjCheck, optFieldCheck, optRangeCheck, optBoundsCheck, optOverflowCheck,
-      optAssert, optWarns, optRefCheck, optHints, optStackTrace, optLineTrace,
-      # consider adding `optStackTraceMsgs`
-      optTrMacros, optStyleCheck, optCursorInference
-    }
+  ChecksOptions* = {
+    optObjCheck, optFieldCheck, optRangeCheck, optOverflowCheck, optBoundsCheck,
+    optAssert, optNaNCheck, optInfCheck, optStyleCheck
+  }
+  DefaultOptions* = {
+    optObjCheck, optFieldCheck, optRangeCheck, optBoundsCheck, optOverflowCheck,
+    optAssert, optWarns, optRefCheck, optHints, optStackTrace, optLineTrace,
+    # consider adding `optStackTraceMsgs`
+    optTrMacros, optStyleCheck, optCursorInference
+  }
   DefaultGlobalOptions* = {optThreadAnalysis, optExcessiveStackTrace, optJsBigInt64}
 
 proc getSrcTimestamp(): DateTime =
@@ -596,8 +596,9 @@ template newPackageCache*(): untyped =
 proc newProfileData(): ProfileData =
   ProfileData(data: newTable[TLineInfo, ProfileInfo]())
 
-const foreignPackageNotesDefault* =
-  {hintProcessing, warnUnknownMagic, hintQuitCalled, hintExecuting, hintUser, warnUser}
+const foreignPackageNotesDefault* = {
+  hintProcessing, warnUnknownMagic, hintQuitCalled, hintExecuting, hintUser, warnUser
+}
 
 proc isDefined*(conf: ConfigRef; symbol: string): bool
 
@@ -719,13 +720,11 @@ proc isDefined*(conf: ConfigRef; symbol: string): bool =
       result = conf.target.targetCPU == cpuAmd64
     of "posix", "unix":
       result =
-        conf.target.targetOS in
-          {
-            osLinux, osMorphos, osSkyos, osIrix, osPalmos, osQnx, osAtari, osAix,
-            osHaiku, osVxWorks, osSolaris, osNetbsd, osFreebsd, osOpenbsd, osDragonfly,
-            osMacosx, osIos, osAndroid, osNintendoSwitch, osFreeRTOS, osCrossos,
-            osZephyr, osNuttX
-          }
+        conf.target.targetOS in {
+          osLinux, osMorphos, osSkyos, osIrix, osPalmos, osQnx, osAtari, osAix, osHaiku,
+          osVxWorks, osSolaris, osNetbsd, osFreebsd, osOpenbsd, osDragonfly, osMacosx,
+          osIos, osAndroid, osNintendoSwitch, osFreeRTOS, osCrossos, osZephyr, osNuttX
+        }
     of "linux":
       result = conf.target.targetOS in {osLinux, osAndroid}
     of "bsd":
@@ -767,8 +766,9 @@ proc isDefined*(conf: ConfigRef; symbol: string): bool =
       result = CPU[conf.target.targetCPU].bit == 64
     of "nimrawsetjmp":
       result =
-        conf.target.targetOS in
-          {osSolaris, osNetbsd, osFreebsd, osOpenbsd, osDragonfly, osMacosx}
+        conf.target.targetOS in {
+          osSolaris, osNetbsd, osFreebsd, osOpenbsd, osDragonfly, osMacosx
+        }
     else:
       discard
 
@@ -942,25 +942,24 @@ proc pathSubs*(conf: ConfigRef; p, config: string): string =
 
   result =
     unixToNativePath(
-      p %
-        [
-          "nim",
-          getPrefixDir(conf).string,
-          "lib",
-          conf.libpath.string,
-          "home",
-          home,
-          "config",
-          config,
-          "projectname",
-          conf.projectName,
-          "projectpath",
-          conf.projectPath.string,
-          "projectdir",
-          conf.projectPath.string,
-          "nimcache",
-          getNimcacheDir(conf).string
-        ],
+      p % [
+        "nim",
+        getPrefixDir(conf).string,
+        "lib",
+        conf.libpath.string,
+        "home",
+        home,
+        "config",
+        config,
+        "projectname",
+        conf.projectName,
+        "projectpath",
+        conf.projectPath.string,
+        "projectdir",
+        conf.projectPath.string,
+        "nimcache",
+        getNimcacheDir(conf).string
+      ],
     ).expandTilde
 
 iterator nimbleSubs*(conf: ConfigRef; p: string): string =
@@ -1023,12 +1022,11 @@ template patchModule(conf: ConfigRef) {.dirty.} =
       if ov.len > 0:
         result = AbsoluteFile(ov)
 
-const stdlibDirs* =
-  [
-    "pure", "core", "arch", "pure/collections", "pure/concurrency", "pure/unidecode",
-    "impure", "wrappers", "wrappers/linenoise", "windows", "posix", "js",
-    "deprecated/pure"
-  ]
+const stdlibDirs* = [
+  "pure", "core", "arch", "pure/collections", "pure/concurrency", "pure/unidecode",
+  "impure", "wrappers", "wrappers/linenoise", "windows", "posix", "js",
+  "deprecated/pure"
+]
 
 const
   pkgPrefix = "pkg/"
