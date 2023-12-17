@@ -110,13 +110,13 @@ root of the project:
 cd myproject
 
 # Format all source code with nph
-find -name "*.nim" -exec nph {} \;
+git ls-files | grep ".nim$" | xargs -n1 nph
 
 # Create a single commit with all changes
-git add -A && git commit -m "Formatted code with nph"
+git commit -am "Formatted with nph $(nph --version)"
 
 # Record the commit hash in the blame file
-echo "# Formatted code with nph" >> .git-blame-ignore-revs
+echo "# Formatted with nph $(nph --version)" >> .git-blame-ignore-revs
 echo $(git rev-parse HEAD) >> .git-blame-ignore-revs
 ```
 

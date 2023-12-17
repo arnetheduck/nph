@@ -1075,6 +1075,48 @@ sons:
             intVal: 53
         postfix:
           - "# after v"
+  - kind: "nkLetSection"
+    mid:
+      - "# let eol"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "v"
+            postfix:
+              - "# let ident after symbol"
+          - kind: "nkIdent"
+            prefix:
+              - "# let ident after colon"
+            ident: "int"
+          - kind: "nkIntLit"
+            prefix:
+              - "# let ident after type"
+              - "# let ident after equals"
+            intVal: 42
+        postfix:
+          - "# let ident after value"
+  - kind: "nkConstSection"
+    mid:
+      - "# const eol"
+    sons:
+      - kind: "nkConstDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "v"
+            postfix:
+              - "# const ident after symbol"
+          - kind: "nkIdent"
+            prefix:
+              - "# const ident after colon"
+            ident: "int"
+          - kind: "nkIntLit"
+            prefix:
+              - "# const ident after type"
+              - "# const ident after equals"
+            intVal: 42
+        postfix:
+          - "# const ident after value"
   - kind: "nkDiscardStmt"
     sons:
       - kind: "nkIntLit"
@@ -1176,6 +1218,35 @@ sons:
                                 sons:
                                   - kind: "nkIdent"
                                     ident: "false"
+  - kind: "nkProcDef"
+    mid:
+      - "## Doc comment only"
+    sons:
+      - kind: "nkIdent"
+        ident: "f"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+  - kind: "nkProcDef"
+    mid:
+      - "## Doc comment only"
+      - "## even two lines"
+    sons:
+      - kind: "nkIdent"
+        ident: "f"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
   - kind: "nkCommand"
     sons:
       - kind: "nkIdent"

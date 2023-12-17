@@ -55,7 +55,6 @@ func isNimFile(file: string): bool =
   let (_, _, ext) = file.splitFile()
   ext in [".nim", ".nims", ".nimble"]
 
-
 proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool =
   let
     conf = newConfigRef()
@@ -103,7 +102,11 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool
     stderr.writeLine "--- POST ---"
     stderr.writeLine treeToYaml(nil, eq.b)
 
-    rawMessage(conf, errGenerated, "Formatted output does not match input, report bug!")
+    internalError(
+      conf,
+      TLineInfo(fileIndex: FileIndex(0)),
+      "Formatted output does not match input, report bug!",
+    )
     if infile != outfile or infile == "-":
       # Write unformatted content
       if not check:

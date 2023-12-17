@@ -1401,7 +1401,8 @@ template id*(a: PIdObj): int =
 
   (x.itemId.module.int shl moduleShift) + x.itemId.item.int
 
-type IdGenerator* = ref object # unfortunately, we really need the 'shared mutable' aspect here.
+type IdGenerator* = ref object
+  # unfortunately, we really need the 'shared mutable' aspect here.
   module*: int32
   symId*: int32
   typeId*: int32

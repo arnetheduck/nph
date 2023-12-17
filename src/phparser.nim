@@ -314,7 +314,7 @@ proc newIdentNodeP(ident: PIdent; p: var Parser): PNode =
   result.ident = ident
 
 proc parseExpr(p: var Parser): PNode
-proc parseStmt(p: var Parser): PNode
+proc parseStmt(p: var Parser; allowEmpty = false): PNode
 proc parseTypeDesc(p: var Parser; fullExpr = false): PNode
 proc parseTypeDefValue(p: var Parser): PNode
 proc parseParamList(p: var Parser; retColon = true): PNode
@@ -435,6 +435,7 @@ proc parseSymbol(p: var Parser; mode = smNormal): PNode =
         var accm = ""
         while p.tok.tokType in {tkOpr, tkDot, tkDotDot, tkEquals, tkParLe..tkParDotRi}:
           accm.add($p.tok)
+          lineinfo.offsetB = p.tok.offsetB
           getTok(p)
 
         let node = newNodeI(nkIdent, lineinfo)
@@ -1215,7 +1216,6 @@ proc identWithPragma(p: var Parser; allowDot = false): PNode =
 
     result.add(a)
     result.add(parsePragma(p))
-    splitLookahead(p, result, clPostfix)
   else:
     result = a
 
@@ -1252,17 +1252,14 @@ proc parseIdentColonEquals(p: var Parser; flags: DeclaredIdentFlags): PNode =
     result.add(a)
     if p.tok.tokType != tkComma:
       break
-    # If there is a `:` or `=`, comments should be split between the
-    # ident here and what follows - else, it's up to the caller to deal with
-    # them so that we don't attach postfixes too deep in the AST
-    p.skipped = splitComments(p.skipped, a, p.tok.indent, clPostfix)
     getTok(p)
     # Skip ahead to the colon or equals
     optInd(p, a)
 
+  # We let comments sit as prefixes to whatever comes next - this works well
+  # with tkColon / tkEquals which don't have indent requirements..
   if p.tok.tokType == tkColon:
     getTok(p)
-    splitLookahead(p, result, clMid)
     optInd(p, result)
     result.add(parseTypeDesc(p, fullExpr = true))
   else:
@@ -1272,7 +1269,6 @@ proc parseIdentColonEquals(p: var Parser; flags: DeclaredIdentFlags): PNode =
 
   if p.tok.tokType == tkEquals:
     getTok(p)
-    splitLookahead(p, result, clMid)
     optInd(p, result)
     result.add(parseExpr(p))
   else:
@@ -2240,6 +2236,7 @@ proc parseCase(p: var Parser): PNode =
   if realInd(p):
     p.currInd = p.tok.indent
     wasIndented = true
+    splitLookahead(p, result, clMid)
 
   while sameInd(p):
     case p.tok.tokType
@@ -2506,7 +2503,7 @@ proc parseRoutine(p: var Parser; kind: TNodeKind): PNode =
     getTok(p)
     splitLookahead(p, result, clMid)
 
-    result.add(parseStmt(p))
+    result.add(parseStmt(p, result.mid.len > 0))
   else:
     result.add(p.emptyNode)
 
@@ -2964,19 +2961,18 @@ proc parseConstant(p: var Parser): PNode =
   else:
     result = newNodeP(nkConstDef, p)
 
+    # We let comments sit as prefixes to whatever comes next - this works well
+    # with tkColon / tkEquals which don't have indent requirements..
     result.add(identWithPragma(p))
     if p.tok.tokType == tkColon:
       getTok(p)
-      splitLookahead(p, result, clMid)
       optInd(p, result)
       result.add(parseTypeDesc(p))
     else:
       result.add(p.emptyNode)
 
   eat(p, tkEquals)
-  splitLookahead(p, result, clMid)
   optInd(p, result)
-  #add(result, parseStmtListExpr(p))
   result.add(parseExpr(p))
 
   result[^1] = postExprBlocks(p, result[^1])
@@ -3142,7 +3138,7 @@ proc complexOrSimpleStmt(p: var Parser): PNode =
   else:
     result = simpleStmt(p)
 
-proc parseStmt(p: var Parser): PNode =
+proc parseStmt(p: var Parser; allowEmpty: bool): PNode =
   #| stmt = (IND{>} complexOrSimpleStmt^+(IND{=} / ';') DED)
   #|      / simpleStmt ^+ ';'
   if p.tok.indent > p.currInd:
@@ -3196,9 +3192,11 @@ proc parseStmt(p: var Parser): PNode =
     case p.tok.tokType
     of tkIf, tkWhile, tkCase, tkTry, tkFor, tkBlock, tkAsm, tkProc, tkFunc, tkIterator,
         tkMacro, tkType, tkConst, tkWhen, tkVar:
-      parMessage(p, "nestable statement requires indentation")
-
-      result = p.emptyNode
+      if allowEmpty:
+        result = newNodeP(nkStmtList, p, withPrefix = false)
+      else:
+        parMessage(p, "nestable statement requires indentation")
+        result = p.emptyNode
     else:
       if p.inSemiStmtList > 0:
         result = simpleStmt(p)
@@ -3208,6 +3206,8 @@ proc parseStmt(p: var Parser): PNode =
         result = newNodeP(nkStmtList, p, withPrefix = false)
         addSkipped(p, result)
         while true:
+          if allowEmpty and p.tok.indent >= 0 and p.tok.indent <= p.currInd:
+            break
           # if p.tok.indent >= 0:
           #  parMessage(p, errInvalidIndentation % "parseStmt 2")
           p.hasProgress = false
