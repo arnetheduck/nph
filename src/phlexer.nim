@@ -204,8 +204,9 @@ type
       # the parsed (string) literal; and
       # documentation comments are here too
 
-    prevLine*: uint16 # line at which the previous token ended
+    prevLine*: int # line at which the previous token ended
     line*, col*: int
+    lineB*: int
     offsetA*, offsetB*: int
       # used for pretty printing so that literals
       # like 0b01 or  r"\L" are unaffected
@@ -355,12 +356,15 @@ template tokenBegin(tok, pos) {.dirty.} =
 
 template tokenEnd(tok, pos) {.dirty.} =
   tok.offsetB = L.offsetBase + pos
+  tok.lineB = L.lineNumber
 
 template tokenEndIgnore(tok, pos) =
   tok.offsetB = L.offsetBase + pos
+  tok.lineB = L.lineNumber
 
 template tokenEndPrevious(tok, pos) =
   tok.offsetB = L.offsetBase + pos
+  tok.lineB = L.lineNumber
 
 template eatChar(L: var Lexer; t: var Token; replacementChar: char) =
   t.literal.add(replacementChar)
@@ -1431,8 +1435,9 @@ proc rawGetTok*(L: var Lexer; tok: var Token) =
     L.tokenEnd.line = tok.line.uint16
     L.tokenEnd.col = getColNumber(L, L.bufpos).int16
 
+  let lineB = tok.lineB
   reset(tok)
-  tok.prevLine = L.tokenEnd.line
+  tok.prevLine = lineB
 
   tok.indent = -1
 

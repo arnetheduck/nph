@@ -16,7 +16,21 @@ import
 
 import tables, sets
 
+import tables except aaaaaaaaaaaaaaaaaaaaaaaaaa
+
+import tables except
+  aaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccccccc,
+  ddddddddddddddddddddddddddddd
+
+import tables except
+  aaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccccccc,
+  ddddddddddddddddddddddddddddd
+
 from tables import Xxx, yyy
+
+from tables import
+  aaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccccccc,
+  ddddddddddddddddddddddddddddd
 
 export a, b, c
 

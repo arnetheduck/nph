@@ -62,8 +62,8 @@ sons:
                             sons:
                               - kind: "nkIdent"
                                 ident: "$"
-                            postfix:
-                              - "# A comment after mixin"
+                        postfix:
+                          - "# A comment after mixin"
                       - kind: "nkCommand"
                         sons:
                           - kind: "nkIdent"
@@ -150,8 +150,8 @@ sons:
                 ident: "fspEnd"
                 postfix:
                   - "## Seek relative to end"
-            postfix:
-              - "# text file handling:"
+        postfix:
+          - "# text file handling:"
       - kind: "nkTypeDef"
         prefix:
           - "## Position relative to which seek should happen."
@@ -310,9 +310,9 @@ sons:
           - kind: "nkEmpty"
           - kind: "nkIdent"
             ident: "int"
-            postfix:
-              - "## alias eol"
-              - "## alias next"
+        postfix:
+          - "## alias eol"
+          - "## alias next"
       - kind: "nkTypeDef"
         sons:
           - kind: "nkPragmaExpr"
@@ -328,8 +328,8 @@ sons:
           - kind: "nkEmpty"
           - kind: "nkIdent"
             ident: "int"
-            postfix:
-              - "## alias2 eol"
+        postfix:
+          - "## alias2 eol"
       - kind: "nkTypeDef"
         sons:
           - kind: "nkIdent"
@@ -348,8 +348,8 @@ sons:
             prefix:
               - "# alias after equals"
             ident: "int"
-            postfix:
-              - "# alias after type"
+        postfix:
+          - "# alias after type"
       - kind: "nkTypeDef"
         sons:
           - kind: "nkIdent"
@@ -361,9 +361,9 @@ sons:
                 ident: "SomeAlias3"
               - kind: "nkIdent"
                 ident: "int"
-            postfix:
-              - "## after alias4"
-              - "## more after alias4"
+        postfix:
+          - "## after alias4"
+          - "## more after alias4"
       - kind: "nkTypeDef"
         prefix:
           - "## Some comment before whenobj"
@@ -530,113 +530,6 @@ sons:
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
-  - kind: "nkProcDef"
-    mid:
-      - "# after proc before indented name"
-    sons:
-      - kind: "nkIdent"
-        ident: "xxx"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkFormalParams"
-        sons:
-          - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkStmtList"
-        sons:
-          - kind: "nkDiscardStmt"
-            sons:
-              - kind: "nkEmpty"
-  - kind: "nkProcDef"
-    mid:
-      - "# proc eq line"
-    sons:
-      - kind: "nkIdent"
-        ident: "xxxx"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkFormalParams"
-        sons:
-          - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkStmtList"
-        sons:
-          - kind: "nkCommentStmt"
-            "comment": "# proc first line"
-          - kind: "nkDiscardStmt"
-            sons:
-              - kind: "nkEmpty"
-  - kind: "nkProcDef"
-    sons:
-      - kind: "nkIdent"
-        ident: "x"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkFormalParams"
-        sons:
-          - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkStmtList"
-        sons:
-          - kind: "nkCommentStmt"
-            "comment": "## A proc doc comment"
-          - kind: "nkIfStmt"
-            sons:
-              - kind: "nkElifBranch"
-                sons:
-                  - kind: "nkIdent"
-                    ident: "true"
-                  - kind: "nkStmtList"
-                    sons:
-                      - kind: "nkInfix"
-                        sons:
-                          - kind: "nkIdent"
-                            ident: "-="
-                          - kind: "nkIdent"
-                            ident: "numberOfCharsRead"
-                          - kind: "nkIntLit"
-                            intVal: 2
-                        postfix:
-                          - "# handle Ctrl+Z as EOF"
-                      - kind: "nkForStmt"
-                        sons:
-                          - kind: "nkIdent"
-                            ident: "i"
-                          - kind: "nkInfix"
-                            sons:
-                              - kind: "nkIdent"
-                                ident: "..<"
-                              - kind: "nkIntLit"
-                                intVal: 0
-                              - kind: "nkIdent"
-                                ident: "numberOfCharsRead"
-                          - kind: "nkStmtList"
-                            sons:
-                              - kind: "nkDiscardStmt"
-                                sons:
-                                  - kind: "nkEmpty"
-  - kind: "nkProcDef"
-    sons:
-      - kind: "nkIdent"
-        ident: "x"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkFormalParams"
-        sons:
-          - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkStmtList"
-        sons:
-          - kind: "nkDiscardStmt"
-            sons:
-              - kind: "nkEmpty"
-    postfix:
-      - "## indented doc comment for proc"
-      - "## that is long"
   - kind: "nkCommentStmt"
     "comment": "# before module"
   - kind: "nkImportStmt"
@@ -908,16 +801,8 @@ sons:
     "comment": "## Doc comment after assignment"
   - kind: "nkCommentStmt"
     "comment": "## needs to be double"
-  - kind: "nkProcDef"
+  - kind: "nkBlockStmt"
     sons:
-      - kind: "nkIdent"
-        ident: "ffff"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkFormalParams"
-        sons:
-          - kind: "nkEmpty"
-      - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkStmtList"
         sons:
@@ -1021,34 +906,32 @@ sons:
         ident: "pragma"
         postfix:
           - "# comment here"
-  - kind: "nkProcDef"
+  - kind: "nkLetSection"
     sons:
-      - kind: "nkIdent"
-        ident: "a"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkFormalParams"
+      - kind: "nkIdentDefs"
         sons:
+          - kind: "nkIdent"
+            ident: "v"
           - kind: "nkEmpty"
-          - kind: "nkIdentDefs"
+          - kind: "nkIntLit"
+            intVal: 52
+    postfix:
+      - "# let all on one line"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "v"
+          - kind: "nkEmpty"
+          - kind: "nkCommand"
             sons:
               - kind: "nkIdent"
-                ident: "v"
+                ident: "addr"
+              - kind: "nkIdent"
+                ident: "output"
                 postfix:
-                  - "#[block]#"
-              - kind: "nkIdent"
-                ident: "int"
-              - kind: "nkEmpty"
-          - kind: "nkIdentDefs"
-            sons:
-              - kind: "nkIdent"
-                ident: "abc"
-              - kind: "nkIdent"
-                ident: "int"
-              - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
-      - kind: "nkEmpty"
+                  - "# let all on one line with command"
   - kind: "nkLetSection"
     sons:
       - kind: "nkIdentDefs"
@@ -1126,6 +1009,131 @@ sons:
         intVal: 54
         postfix:
           - "# discard value"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "x"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+    postfix:
+      - "# proc, impl and comment on one line"
+  - kind: "nkProcDef"
+    mid:
+      - "# after proc before indented name"
+    sons:
+      - kind: "nkIdent"
+        ident: "xxx"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    mid:
+      - "# proc eq line"
+    sons:
+      - kind: "nkIdent"
+        ident: "xxxx"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkCommentStmt"
+            "comment": "# proc first line"
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "x"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkCommentStmt"
+            "comment": "## A proc doc comment"
+          - kind: "nkIfStmt"
+            sons:
+              - kind: "nkElifBranch"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "true"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "-="
+                          - kind: "nkIdent"
+                            ident: "numberOfCharsRead"
+                          - kind: "nkIntLit"
+                            intVal: 2
+                        postfix:
+                          - "# handle Ctrl+Z as EOF"
+                      - kind: "nkForStmt"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "i"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "..<"
+                              - kind: "nkIntLit"
+                                intVal: 0
+                              - kind: "nkIdent"
+                                ident: "numberOfCharsRead"
+                          - kind: "nkStmtList"
+                            sons:
+                              - kind: "nkDiscardStmt"
+                                sons:
+                                  - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "x"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+    postfix:
+      - "## indented doc comment for proc"
+      - "## that is long"
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
@@ -1247,6 +1255,34 @@ sons:
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkStmtList"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "v"
+                postfix:
+                  - "#[block]#"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "abc"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
   - kind: "nkCommand"
     sons:
       - kind: "nkIdent"

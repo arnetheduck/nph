@@ -148,7 +148,7 @@ proc fileInfoIdx*(
         else:
           relativeTo(canon, conf.projectPath)
         ,
-      ),
+      )
     )
 
     conf.m.filenameToIndexTbl[canon2] = result
@@ -311,7 +311,6 @@ proc toFullPathConsiderDirty*(conf: ConfigRef; fileIdx: FileIndex): AbsoluteFile
           commandLineDesc
         else:
           "???"
-        ,
       )
   elif not conf.m.fileInfos[fileIdx.int32].dirtyFile.isEmpty:
     result = conf.m.fileInfos[fileIdx.int32].dirtyFile
@@ -664,7 +663,7 @@ proc liMessage*(
       $msg
     else:
       ""
-    # xxx not sure why hintUserRaw is special
+      # xxx not sure why hintUserRaw is special
 
   case msg
   of errMin..errMax:
@@ -971,7 +970,7 @@ proc genSuccessX*(conf: ConfigRef) =
 
   if conf.filenameOption != foAbs:
     output = output.AbsoluteFile.extractFilename
-        # xxx honor filenameOption more accurately
+      # xxx honor filenameOption more accurately
 
   rawMessage(
     conf,

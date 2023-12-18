@@ -133,25 +133,6 @@ if true:
 else: # else colon line
   discard
 
-proc # after proc before indented name
-  xxx = discard
-
-proc xxxx = # proc eq line
-  # proc first line
-  discard
-
-proc x =
-  ## A proc doc comment
-  if true:
-    numberOfCharsRead -= 2 # handle Ctrl+Z as EOF
-
-    for i in 0 ..< numberOfCharsRead:
-      discard
-
-proc x = discard
-  ## indented doc comment for proc
-  ## that is long
-
 # before module
 import module # with a comment
 import module ## with a comment
@@ -229,9 +210,8 @@ a = b
 ## Doc comment after assignment
 ## needs to be double
 
-proc ffff =
+block:
   result.add()
-
 ## Doc comment after indented statement
 ## needs to be double
 
@@ -263,7 +243,8 @@ a(
 {.pragma # comment here
  .}
 
-proc a(v#[block]#: int, abc: int)
+let v = 52 # let all on one line
+let v = addr output # let all on one line with command
 
 let
   # let first line indented
@@ -291,6 +272,27 @@ discard # discard eol
   # discard first line
   54 # discard value
 
+proc x = discard # proc, impl and comment on one line
+
+proc # after proc before indented name
+  xxx = discard
+
+proc xxxx = # proc eq line
+  # proc first line
+  discard
+
+proc x =
+  ## A proc doc comment
+  if true:
+    numberOfCharsRead -= 2 # handle Ctrl+Z as EOF
+
+    for i in 0 ..< numberOfCharsRead:
+      discard
+
+proc x = discard
+  ## indented doc comment for proc
+  ## that is long
+
 proc f: bool =
   ## Comment here
   ## another
@@ -317,6 +319,8 @@ proc f =
 proc f =
   ## Doc comment only
   ## even two lines
+
+proc a(v#[block]#: int, abc: int)
 
 command "a", "b", "c" # command eol comment
 

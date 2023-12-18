@@ -13,8 +13,14 @@ type A[
 proc f(
   a:
     Aaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbb | Ccccccccccccccccccccccccccc |
-      Ddddddddddddddddddddddddd | Eeeeeeeeeeeeeeeee;
+      Ddddddddddddddddddddddddd | Eeeeeeeeeeeeeeeee
 )
+
+type FieldObject = object
+  aaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbb, cccccccccccccccccccc, dddddddddddddddddddd,
+    eeeeeeeeeeeeeeeeeeee, fffffffffffffffffff, ggggggggggggggggggggggg: int
+  aaaaaaaaaaaaaaa*, bbbbbbbbbbbbbbbbb*, cccccccccccccccccccc*, dddddddddddddddddddd*,
+    eeeeeeeeeeeeeeeeeeee*, fffffffffffffffffff*, ggggggggggggggggggggggg*: int
 
 type CaseObject = object
   case f: bool

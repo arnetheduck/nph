@@ -35,12 +35,12 @@ proc flagsToStr[T](flags: set[T]): string =
   if flags == {}:
     result = "[]"
   else:
-    result = ""
+    result = "["
     for x in items(flags):
       if result != "":
         result.add(", ")
       result.addYamlString($x)
-    result = "[" & result & "]"
+    result.add "]"
 
 proc lineInfoToStr(conf: ConfigRef; info: TLineInfo): string =
   result.add "["
@@ -96,7 +96,7 @@ proc symToYamlAux(
     if card(n.flags) > 0:
       res.addf("\n$1flags: $2", [istr, flagsToStr(n.flags)])
     res.addf("\n$1magic: $2", [istr, makeYamlString($n.magic)])
-    res.addf("\n$1ast: ", [istr])
+    res.addf("\n$1ast:\n$1    ", [istr])
     res.treeToYamlAux(conf, n.ast, marker, indent + 1, maxRecDepth - 1)
     res.addf("\n$1options: $2", [istr, flagsToStr(n.options)])
     res.addf("\n$1position: $2", [istr, $n.position])
@@ -105,7 +105,7 @@ proc symToYamlAux(
     if card(n.loc.flags) > 0:
       res.addf("\n$1flags: $2", [istr, makeYamlString($n.loc.flags)])
     res.addf("\n$1r: $2", [istr, n.loc.r])
-    res.addf("\n$1lode: $2", [istr])
+    res.addf("\n$1lode:\n$1    ", [istr])
     res.treeToYamlAux(conf, n.loc.lode, marker, indent + 1, maxRecDepth - 1)
 
 proc typeToYamlAux(
@@ -123,9 +123,9 @@ proc typeToYamlAux(
   else:
     let istr = spaces(indent * 4)
     res.addf("kind: $2", [istr, makeYamlString($n.kind)])
-    res.addf("\n$1sym: ")
+    res.addf("\n$1sym:\n$1    ", [istr])
     res.symToYamlAux(conf, n.sym, marker, indent + 1, maxRecDepth - 1)
-    res.addf("\n$1n: ")
+    res.addf("\n$1n:\n$1    ", [istr])
     res.treeToYamlAux(conf, n.n, marker, indent + 1, maxRecDepth - 1)
     if card(n.flags) > 0:
       res.addf("\n$1flags: $2", [istr, flagsToStr(n.flags)])
@@ -135,7 +135,7 @@ proc typeToYamlAux(
     if n.len > 0:
       res.addf("\n$1sons:")
       for s in n.sons:
-        res.addf("\n  - ")
+        res.addf("\n$1  - ", [istr])
         res.typeToYamlAux(conf, s, marker, indent + 1, maxRecDepth - 1)
 
 proc treeToYamlAux(
@@ -158,7 +158,7 @@ proc treeToYamlAux(
       case n.kind
       of nkCharLit..nkUInt64Lit:
         res.addf("\n$1intVal: $2", [istr, $(n.intVal)])
-      of nkFloatLit, nkFloat32Lit, nkFloat64Lit:
+      of nkFloatLit..nkFloat128Lit:
         res.addf("\n$1floatVal: $2", [istr, n.floatVal.toStrMaxPrecision])
       of nkStrLit..nkTripleStrLit:
         res.addf("\n$1strVal: $2", [istr, makeYamlString(n.strVal)])
@@ -172,7 +172,7 @@ proc treeToYamlAux(
           res.addf("\n$1ident: null", [istr])
       else:
         if n.len > 0:
-          res.addf("\n$1sons: ", [istr])
+          res.addf("\n$1sons:", [istr])
           for i in 0..<n.len:
             res.addf("\n$1  - ", [istr])
             res.treeToYamlAux(conf, n[i], marker, indent + 1, maxRecDepth - 1)

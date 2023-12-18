@@ -62,11 +62,13 @@ command line options are supported ;)
 * diffs are kept at a minimum
   * diff-inducing constructs such as vertical alignment are avoided, for more
     productive merges
+  * formatting the same code again results in no differences
 * it broadly follows the [Status Nim style guide](https://status-im.github.io/nim-style-guide/)
   and [NEP1](https://nim-lang.org/docs/nep1.html)
   * this is tool aimed at making collaboration easier, with others and your
     future self
-  * where NEP1 contradicts itself, see above
+  * where NEP1 contradicts itself or these priorities, these priorities have
+    precedence
 
 The formatting rules are loosely derived from other formatters that already have
 gone through the journey of debating what "pleasing to read" might mean while
@@ -75,6 +77,8 @@ making adaptations for both features and quirks of the Nim parser.
 If in doubt, formatting that works well for descriptive identifiers and avoids
 putting too much information in a single like will be preferred.
 
+If something breaks the above guidelines, it's _likely_ a bug.
+
 ## FAQ
 
 ### Why use a formatter?
@@ -82,7 +86,7 @@ putting too much information in a single like will be preferred.
 A formatter removes the tedium of manually adding structure to code to make it
 more readable - overlong lines, inconsistent indentation, lack of visual
 structure and other small distractions quickly nibble away at the mental budget
-available for writing code while a formatter solves this many many other things
+available for writing code while a formatter solves this and many other things
 at the press of a button.
 
 When you work with others, debates and nitpicking over style go away and
@@ -210,10 +214,7 @@ formatting diffs all the time.
 
 Because it is based on it, of course! As a starting point this is fine but the
 code would benefit greatly from being rewritten with a dedicated formatting
-AST.
-
-In particular, the comment handling is done in a hand-wavy manner with bits and
-pieces of the old code mixed with new heuristics resulting in quite the mess.
+AST - and here we are.
 
 ### Should it be upstreamed?
 
@@ -239,14 +240,38 @@ extra is needed here is an open question but 10% seems like a good start for a
 language like Nim which defaults to 2-space significant indent and a naive
 module system that encourages globally unique identifiers with longer names.
 
+Automated formatting keeps most code well below this limit but the extra 10%
+allows gives it some lenience - think of it as those cases where a prorgammer
+would use their judgement and common sense to override a style guide
+recommendation.
+
 ### What about comments?
 
-`nph` currently touches comments as little as possible - specifically, they
-are not re-flowed or re-aligned and the aim is to make them sticky to where they
-were originally written.
+Comments may appear in many different places that are not represented in the
+Nim AST. When `nph` reformats code, it may have to move comments around in order
+to maintain line lengths and introduce or remove indentation.
 
-Improvements in this area are much welcome - the compiler AST was not really
-written with comment preservation in mind and `nph`'s handling is not great.
+`nph` uses heuristics to place comments into one of several categories which
+broadly play by similar rules that code does - in particular, indentation is
+used to determine "ownership" over the comment.
+
+The implementation currently tracks several comment categories:
+
+* comment statement nodes - comments that appear with regular indent in
+  statement list contexts (such as the body of a `proc`) as represented as such,
+  ie as statement nodes and get treated similar to how regular code would
+* node attachments - comments that are anchored to an AST node depending on
+  their location in the code relative to that node:
+  * prefix - anything leading up to a particular AST node - for example less
+    indented or otherwise appearing before the node
+  * mid - at midpoints in composite nodes - between the `:` and the body of an
+    `if` for example
+  * postfix - appearing after the node, meaning on the same line or more
+    indented than the node
+
+When rendering the code, `nph` will use these categories to guide where the
+comment text should go, maintaining comment output in such a way that parsing
+the file again results in equivalent comment placement.
 
 ### How are blank lines handled?
 

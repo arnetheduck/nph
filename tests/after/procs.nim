@@ -6,7 +6,7 @@ proc a(v: int) =
 
 proc a(
     aaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccccccc,
-    vvvvvvvvvvvvvvvvvvvvvv: string;
+      vvvvvvvvvvvvvvvvvvvvvv: string
 ) =
   discard
 
@@ -32,6 +32,30 @@ proc a(v: int) {.
 .} =
   discard
 
+proc a(
+    T:
+      typedesc[
+        Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb |
+          Cccccccccccccccccccccccccc | Dddddddddddd
+      ];
+    aaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccccccc, ddddddddddddddddddddddd;
+) =
+  discard
+
+proc aaaaaaaaa*[
+    Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc,
+      Dddddddddddddddddddddd
+](
+    aaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbb, cccccccccccccccc,
+      ddddddddddddddddddd: int
+): ReturnType[
+    Nested[
+      Aaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccccc,
+      Dddddddddddddddddddddddd, Eeeeeeeeeeeeeeeeeeeee
+    ]
+] =
+  discard
+
 proc aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(
     v: int
 ) =
@@ -42,20 +66,20 @@ proc aaa[A, B, C](v: int)
 proc aaaa*[A, B, C](v: int)
 proc aaaaa[A, B, C](
   aaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbb, cccccccccccccccc,
-  ddddddddddddddddddd: int;
+    ddddddddddddddddddd: int
 )
 
 proc aaaa*[
   Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc,
-  Dddddddddddddddddddddd
+    Dddddddddddddddddddddd
 ](v: int)
 
 proc aaaaaaaaa*[
   Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc,
-  Dddddddddddddddddddddd
+    Dddddddddddddddddddddd
 ](
   aaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbb, cccccccccccccccc,
-  ddddddddddddddddddd: int;
+    ddddddddddddddddddd: int
 )
 
 proc aaaaaaaa[T: Aaaa](v: int)
@@ -72,12 +96,15 @@ proc aaaaaaaa[
 proc aaaaaaaaaaa(
   v:
     Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb |
-      Cccccccccccccccccccccccccc;
+      Cccccccccccccccccccccccccc
 )
 
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 42 + 33 +
-    44
+  44
 
+command aaaaaaaaaaaaaaaaaaaaaa,
+  aaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaa,
+  bbbbbbbbbbbbbbbb
 functionCall(
   aaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaa,
   aaaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaa

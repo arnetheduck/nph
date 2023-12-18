@@ -4,7 +4,7 @@
 
 import
   "."/[
-    astcmp, astyaml, phast, phastalgo, phmsgs, phlineinfos, phoptions, phparser,
+    astcmp, astyaml, phast, phastyaml, phmsgs, phlineinfos, phoptions, phparser,
     phrenderer
   ]
 

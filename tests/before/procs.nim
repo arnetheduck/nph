@@ -9,8 +9,11 @@ proc a(aaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccc: string
 proc a(v: int) {.nimcall.} = discard
 proc a(v: int) {.nimcall, pragma2, pragma3, praaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagma, rrr.} = discard
 
-proc aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(v: int) = discard
+proc a(T: typedesc[Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccccccccc | Dddddddddddd], aaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccccccc, ddddddddddddddddddddddd) = discard
 
+proc aaaaaaaaa*[Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc, Dddddddddddddddddddddd](aaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbb, cccccccccccccccc, ddddddddddddddddddd: int): ReturnType[Nested[Aaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccccc, Dddddddddddddddddddddddd, Eeeeeeeeeeeeeeeeeeeee]] = discard
+
+proc aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(v: int) = discard
 
 proc aaa*(v: int)
 proc aaa[A, B, C](v: int)
@@ -24,10 +27,13 @@ proc aaaaaaaa[Tttttttttttttttttttttttttttttttttttttttttt: Aaaaaaaaaaaaaaaaaaaaaa
 proc aaaaaaaa[T: Aaaa; S: static int](v: int)
 proc aaaaaaaa[T: Aaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccccccccc](v: int)
 
+
+
 proc aaaaaaaaaaa(v: Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccccccccc)
 
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 42 + 33 + 44
 
+command aaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaa, bbbbbbbbbbbbbbbb
 functionCall(aaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaa)
 
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(aaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaa,aaaaaaaaaaaaaaaaa,aaaaaaaaaaaaaaaaaaaaa)

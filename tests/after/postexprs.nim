@@ -10,10 +10,10 @@ command:
   discard 2
 
 command "param" do ():
-    discard 3
+  discard 3
 # for some reason, this comes with an extra nkCall in the AST
 command "param" do:
-    discard 4
+  discard 4
 command "param":
   discard 5
 
@@ -82,11 +82,9 @@ discard command:
 call(
   command do ():
     27
-  ,
 )
 call(
   command do:
     28
-  ,
 )
 call(command: 29)
