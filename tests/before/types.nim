@@ -7,6 +7,11 @@ type A[T: Aaaaaaaaaaaaaaaaaaa|Bbbbbbbbbbbbbbbbbbbbbbbb|Cccccccccccccccccccc|Dddd
 
 proc f(a: Aaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbb | Ccccccccccccccccccccccccccc | Ddddddddddddddddddddddddd | Eeeeeeeeeeeeeeeee)
 
+
+type FieldObject = object
+  aaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbb, cccccccccccccccccccc, dddddddddddddddddddd, eeeeeeeeeeeeeeeeeeee, fffffffffffffffffff, ggggggggggggggggggggggg: int
+  aaaaaaaaaaaaaaa*, bbbbbbbbbbbbbbbbb*, cccccccccccccccccccc*, dddddddddddddddddddd*, eeeeeeeeeeeeeeeeeeee*, fffffffffffffffffff*, ggggggggggggggggggggggg*: int
+
 type CaseObject = object
   case f: bool
   of false:

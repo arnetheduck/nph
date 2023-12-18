@@ -54,7 +54,7 @@ type
 
   FileSeekPos* = enum
     fspEnd ## Seek relative to end
-  # text file handling:
+    # text file handling:
 
   ## Position relative to which seek should happen.
   # The values are ordered so that they match with stdio
@@ -85,15 +85,19 @@ type
       v: string # case field eol
 
   SomeAlias* = int
-      ## alias eol
-      ## alias next
+    ## alias eol
+    ## alias next
+
   SomeAlias2 {.nodecl.} = int ## alias2 eol
+
   SomeAlias3 # alias after symbol
     [T] = # alias after equals
       int # alias after type
+
   SomeAlias4 = SomeAlias3[int]
-      ## after alias4
-      ## more after alias4
+    ## after alias4
+    ## more after alias4
+
   ## Some comment before whenobj
   WhenObject = object # whenobject object line
     when false: # when object false line
@@ -133,26 +137,6 @@ if true:
 # before else dedented
 else: # else colon line
   discard
-
-proc xxx() = # after proc before indented name
-  discard
-
-proc xxxx() = # proc eq line
-  # proc first line
-  discard
-
-proc x() =
-  ## A proc doc comment
-  if true:
-    numberOfCharsRead -= 2 # handle Ctrl+Z as EOF
-
-    for i in 0..<numberOfCharsRead:
-      discard
-
-proc x() =
-  discard
-  ## indented doc comment for proc
-  ## that is long
 
 # before module
 import module # with a comment
@@ -233,9 +217,8 @@ a = b
 ## Doc comment after assignment
 ## needs to be double
 
-proc ffff() =
+block:
   result.add()
-
 ## Doc comment after indented statement
 ## needs to be double
 
@@ -262,8 +245,8 @@ a(b = c)
 {.pragma # comment here
   .}
 
-proc a(v #[block]#
-  : int; abc: int)
+let v = 52 # let all on one line
+let v = addr output # let all on one line with command
 
 let
   # let first line indented
@@ -294,6 +277,30 @@ discard
   # discard first line
   54 # discard value
 
+proc x() =
+  discard
+  # proc, impl and comment on one line
+
+proc xxx() = # after proc before indented name
+  discard
+
+proc xxxx() = # proc eq line
+  # proc first line
+  discard
+
+proc x() =
+  ## A proc doc comment
+  if true:
+    numberOfCharsRead -= 2 # handle Ctrl+Z as EOF
+
+    for i in 0..<numberOfCharsRead:
+      discard
+
+proc x() =
+  discard
+  ## indented doc comment for proc
+  ## that is long
+
 proc f(): bool =
   ## Comment here
   ## another
@@ -321,10 +328,13 @@ proc f() =
   ## Doc comment only
   ## even two lines
 
+proc a(v #[block]#
+  : int; abc: int)
+
 command "a", "b", "c" # command eol comment
 
-command "first arg", # first arg comment
-  "second arg", # second arg comment
+command "first arg" # first arg comment
+, "second arg", # second arg comment
   "third arg" # third arg comment
 
 command "first arg"

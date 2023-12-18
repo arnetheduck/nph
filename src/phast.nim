@@ -1105,8 +1105,8 @@ type
     path*: PNode # can be a string literal!
 
   CompilesId* = int
-      ## id that is used for the caching logic within
-      ## ``system.compiles``. See the seminst module.
+    ## id that is used for the caching logic within
+    ## ``system.compiles``. See the seminst module.
   TInstantiation* = object
     sym*: PSym
     concreteTypes*: seq[PType]
@@ -1181,6 +1181,7 @@ type
       cname*: string
         # resolved C declaration name in importc decl, e.g.:
         # proc fun() {.importc: "$1aux".} => cname = funaux
+
     constraint*: PNode
       # additional constraints like 'lit|result'; also
       # misused for the codegenDecl and virtual pragmas in the hope
@@ -1648,9 +1649,9 @@ when false:
   var x: CountTable[string]
 
   addQuitProc proc () {.noconv.} =
-        for k, v in pairs(x):
-          echo k
-          echo v
+      for k, v in pairs(x):
+        echo k
+        echo v
 
 proc newSym*(
     symKind: TSymKind;

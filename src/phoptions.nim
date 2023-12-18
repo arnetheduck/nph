@@ -590,7 +590,6 @@ template newPackageCache*(): untyped =
       modeCaseInsensitive
     else:
       modeCaseSensitive
-    ,
   )
 
 proc newProfileData(): ProfileData =
@@ -959,7 +958,7 @@ proc pathSubs*(conf: ConfigRef; p, config: string): string =
         conf.projectPath.string,
         "nimcache",
         getNimcacheDir(conf).string
-      ],
+      ]
     ).expandTilde
 
 iterator nimbleSubs*(conf: ConfigRef; p: string): string =
