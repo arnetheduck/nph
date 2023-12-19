@@ -10,11 +10,12 @@ from std/math import isNaN
 type
   Equivalence* = enum
     Same
+    ParseError
     Different
 
   Outcome* = object
     case kind*: Equivalence
-    of Same:
+    of Same, ParseError:
       discard
     of Different:
       a*, b*: PNode
@@ -71,10 +72,16 @@ proc equivalent*(a, b: PNode): Outcome =
     of nkIdent:
       a.ident.s == b.ident.s
     else:
+      let skipped =
+        if a.kind == nkStmtListExpr:
+          # When inserting a `;`, we might get some extra empty statements (?)
+          {nkEmpty, nkCommentStmt}
+        else:
+          {nkCommentStmt}
       # TODO don't break comments!
       let
-        af = a.sons.filterIt(it.kind != nkCommentStmt)
-        bf = b.sons.filterIt(it.kind != nkCommentStmt)
+        af = a.sons.filterIt(it.kind notin skipped)
+        bf = b.sons.filterIt(it.kind notin skipped)
 
       if af.len() != bf.len():
         false
@@ -91,8 +98,17 @@ proc equivalent*(a, b: PNode): Outcome =
   else:
     Outcome(kind: Same)
 
+proc makeConfigRef(): ConfigRef =
+  let conf = newConfigRef()
+  conf.errorMax = int.high
+  conf
+
 proc equivalent*(a, afile, b, bfile: string): Outcome =
-  equivalent(
-    parseString(a, newIdentCache(), newConfigRef(), afile),
-    parseString(b, newIdentCache(), newConfigRef(), bfile),
-  )
+  let
+    conf = makeConfigRef()
+    aa = parseString(a, newIdentCache(), conf, afile)
+    bb = parseString(b, newIdentCache(), conf, bfile)
+  if conf.errorCounter > 0:
+    Outcome(kind: ParseError)
+  else:
+    equivalent(aa, bb)

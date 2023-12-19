@@ -68,6 +68,11 @@ type
     fiiiiiiiiiiiiiiiiiiiiiiiieeeeeeeeeld: int
       # loooooooooooooooooooong comment past the max line length
 
+    docfield, ## Doc comment after comma
+      docfield2, ## Doc comment again
+        ## Multiline
+      docfield3: int ## here came the type
+
   # and here
   NewlineObject = object
     field: int ## doc comment after field
@@ -91,7 +96,8 @@ type
   SomeAlias2 {.nodecl.} = int ## alias2 eol
 
   SomeAlias3 # alias after symbol
-    [T] = # alias after equals
+    [T] =
+      # alias after equals
       int # alias after type
 
   SomeAlias4 = SomeAlias3[int]
@@ -118,6 +124,16 @@ when defined(somecond): # when colon line
 else: # else colon line
   # else first line
   discard
+
+if true:
+  ## doc-comment-only if
+
+block:
+  if true:
+    ## doc-comment-only if nested
+
+while false:
+  ## doc-comment-only while
 
 if true:
   # if next line
@@ -203,8 +219,7 @@ static: # static colon line
   # static first line
   discard
 
-discard Object(
-    # object eol
+discard Object( # object eol
     # object first line
     field: 0, # field line
     field2:
@@ -222,17 +237,21 @@ block:
 ## Doc comment after indented statement
 ## needs to be double
 
-abc and # dedented comment in infix
+abc and
+# dedented comment in infix
 def
 
-abc and # indented comment in infix
+abc and
+# indented comment in infix
 def
 
-if abc and # dedented comment in infix
+if abc and
+# dedented comment in infix
 def:
   discard
 
-if abc and # indented comment in infix
+if abc and
+# indented comment in infix
 def:
   discard
 
@@ -258,7 +277,8 @@ var
 
 let # let eol
   v # let ident after symbol
-  : # let ident after colon
+  :
+    # let ident after colon
     int =
     # let ident after type
     # let ident after equals
@@ -266,7 +286,8 @@ let # let eol
 
 const # const eol
   v # const ident after symbol
-  : # const ident after colon
+  :
+    # const ident after colon
     int =
     # const ident after type
     # const ident after equals
@@ -333,8 +354,8 @@ proc a(v #[block]#
 
 command "a", "b", "c" # command eol comment
 
-command "first arg" # first arg comment
-, "second arg", # second arg comment
+command "first arg", # first arg comment
+  "second arg", # second arg comment
   "third arg" # third arg comment
 
 command "first arg"

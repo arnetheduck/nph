@@ -17,7 +17,7 @@ static:
     "nph needs to be compiled with nim 2.0.0 exactly for now"
 
 const
-  Version = "0.1"
+  Version = gorge("git describe --long --dirty --always")
   Usage =
     "nph - Nim formatter " & Version &
       """
@@ -30,6 +30,9 @@ Options:
   --version             show the version
   --help                show this help
 """
+  ErrCheckFailed = 1
+  ErrParseFailed = 2
+  ErrEqFailed = 3
 
 proc writeHelp() =
   stdout.write(Usage)
@@ -55,16 +58,28 @@ func isNimFile(file: string): bool =
   let (_, _, ext) = file.splitFile()
   ext in [".nim", ".nims", ".nimble"]
 
-proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool =
+proc makeConfigRef(): ConfigRef =
+  let conf = newConfigRef()
+  conf.errorMax = int.high
+  conf
+
+proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): int =
   let
-    conf = newConfigRef()
+    conf = makeConfigRef()
     input =
       if infile == "-":
         readAll(stdin)
       else:
         readFile(infile)
     node = parse(input, infile, printTokens, conf)
-    output = renderTree(node, conf) & "\n"
+
+  if conf.errorCounter > 0:
+    return ErrParseFailed
+
+  let output = renderTree(node, conf) & "\n"
+
+  if conf.errorCounter > 0:
+    return ErrParseFailed
 
   if infile != "-":
     if debug:
@@ -78,7 +93,7 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool
         )
     elif fileExists(outFile) and output == readFile(outFile):
       # No formatting difference - don't touch file modificuation date
-      return true
+      return QuitSuccess
 
   let eq =
     equivalent(
@@ -92,7 +107,41 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool
       ,
     )
 
-  if eq.kind == Different:
+  template writeUnformatted() =
+    if not debug and (infile != outfile or infile == "-"):
+      # Write unformatted content
+      if not check:
+        if infile == "-":
+          write(stdout, input)
+        else:
+          writeFile(outfile, input)
+
+  case eq.kind
+  of Same:
+    if check:
+      ErrCheckFailed # We failed the equivalence check above
+    else:
+      # Formatting changed the file
+      if not debug or infile == "-":
+        if infile == "-":
+          write(stdout, output)
+        else:
+          writeFile(outfile, output)
+
+      QuitSuccess
+  of ParseError:
+    writeUnformatted()
+
+    localError(
+      conf,
+      TLineInfo(fileIndex: FileIndex(0)),
+      "Skipped file, formatted output cannot be parsed (bug! " & Version & ")",
+    )
+
+    ErrEqFailed
+  of Different:
+    writeUnformatted()
+
     stderr.writeLine "--- Input ---"
     stderr.writeLine input
     stderr.writeLine "--- Formatted ---"
@@ -102,32 +151,13 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): bool
     stderr.writeLine "--- POST ---"
     stderr.writeLine treeToYaml(nil, eq.b)
 
-    internalError(
+    localError(
       conf,
       TLineInfo(fileIndex: FileIndex(0)),
-      "Formatted output does not match input, report bug!",
+      "Skipped file, formatted output does not match input (bug! " & Version & ")",
     )
-    if infile != outfile or infile == "-":
-      # Write unformatted content
-      if not check:
-        if infile == "-":
-          write(stdout, input)
-        else:
-          writeFile(outfile, input)
 
-    quit 2
-
-  if check:
-    false # We failed the equivalence check above
-  else:
-    # Formatting changed the file
-    if not debug or infile == "-":
-      if infile == "-":
-        write(stdout, output)
-      else:
-        writeFile(outfile, output)
-
-    true
+    ErrEqFailed
 
 proc main() =
   var
@@ -194,14 +224,20 @@ proc main() =
   elif outdir.len != 0:
     outfiles = infiles.mapIt($(joinPath(outdir, it)))
 
+  var res = QuitSuccess
   for (infile, outfile) in zip(infiles, outfiles):
     let (dir, _, _) = splitFile(outfile)
 
     createDir(dir)
-    if not prettyPrint(infile, outfile, debug, check, printTokens):
-      quit 1
+    let err = prettyPrint(infile, outfile, debug, check, printTokens)
+    case err
+    of ErrCheckFailed:
+      quit ErrCheckFailed
+    else:
+      # Keep going on source code errors but fail the program eventually
+      res = max(res, err)
 
-  quit 0
+  quit res
 
 when isMainModule:
   main()

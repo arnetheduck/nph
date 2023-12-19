@@ -37,6 +37,10 @@ jobs:
     name: CI '${{ matrix.target.name }}'
     runs-on: ${{ matrix.builder }}
     steps:
+      - name: Set git to use LF
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -64,6 +68,8 @@ jobs:
 
       - name: Check formatting
         run: |
-          find src tests/after -name "*.nim" -print0 | xargs -0 -n1 ./nph
-          git diff
-          # find -name "*.nim"  ! -path "./tests/before/*" ! -path "./nimbledeps/*" -print0 | xargs -0 -n1 ./nph --check
+          ! ./nph --check tests/before
+          ./nph --check tests/after
+
+          ./nph src
+          git diff --exit-code

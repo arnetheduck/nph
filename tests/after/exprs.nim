@@ -12,6 +12,21 @@ var c3 =
     else: 0
   )
 
+while (;
+  node = node.next
+
+  node != nil
+):
+  discard
+
+while (
+  var a = 0
+  inc a
+  a += 42
+  a > 0
+):
+  discard
+
 for a in 0..<1:
   discard
 
