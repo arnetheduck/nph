@@ -138,13 +138,16 @@ proc parMessage(p: Parser; arg: string) =
   ## Produce and emit the parser message `arg` to output.
   lexMessageTok(p.lex, errGenerated, p.tok, arg)
 
-template withInd(p, body: untyped) =
+template withInd(p, indent, body: untyped) =
   let oldInd = p.currInd
-  p.currInd = p.tok.indent
+  p.currInd = indent
 
   body
 
   p.currInd = oldInd
+
+template withInd(p, body: untyped) =
+  withInd(p, p.tok.indent, body)
 
 template realInd(p): bool =
   p.tok.indent > p.currInd
@@ -229,7 +232,7 @@ proc drainSkipped(p: var Parser; indent: int): seq[Token] =
     for c in p.skipped:
       if c.indent == -1 or c.indent > indent:
         result.add(c)
-        p.lineNumberPrevious = int c.prevLine
+        p.lineNumberPrevious = int c.lineB
 
     p.skipped.delete(0..result.high)
 
@@ -358,8 +361,16 @@ proc isOperator(tok: Token): bool =
   }
 
 proc parseComStmt(p: var Parser; n: PNode; commentLoc = clPostfix): PNode =
-  splitLookahead(p, n, commentLoc)
-  parseStmt(p)
+  splitLookahead(p, n, int.high, commentLoc)
+
+  # Let parseStmt deal with statement lists that contain only doc comments
+  if not (
+    p.tok.indent >= 0 and p.tok.indent < p.currInd and p.skipped.len > 0 and
+    p.skipped[0].indent > p.currInd
+  ):
+    splitLookahead(p, n, commentLoc)
+
+  parseStmt(p, allowEmpty = true)
 
 proc parseColComStmt(p: var Parser; n: PNode; commentLoc = clPostfix): PNode =
   # `:` followed by a list of statements, with comments interspresed
@@ -1109,6 +1120,9 @@ proc parseOperators(
     a.add(opNode)
     a.add(result)
     a.add(b)
+    # Reset the "beginning" of the infix to capture empty lines correctly
+    a.info = result.info
+    a.endInfo = b.endInfo
 
     result = a
     opPrec = getPrecedence(p.tok)
@@ -1232,7 +1246,7 @@ proc parseIdentColonEquals(p: var Parser; flags: DeclaredIdentFlags): PNode =
     if p.tok.tokType != tkComma:
       break
     getTok(p)
-
+    splitLookahead(p, a, clPostfix)
     optInd(p, a)
 
   # We let comments sit as prefixes to whatever comes next - this works well
@@ -2501,7 +2515,6 @@ proc parseSection(
   #| section(RULE) = COMMENT? RULE / (IND{>} (RULE / COMMENT)^+IND{=} DED)
   if result.kind != nkTypeSection:
     getTok(p)
-
   splitLookahead(p, result, clMid)
   if realInd(p):
     withInd(p):
@@ -2838,7 +2851,6 @@ proc parseTypeDef(p: var Parser): PNode =
   #| typeDef = identVisDot genericParamList? pragma '=' optInd typeDefValue
   #|             indAndComment?
   result = newNodeP(nkTypeDef, p)
-
   var identifier = identVis(p, allowDot = true)
   var identPragma = identifier
   var pragma: PNode
@@ -3119,11 +3131,17 @@ proc complexOrSimpleStmt(p: var Parser): PNode =
 proc parseStmt(p: var Parser; allowEmpty: bool): PNode =
   #| stmt = (IND{>} complexOrSimpleStmt^+(IND{=} / ';') DED)
   #|      / simpleStmt ^+ ';'
-  if p.tok.indent > p.currInd:
-    result = newNodeP(nkStmtList, p, withPrefix = false)
-    addSkipped(p, result)
 
-    withInd(p):
+  let nextInd =
+    if p.tok.indent < p.currInd and p.skipped.len > 0 and p.skipped[0].indent > p.currInd:
+      p.skipped[0].indent
+    else:
+      p.tok.indent
+  if nextInd > p.currInd:
+    result = newNodeP(nkStmtList, p, withPrefix = false)
+
+    withInd(p, nextInd):
+      addSkipped(p, result)
       splitLookahead(p, result, clPrefix)
       while true:
         if p.tok.indent == p.currInd:
@@ -3172,6 +3190,7 @@ proc parseStmt(p: var Parser; allowEmpty: bool): PNode =
         tkMacro, tkType, tkConst, tkWhen, tkVar:
       if allowEmpty:
         result = newNodeP(nkStmtList, p, withPrefix = false)
+        addSkipped(p, result)
       else:
         parMessage(p, "nestable statement requires indentation")
         result = p.emptyNode

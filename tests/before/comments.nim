@@ -64,6 +64,11 @@ type
     # comment between fields
     field2: int ## Field comment again
     fiiiiiiiiiiiiiiiiiiiiiiiieeeeeeeeeld: int # loooooooooooooooooooong comment past the max line length
+
+    docfield, ## Doc comment after comma
+      docfield2, ## Doc comment again
+                 ## Multiline
+      docfield3: int ## here came the type
   # and here
 
   NewlineObject = object
@@ -113,6 +118,16 @@ when defined(somecond): # when colon line
 else: # else colon line
   # else first line
   discard
+
+if true:
+  ## doc-comment-only if
+
+block:
+  if true:
+    ## doc-comment-only if nested
+
+while false:
+  ## doc-comment-only while
 
 if true:
   # if next line

@@ -11,9 +11,10 @@
 
 # * yaml formatting for the nph-specific fields
 
-import "."/[phast, phlexer, phlineinfos, phoptions, phmsgs]
-import "$nim"/compiler/[rodutils]
-import std/[intsets, strutils]
+import
+  "."/[phast, phlexer, phlineinfos, phoptions, phmsgs],
+  "$nim"/compiler/[rodutils],
+  std/[intsets, strutils]
 
 proc addYamlString*(res: var string; s: string) =
   # We have to split long strings into many ropes. Otherwise

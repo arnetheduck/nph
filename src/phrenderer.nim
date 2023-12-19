@@ -86,6 +86,7 @@ type
     lfSepAtEnd ## Always add separator at end
     lfLongSepAtEnd ## Add separator at end in one-per-line mode
     lfSkipPushComma ## Hack to remove first comma in pragma push
+    lfFirstCommentSticky ## Render the first comment on the same line if line-breaking
 
   ListFlags = set[ListFlag]
   SubFlag = enum
@@ -202,8 +203,10 @@ proc addTok(g: var TSrcGen; kind: TokType; s: string) =
 proc outputLine(g: TSrcGen): int =
   ## The line it would be added if we were to add a token
   g.line + (
-    if g.pendingNL >= 0: 1 + ord(g.pendingNewline)
-    else: 0
+    if g.pendingNL >= 0:
+      1 + ord(g.pendingNewline)
+    else:
+      0
   )
 
 proc outputLine(g: TSrcLen): int =
@@ -254,6 +257,16 @@ proc optNL(g: var TSrcGen; a, b: PNode) =
 
 proc blankLine(g: var TSrcGen; v = true) =
   g.pendingNewline = v or g.pendingNewline
+
+proc optIndent(g: var TSrcGen; wid = IndentWidth) =
+  # Set up an indent increase, if a newline were to happen
+  g.indent += wid
+  if g.pendingNL >= 0:
+    g.pendingNL = g.indent
+    g.lineLen = g.indent
+
+proc optIndent(g: var TSrcLen; wid = IndentWidth) =
+  g.indent += wid
 
 proc indentNL(g: var TSrcGen; wid = IndentWidth) =
   g.indent += wid
@@ -610,69 +623,6 @@ proc nlsub(g: TOutput; n: PNode; flags: SubFlags = {}): int =
   else:
     lsub(g, n, flags)
 
-# proc lcomma(g: TSrcGen; n: PNode; start: int = 0; theEnd: int = -1, flags: ListFlags = {}, subFlags: SubFlags = {}): int =
-#   assert(theEnd < 0)
-#   # if n.prefix.len > 0 or n.mid.len > 0 or n.postfix.len > 0:
-#   #   return MaxLineLen + 1
-#   result = 0
-#   for i in start..n.len + theEnd:
-#     result += lsub(g, n[i], subFlags) + len(", ")
-
-#   if result > 0 and lfSepAtEnd notin flags:
-#     result -= len(", ") # last does not get a comma!
-
-# proc llist(
-#     g: TSrcGen;
-#     n: PNode;
-#     brOpen = tkParLe;
-#     separator = tkComma;
-#     extra = 0;
-#     start = 0;
-#     theEnd = -1;
-#     indentNL = IndentWidth;
-#     flags: ListFlags = {};
-#     subFlags: SubFlags = {};
-# ): int =
-#   let
-#     brLen = if brCloseOf(brOpen) == tkInvalid: 0 else: len($brOpen) * 2
-#     subLen = lcomma(g, n, start = start, theEnd = theEnd)
-
-#   subLen + brLen + extra
-
-# proc lsons(g: TSrcGen; n: PNode; start: int = 0; theEnd: int = -1): int =
-#   assert(theEnd < 0)
-
-#   result = 0
-#   # if n.prefix.len > 0 or n.mid.len > 0 or n.postfix.len > 0:
-#   #   return MaxLineLen + 1
-#   for i in start..n.len + theEnd:
-#     inc(result, lsub(g, n[i]))
-
-# proc lpostStatements(g: var TSrcLen, n: PNode; start: int; skipDo: bool; skipColon = false): int =
-#   var i = start
-#   if n[i].kind in {nkStmtList, nkStmtListExpr}:
-#     if skipDo:
-#       if not skipColon:
-#         put(g, tkColon, ":")
-#     else:
-#       result += len(Space)
-#       put(g, tkSpaces, Space)
-#       put(g, tkDo, "do")
-#       put(g, tkColon, ":")
-
-#   lsub(g, n[i])
-
-#   i.inc
-#   for j in i..<n.len:
-#     if n[j].kind == nkDo:
-#       optNL(g)
-#     elif n[j].kind in {nkStmtList, nkStmtListExpr}:
-#       optNL(g)
-#       put(g, tkDo, "do")
-#       put(g, tkColon, ":")
-
-#     lsub(g, n[j])
-
 proc fits(g: TSrcLen; x: int): bool =
   # Line lengths are computed assuming no extra line breaks
   true
@@ -687,23 +637,16 @@ proc putWithSpace(g: var TOutput; kind: TokType; s: string) =
   put(g, kind, s)
   put(g, tkSpaces, Space)
 
-proc gextras(g: var TSrcGen; toks: openArray[Token]; indented: bool) =
+proc gextras(g: var TSrcGen; toks: openArray[Token]; indented, firstSticky: bool) =
   if toks.len == 0:
     return
 
   let long = toks.len > 1 or overflows(g, len($toks[0]))
-  var hadPending = false
-  if long:
-    if indented:
-      indentNL(g)
-    else:
-      optNL(g)
-  elif indented:
-    if g.pendingNL >= 0:
-      hadPending = true
-      g.indent += IndentWidth
-      g.pendingNL += IndentWidth
-      g.lineLen += IndentWidth
+  if indented:
+    optIndent(g)
+
+  if long and not firstSticky:
+    optNL(g)
 
   for tok in toks:
     g.pendingNewline = g.pendingNewline or tok.prevLine + 1 < tok.line
@@ -714,22 +657,19 @@ proc gextras(g: var TSrcGen; toks: openArray[Token]; indented: bool) =
     put(g, tok.tokType, $tok)
     optNL(g)
 
-  if long and indented:
+  if indented:
     dedent(g)
-  elif indented:
-    if hadPending:
-      g.indent -= IndentWidth
-      if g.pendingNL >= IndentWidth:
-        g.pendingNL -= IndentWidth
-        g.lineLen -= IndentWidth
 
 proc gprefixes(g: var TSrcGen; n: PNode) =
-  gextras(g, n.prefix, false)
+  if n.prefix.len > 0:
+    # Putting prefixes on the same line as the node helps comment stability
+    g.optNL()
+  gextras(g, n.prefix, false, false)
 
 proc gmids(g: var TSrcGen; n: PNode; indented = false) =
-  gextras(g, n.mid, indented)
+  gextras(g, n.mid, indented, false)
 
-proc gpostfixes(g: var TSrcGen; n: PNode) =
+proc gpostfixes(g: var TSrcGen; n: PNode; firstSticky = false) =
   # Postfixes are indented to increase chances that they stick
   # with the same node on re-parse since in most cases, we split
   # comments between prefix and postfix indent being greater than the
@@ -738,7 +678,7 @@ proc gpostfixes(g: var TSrcGen; n: PNode) =
   # Suspent kind-specific blanks while rendering postfixes
   let blank = g.pendingNewline
   g.pendingNewline = false
-  gextras(g, n.postfix, true)
+  gextras(g, n.postfix, true, firstSticky)
   g.pendingNewline = blank
 
 proc gprefixes(g: var TSrcLen; n: PNode) =
@@ -747,7 +687,7 @@ proc gprefixes(g: var TSrcLen; n: PNode) =
 proc gmids(g: var TSrcLen; n: PNode; indented = false) =
   discard
 
-proc gpostfixes(g: var TSrcLen; n: PNode) =
+proc gpostfixes(g: var TSrcLen; n: PNode; firstSticky = false) =
   discard
 
 proc eqIdent(n: PNode; s: string): bool =
@@ -782,7 +722,7 @@ proc gcomma(
   var indented = false
   defer:
     if indented:
-      g.indent -= indentNL
+      g.dedent(indentNL)
 
   let (start, count) =
     if lfFirstSticky in flags:
@@ -793,10 +733,11 @@ proc gcomma(
       # The first item must be rendered without newlines, so we start with that
       gsub(g, n[start], flags = subFlags + {sfSkipPostfix})
 
-      gpostfixes(g, n[start])
-
       if count > 1:
         putWithSpace(g, separator, $separator)
+
+      # Postfixes after separator!
+      gpostfixes(g, n[start], lfFirstCommentSticky in flags)
 
       # If we can't fit everything on the current line, start over at a fresh one
       if lfFirstAlone in flags and
@@ -812,11 +753,9 @@ proc gcomma(
               flags - {lfFirstSticky, lfFirstAlone},
               subFlags,
             ),
-          ):
+          ) or n[start].postfix.len > 0:
         indented = true
-        g.indent += indentNL
-
-        optNL(g)
+        g.indentNL(indentNL)
 
       (start + 1, count - 1)
     else:
@@ -868,7 +807,7 @@ proc gcomma(
         else:
           put(g, tkSpaces, " ")
 
-    gpostfixes(g, n[i])
+    gpostfixes(g, n[i], lfFirstCommentSticky in flags)
 
   if lfSepAtEnd in flags or onePerLine and lfLongSepAtEnd in flags:
     put(g, separator, $separator)
@@ -907,25 +846,31 @@ proc glist(
     brClose = brCloseOf(brOpen)
     len =
       llist(g, n, brOpen, separator, extra, start, theEnd, indentNL, flags, subFlags)
-    ind = g.indent + indentNL
-    withNL = n.len + theEnd >= start and overflows(g, len) or n.mid.len > 0
+    withNL = n.len + theEnd >= start and (overflows(g, len) or n.mid.len > 1)
 
   if brClose != tkInvalid:
     # TODO stack all opening brackets on one line if there are many
     put(g, brOpen, $brOpen)
 
-  let oldInd = g.indent
-  g.indent = ind
+  optIndent(g, indentNL)
+  if n.mid.len == 1:
+    # Rendering the mid before the rest of the list helps comment stability
+    gmids(g, n)
+
   if withNL:
     g.optNL()
 
-  gmids(g, n)
+  if n.mid.len != 1:
+    gmids(g, n)
+
   gcomma(
     g, n, start, theEnd, separator, indentNL = 0, flags = flags, subFlags = subFlags
   )
 
-  g.indent = oldInd
-  if withNL:
+  dedent(g, indentNL)
+
+  # If comments caused a newline, make sure we end with a newline as well
+  if withNL or n.mid.len > 0:
     g.optNL()
 
   if brClose != tkInvalid:
@@ -967,6 +912,15 @@ proc gstmts(g: var TOutput; n: PNode; flags: SubFlags = {}; doIndent = true) =
 
   if needsPar:
     put(g, tkParLe, $tkParLe)
+    # Sometimes a semi-colon is needed to get the right parsing
+    if not (
+      n.len > 0 and
+      n[0].kind in {
+        nkIfStmt, nkWhenStmt, nkWhileStmt, nkDiscardStmt, nkTryStmt, nkBlockStmt,
+        nkLetSection, nkVarSection, nkConstSection, nkCaseStmt
+      }
+    ):
+      put(g, tkSemiColon, $tkSemiColon)
 
   if doIndent or needsPar:
     indentNL(g)
@@ -1009,15 +963,23 @@ proc gstmts(g: var TOutput; n: PNode; flags: SubFlags = {}; doIndent = true) =
     # No EOL after `)` or things will get misparsed!
     put(g, tkParRi, $tkParRi)
 
+proc gcolcoms(g: var TOutput; n, stmts: PNode; useSub = false) =
+  putWithSpace(g, tkColon, ":")
+  if stmts.kind == nkStmtList and stmts.len == 0 and n.mid.len > 0:
+    g.optNL() # doc-comment-only
+  gmids(g, n, true)
+  if useSub:
+    gsub(g, stmts)
+  else:
+    gstmts(g, stmts) # Adds a newline after each child
+
 proc gcond(g: var TOutput; n: PNode; flags: SubFlags = {}) =
   gsub(g, n, flags)
 
 proc gif(g: var TOutput; n: PNode; flags: SubFlags) =
   gprefixes(g, n[0])
   gcond(g, n[0][0], {sfLongIndent})
-  putWithSpace(g, tkColon, ":")
-  gmids(g, n[0], true)
-  gsub(g, n[0][1])
+  gcolcoms(g, n[0], n[0][1], true)
   optNL(g)
   if sfSkipPostfix notin flags:
     gpostfixes(g, n[0])
@@ -1029,9 +991,7 @@ proc gif(g: var TOutput; n: PNode; flags: SubFlags) =
 proc gwhile(g: var TOutput; n: PNode) =
   putWithSpace(g, tkWhile, "while")
   gcond(g, n[0], {sfLongIndent})
-  putWithSpace(g, tkColon, ":")
-  gmids(g, n, true)
-  gstmts(g, n[1])
+  gcolcoms(g, n, n[1])
 
 proc gpattern(g: var TOutput; n: PNode) =
   put(g, tkCurlyLe, "{")
@@ -1041,15 +1001,11 @@ proc gpattern(g: var TOutput; n: PNode) =
 
 proc gpragmaBlock(g: var TOutput; n: PNode) =
   gsub(g, n[0])
-  putWithSpace(g, tkColon, ":")
-  gmids(g, n, true)
-  gstmts(g, n[1])
+  gcolcoms(g, n, n[1])
 
 proc gtry(g: var TOutput; n: PNode) =
   put(g, tkTry, "try")
-  putWithSpace(g, tkColon, ":")
-  gmids(g, n, true)
-  gstmts(g, n[0])
+  gcolcoms(g, n, n[0])
   gsons(g, n, start = 1)
 
 proc gfor(g: var TOutput; n: PNode) =
@@ -1058,9 +1014,7 @@ proc gfor(g: var TOutput; n: PNode) =
   put(g, tkSpaces, Space)
   putWithSpace(g, tkIn, "in")
   gsub(g, n[^2], flags = {sfLongIndent})
-  putWithSpace(g, tkColon, ":")
-  gmids(g, n, true)
-  gstmts(g, n[^1])
+  gcolcoms(g, n, n[^1])
 
 proc gcase(g: var TOutput; n: PNode) =
   if n.len == 0:
@@ -1134,15 +1088,11 @@ proc gblock(g: var TOutput; n: PNode) =
   if n.len == 1:
     return
 
-  putWithSpace(g, tkColon, ":")
-  gmids(g, n, true)
-  gstmts(g, n[1])
+  gcolcoms(g, n, n[1])
 
 proc gstaticStmt(g: var TOutput; n: PNode) =
   put(g, tkStatic, "static")
-  putWithSpace(g, tkColon, ":")
-  gmids(g, n, true)
-  gstmts(g, n[0])
+  gcolcoms(g, n, n[0])
 
 proc gasm(g: var TOutput; n: PNode) =
   putWithSpace(g, tkAsm, "asm")
@@ -1286,8 +1236,8 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags) =
 
   if n.kind in {nkStmtList, nkStmtListExpr, nkStmtListType}:
     gstmts(g, n)
-
     return
+
   # When adding blanks after certain nodes, we only do so if there's a body
   let currLine = g.outputLine()
   gprefixes(g, n)
@@ -1499,11 +1449,11 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags) =
       doParamsAux(g, n[paramsPos])
 
     gsub(g, n[pragmasPos])
-    put(g, tkColon, ":")
-    gmids(g, n, true)
-    gsub(g, n[bodyPos])
+    gcolcoms(g, n, n[bodyPos])
   of nkIdentDefs:
-    gcomma(g, n, theEnd = -3, indentNL = 2, flags = {lfFirstSticky})
+    gcomma(
+      g, n, theEnd = -3, indentNL = 2, flags = {lfFirstSticky, lfFirstCommentSticky}
+    )
 
     if n.len >= 2 and n[^2].kind != nkEmpty:
       putWithSpace(g, tkColon, ":")
@@ -1653,28 +1603,18 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags) =
     put(g, tkAccent, "`")
   of nkIfExpr:
     putWithSpace(g, tkIf, "if")
-    if n.len > 0:
-      gcond(g, n[0][0])
-
-    putWithSpace(g, tkColon, ":")
-    if n.len > 0:
-      gmids(g, n[0])
-      gsub(g, n[0][1])
-      optNL(g)
-
+    gcond(g, n[0][0])
+    gcolcoms(g, n[0], n[0][1], true)
+    optNL(g)
     gsons(g, n, 1)
   of nkElifExpr:
     putWithSpace(g, tkElif, "elif")
     gcond(g, n[0])
-    putWithSpace(g, tkColon, ":")
-    gmids(g, n)
-    gsub(g, n[1])
+    gcolcoms(g, n, n[1], true)
     optNL(g)
   of nkElseExpr:
     put(g, tkElse, "else")
-    putWithSpace(g, tkColon, ":")
-    gmids(g, n)
-    gsub(g, n[0])
+    gcolcoms(g, n, n[0], true)
     optNL(g)
   of nkTypeOfExpr:
     if g.inConcept > 0:
@@ -1964,9 +1904,7 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags) =
     optNL(g)
     putWithSpace(g, tkOf, "of")
     gcomma(g, n, 0, -2, indentNL = longIndentWid)
-    putWithSpace(g, tkColon, ":")
-    gmids(g, n)
-    gstmts(g, lastSon(n))
+    gcolcoms(g, n, n[^1])
   of nkImportAs:
     gsub(g, n[0])
     put(g, tkSpaces, Space)
@@ -1982,15 +1920,11 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags) =
     optNL(g)
     putWithSpace(g, tkElif, "elif")
     gcond(g, n[0], flags = {sfLongIndent})
-    putWithSpace(g, tkColon, ":")
-    gmids(g, n)
-    gstmts(g, n[1])
+    gcolcoms(g, n, n[1])
   of nkElse:
     optNL(g)
     put(g, tkElse, "else")
-    putWithSpace(g, tkColon, ":")
-    gmids(g, n)
-    gstmts(g, n[0])
+    gcolcoms(g, n, n[0])
   of nkFinally, nkDefer:
     optNL(g)
     if n.kind == nkFinally:
@@ -1998,9 +1932,7 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags) =
     else:
       put(g, tkDefer, "defer")
 
-    putWithSpace(g, tkColon, ":")
-    gmids(g, n)
-    gstmts(g, n[0])
+    gcolcoms(g, n, n[0])
   of nkExceptBranch:
     optNL(g)
     if n.len != 1:
@@ -2009,9 +1941,7 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags) =
       put(g, tkExcept, "except")
 
     gcomma(g, n, 0, -2, indentNL = longIndentWid)
-    putWithSpace(g, tkColon, ":")
-    gmids(g, n)
-    gstmts(g, lastSon(n))
+    gcolcoms(g, n, n[^1])
   of nkGenericParams:
     glist(g, n, tkBracketLe, tkSemiColon, indentNL = flagIndent(flags))
   of nkFormalParams:

@@ -78,6 +78,73 @@ sons:
                         sons:
                           - kind: "nkIntLit"
                             intVal: 0
+  - kind: "nkWhileStmt"
+    sons:
+      - kind: "nkStmtListExpr"
+        sons:
+          - kind: "nkAsgn"
+            sons:
+              - kind: "nkIdent"
+                ident: "node"
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "node"
+                  - kind: "nkIdent"
+                    ident: "next"
+          - kind: "nkEmpty"
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "!="
+              - kind: "nkIdent"
+                ident: "node"
+              - kind: "nkNilLit"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkWhileStmt"
+    sons:
+      - kind: "nkStmtListExpr"
+        sons:
+          - kind: "nkVarSection"
+            sons:
+              - kind: "nkIdentDefs"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "a"
+                  - kind: "nkEmpty"
+                  - kind: "nkIntLit"
+                    intVal: 0
+          - kind: "nkCommand"
+            sons:
+              - kind: "nkIdent"
+                ident: "inc"
+              - kind: "nkIdent"
+                ident: "a"
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "+="
+              - kind: "nkIdent"
+                ident: "a"
+              - kind: "nkIntLit"
+                intVal: 42
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: ">"
+              - kind: "nkIdent"
+                ident: "a"
+              - kind: "nkIntLit"
+                intVal: 0
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
   - kind: "nkForStmt"
     sons:
       - kind: "nkIdent"

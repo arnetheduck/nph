@@ -199,6 +199,24 @@ sons:
                       - kind: "nkEmpty"
                     postfix:
                       - "# loooooooooooooooooooong comment past the max line length"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "docfield"
+                        postfix:
+                          - "## Doc comment after comma"
+                      - kind: "nkIdent"
+                        ident: "docfield2"
+                        postfix:
+                          - "## Doc comment again"
+                          - "## Multiline"
+                      - kind: "nkIdent"
+                        ident: "docfield3"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+                    postfix:
+                      - "## here came the type"
       - kind: "nkTypeDef"
         prefix:
           - "# and here"
@@ -460,6 +478,37 @@ sons:
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        mid:
+          - "## doc-comment-only if"
+        sons:
+          - kind: "nkIdent"
+            ident: "true"
+          - kind: "nkStmtList"
+  - kind: "nkBlockStmt"
+    sons:
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkIfStmt"
+            sons:
+              - kind: "nkElifBranch"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "true"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkCommentStmt"
+                        "comment": "## doc-comment-only if nested"
+  - kind: "nkWhileStmt"
+    mid:
+      - "## doc-comment-only while"
+    sons:
+      - kind: "nkIdent"
+        ident: "false"
+      - kind: "nkStmtList"
   - kind: "nkIfStmt"
     sons:
       - kind: "nkElifBranch"
@@ -765,6 +814,8 @@ sons:
   - kind: "nkDiscardStmt"
     sons:
       - kind: "nkObjConstr"
+        mid:
+          - "# object eol"
         sons:
           - kind: "nkIdent"
             ident: "Object"
@@ -772,7 +823,6 @@ sons:
             sons:
               - kind: "nkIdent"
                 prefix:
-                  - "# object eol"
                   - "# object first line"
                 ident: "field"
               - kind: "nkIntLit"
@@ -819,21 +869,21 @@ sons:
     sons:
       - kind: "nkIdent"
         ident: "and"
-        postfix:
-          - "# dedented comment in infix"
       - kind: "nkIdent"
         ident: "abc"
       - kind: "nkIdent"
+        prefix:
+          - "# dedented comment in infix"
         ident: "def"
   - kind: "nkInfix"
     sons:
       - kind: "nkIdent"
         ident: "and"
-        postfix:
-          - "# indented comment in infix"
       - kind: "nkIdent"
         ident: "abc"
       - kind: "nkIdent"
+        prefix:
+          - "# indented comment in infix"
         ident: "def"
   - kind: "nkIfStmt"
     sons:
@@ -843,11 +893,11 @@ sons:
             sons:
               - kind: "nkIdent"
                 ident: "and"
-                postfix:
-                  - "# dedented comment in infix"
               - kind: "nkIdent"
                 ident: "abc"
               - kind: "nkIdent"
+                prefix:
+                  - "# dedented comment in infix"
                 ident: "def"
           - kind: "nkStmtList"
             sons:
@@ -862,11 +912,11 @@ sons:
             sons:
               - kind: "nkIdent"
                 ident: "and"
-                postfix:
-                  - "# indented comment in infix"
               - kind: "nkIdent"
                 ident: "abc"
               - kind: "nkIdent"
+                prefix:
+                  - "# indented comment in infix"
                 ident: "def"
           - kind: "nkStmtList"
             sons:
