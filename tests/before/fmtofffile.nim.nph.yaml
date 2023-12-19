@@ -1,0 +1,4 @@
+kind: "nkStmtList"
+sons:
+  - kind: "nkCommentStmt"
+    "comment": "#!fmt: off\u000A\u000Aproc uglyFormat(hangingIndent: int,\u000A                isVery: bool,\u000A                ugly = true)\u000A"

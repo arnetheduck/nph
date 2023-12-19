@@ -121,17 +121,20 @@ proc isExported(n: PNode): bool =
 
 proc isSimple(n: PNode; identDefs = false): bool =
   ## Simple nodes are those that are either identifiers or simple lists thereof
-  case n.kind
-  of nkCharLit..nkNilLit, nkIdent:
-    true
-  of nkStmtList, nkImportStmt, nkExportStmt:
-    n.allIt(isSimple(it))
-  of nkIdentDefs:
-    n.allIt(isSimple(it, true))
-  of nkPostfix:
-    identDefs and isExported(n)
-  else:
+  if n.prefix.len > 0 or n.mid.len > 0 or n.postfix.len > 0:
     false
+  else:
+    case n.kind
+    of nkCharLit..nkNilLit, nkIdent:
+      true
+    of nkStmtList, nkImportStmt, nkExportStmt:
+      n.allIt(isSimple(it))
+    of nkIdentDefs:
+      n.allIt(isSimple(it, true))
+    of nkPostfix:
+      identDefs and isExported(n)
+    else:
+      false
 
 # We render the source code in a two phases: The first
 # determines how long the subtree will likely be, the second

@@ -1313,7 +1313,9 @@ proc bufMatches(L: Lexer; pos: int; chars: string): bool =
 
   true
 
-proc scanMultiLineComment(L: var Lexer; tok: var Token; start: int; isDoc: bool) =
+proc scanMultiLineComment(
+    L: var Lexer; tok: var Token; start: int; starter, ender: string; endOptional = true
+) =
   var pos = start
 
   tokenBegin(tok, pos)
@@ -1325,35 +1327,21 @@ proc scanMultiLineComment(L: var Lexer; tok: var Token; start: int; isDoc: bool)
   var nesting = 0
   while true:
     if L.buf[pos] == nimlexbase.EndOfFile:
-      tokenEndIgnore(tok, pos)
-      lexMessagePos(L, errGenerated, pos, "end of multiline comment expected")
-
+      if not endOptional:
+        lexMessagePos(L, errGenerated, pos, "end of multiline comment expected")
       break
 
-    if isDoc:
-      if L.bufMatches(pos, "##["):
-        nesting += 1
-      elif L.bufMatches(pos, "]##"):
-        if nesting == 0:
-          tok.literal.add "]##"
+    if L.bufMatches(pos, starter):
+      nesting += 1
+    elif L.bufMatches(pos, ender):
+      if nesting == 0:
+        tok.literal.add ender
 
-          pos += 3
+        pos += ender.len
 
-          break
+        break
 
-        nesting -= 1
-    else:
-      if L.bufMatches(pos, "#["):
-        nesting += 1
-      elif L.bufMatches(pos, "]#"):
-        if nesting == 0:
-          tok.literal.add "]#"
-
-          pos += 2
-
-          break
-
-        nesting -= 1
+      nesting -= 1
 
     tok.literal.add L.buf[pos]
     if L.buf[pos] in {CR, LF}:
@@ -1370,24 +1358,26 @@ proc scanComment(L: var Lexer; tok: var Token) =
 
   tok.tokType = tkComment
   if L.buf[pos + 1] == '[':
-    scanMultiLineComment(L, tok, pos, false)
+    scanMultiLineComment(L, tok, pos, "#[", "]#")
+  elif L.bufMatches(pos + 1, "#["):
+    scanMultiLineComment(L, tok, pos, "##[", "]##")
+  elif L.bufMatches(pos + 1, "!fmt: off"):
+    # We treat unformatted sections like one giant multi-line comment statement
+    scanMultiLineComment(L, tok, pos, "#!fmt: off", "#!fmt: on", endOptional = true)
+  elif L.bufMatches(pos + 1, "!nimpretty: off"):
+    scanMultiLineComment(
+      L, tok, pos, "#!nimpretty: off", "#!nimpretty: on", endOptional = true
+    )
+  else:
+    # Single-line comment
+    tokenBegin(tok, pos)
+    while L.buf[pos] notin {CR, LF, nimlexbase.EndOfFile}:
+      tok.literal.add(L.buf[pos])
+      inc(pos)
 
-    return
-  elif L.buf[pos + 1] == '#' and L.buf[pos + 2] == '[':
-    scanMultiLineComment(L, tok, pos, true)
+    tokenEndIgnore(tok, pos)
 
-    return
-
-  # tok.literal.add '#'
-
-  tokenBegin(tok, pos)
-  while L.buf[pos] notin {CR, LF, nimlexbase.EndOfFile}:
-    tok.literal.add(L.buf[pos])
-    inc(pos)
-
-  tokenEndIgnore(tok, pos)
-
-  L.bufpos = pos
+    L.bufpos = pos
 
 proc skip(L: var Lexer; tok: var Token) =
   var pos = L.bufpos
