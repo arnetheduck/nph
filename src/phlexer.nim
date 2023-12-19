@@ -1314,7 +1314,7 @@ proc bufMatches(L: Lexer; pos: int; chars: string): bool =
   true
 
 proc scanMultiLineComment(
-    L: var Lexer; tok: var Token; start: int; starter, ender: string; endOptional = true
+    L: var Lexer; tok: var Token; start: int; starter, ender: string; endOptional = false
 ) =
   var pos = start
 
@@ -1324,7 +1324,9 @@ proc scanMultiLineComment(
 
   pos += 1
 
-  var nesting = 0
+  var
+    nesting = 0
+    ended = false
   while true:
     if L.buf[pos] == nimlexbase.EndOfFile:
       if not endOptional:
@@ -1334,22 +1336,32 @@ proc scanMultiLineComment(
     if L.bufMatches(pos, starter):
       nesting += 1
     elif L.bufMatches(pos, ender):
-      if nesting == 0:
-        tok.literal.add ender
+      if nesting <= 0:
+        if endOptional:
+          ended = true
+        else:
+          tok.literal.add ender
 
-        pos += ender.len
+          pos += ender.len
 
-        break
+          break
 
       nesting -= 1
 
-    tok.literal.add L.buf[pos]
     if L.buf[pos] in {CR, LF}:
+      if ended:
+        break
+
+      tok.literal.add L.buf[pos]
       pos = handleCRLF(L, pos)
     else:
+      tok.literal.add L.buf[pos]
       pos += 1
 
-  tokenEnd(tok, pos - 1)
+  if ended:
+    tokenEnd(tok, pos)
+  else:
+    tokenEnd(tok, pos - 1)
 
   L.bufpos = pos
 

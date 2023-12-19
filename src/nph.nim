@@ -76,7 +76,9 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): int 
   if conf.errorCounter > 0:
     return ErrParseFailed
 
-  let output = renderTree(node, conf) & "\n"
+  var output = renderTree(node, conf)
+  if not output.endsWith("\n"):
+    output.add "\n"
 
   if conf.errorCounter > 0:
     return ErrParseFailed
