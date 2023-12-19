@@ -1,0 +1,77 @@
+kind: "nkStmtList"
+sons:
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "getsFormatted"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "a"
+              - kind: "nkIdent"
+                ident: "b"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkCommentStmt"
+    "comment": "#!fmt: off\u000Alet\u000A  myHandFormattedList\u000A        :\u000A   array[3, int]\u000A =\u000A    [1, 2, 3]\u000A\u000A#!fmt: on"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "hanging"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "indent"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "isUgly"
+              - kind: "nkEmpty"
+              - kind: "nkIdent"
+                ident: "true"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkBlockStmt"
+    sons:
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkCommentStmt"
+            "comment": "#!fmt: off\u000A  if   true   :\u000A    discard\u000A  #!fmt: on"
+          - kind: "nkIfStmt"
+            sons:
+              - kind: "nkElifBranch"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "false"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkDiscardStmt"
+                        sons:
+                          - kind: "nkEmpty"

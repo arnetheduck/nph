@@ -560,10 +560,21 @@ const
     optAssert, optNaNCheck, optInfCheck, optStyleCheck
   }
   DefaultOptions* = {
-    optObjCheck, optFieldCheck, optRangeCheck, optBoundsCheck, optOverflowCheck,
-    optAssert, optWarns, optRefCheck, optHints, optStackTrace, optLineTrace,
+    optObjCheck,
+    optFieldCheck,
+    optRangeCheck,
+    optBoundsCheck,
+    optOverflowCheck,
+    optAssert,
+    optWarns,
+    optRefCheck,
+    optHints,
+    optStackTrace,
+    optLineTrace,
     # consider adding `optStackTraceMsgs`
-    optTrMacros, optStyleCheck, optCursorInference
+    optTrMacros,
+    optStyleCheck,
+    optCursorInference
   }
   DefaultGlobalOptions* = {optThreadAnalysis, optExcessiveStackTrace, optJsBigInt64}
 
