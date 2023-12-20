@@ -1,12 +1,14 @@
 type A = int
 
-type B = A | B
+type TypeClass = A | B
 type Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb = Aaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbb | Cccccccccccccccccccccc | Dddddddddddddddddddddd
 
-type A[T: Aaaaaaaaaaaaaaaaaaa|Bbbbbbbbbbbbbbbbbbbbbbbb|Cccccccccccccccccccc|Dddddddddddddddd|Eeeeeeeeeeeeeeeeeee] = Bbbbbbbbbbbbbbbbbb[T]
+type GenericAlias[T: Aaaaaaaaaaaaaaaaaaa|Bbbbbbbbbbbbbbbbbbbbbbbb|Cccccccccccccccccccc|Dddddddddddddddd|Eeeeeeeeeeeeeeeeeee] = Bbbbbbbbbbbbbbbbbb[T]
 
-proc f(a: Aaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbb | Ccccccccccccccccccccccccccc | Ddddddddddddddddddddddddd | Eeeeeeeeeeeeeeeee)
+type GenericRef = GenType[A, ref B]
+proc procTypeclass(a: Aaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbb | Ccccccccccccccccccccccccccc | Ddddddddddddddddddddddddd | Eeeeeeeeeeeeeeeee)
 
+type EmptyObject = object
 
 type FieldObject = object
   aaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbb, cccccccccccccccccccc, dddddddddddddddddddd, eeeeeeeeeeeeeeeeeeee, fffffffffffffffffff, ggggggggggggggggggggggg: int
@@ -33,3 +35,7 @@ type PragmaObject {.objectPragma, aaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccc
   vfalse {.fieldPragma, aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccccccccccc, dddddddddddddddddddddd.}: int
   vpublic* {.fieldPragma.}: int
 
+type RefObject = ref object of RootObj
+  reffield: int
+
+type RefAlone = ref object of RootObj

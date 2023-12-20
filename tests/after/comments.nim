@@ -196,7 +196,7 @@ else: # case else colon line
   # case else first line
   discard
 
-f do () -> int: # do colon line
+f do() -> int: # do colon line
   # do first line
   discard
   discard
@@ -206,11 +206,12 @@ block: # block colon line
   discard
   discard
 
-let x =
-  proc (): int = # lambda eq line
-      # lambda first line
-      discard
-      discard
+let
+  x =
+    proc(): int = # lambda eq line
+        # lambda first line
+        discard
+        discard
 while false: # while colon line
   # while first line
   discard

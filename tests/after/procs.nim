@@ -26,7 +26,9 @@ proc a(
 proc a(v: int) {.nimcall.} =
   discard
 
-proc a(v: int) {.
+proc a(
+    v: int
+) {.
     nimcall, pragma2, pragma3, praaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagma,
     rrr
 .} =
@@ -128,16 +130,18 @@ type Cp = proc(v: int)
 type Dp = proc() {.nimcall.}
 type Ep = proc {.nimcall.}
 type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc {.bbbbbbbbbbbbbbbbbbbbbbbb.}
-type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =
-  proc(aaaaaaaa: Bbbbbbb; ccccccccc: Dddddddddddd; eeeeee: Ffffff)
+type
+  Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =
+    proc(aaaaaaaa: Bbbbbbb; ccccccccc: Dddddddddddd; eeeeee: Ffffff)
 
-type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =
-  proc(
-    aaaaaaaa: Bbbbbbb;
-    ccccccccc: Dddddddddddd;
-    eeeeeeeeeeeee: Ffffffffffffffff;
-    gggggggggggggg: Hhhhhhhhhhhhhhhhhhhh;
-  )
+type
+  Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =
+    proc(
+      aaaaaaaa: Bbbbbbb;
+      ccccccccc: Dddddddddddd;
+      eeeeeeeeeeeee: Ffffffffffffffff;
+      gggggggggggggg: Hhhhhhhhhhhhhhhhhhhh;
+    )
 
 proc `.()`() =
   discard

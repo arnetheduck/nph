@@ -45,11 +45,12 @@ proc writeVersion() =
   quit(0)
 
 proc parse(input, filename: string; printTokens: bool; conf: ConfigRef): PNode =
-  let fn =
-    if filename == "-":
-      "stdin"
-    else:
-      filename
+  let
+    fn =
+      if filename == "-":
+        "stdin"
+      else:
+        filename
 
   parseString(input, newIdentCache(), conf, fn, printTokens = printTokens)
 
@@ -97,17 +98,18 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): int 
       # No formatting difference - don't touch file modificuation date
       return QuitSuccess
 
-  let eq =
-    equivalent(
-      input,
-      infile,
-      output,
-      if infile == "-":
-        "stdout"
-      else:
-        outfile
-      ,
-    )
+  let
+    eq =
+      equivalent(
+        input,
+        infile,
+        output,
+        if infile == "-":
+          "stdout"
+        else:
+          outfile
+        ,
+      )
 
   template writeUnformatted() =
     if not debug and (infile != outfile or infile == "-"):

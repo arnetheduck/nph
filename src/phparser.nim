@@ -703,14 +703,15 @@ proc semiStmtList(p: var Parser; result: PNode) =
   inc p.inSemiStmtList
 
   withInd(p):
-    let a =
-      case p.tok.tokType
-      of tkIf:
-        parseIfOrWhenExpr(p, nkIfStmt)
-      of tkWhen:
-        parseIfOrWhenExpr(p, nkWhenStmt)
-      else:
-        complexOrSimpleStmt(p)
+    let
+      a =
+        case p.tok.tokType
+        of tkIf:
+          parseIfOrWhenExpr(p, nkIfStmt)
+        of tkWhen:
+          parseIfOrWhenExpr(p, nkWhenStmt)
+        else:
+          complexOrSimpleStmt(p)
 
     result.add a
     while p.tok.tokType != tkEof:
@@ -1096,11 +1097,12 @@ proc parseOperators(
   # expand while operators have priorities higher than 'limit'
   var opPrec = getPrecedence(p.tok)
 
-  let modeB =
-    if mode == pmTypeDef:
-      pmTypeDesc
-    else:
-      mode
+  let
+    modeB =
+      if mode == pmTypeDef:
+        pmTypeDesc
+      else:
+        mode
   # the operator itself must not start on a new line:
   # progress guaranteed
   while opPrec >= limit and p.tok.indent < 0 and not isUnary(p.tok):
@@ -1371,11 +1373,12 @@ proc parseParamList(p: var Parser; retColon = true): PNode =
     optPar(p)
     eat(p, tkParRi)
 
-  let hasRet =
-    if retColon:
-      p.tok.tokType == tkColon
-    else:
-      p.tok.tokType == tkOpr and p.tok.ident.s == "->"
+  let
+    hasRet =
+      if retColon:
+        p.tok.tokType == tkColon
+      else:
+        p.tok.tokType == tkOpr and p.tok.ident.s == "->"
 
   if hasRet and p.tok.indent < 0:
     getTok(p)
@@ -1666,18 +1669,19 @@ proc primary(p: var Parser; mode: PrimaryMode): PNode =
     splitLookahead(p, a, clPostfix)
     optInd(p, a)
 
-    const identOrLiteralKinds =
-      tkBuiltInMagics + {
-        tkSymbol,
-        tkAccent,
-        tkNil,
-        tkIntLit..tkCustomLit,
-        tkCast,
-        tkOut,
-        tkParLe,
-        tkBracketLe,
-        tkCurlyLe
-      }
+    const
+      identOrLiteralKinds =
+        tkBuiltInMagics + {
+          tkSymbol,
+          tkAccent,
+          tkNil,
+          tkIntLit..tkCustomLit,
+          tkCast,
+          tkOut,
+          tkParLe,
+          tkBracketLe,
+          tkCurlyLe
+        }
 
     if isSigil and p.tok.tokType in identOrLiteralKinds:
       let baseInd = p.lex.currLineIndent
@@ -2364,13 +2368,14 @@ proc parseGenericParam(p: var Parser): PNode =
   while true:
     case p.tok.tokType
     of tkIn, tkOut:
-      let x =
-        p.lex.cache.getIdent(
-          if p.tok.tokType == tkIn:
-            "in"
-          else:
-            "out"
-        )
+      let
+        x =
+          p.lex.cache.getIdent(
+            if p.tok.tokType == tkIn:
+              "in"
+            else:
+              "out"
+          )
 
       a = newNodeP(nkPrefix, p)
 
@@ -2555,11 +2560,12 @@ proc parseEnum(p: var Parser): PNode =
   splitLookahead(p, result, clMid)
   # progress guaranteed
   while true:
-    let symInd =
-      if p.tok.indent == -1:
-        p.currInd
-      else:
-        p.tok.indent
+    let
+      symInd =
+        if p.tok.indent == -1:
+          p.currInd
+        else:
+          p.tok.indent
 
     var a = parseSymbol(p)
     if a.kind == nkEmpty:
@@ -2767,20 +2773,21 @@ proc parseObject(p: var Parser): PNode =
   setEndInfo()
 
 proc parseTypeClassParam(p: var Parser): PNode =
-  let modifier =
-    case p.tok.tokType
-    of tkOut, tkVar:
-      nkVarTy
-    of tkPtr:
-      nkPtrTy
-    of tkRef:
-      nkRefTy
-    of tkStatic:
-      nkStaticTy
-    of tkType:
-      nkTypeOfExpr
-    else:
-      nkEmpty
+  let
+    modifier =
+      case p.tok.tokType
+      of tkOut, tkVar:
+        nkVarTy
+      of tkPtr:
+        nkPtrTy
+      of tkRef:
+        nkRefTy
+      of tkStatic:
+        nkStaticTy
+      of tkType:
+        nkTypeOfExpr
+      else:
+        nkEmpty
 
   if modifier != nkEmpty:
     result = newNodeP(modifier, p)
@@ -3132,11 +3139,13 @@ proc parseStmt(p: var Parser; allowEmpty: bool): PNode =
   #| stmt = (IND{>} complexOrSimpleStmt^+(IND{=} / ';') DED)
   #|      / simpleStmt ^+ ';'
 
-  let nextInd =
-    if p.tok.indent < p.currInd and p.skipped.len > 0 and p.skipped[0].indent > p.currInd:
-      p.skipped[0].indent
-    else:
-      p.tok.indent
+  let
+    nextInd =
+      if p.tok.indent < p.currInd and p.skipped.len > 0 and
+          p.skipped[0].indent > p.currInd:
+        p.skipped[0].indent
+      else:
+        p.tok.indent
   if nextInd > p.currInd:
     result = newNodeP(nkStmtList, p, withPrefix = false)
 
