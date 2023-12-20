@@ -92,6 +92,7 @@ sons:
                     ident: "node"
                   - kind: "nkIdent"
                     ident: "next"
+          - kind: "nkEmpty"
           - kind: "nkInfix"
             sons:
               - kind: "nkIdent"
@@ -1129,6 +1130,31 @@ sons:
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkEmpty"
+          - kind: "nkCaseStmt"
+            sons:
+              - kind: "nkIdent"
+                ident: "x"
+              - kind: "nkOfBranch"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 2
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkIntLit"
+                        intVal: 4
+              - kind: "nkElse"
+                sons:
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkIntLit"
+                        intVal: 4
   - kind: "nkCaseStmt"
     sons:
       - kind: "nkIdent"

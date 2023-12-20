@@ -14,7 +14,7 @@ sons:
       - kind: "nkTypeDef"
         sons:
           - kind: "nkIdent"
-            ident: "B"
+            ident: "TypeClass"
           - kind: "nkEmpty"
           - kind: "nkInfix"
             sons:
@@ -56,7 +56,7 @@ sons:
       - kind: "nkTypeDef"
         sons:
           - kind: "nkIdent"
-            ident: "A"
+            ident: "GenericAlias"
           - kind: "nkGenericParams"
             sons:
               - kind: "nkIdentDefs"
@@ -96,10 +96,27 @@ sons:
                 ident: "Bbbbbbbbbbbbbbbbbb"
               - kind: "nkIdent"
                 ident: "T"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "GenericRef"
+          - kind: "nkEmpty"
+          - kind: "nkBracketExpr"
+            sons:
+              - kind: "nkIdent"
+                ident: "GenType"
+              - kind: "nkIdent"
+                ident: "A"
+              - kind: "nkRefTy"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "B"
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
-        ident: "f"
+        ident: "procTypeclass"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkFormalParams"
@@ -139,6 +156,18 @@ sons:
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "EmptyObject"
+          - kind: "nkEmpty"
+          - kind: "nkObjectTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
   - kind: "nkTypeSection"
     sons:
       - kind: "nkTypeDef"
@@ -423,3 +452,45 @@ sons:
                       - kind: "nkIdent"
                         ident: "int"
                       - kind: "nkEmpty"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "RefObject"
+          - kind: "nkEmpty"
+          - kind: "nkRefTy"
+            sons:
+              - kind: "nkObjectTy"
+                sons:
+                  - kind: "nkEmpty"
+                  - kind: "nkOfInherit"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "RootObj"
+                  - kind: "nkRecList"
+                    sons:
+                      - kind: "nkIdentDefs"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "reffield"
+                          - kind: "nkIdent"
+                            ident: "int"
+                          - kind: "nkEmpty"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "RefAlone"
+          - kind: "nkEmpty"
+          - kind: "nkRefTy"
+            sons:
+              - kind: "nkObjectTy"
+                sons:
+                  - kind: "nkEmpty"
+                  - kind: "nkOfInherit"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "RootObj"
+                  - kind: "nkEmpty"

@@ -58,6 +58,9 @@ if (aaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbbbbbbb) or (ccccccccccccccccccccc
 elif aaaaaaaaa and (bbbbbbbbbb or cccccccccccc and (dddddddddddddddd or eeeeeeeeeeeeeee or fffffffffffffff or gggggggggggggg)):
   discard
 
+let a = case x
+  of 2: 4
+  else: 4
 
 case aaaaaaaaaa
 of aaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc, ddddddddddddddddddddddd: discard

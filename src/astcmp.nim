@@ -59,39 +59,41 @@ proc equivalent*(a, b: PNode): Outcome =
 
     return Outcome(kind: Different, a: a, b: b)
 
-  let eq =
-    case a.kind
-    of nkCharLit..nkUInt64Lit:
-      a.intVal == b.intVal
-    of nkFloatLit..nkFloat128Lit:
-      (isNaN(a.floatVal) and isNaN(b.floatVal)) or a.floatVal == b.floatVal
-    of nkStrLit..nkTripleStrLit:
-      a.strVal == b.strVal
-    of nkSym:
-      raiseAssert "Shouldn't eixst in parser"
-    of nkIdent:
-      a.ident.s == b.ident.s
-    else:
-      let skipped =
-        if a.kind == nkStmtListExpr:
-          # When inserting a `;`, we might get some extra empty statements (?)
-          {nkEmpty, nkCommentStmt}
-        else:
-          {nkCommentStmt}
-      # TODO don't break comments!
-      let
-        af = a.sons.filterIt(it.kind notin skipped)
-        bf = b.sons.filterIt(it.kind notin skipped)
-
-      if af.len() != bf.len():
-        false
+  let
+    eq =
+      case a.kind
+      of nkCharLit..nkUInt64Lit:
+        a.intVal == b.intVal
+      of nkFloatLit..nkFloat128Lit:
+        (isNaN(a.floatVal) and isNaN(b.floatVal)) or a.floatVal == b.floatVal
+      of nkStrLit..nkTripleStrLit:
+        a.strVal == b.strVal
+      of nkSym:
+        raiseAssert "Shouldn't eixst in parser"
+      of nkIdent:
+        a.ident.s == b.ident.s
       else:
-        for (aa, bb) in zip(af, bf):
-          let eq = equivalent(aa, bb)
-          if eq.kind == Different:
-            return eq
+        let
+          skipped =
+            if a.kind == nkStmtListExpr:
+              # When inserting a `;`, we might get some extra empty statements (?)
+              {nkEmpty, nkCommentStmt}
+            else:
+              {nkCommentStmt}
+        # TODO don't break comments!
+        let
+          af = a.sons.filterIt(it.kind notin skipped)
+          bf = b.sons.filterIt(it.kind notin skipped)
 
-        true
+        if af.len() != bf.len():
+          false
+        else:
+          for (aa, bb) in zip(af, bf):
+            let eq = equivalent(aa, bb)
+            if eq.kind == Different:
+              return eq
+
+          true
 
   if not eq:
     Outcome(kind: Different, a: a, b: b)
