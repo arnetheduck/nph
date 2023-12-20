@@ -553,7 +553,7 @@ proc atom(g: TOutput; n: PNode): string =
 proc init(T: type TSrcLen; g: TSrcGen): T =
   T(config: g.config, fid: g.fid, pendingWhitespace: -1)
 
-proc gsub(g: var TOutput; n: PNode; flags: SubFlags = {})
+proc gsub(g: var TOutput; n: PNode; flags: SubFlags = {}, extra = 0)
 proc gsons(
   g: var TOutput; n: PNode; start: int = 0; theEnd: int = -1; flags: SubFlags = {}
 )
@@ -582,12 +582,12 @@ proc glist(
   subFlags: SubFlags = {};
 )
 
-proc lsub(g: TSrcGen; n: PNode; flags: SubFlags = {}): int =
+proc lsub(g: TSrcGen; n: PNode; flags: SubFlags = {}, extra = 0): int =
   var g = TSrcLen.init(g)
-  gsub(g, n, flags)
+  gsub(g, n, flags, extra)
   g.lineLen
 
-proc lsub(g: TSrcLen; n: PNode; flags: SubFlags = {}): int =
+proc lsub(g: TSrcLen; n: PNode; flags: SubFlags = {}, extra = 0): int =
   0
 
 proc lsons(
@@ -1110,7 +1110,8 @@ proc gproc(g: var TOutput; n: PNode) =
         {}
 
   gsub(g, n[genericParamsPos], flags)
-  gsub(g, n[paramsPos], flags)
+
+  gsub(g, n[paramsPos], flags, extra = lsub(g, n[pragmasPos], flags))
   gsub(g, n[pragmasPos], flags)
   if n[bodyPos].kind != nkEmpty:
     optSpace(g)
@@ -1303,7 +1304,7 @@ proc isCustomLit(n: PNode): bool =
 
     result = ident != nil and ident.s.startsWith('\'')
 
-proc gsub(g: var TOutput; n: PNode; flags: SubFlags) =
+proc gsub(g: var TOutput; n: PNode; flags: SubFlags, extra: int) =
   if isNil(n):
     return
 
@@ -1510,7 +1511,7 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags) =
     putWithSpace(g, tkBind, "bind")
     gsub(g, n[0])
   of nkLambda:
-    putWithSpace(g, tkProc, "proc")
+    put(g, tkProc, "proc")
     gsub(g, n[paramsPos])
     gsub(g, n[pragmasPos])
     optSpace(g)
@@ -2026,10 +2027,11 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags) =
     if n.len >= 1:
       let
         retExtra =
-          if n.len > 0 and n[0].kind != nkEmpty:
-            len(": ") + lsub(g, n[0])
-          else:
-            0
+          extra + (
+            if n.len > 0 and n[0].kind != nkEmpty:
+              len(": ") + lsub(g, n[0])
+            else:
+              0)
       # Semi-colon here is ugly but necessary for semantic equality, else we
       # get different groupings of nkIdentDefs and their descendants
       # TODO relaxing this to semantic equivalence would allow the use of `,`

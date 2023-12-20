@@ -26,7 +26,9 @@ proc a(
 proc a(v: int) {.nimcall.} =
   discard
 
-proc a(v: int) {.
+proc a(
+    v: int
+) {.
     nimcall, pragma2, pragma3, praaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagma,
     rrr
 .} =

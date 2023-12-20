@@ -208,7 +208,7 @@ block: # block colon line
 
 let
   x =
-    proc (): int = # lambda eq line
+    proc(): int = # lambda eq line
         # lambda first line
         discard
         discard
