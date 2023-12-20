@@ -1656,7 +1656,7 @@ when false:
 
   var x: CountTable[string]
 
-  addQuitProc proc () {.noconv.} =
+  addQuitProc proc() {.noconv.} =
       for k, v in pairs(x):
         echo k
         echo v

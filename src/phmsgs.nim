@@ -181,9 +181,9 @@ proc newLineInfo*(fileInfoIdx: FileIndex; line, col: int): TLineInfo =
   else:
     result.col = -1
 
-proc newLineInfo*(conf: ConfigRef; filename: AbsoluteFile; line, col: int): TLineInfo {.
-    inline
-.} =
+proc newLineInfo*(
+    conf: ConfigRef; filename: AbsoluteFile; line, col: int
+): TLineInfo {.inline.} =
   result = newLineInfo(fileInfoIdx(conf, filename), line, col)
 
 const gCmdLineInfo* = newLineInfo(commandLineIdx, 1, 1)
@@ -818,9 +818,9 @@ template localError*(conf: ConfigRef; info: TLineInfo; arg: string) =
 template message*(conf: ConfigRef; info: TLineInfo; msg: TMsgKind; arg = "") =
   liMessage(conf, info, msg, arg, doNothing, instLoc())
 
-proc warningDeprecated*(conf: ConfigRef; info: TLineInfo = gCmdLineInfo; msg = "") {.
-    inline
-.} =
+proc warningDeprecated*(
+    conf: ConfigRef; info: TLineInfo = gCmdLineInfo; msg = ""
+) {.inline.} =
   message(conf, info, warnDeprecated, msg)
 
 proc internalErrorImpl(
