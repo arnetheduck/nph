@@ -17,7 +17,7 @@ static:
     "nph needs to be compiled with nim 2.0.0 exactly for now"
 
 const
-  Version = gorge("git describe --long --dirty --always")
+  Version = gorge("git describe --long --dirty --always --tags")
   Usage =
     "nph - Nim formatter " & Version &
     """

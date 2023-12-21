@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1"
+version       = "0.2"
 author        = "Jacek Sieka"
 description   = "Nim code formatter"
 license       = "MIT"
@@ -74,10 +74,10 @@ proc commitProject(
 
   try:
     exec "git checkout -b nph"
-    exec "git commit -am \"Formatted with $(nph --version)\""
+    exec "git commit -am \"Formatted with nph $(nph --version)\""
   except:
     exec "git checkout nph"
-    exec "git commit -am \"Formatted with $(nph --version)\" --amend"
+    exec "git commit -am \"Formatted with nph $(nph --version)\" --amend"
 
   cd "../.."
 
