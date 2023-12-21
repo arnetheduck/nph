@@ -3,3 +3,4 @@ nimbledeps
 nimble.develop
 nimble.paths
 *.exe
+playground/

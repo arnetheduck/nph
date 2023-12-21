@@ -435,6 +435,197 @@ sons:
       - kind: "nkIdentDefs"
         sons:
           - kind: "nkIdent"
+            ident: "mediumInfix"
+          - kind: "nkEmpty"
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "+"
+              - kind: "nkInfix"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "+"
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "+"
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "+"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "+"
+                              - kind: "nkInfix"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "+"
+                                  - kind: "nkInfix"
+                                    sons:
+                                      - kind: "nkIdent"
+                                        ident: "+"
+                                      - kind: "nkInfix"
+                                        sons:
+                                          - kind: "nkIdent"
+                                            ident: "+"
+                                          - kind: "nkInfix"
+                                            sons:
+                                              - kind: "nkIdent"
+                                                ident: "+"
+                                              - kind: "nkIdent"
+                                                ident: "aaaaaaaaaaaaa"
+                                              - kind: "nkIdent"
+                                                ident: "bbbbbbbbbbbbbbb"
+                                          - kind: "nkIdent"
+                                            ident: "ccccccccccccccc"
+                                      - kind: "nkIdent"
+                                        ident: "dddddddddddddddd"
+                                  - kind: "nkIdent"
+                                    ident: "eeeeeeeeeeeeeeeeeeeee"
+                              - kind: "nkInfix"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "*"
+                                  - kind: "nkIdent"
+                                    ident: "fffffffffffffff"
+                                  - kind: "nkIdent"
+                                    ident: "ggggggggggggggg"
+                          - kind: "nkIdent"
+                            ident: "hhhhhhhhhhhhhhh"
+                      - kind: "nkIdent"
+                        ident: "iiiiiiiiiiiiii"
+                  - kind: "nkIdent"
+                    ident: "jjjjjjjjjjjjjjjjj"
+              - kind: "nkIdent"
+                ident: "kkkkkkkkkk"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "parenInfix"
+          - kind: "nkEmpty"
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "*"
+              - kind: "nkPar"
+                sons:
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "+"
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "+"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "+"
+                              - kind: "nkInfix"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "+"
+                                  - kind: "nkInfix"
+                                    sons:
+                                      - kind: "nkIdent"
+                                        ident: "+"
+                                      - kind: "nkIdent"
+                                        ident: "aaaaaaaaaaaaa"
+                                      - kind: "nkIdent"
+                                        ident: "bbbbbbbbbbbbbbb"
+                                  - kind: "nkIdent"
+                                    ident: "ccccccccccccccc"
+                              - kind: "nkIdent"
+                                ident: "dddddddddddddddd"
+                          - kind: "nkIdent"
+                            ident: "eeeeeeeeeeeeeeeeeeeee"
+                      - kind: "nkIdent"
+                        ident: "fffffffffffffff"
+              - kind: "nkPar"
+                sons:
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "+"
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "+"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "+"
+                              - kind: "nkInfix"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "+"
+                                  - kind: "nkIdent"
+                                    ident: "ggggggggggggggg"
+                                  - kind: "nkIdent"
+                                    ident: "hhhhhhhhhhhhhhh"
+                              - kind: "nkIdent"
+                                ident: "iiiiiiiiiiiiii"
+                          - kind: "nkIdent"
+                            ident: "jjjjjjjjjjjjjjjjj"
+                      - kind: "nkIdent"
+                        ident: "kkkkkkkkkkkkk"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "parenShortInfix"
+          - kind: "nkEmpty"
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "*"
+              - kind: "nkPar"
+                sons:
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "+"
+                      - kind: "nkIdent"
+                        ident: "aaaaaaaaaaaaa"
+                      - kind: "nkIdent"
+                        ident: "eeeeeeeeeeeeeeeeeeeee"
+              - kind: "nkPar"
+                sons:
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "+"
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "+"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "+"
+                              - kind: "nkInfix"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "+"
+                                  - kind: "nkIdent"
+                                    ident: "ggggggggggggggg"
+                                  - kind: "nkIdent"
+                                    ident: "hhhhhhhhhhhhhhh"
+                              - kind: "nkIdent"
+                                ident: "iiiiiiiiiiiiii"
+                          - kind: "nkIdent"
+                            ident: "jjjjjjjjjjjjjjjjj"
+                      - kind: "nkIdent"
+                        ident: "kkkkkkkkkkkkkkkk"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
             ident: "longInfix"
           - kind: "nkEmpty"
           - kind: "nkPar"
@@ -1011,6 +1202,37 @@ sons:
                             ident: "a22"
                       - kind: "nkIdent"
                         ident: "a33"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "longArray"
+          - kind: "nkEmpty"
+          - kind: "nkBracket"
+            sons:
+              - kind: "nkIdent"
+                ident: "aaaaaaaaaaaaa"
+              - kind: "nkIdent"
+                ident: "bbbbbbbbbbbbbbb"
+              - kind: "nkIdent"
+                ident: "ccccccccccccccc"
+              - kind: "nkIdent"
+                ident: "dddddddddddddddd"
+              - kind: "nkIdent"
+                ident: "eeeeeeeeeeeeeeeeeeeee"
+              - kind: "nkIdent"
+                ident: "fffffffffffffff"
+              - kind: "nkIdent"
+                ident: "ggggggggggggggg"
+              - kind: "nkIdent"
+                ident: "hhhhhhhhhhhhhhh"
+              - kind: "nkIdent"
+                ident: "iiiiiiiiiiiiii"
+              - kind: "nkIdent"
+                ident: "jjjjjjjjjjjjjjjjj"
+              - kind: "nkIdent"
+                ident: "kkkkkkkkkk"
   - kind: "nkIfStmt"
     sons:
       - kind: "nkElifBranch"
@@ -1128,6 +1350,50 @@ sons:
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "prefix"
+          - kind: "nkEmpty"
+          - kind: "nkIfExpr"
+            sons:
+              - kind: "nkElifExpr"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "someprettylongconditionhereabcabcabcabc"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkStrLit"
+                        strVal: "[Valid]   "
+              - kind: "nkElseExpr"
+                sons:
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkStrLit"
+                        strVal: "[Invalid] "
+  - kind: "nkCommentStmt"
+    "comment": "# short if in short if"
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkIdent"
+            ident: "true"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkIfStmt"
+                sons:
+                  - kind: "nkElifBranch"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "false"
+                      - kind: "nkStmtList"
+                        sons:
+                          - kind: "nkDiscardStmt"
+                            sons:
+                              - kind: "nkEmpty"
   - kind: "nkLetSection"
     sons:
       - kind: "nkIdentDefs"

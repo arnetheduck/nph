@@ -1,11 +1,4 @@
-var
-  c3 =
-    row[p] + (
-      if runeA != runeB:
-        1
-      else:
-        0
-    )
+var c3 = row[p] + (if runeA != runeB: 1 else: 0)
 
 var c3 = row[p] + (if runeA != runeB: 1 else: 0)
 
@@ -35,11 +28,7 @@ template ttt*(): untyped =
 
 let
   x0 = (discard; false)
-  x1 =
-    if (discard; false):
-      0
-    else:
-      1
+  x1 = if (discard; false): 0 else: 1
   x2 = (if (discard; false): 0 else: 1)
   x3 = (if (discard; false): (0) else: (1))
 
@@ -56,6 +45,27 @@ discard xxxx "arg":
 let shortInfix = a * b * c + d * e * f + (a + b) * g
 
 let
+  mediumInfix =
+    aaaaaaaaaaaaa + bbbbbbbbbbbbbbb + ccccccccccccccc + dddddddddddddddd +
+    eeeeeeeeeeeeeeeeeeeee + fffffffffffffff * ggggggggggggggg + hhhhhhhhhhhhhhh +
+    iiiiiiiiiiiiii + jjjjjjjjjjjjjjjjj + kkkkkkkkkk
+let
+  parenInfix =
+    (
+      aaaaaaaaaaaaa + bbbbbbbbbbbbbbb + ccccccccccccccc + dddddddddddddddd +
+      eeeeeeeeeeeeeeeeeeeee + fffffffffffffff
+    ) * (
+      ggggggggggggggg + hhhhhhhhhhhhhhh + iiiiiiiiiiiiii + jjjjjjjjjjjjjjjjj +
+      kkkkkkkkkkkkk
+    )
+let
+  parenShortInfix =
+    (aaaaaaaaaaaaa + eeeeeeeeeeeeeeeeeeeee) * (
+      ggggggggggggggg + hhhhhhhhhhhhhhh + iiiiiiiiiiiiii + jjjjjjjjjjjjjjjjj +
+      kkkkkkkkkkkkkkkk
+    )
+
+let
   longInfix = (
     a30 * a21 * a12 * a03 - a20 * a31 * a12 * a03 - a30 * a11 * a22 * a03 +
     a10 * a31 * a22 * a03 + a20 * a11 * a32 * a03 - a10 * a21 * a32 * a03 -
@@ -66,6 +76,13 @@ let
     a20 * a11 * a02 * a33 + a10 * a21 * a02 * a33 + a20 * a01 * a12 * a33 -
     a00 * a21 * a12 * a33 - a10 * a01 * a22 * a33 + a00 * a11 * a22 * a33
   )
+
+let
+  longArray = [
+    aaaaaaaaaaaaa, bbbbbbbbbbbbbbb, ccccccccccccccc, dddddddddddddddd,
+    eeeeeeeeeeeeeeeeeeeee, fffffffffffffff, ggggggggggggggg, hhhhhhhhhhhhhhh,
+    iiiiiiiiiiiiii, jjjjjjjjjjjjjjjjj, kkkkkkkkkk
+  ]
 
 if aaaaaaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbb and ccccccccccccccccccccccccc and
     ddddddddddddddddd and fffffffffffffffff:
@@ -83,13 +100,18 @@ elif aaaaaaaaa and (
 ):
   discard
 
+let prefix = if someprettylongconditionhereabcabcabcabc: "[Valid]   " else: "[Invalid] "
+
+# short if in short if
+if true:
+  if false:
+    discard
+
 let
   a =
     case x
-    of 2:
-      4
-    else:
-      4
+    of 2: 4
+    else: 4
 
 case aaaaaaaaaa
 of aaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc,

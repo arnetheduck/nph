@@ -1002,7 +1002,7 @@ proc commandExpr(p: var Parser; r: PNode; mode: PrimaryMode): PNode =
 proc isDotLike(tok: Token): bool =
   result =
     tok.tokType == tkOpr and tok.ident.s.len > 1 and tok.ident.s[0] == '.' and
-      tok.ident.s[1] != '.'
+    tok.ident.s[1] != '.'
 
 proc primarySuffix(p: var Parser; r: PNode; baseIndent: int; mode: PrimaryMode): PNode =
   #| primarySuffix = '(' (exprColonEqExpr comma?)* ')'
@@ -1097,12 +1097,7 @@ proc parseOperators(
   # expand while operators have priorities higher than 'limit'
   var opPrec = getPrecedence(p.tok)
 
-  let
-    modeB =
-      if mode == pmTypeDef:
-        pmTypeDesc
-      else:
-        mode
+  let modeB = if mode == pmTypeDef: pmTypeDesc else: mode
   # the operator itself must not start on a new line:
   # progress guaranteed
   while opPrec >= limit and p.tok.indent < 0 and not isUnary(p.tok):
@@ -1461,15 +1456,7 @@ proc parseProcExpr(p: var Parser; isExpr: bool; kind: TNodeKind): PNode =
 
     result[bodyPos] = parseComStmt(p, result, clMid)
   else:
-    result =
-      newNodeI(
-        if kind == nkIteratorDef:
-          nkIteratorTy
-        else:
-          nkProcTy
-        ,
-        info,
-      )
+    result = newNodeI(if kind == nkIteratorDef: nkIteratorTy else: nkProcTy, info)
 
     if hasSignature or pragmas.kind != nkEmpty:
       if hasSignature:
@@ -2368,14 +2355,7 @@ proc parseGenericParam(p: var Parser): PNode =
   while true:
     case p.tok.tokType
     of tkIn, tkOut:
-      let
-        x =
-          p.lex.cache.getIdent(
-            if p.tok.tokType == tkIn:
-              "in"
-            else:
-              "out"
-          )
+      let x = p.lex.cache.getIdent(if p.tok.tokType == tkIn: "in" else: "out")
 
       a = newNodeP(nkPrefix, p)
 
@@ -2461,16 +2441,7 @@ proc parseRoutine(p: var Parser; kind: TNodeKind): PNode =
       p.tok.tokType notin {tkSymbol, tokKeywordLow..tokKeywordHigh, tkAccent}:
     # no name; lambda or proc type
     # in every context that we can parse a routine, we can also parse these
-    result =
-      parseProcExpr(
-        p,
-        true,
-        if kind == nkProcDef:
-          nkLambda
-        else:
-          kind
-        ,
-      )
+    result = parseProcExpr(p, true, if kind == nkProcDef: nkLambda else: kind)
 
     return
 
@@ -2776,18 +2747,12 @@ proc parseTypeClassParam(p: var Parser): PNode =
   let
     modifier =
       case p.tok.tokType
-      of tkOut, tkVar:
-        nkVarTy
-      of tkPtr:
-        nkPtrTy
-      of tkRef:
-        nkRefTy
-      of tkStatic:
-        nkStaticTy
-      of tkType:
-        nkTypeOfExpr
-      else:
-        nkEmpty
+      of tkOut, tkVar: nkVarTy
+      of tkPtr: nkPtrTy
+      of tkRef: nkRefTy
+      of tkStatic: nkStaticTy
+      of tkType: nkTypeOfExpr
+      else: nkEmpty
 
   if modifier != nkEmpty:
     result = newNodeP(modifier, p)

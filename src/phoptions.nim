@@ -597,10 +597,7 @@ proc getClockStr*(): string =
 
 template newPackageCache*(): untyped =
   newStringTable(
-    when FileSystemCaseSensitive:
-      modeCaseInsensitive
-    else:
-      modeCaseSensitive
+    when FileSystemCaseSensitive: modeCaseInsensitive else: modeCaseSensitive
   )
 
 proc newProfileData(): ProfileData =
@@ -1144,12 +1141,7 @@ proc findProjectNimFile*(conf: ConfigRef; pkg: string): string =
               # package. Either way, bailing is the better choice.
               return ""
 
-    let
-      pkgname =
-        if nimblepkg.len > 0:
-          nimblepkg
-        else:
-          pkgname
+    let pkgname = if nimblepkg.len > 0: nimblepkg else: pkgname
 
     for c in candidates:
       if pkgname in c.extractFilename():
@@ -1190,12 +1182,7 @@ proc canonicalImport*(conf: ConfigRef; file: AbsoluteFile): string =
   result = ret.nativeToUnixPath.changeFileExt("")
 
 proc canonDynlibName(s: string): string =
-  let
-    start =
-      if s.startsWith("lib"):
-        3
-      else:
-        0
+  let start = if s.startsWith("lib"): 3 else: 0
 
   let ende = strutils.find(s, {'(', ')', '.'})
   if ende >= 0:
@@ -1209,7 +1196,7 @@ proc inclDynlibOverride*(conf: ConfigRef; lib: string) =
 proc isDynlibOverride*(conf: ConfigRef; lib: string): bool =
   result =
     optDynlibOverrideAll in conf.globalOptions or
-      conf.dllOverrides.hasKey(lib.canonDynlibName)
+    conf.dllOverrides.hasKey(lib.canonDynlibName)
 
 proc showNonExportedFields*(conf: ConfigRef) =
   incl(conf.globalOptions, optShowNonExportedFields)
@@ -1219,85 +1206,47 @@ proc expandDone*(conf: ConfigRef): bool =
 
 proc parseIdeCmd*(s: string): IdeCmd =
   case s
-  of "sug":
-    ideSug
-  of "con":
-    ideCon
-  of "def":
-    ideDef
-  of "use":
-    ideUse
-  of "dus":
-    ideDus
-  of "chk":
-    ideChk
-  of "chkFile":
-    ideChkFile
-  of "mod":
-    ideMod
-  of "highlight":
-    ideHighlight
-  of "outline":
-    ideOutline
-  of "known":
-    ideKnown
-  of "msg":
-    ideMsg
-  of "project":
-    ideProject
-  of "globalSymbols":
-    ideGlobalSymbols
-  of "recompile":
-    ideRecompile
-  of "changed":
-    ideChanged
-  of "type":
-    ideType
-  else:
-    ideNone
+  of "sug": ideSug
+  of "con": ideCon
+  of "def": ideDef
+  of "use": ideUse
+  of "dus": ideDus
+  of "chk": ideChk
+  of "chkFile": ideChkFile
+  of "mod": ideMod
+  of "highlight": ideHighlight
+  of "outline": ideOutline
+  of "known": ideKnown
+  of "msg": ideMsg
+  of "project": ideProject
+  of "globalSymbols": ideGlobalSymbols
+  of "recompile": ideRecompile
+  of "changed": ideChanged
+  of "type": ideType
+  else: ideNone
 
 proc `$`*(c: IdeCmd): string =
   case c
-  of ideSug:
-    "sug"
-  of ideCon:
-    "con"
-  of ideDef:
-    "def"
-  of ideUse:
-    "use"
-  of ideDus:
-    "dus"
-  of ideChk:
-    "chk"
-  of ideChkFile:
-    "chkFile"
-  of ideMod:
-    "mod"
-  of ideNone:
-    "none"
-  of ideHighlight:
-    "highlight"
-  of ideOutline:
-    "outline"
-  of ideKnown:
-    "known"
-  of ideMsg:
-    "msg"
-  of ideProject:
-    "project"
-  of ideGlobalSymbols:
-    "globalSymbols"
-  of ideDeclaration:
-    "declaration"
-  of ideExpand:
-    "expand"
-  of ideRecompile:
-    "recompile"
-  of ideChanged:
-    "changed"
-  of ideType:
-    "type"
+  of ideSug: "sug"
+  of ideCon: "con"
+  of ideDef: "def"
+  of ideUse: "use"
+  of ideDus: "dus"
+  of ideChk: "chk"
+  of ideChkFile: "chkFile"
+  of ideMod: "mod"
+  of ideNone: "none"
+  of ideHighlight: "highlight"
+  of ideOutline: "outline"
+  of ideKnown: "known"
+  of ideMsg: "msg"
+  of ideProject: "project"
+  of ideGlobalSymbols: "globalSymbols"
+  of ideDeclaration: "declaration"
+  of ideExpand: "expand"
+  of ideRecompile: "recompile"
+  of ideChanged: "changed"
+  of ideType: "type"
 
 proc floatInt64Align*(conf: ConfigRef): int16 =
   ## Returns either 4 or 8 depending on reasons.

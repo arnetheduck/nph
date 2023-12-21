@@ -362,20 +362,13 @@ proc putComment(g: var TSrcLen; s: string) =
 
 proc brCloseOf(brOpen: TokType): TokType =
   case brOpen
-  of tkParLe:
-    tkParRi
-  of tkBracketLe:
-    tkBracketRi
-  of tkCurlyLe:
-    tkCurlyRi
-  of tkBracketDotLe:
-    tkBracketDotRi
-  of tkCurlyDotLe:
-    tkCurlyDotRi
-  of tkParDotLe:
-    tkParDotRi
-  else:
-    tkInvalid
+  of tkParLe: tkParRi
+  of tkBracketLe: tkBracketRi
+  of tkCurlyLe: tkCurlyRi
+  of tkBracketDotLe: tkBracketDotRi
+  of tkCurlyDotLe: tkCurlyDotRi
+  of tkParDotLe: tkParDotRi
+  else: tkInvalid
 
 proc skipHiddenNodes(n: PNode): PNode =
   result = n
@@ -1039,23 +1032,96 @@ proc gcolcoms(g: var TOutput; n, stmts: PNode; useSub = false) =
 proc gcond(g: var TOutput; n: PNode; flags: SubFlags = {}) =
   gsub(g, n, flags)
 
+proc isTrivialSub(n: PNode): bool =
+  case n.kind
+  of nkStmtList:
+    n.len == 1 and isTrivialSub(n[0])
+  else:
+    isSimple(n)
+
+proc skipTrivialStmtList(n: PNode): PNode =
+  if n.kind == nkStmtList:
+    assert n.len == 1
+    n[0]
+  else:
+    n
+
+proc isTrivialBranch(n: PNode): bool =
+  case n.kind
+  of nkOfBranch, nkElifBranch, nkElifExpr, nkElse, nkElseExpr:
+    n[^1].isTrivialSub()
+  else:
+    debugEcho n.kind
+    false
+
+proc lbranch(g: TOutput; n: PNode): int =
+  case n.kind
+  of nkOfBranch:
+    lcomma(g, n, 0, -2, indentNL = longIndentWid) + len("of:_")
+  of nkElifBranch, nkElifExpr:
+    lsub(g, n[0]) + len("elif:_")
+  of nkElse, nkElseExpr:
+    len("else:_")
+  else:
+    raiseAssert $n.kind
+
+proc gtrivialBranch(g: var TOutput; n: PNode) =
+  case n.kind
+  of nkOfBranch:
+    putWithSpace(g, tkOf, $tkOf)
+    gcomma(g, n, 0, -2, indentNL = longIndentWid)
+    putWithSpace(g, tkColon, $tkColon)
+    gsub(g, n[^1].skipTrivialStmtList())
+  of nkElifBranch, nkElifExpr:
+    optSpace(g)
+    put(g, tkElif, $tkElif)
+    putWithSpace(g, tkColon, $tkColon)
+    gsub(g, n[1].skipTrivialStmtList())
+  of nkElse, nkElseExpr:
+    optSpace(g)
+    put(g, tkElse, $tkElse)
+    putWithSpace(g, tkColon, $tkColon)
+    gsub(g, n[0].skipTrivialStmtList())
+  else:
+    raiseAssert $n.kind
+
 proc gif(g: var TOutput; n: PNode; flags: SubFlags) =
   gprefixes(g, n[0])
   let
-    sublen = lsub(g, n[0][0]) + lsub(g, n[0][1]) + lsons(g, n, 1) + len(":")
-    simple = not overflows(g, sublen)
+    # An `if` is "trivial" if it's used in an expression-like way - this helps
+    # normalise an expression-if split over multiple lines which is parsed to
+    # `nkIfStmt` instead of `nkIfExpr` even though it semantically is the same
+    trivial =
+      n.len == 2 and n[1].kind in {nkElse, nkElseExpr} and
+      n.allIt(isTrivialBranch(it) and not hasComments(it))
+    sublen =
+      if trivial:
+        foldl(n, a + lbranch(g, b) + lsub(g, b[^1].skipTrivialStmtList()), 0)
+      else:
+        lsub(g, n[0][0]) + lsub(g, n[0][1]) + lsons(g, n, 1) + len(":")
+    oneline = not overflows(g, sublen)
 
   gcond(g, n[0][0], {sfLongIndent})
-  gcolcoms(g, n[0], n[0][1], true)
 
-  if sfSkipPostfix notin flags:
-    gpostfixes(g, n[0])
-
-  if not simple:
-    optNL(g)
-    gsonsNL(g, n, 1)
+  if trivial:
+    putWithSpace(g, tkColon, $tkColon)
+    gsub(g, n[0][1].skipTrivialStmtList())
+    for i in 1..<n.len:
+      gtrivialBranch(g, n[i])
   else:
-    gsons(g, n, 1)
+    gcolcoms(g, n[0], n[0][1], true)
+
+    if sfSkipPostfix notin flags:
+      gpostfixes(g, n[0])
+
+    if oneline:
+      # We end up here when rendering things that were parsed as expressions but
+      # don't match the "trivial" rule above
+      # TODO treat such constructs as trivail for better determinism?
+      gsons(g, n, 1)
+    else:
+      optNL(g)
+      gsonsNL(g, n, 1)
 
 proc gwhile(g: var TOutput; n: PNode) =
   putWithSpace(g, tkWhile, "while")
@@ -1090,10 +1156,31 @@ proc gcase(g: var TOutput; n: PNode) =
     return
 
   putWithSpace(g, tkCase, "case")
-  gcond(g, n[0])
-  gmids(g, n)
-  optNL(g)
-  gsons(g, n, start = 1)
+
+  # If each branch is simple and fits on a line, we render the whole case using
+  # trivial mode with no newline before branch body
+  let
+    trivial = n.sons[1..^1].allIt(isTrivialBranch(it) and not hasComments(it))
+    sublen =
+      if trivial:
+        max(n.sons[1..^1].mapIt(lbranch(g, it) + lsub(g, it[^1].skipTrivialStmtList())))
+      else:
+        MaxLineLen + 1
+
+  if trivial and fits(g, g.indent + sublen):
+    gcond(g, n[0].skipTrivialStmtList())
+    for i in 1..<n.len:
+      optNL(g)
+      gtrivialBranch(g, n[i])
+
+    # Ensure postfix comments of "outer" statements don't get attached
+    # to the last case branch
+    optNL(g)
+  else:
+    gcond(g, n[0])
+    gmids(g, n)
+    optNL(g)
+    gsons(g, n, start = 1)
 
 proc gproc(g: var TOutput; n: PNode) =
   gsub(g, n[namePos])
@@ -1404,12 +1491,6 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags; extra: int) =
     put(g, tkParLe, "(")
     gsub(g, n[1])
     put(g, tkParRi, ")")
-  of nkAddr:
-    put(g, tkAddr, "addr")
-    if n.len > 0:
-      put(g, tkParLe, "(")
-      gsub(g, n[0])
-      put(g, tkParRi, ")")
   of nkStaticExpr:
     putWithSpace(g, tkStatic, "static")
     gsub(g, n[0])
@@ -1420,7 +1501,7 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags; extra: int) =
       n,
       tkBracketLe,
       start = 1,
-      indentNL = flagIndent(flags),
+      indentNL = flagIndent(flags - {sfNoIndent}),
       flags = {lfLongSepAtEnd},
     )
   of nkCurlyExpr:
@@ -1464,7 +1545,7 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags; extra: int) =
     optSpace(g)
     putWithSpace(g, tkEquals, "=")
     gmids(g, n, true)
-    gsubOptNL(g, n[1], flags = {sfSkipDo})
+    gsubOptNL(g, n[1], flags = {sfSkipDo, sfNoIndent})
   of nkPar, nkClosure:
     glist(g, n, tkParLe, subflags = {sfNoIndent})
   of nkTupleConstr:
@@ -1538,7 +1619,7 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags; extra: int) =
     if n.len >= 1 and n[^1].kind != nkEmpty:
       optSpace(g)
       putWithSpace(g, tkEquals, "=")
-      gsubOptNL(g, n[^1], flags = {sfSkipDo}, strict = true)
+      gsubOptNL(g, n[^1], flags = {sfSkipDo, sfNoIndent})
   of nkConstDef:
     gcomma(g, n, theEnd = -3, indentNL = 0, flags = {lfFirstSticky})
     if n.len >= 2 and n[^2].kind != nkEmpty:
@@ -1548,7 +1629,7 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags; extra: int) =
     if n.len >= 1 and n[^1].kind != nkEmpty:
       optSpace(g)
       putWithSpace(g, tkEquals, "=")
-      gsubOptNL(g, n[^1], flags = {sfSkipDo}, strict = true)
+      gsubOptNL(g, n[^1], flags = {sfSkipDo, sfNoIndent})
   of nkVarTuple:
     if n[^1].kind == nkEmpty:
       glist(g, n, tkParLe, theEnd = -2)
@@ -1556,7 +1637,7 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags; extra: int) =
       glist(g, n, tkParLe, extra = len(" = "), theEnd = -3)
       optSpace(g)
       putWithSpace(g, tkEquals, "=")
-      gsubOptNL(g, n[^1], flags = {sfSkipDo})
+      gsubOptNL(g, n[^1], flags = {sfSkipDo, sfNoIndent})
   of nkExprColonExpr:
     gsub(g, n[0])
     putWithSpace(g, tkColon, ":")
@@ -1761,7 +1842,7 @@ proc gsub(g: var TOutput; n: PNode; flags: SubFlags; extra: int) =
       if n[2].kind in {nkObjectTy, nkEnumTy, nkRefTy}:
         gsub(g, n[2])
       else:
-        gsubOptNL(g, n[2], strict = true)
+        gsubOptNL(g, n[2], strict = true, flags = {sfNoIndent})
 
     if n[0].postfix.len > 0:
       g.dedent()

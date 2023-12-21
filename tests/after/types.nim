@@ -3,7 +3,8 @@ type A = int
 type TypeClass = A | B
 type
   Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb =
-    Aaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbb | Cccccccccccccccccccccc | Dddddddddddddddddddddd
+    Aaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbb | Cccccccccccccccccccccc | Dddddddddddddddddddddd |
+    Eeeeeeeeeeeeeeeeeeeeeeeeee
 
 type
   GenericAlias[

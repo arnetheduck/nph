@@ -41,6 +41,10 @@ discard xxxx "arg":
 
 let shortInfix = a*b*c+d*e*f+(a+b)*g
 
+let mediumInfix = aaaaaaaaaaaaa+bbbbbbbbbbbbbbb+ccccccccccccccc+dddddddddddddddd+eeeeeeeeeeeeeeeeeeeee+fffffffffffffff*ggggggggggggggg+hhhhhhhhhhhhhhh+iiiiiiiiiiiiii+jjjjjjjjjjjjjjjjj+kkkkkkkkkk
+let parenInfix = (aaaaaaaaaaaaa+bbbbbbbbbbbbbbb+ccccccccccccccc+dddddddddddddddd+eeeeeeeeeeeeeeeeeeeee+fffffffffffffff)*(ggggggggggggggg+hhhhhhhhhhhhhhh+iiiiiiiiiiiiii+jjjjjjjjjjjjjjjjj+kkkkkkkkkkkkk)
+let parenShortInfix = (aaaaaaaaaaaaa+eeeeeeeeeeeeeeeeeeeee)*(ggggggggggggggg+hhhhhhhhhhhhhhh+iiiiiiiiiiiiii+jjjjjjjjjjjjjjjjj+kkkkkkkkkkkkkkkk)
+
 let longInfix = (
     a30*a21*a12*a03 - a20*a31*a12*a03 - a30*a11*a22*a03 + a10*a31*a22*a03 +
     a20*a11*a32*a03 - a10*a21*a32*a03 - a30*a21*a02*a13 + a20*a31*a02*a13 +
@@ -50,6 +54,8 @@ let longInfix = (
     a20*a01*a12*a33 - a00*a21*a12*a33 - a10*a01*a22*a33 + a00*a11*a22*a33
   )
 
+let longArray = [aaaaaaaaaaaaa,bbbbbbbbbbbbbbb,ccccccccccccccc,dddddddddddddddd,eeeeeeeeeeeeeeeeeeeee,fffffffffffffff,ggggggggggggggg,hhhhhhhhhhhhhhh,iiiiiiiiiiiiii,jjjjjjjjjjjjjjjjj,kkkkkkkkkk]
+
 if aaaaaaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbb and ccccccccccccccccccccccccc and ddddddddddddddddd and fffffffffffffffff:
   discard
 
@@ -57,6 +63,17 @@ if (aaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbbbbbbb) or (ccccccccccccccccccccc
   discard
 elif aaaaaaaaa and (bbbbbbbbbb or cccccccccccc and (dddddddddddddddd or eeeeeeeeeeeeeee or fffffffffffffff or gggggggggggggg)):
   discard
+
+let
+  prefix =
+    if someprettylongconditionhereabcabcabcabc:
+      "[Valid]   "
+    else:
+      "[Invalid] "
+
+# short if in short if
+if true:
+  if false: discard
 
 let a = case x
   of 2: 4
