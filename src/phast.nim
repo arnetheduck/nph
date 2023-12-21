@@ -1397,12 +1397,7 @@ proc getPIdent*(a: PNode): PIdent {.inline.} =
   else:
     nil
 
-const
-  moduleShift =
-    when defined(cpu32):
-      20
-    else:
-      24
+const moduleShift = when defined(cpu32): 20 else: 24
 
 template id*(a: PIdObj): int =
   let x = a
@@ -2037,7 +2032,7 @@ proc skipTypesOrNil*(t: PType; kinds: TTypeKinds): PType =
 proc isGCedMem*(t: PType): bool {.inline.} =
   result =
     t.kind in {tyString, tyRef, tySequence} or
-      t.kind == tyProc and t.callConv == ccClosure
+    t.kind == tyProc and t.callConv == ccClosure
 
 proc propagateToOwner*(owner, elem: PType; propagateHasAsgn = true) =
   owner.flags.incl elem.flags * {tfHasMeta, tfTriggersCompileTime}

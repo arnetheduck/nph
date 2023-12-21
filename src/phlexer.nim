@@ -1259,11 +1259,7 @@ proc getPrecedence*(tok: Token): int =
       return 0
 
     template considerAsgn(value: untyped) =
-      result =
-        if tok.ident.s[^1] == '=':
-          1
-        else:
-          value
+      result = if tok.ident.s[^1] == '=': 1 else: value
 
     case relevantChar
     of '$', '^':
@@ -1288,11 +1284,7 @@ proc getPrecedence*(tok: Token): int =
       else:
         let (len, pred) = unicodeOprLen(cstring(tok.ident.s), 0)
         if len != 0:
-          result =
-            if pred == Mul:
-              MulPred
-            else:
-              PlusPred
+          result = if pred == Mul: MulPred else: PlusPred
         else:
           result = 2
     else:
@@ -1596,10 +1588,7 @@ proc rawGetTok*(L: var Lexer; tok: var Token) =
       # check for generalized raw string literal:
       let
         mode =
-          if L.bufpos > 0 and L.buf[L.bufpos - 1] in SymChars:
-            generalized
-          else:
-            normal
+          if L.bufpos > 0 and L.buf[L.bufpos - 1] in SymChars: generalized else: normal
 
       getString(L, tok, mode)
       if mode == generalized:

@@ -25,20 +25,12 @@ template instLoc*(): InstantiationInfo =
   instantiationInfo(-2, fullPaths = true)
 
 template toStdOrrKind(stdOrr): untyped =
-  if stdOrr == stdout:
-    stdOrrStdout
-  else:
-    stdOrrStderr
+  if stdOrr == stdout: stdOrrStdout else: stdOrrStderr
 
 proc flushDot*(conf: ConfigRef) =
   ## safe to call multiple times
   # xxx one edge case not yet handled is when `printf` is called at CT with `compiletimeFFI`.
-  let
-    stdOrr =
-      if optStdout in conf.globalOptions:
-        stdout
-      else:
-        stderr
+  let stdOrr = if optStdout in conf.globalOptions: stdout else: stderr
 
   let stdOrrKind = toStdOrrKind(stdOrr)
   if stdOrrKind in conf.lastMsgWasDot:
@@ -258,29 +250,19 @@ proc getInfoContext*(conf: ConfigRef; index: int): TLineInfo =
 
 template toFilename*(conf: ConfigRef; fileIdx: FileIndex): string =
   if fileIdx.int32 < 0 or conf == nil:
-    if fileIdx == commandLineIdx:
-      commandLineDesc
-    else:
-      "???"
+    if fileIdx == commandLineIdx: commandLineDesc else: "???"
   else:
     conf.m.fileInfos[fileIdx.int32].shortName
 
 proc toProjPath*(conf: ConfigRef; fileIdx: FileIndex): string =
   if fileIdx.int32 < 0 or conf == nil:
-    if fileIdx == commandLineIdx:
-      commandLineDesc
-    else:
-      "???"
+    if fileIdx == commandLineIdx: commandLineDesc else: "???"
   else:
     conf.m.fileInfos[fileIdx.int32].projPath.string
 
 proc toFullPath*(conf: ConfigRef; fileIdx: FileIndex): string =
   if fileIdx.int32 < 0 or conf == nil:
-    result = (
-      if fileIdx == commandLineIdx:
-        commandLineDesc
-      else: "???"
-    )
+    result = (if fileIdx == commandLineIdx: commandLineDesc else: "???")
   else:
     result = conf.m.fileInfos[fileIdx.int32].fullPath.string
 
@@ -307,13 +289,7 @@ proc getHash*(conf: ConfigRef; fileIdx: FileIndex): string =
 
 proc toFullPathConsiderDirty*(conf: ConfigRef; fileIdx: FileIndex): AbsoluteFile =
   if fileIdx.int32 < 0:
-    result =
-      AbsoluteFile(
-        if fileIdx == commandLineIdx:
-          commandLineDesc
-        else:
-          "???"
-      )
+    result = AbsoluteFile(if fileIdx == commandLineIdx: commandLineDesc else: "???")
   elif not conf.m.fileInfos[fileIdx.int32].dirtyFile.isEmpty:
     result = conf.m.fileInfos[fileIdx.int32].dirtyFile
   else:
@@ -349,10 +325,7 @@ proc toFilenameOption*(conf: ConfigRef; fileIdx: FileIndex; opt: FilenameOption)
       relPath = toProjPath(conf, fileIdx)
 
     result =
-      if (relPath.len > absPath.len) or (relPath.count("..") > 2):
-        absPath
-      else:
-        relPath
+      if (relPath.len > absPath.len) or (relPath.count("..") > 2): absPath else: relPath
   of foStacktrace:
     if optExcessiveStackTrace in conf.globalOptions:
       result = toFilenameOption(conf, fileIdx, foAbs)
@@ -467,12 +440,7 @@ template callWritelnHook(args: varargs[string, `$`]) =
 
 proc msgWrite(conf: ConfigRef; s: string) =
   if conf.m.errorOutputs != {}:
-    let
-      stdOrr =
-        if optStdout in conf.globalOptions:
-          stdout
-        else:
-          stderr
+    let stdOrr = if optStdout in conf.globalOptions: stdout else: stderr
 
     write(stdOrr, s)
     flushFile(stdOrr)
@@ -634,12 +602,9 @@ proc formatMsg*(conf: ConfigRef; info: TLineInfo; msg: TMsgKind; arg: string): s
   let
     title =
       case msg
-      of warnMin..warnMax:
-        WarningTitle
-      of hintMin..hintMax:
-        HintTitle
-      else:
-        ErrorTitle
+      of warnMin..warnMax: WarningTitle
+      of hintMin..hintMax: HintTitle
+      else: ErrorTitle
 
   conf.toFileLineCol(info) & " " & title & getMessageStr(msg, arg)
 
@@ -849,12 +814,7 @@ template internalAssert*(conf: ConfigRef; e: bool) =
 
 template lintReport*(conf: ConfigRef; info: TLineInfo; beau, got: string; extraMsg = "") =
   let m = "'$1' should be: '$2'$3" % [got, beau, extraMsg]
-  let
-    msg =
-      if optStyleError in conf.globalOptions:
-        errGenerated
-      else:
-        hintName
+  let msg = if optStyleError in conf.globalOptions: errGenerated else: hintName
 
   liMessage(conf, info, msg, m, doNothing, instLoc())
 
@@ -870,16 +830,7 @@ template listMsg(title, r) =
   msgWriteln(conf, title, {msgNoUnitSep})
   for a in r:
     msgWriteln(
-      conf,
-      "  [$1] $2" % [
-        if a in conf.notes:
-          "x"
-        else:
-          " "
-        ,
-        $a
-      ],
-      {msgNoUnitSep},
+      conf, "  [$1] $2" % [if a in conf.notes: "x" else: " ", $a], {msgNoUnitSep}
     )
 
 proc listWarnings*(conf: ConfigRef) =

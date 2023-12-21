@@ -1,7 +1,7 @@
 type A = int
 
 type TypeClass = A | B
-type Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb = Aaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbb | Cccccccccccccccccccccc | Dddddddddddddddddddddd
+type Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb = Aaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbb | Cccccccccccccccccccccc | Dddddddddddddddddddddd | Eeeeeeeeeeeeeeeeeeeeeeeeee
 
 type GenericAlias[T: Aaaaaaaaaaaaaaaaaaa|Bbbbbbbbbbbbbbbbbbbbbbbb|Cccccccccccccccccccc|Dddddddddddddddd|Eeeeeeeeeeeeeeeeeee] = Bbbbbbbbbbbbbbbbbb[T]
 
