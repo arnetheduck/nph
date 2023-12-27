@@ -2,8 +2,9 @@
 #        (c) Copyright 2023 Jacek Sieka
 ## Compare two AST's for semantic equivalence - aka undo whitespace bugs in the
 ## Nim parser / grammar
-
-import "$nim"/compiler/[ast, parser, idents, options], std/sequtils
+import
+  "$nim"/compiler/[ast, llstream, parser, idents, options, pathutils],
+  std/sequtils
 
 from std/math import isNaN
 
@@ -19,6 +20,38 @@ type
       discard
     of Different:
       a*, b*: PNode
+
+# TODO https://github.com/nim-lang/Nim/pull/23088
+proc parseAll(p: var Parser): PNode =
+  ## Parses the rest of the input stream held by the parser into a PNode.
+  result = newNodeP(nkStmtList, p)
+  while true:
+    let nextStmt = p.parseTopLevelStmt()
+    if nextStmt.kind == nkEmpty:
+      break
+    result &= nextStmt
+  # setEndInfo()
+
+proc parseString2(
+    s: string,
+    cache: IdentCache,
+    config: ConfigRef,
+    filename: string = "",
+    line: int = 0,
+    printTokens = false,
+): PNode =
+  ## Parses a string into an AST, returning the top node.
+  ## `filename` and `line`, although optional, provide info so that the
+  ## compiler can generate correct error messages referring to the original
+  ## source.
+  var stream = llStreamOpen(s)
+  stream.lineOffset = line
+
+  var p: Parser
+
+  openParser(p, AbsoluteFile filename, stream, cache, config)
+  result = p.parseAll
+  closeParser(p)
 
 proc similarKinds(ak, bk: TNodeKind): bool =
   ak == bk or (ak in {nkElseExpr, nkElse} and bk in {nkElseExpr, nkElse}) or (
@@ -108,8 +141,8 @@ proc makeConfigRef(): ConfigRef =
 proc equivalent*(a, afile, b, bfile: string): Outcome =
   let
     conf = makeConfigRef()
-    aa = parseString(a, newIdentCache(), conf, afile)
-    bb = parseString(b, newIdentCache(), conf, bfile)
+    aa = parseString2(a, newIdentCache(), conf, afile)
+    bb = parseString2(b, newIdentCache(), conf, bfile)
   if conf.errorCounter > 0:
     Outcome(kind: ParseError)
   else:

@@ -10,7 +10,7 @@ let
     [1, 2, 3]
 
 #!fmt: on
-proc hanging(indent: int; isUgly = true) =
+proc hanging(indent: int, isUgly = true) =
   discard
 
 block:

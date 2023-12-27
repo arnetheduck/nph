@@ -54,3 +54,6 @@ from aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa impo
   eeeeeeeeeeeeeeeeeeeeeee, ffffffffffffff
 
 {.push raises: [].}
+
+import tables
+export tables

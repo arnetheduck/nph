@@ -86,3 +86,11 @@ call(command do:
 call(command:
   29
 )
+
+command "llllllllllllllllooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnggggggggggggggggggggg parameter":
+  discard
+
+
+command param:
+of a: discard
+else: discard

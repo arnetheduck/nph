@@ -3,7 +3,7 @@ sons:
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
-        ident: "a"
+        ident: "a0"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkFormalParams"
@@ -19,7 +19,7 @@ sons:
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
-        ident: "a"
+        ident: "a1"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkFormalParams"
@@ -42,7 +42,7 @@ sons:
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
-        ident: "a"
+        ident: "a2"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkFormalParams"
@@ -71,7 +71,7 @@ sons:
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
-        ident: "a"
+        ident: "a3"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkFormalParams"
@@ -115,7 +115,7 @@ sons:
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
-        ident: "a"
+        ident: "a4"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkFormalParams"
@@ -143,7 +143,7 @@ sons:
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
-        ident: "a"
+        ident: "a5"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkFormalParams"
@@ -169,7 +169,7 @@ sons:
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
-        ident: "a"
+        ident: "a6"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkFormalParams"
@@ -203,7 +203,7 @@ sons:
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
-        ident: "a"
+        ident: "a7"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkFormalParams"
@@ -863,6 +863,53 @@ sons:
                 sons:
                   - kind: "nkIdent"
                     ident: "nimcall"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "Fp"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+            sons:
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "aaaaaaaaaaaaaaaaa"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "bbbbbbbbbbbbbbb"
+                      - kind: "nkEmpty"
+                      - kind: "nkLambda"
+                        sons:
+                          - kind: "nkEmpty"
+                          - kind: "nkEmpty"
+                          - kind: "nkEmpty"
+                          - kind: "nkFormalParams"
+                            sons:
+                              - kind: "nkEmpty"
+                          - kind: "nkEmpty"
+                          - kind: "nkEmpty"
+                          - kind: "nkStmtList"
+                            sons:
+                              - kind: "nkDiscardStmt"
+                                sons:
+                                  - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "cccccccccccccccccc"
+                      - kind: "nkEmpty"
+                      - kind: "nkIntLit"
+                        intVal: 30
+              - kind: "nkEmpty"
   - kind: "nkTypeSection"
     sons:
       - kind: "nkTypeDef"

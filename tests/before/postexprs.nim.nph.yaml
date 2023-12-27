@@ -498,3 +498,36 @@ sons:
             ident: "command"
           - kind: "nkIntLit"
             intVal: 29
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkStrLit"
+        strVal: "llllllllllllllllooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnggggggggggggggggggggg parameter"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkIdent"
+        ident: "param"
+      - kind: "nkOfBranch"
+        sons:
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+      - kind: "nkElse"
+        sons:
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"

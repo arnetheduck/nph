@@ -96,13 +96,20 @@ type
   SomeAlias2 {.nodecl.} = int ## alias2 eol
 
   SomeAlias3 # alias after symbol
-    [T] =
-      # alias after equals
+    [T] = # alias after equals
       int # alias after type
 
   SomeAlias4 = SomeAlias3[int]
     ## after alias4
     ## more after alias4
+
+  SomeAlias5 = ## doc comment after equals before proc
+      ## more than one line
+      proc(v: int)
+
+  SomeAlias6 = ##
+    ## doc comment after equals before proc continued
+    proc(v: int)
 
   ## Some comment before whenobj
   WhenObject = object # whenobject object line
@@ -259,8 +266,8 @@ def:
 a(b = c # comment after keyword parameter
   )
 
-a(b = c)
-# dedented comment after keyword parameter
+a(b = c # dedented comment after keyword parameter
+  )
 
 {.pragma # comment here
   .}
@@ -289,8 +296,7 @@ const # const eol
   v # const ident after symbol
   :
     # const ident after colon
-    int =
-    # const ident after type
+    int = # const ident after type
     # const ident after equals
     42 # const ident after value
 
@@ -351,7 +357,7 @@ proc f() =
   ## even two lines
 
 proc a(v #[block]#
-  : int; abc: int)
+  : int, abc: int)
 
 command "a", "b", "c" # command eol comment
 

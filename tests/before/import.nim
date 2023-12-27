@@ -32,3 +32,5 @@ from a import a, b, c
 from aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa import aaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbb, cccccccccccccccc, ddddddddddddddd, eeeeeeeeeeeeeeeeeeeeeee, ffffffffffffff
 
 {.push raises: [].}
+
+import tables; export tables

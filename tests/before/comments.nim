@@ -99,6 +99,14 @@ type
   SomeAlias4 = SomeAlias3[int] ## after alias4
     ## more after alias4
 
+  SomeAlias5 = ## doc comment after equals before proc
+    ## more than one line
+    proc(v: int)
+
+  SomeAlias6 = ##
+      ## doc comment after equals before proc continued
+    proc(v: int)
+
   ## Some comment before whenobj
   WhenObject = object # whenobject object line
     when false: # when object false line

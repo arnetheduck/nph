@@ -1,15 +1,15 @@
-proc a = discard
+proc a0 = discard
 
-proc a(v: int) = discard
-proc a(aaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccccccc, vvvvvvvvvvvvvvvvvvvvvv: string) = discard
-proc a(aaaaaaaaaaaaaaaaaaaaaaa: int, bbbbbbbbbbbbbbbbbbbbbb: int, ccccccccccccccccccccccccccc: int, vvvvvvvvvvvvvvvvvvvvvv: string) = discard
+proc a1(v: int) = discard
+proc a2(aaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccccccc, vvvvvvvvvvvvvvvvvvvvvv: string) = discard
+proc a3(aaaaaaaaaaaaaaaaaaaaaaa: int, bbbbbbbbbbbbbbbbbbbbbb: int, ccccccccccccccccccccccccccc: int, vvvvvvvvvvvvvvvvvvvvvv: string) = discard
 
-proc a(aaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccc: string): Ddddddddddddddddddddddddd = discard
+proc a4(aaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccc: string): Ddddddddddddddddddddddddd = discard
 
-proc a(v: int) {.nimcall.} = discard
-proc a(v: int) {.nimcall, pragma2, pragma3, praaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagma, rrr.} = discard
+proc a5(v: int) {.nimcall.} = discard
+proc a6(v: int) {.nimcall, pragma2, pragma3, praaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaagma, rrr.} = discard
 
-proc a(T: typedesc[Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccccccccc | Dddddddddddd], aaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccccccc, ddddddddddddddddddddddd) = discard
+proc a7(T: typedesc[Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccccccccc | Dddddddddddd], aaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccccccc, ddddddddddddddddddddddd) = discard
 
 proc aaaaaaaaa*[Aaaaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccc, Dddddddddddddddddddddd](aaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbb, cccccccccccccccc, ddddddddddddddddddd: int): ReturnType[Nested[Aaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccccc, Dddddddddddddddddddddddd, Eeeeeeeeeeeeeeeeeeeee]] = discard
 
@@ -45,6 +45,7 @@ type Bp = proc
 type Cp = proc(v: int)
 type Dp = proc() {.nimcall.}
 type Ep = proc {.nimcall.}
+type Fp = proc(aaaaaaaaaaaaaaaaa: int, bbbbbbbbbbbbbbb = proc() = discard, cccccccccccccccccc = 30)
 type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc {.bbbbbbbbbbbbbbbbbbbbbbbb.}
 type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc (aaaaaaaa: Bbbbbbb, ccccccccc: Dddddddddddd, eeeeee: Ffffff)
 type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc (aaaaaaaa: Bbbbbbb, ccccccccc: Dddddddddddd, eeeeeeeeeeeee: Ffffffffffffffff, gggggggggggggg: Hhhhhhhhhhhhhhhhhhhh)
