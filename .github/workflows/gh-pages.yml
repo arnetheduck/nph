@@ -1,0 +1,42 @@
+name: github pages
+
+on:
+  push:
+    branches:
+      - master
+      - docs
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions-rs/install@v0.1
+        with:
+         crate: mdbook
+         use-tool-cache: true
+         version: "0.4.36"
+      - uses: actions-rs/install@v0.1
+        with:
+         crate: mdbook-toc
+         use-tool-cache: true
+         version: "0.14.1"
+      - uses: actions-rs/install@v0.1
+        with:
+         crate: mdbook-open-on-gh
+         use-tool-cache: true
+         version: "2.4.1"
+      - uses: actions-rs/install@v0.1
+        with:
+          crate: mdbook-admonish
+          use-tool-cache: true
+          version: "1.14.0"
+      - name: Build book
+        run: |
+          PATH=.cargo/bin:$PATH mdbook build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./book
