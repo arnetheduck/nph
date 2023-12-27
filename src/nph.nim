@@ -31,8 +31,9 @@ Options:
   --help                show this help
 """
   ErrCheckFailed = 1
-  ErrParseFailed = 2
-  ErrEqFailed = 3
+  ErrParseInputFailed = 2
+  ErrParseOutputFailed = 3
+  ErrEqFailed = 4
 
 proc writeHelp() =
   stdout.write(Usage)
@@ -44,7 +45,7 @@ proc writeVersion() =
   stdout.flushFile()
   quit(0)
 
-proc parse(input, filename: string; printTokens: bool; conf: ConfigRef): PNode =
+proc parse(input, filename: string, printTokens: bool, conf: ConfigRef): PNode =
   let fn = if filename == "-": "stdin" else: filename
 
   parseString(input, newIdentCache(), conf, fn, printTokens = printTokens)
@@ -59,7 +60,7 @@ proc makeConfigRef(): ConfigRef =
   conf.errorMax = int.high
   conf
 
-proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): int =
+proc prettyPrint(infile, outfile: string, debug, check, printTokens: bool): int =
   let
     conf = makeConfigRef()
     input =
@@ -70,14 +71,18 @@ proc prettyPrint(infile, outfile: string; debug, check, printTokens: bool): int 
     node = parse(input, infile, printTokens, conf)
 
   if conf.errorCounter > 0:
-    return ErrParseFailed
+    localError(
+      conf, TLineInfo(fileIndex: FileIndex(0)), "Skipped file, input cannot be parsed"
+    )
+
+    return ErrParseInputFailed
 
   var output = renderTree(node, conf)
   if not output.endsWith("\n"):
     output.add "\n"
 
   if conf.errorCounter > 0:
-    return ErrParseFailed
+    return ErrParseOutputFailed
 
   if infile != "-":
     if debug:

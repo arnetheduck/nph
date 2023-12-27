@@ -211,7 +211,7 @@ type
       # used for pretty printing so that literals
       # like 0b01 or  r"\L" are unaffected
 
-  ErrorHandler* = proc(conf: ConfigRef; info: TLineInfo; msg: TMsgKind; arg: string)
+  ErrorHandler* = proc(conf: ConfigRef, info: TLineInfo, msg: TMsgKind, arg: string)
   Lexer* = object of TBaseLexer
     fileIdx*: FileIndex
     indentAhead*: int
@@ -227,7 +227,7 @@ type
     config*: ConfigRef
     printTokens: bool
 
-proc getLineInfo*(L: Lexer; tok: Token): TLineInfo {.inline.} =
+proc getLineInfo*(L: Lexer, tok: Token): TLineInfo {.inline.} =
   result = newLineInfo(L.fileIdx, tok.line, tok.col)
   result.offsetA = tok.offsetA
   result.offsetB = tok.offsetB
@@ -282,7 +282,7 @@ proc prettyTok*(tok: Token): string =
 proc debug*(tok: Token): string =
   $tok.tokType & "(" & $tok & ")" & $tok.line & ":" & $tok.col & ":" & $tok.indent
 
-proc printTok*(conf: ConfigRef; tok: Token) =
+proc printTok*(conf: ConfigRef, tok: Token) =
   # xxx factor with toLocation
   msgWriteln(
     conf,
@@ -291,12 +291,12 @@ proc printTok*(conf: ConfigRef; tok: Token) =
   )
 
 proc openLexer*(
-    lex: var Lexer;
-    fileIdx: FileIndex;
-    inputstream: PLLStream;
-    cache: IdentCache;
-    config: ConfigRef;
-    printTokens: bool;
+    lex: var Lexer,
+    fileIdx: FileIndex,
+    inputstream: PLLStream,
+    cache: IdentCache,
+    config: ConfigRef,
+    printTokens: bool,
 ) =
   openBaseLexer(lex, inputstream)
 
@@ -311,12 +311,12 @@ proc openLexer*(
   lex.printTokens = printTokens
 
 proc openLexer*(
-    lex: var Lexer;
-    filename: AbsoluteFile;
-    inputstream: PLLStream;
-    cache: IdentCache;
-    config: ConfigRef;
-    printTokens: bool;
+    lex: var Lexer,
+    filename: AbsoluteFile,
+    inputstream: PLLStream,
+    cache: IdentCache,
+    config: ConfigRef,
+    printTokens: bool,
 ) =
   openLexer(lex, fileInfoIdx(config, filename), inputstream, cache, config, printTokens)
 
@@ -329,26 +329,26 @@ proc closeLexer*(lex: var Lexer) =
 proc getLineInfo(L: Lexer): TLineInfo =
   result = newLineInfo(L.fileIdx, L.lineNumber, getColNumber(L, L.bufpos))
 
-proc dispMessage(L: Lexer; info: TLineInfo; msg: TMsgKind; arg: string) =
+proc dispMessage(L: Lexer, info: TLineInfo, msg: TMsgKind, arg: string) =
   if L.errorHandler.isNil:
     phmsgs.message(L.config, info, msg, arg)
   else:
     L.errorHandler(L.config, info, msg, arg)
 
-proc lexMessage*(L: Lexer; msg: TMsgKind; arg = "") =
+proc lexMessage*(L: Lexer, msg: TMsgKind, arg = "") =
   L.dispMessage(getLineInfo(L), msg, arg)
 
-proc lexMessageTok*(L: Lexer; msg: TMsgKind; tok: Token; arg = "") =
+proc lexMessageTok*(L: Lexer, msg: TMsgKind, tok: Token, arg = "") =
   var info = newLineInfo(L.fileIdx, tok.line, tok.col)
 
   L.dispMessage(info, msg, arg)
 
-proc lexMessagePos(L: var Lexer; msg: TMsgKind; pos: int; arg = "") =
+proc lexMessagePos(L: var Lexer, msg: TMsgKind, pos: int, arg = "") =
   var info = newLineInfo(L.fileIdx, L.lineNumber, pos - L.lineStart)
 
   L.dispMessage(info, msg, arg)
 
-proc matchTwoChars(L: Lexer; first: char; second: set[char]): bool =
+proc matchTwoChars(L: Lexer, first: char, second: set[char]): bool =
   result = (L.buf[L.bufpos] == first) and (L.buf[L.bufpos + 1] in second)
 
 template tokenBegin(tok, pos) {.dirty.} =
@@ -366,16 +366,16 @@ template tokenEndPrevious(tok, pos) =
   tok.offsetB = L.offsetBase + pos
   tok.lineB = L.lineNumber
 
-template eatChar(L: var Lexer; t: var Token; replacementChar: char) =
+template eatChar(L: var Lexer, t: var Token, replacementChar: char) =
   t.literal.add(replacementChar)
   inc(L.bufpos)
 
-template eatChar(L: var Lexer; t: var Token) =
+template eatChar(L: var Lexer, t: var Token) =
   t.literal.add(L.buf[L.bufpos])
   inc(L.bufpos)
 
-proc getNumber(L: var Lexer; result: var Token) =
-  proc matchUnderscoreChars(L: var Lexer; tok: var Token; chars: set[char]): Natural =
+proc getNumber(L: var Lexer, result: var Token) =
+  proc matchUnderscoreChars(L: var Lexer, tok: var Token, chars: set[char]): Natural =
     var pos = L.bufpos # use registers for pos, buf
 
     result = 0
@@ -403,7 +403,7 @@ proc getNumber(L: var Lexer; result: var Token) =
 
     L.bufpos = pos
 
-  proc matchChars(L: var Lexer; tok: var Token; chars: set[char]) =
+  proc matchChars(L: var Lexer, tok: var Token, chars: set[char]) =
     var pos = L.bufpos # use registers for pos, buf
     while L.buf[pos] in chars:
       tok.literal.add(L.buf[pos])
@@ -412,7 +412,7 @@ proc getNumber(L: var Lexer; result: var Token) =
     L.bufpos = pos
 
   proc lexMessageLitNum(
-      L: var Lexer; msg: string; startpos: int; msgKind = errGenerated
+      L: var Lexer, msg: string, startpos: int, msgKind = errGenerated
   ) =
     # Used to get slightly human friendlier err messages.
     const literalishChars = {'A'..'Z', 'a'..'z', '0'..'9', '_', '.', '\''}
@@ -748,7 +748,7 @@ proc getNumber(L: var Lexer; result: var Token) =
 
   L.bufpos = postPos
 
-proc handleHexChar(L: var Lexer; xi: var int; position: range[0..4]) =
+proc handleHexChar(L: var Lexer, xi: var int, position: range[0..4]) =
   template invalid() =
     lexMessage(
       L,
@@ -780,13 +780,13 @@ proc handleHexChar(L: var Lexer; xi: var int; position: range[0..4]) =
     # Need to progress for `nim check`
     inc(L.bufpos)
 
-proc handleDecChars(L: var Lexer; xi: var int) =
+proc handleDecChars(L: var Lexer, xi: var int) =
   while L.buf[L.bufpos] in {'0'..'9'}:
     xi = (xi * 10) + (ord(L.buf[L.bufpos]) - ord('0'))
 
     inc(L.bufpos)
 
-proc addUnicodeCodePoint(s: var string; i: int) =
+proc addUnicodeCodePoint(s: var string, i: int) =
   let i = cast[uint](i)
   # inlined toUTF-8 to avoid unicode and strutils dependencies.
   let pos = s.len
@@ -830,7 +830,7 @@ proc addUnicodeCodePoint(s: var string; i: int) =
     s[pos + 4] = chr(i shr 6 and ones(6) or 0b10_0000_00)
     s[pos + 5] = chr(i and ones(6) or 0b10_0000_00)
 
-proc getEscapedChar(L: var Lexer; tok: var Token) =
+proc getEscapedChar(L: var Lexer, tok: var Token) =
   inc(L.bufpos) # skip '\'
   case L.buf[L.bufpos]
   of 'n', 'N':
@@ -927,7 +927,7 @@ proc getEscapedChar(L: var Lexer; tok: var Token) =
   else:
     lexMessage(L, errGenerated, "invalid character constant")
 
-proc handleCRLF(L: var Lexer; pos: int): int =
+proc handleCRLF(L: var Lexer, pos: int): int =
   case L.buf[pos]
   of CR:
     result = nimlexbase.handleCR(L, pos)
@@ -942,7 +942,7 @@ type
     raw
     generalized
 
-proc getString(L: var Lexer; tok: var Token; mode: StringMode) =
+proc getString(L: var Lexer, tok: var Token, mode: StringMode) =
   var pos = L.bufpos
   var line = L.lineNumber # save linenumber for better error message
 
@@ -1037,7 +1037,7 @@ proc getString(L: var Lexer; tok: var Token; mode: StringMode) =
 
     L.bufpos = pos
 
-proc getCharacter(L: var Lexer; tok: var Token) =
+proc getCharacter(L: var Lexer, tok: var Token) =
   tokenBegin(tok, L.bufpos)
 
   let startPos = L.bufpos
@@ -1078,7 +1078,7 @@ type
     Mul
     Add
 
-proc unicodeOprLen(buf: cstring; pos: int): (int8, UnicodeOprPred) =
+proc unicodeOprLen(buf: cstring, pos: int): (int8, UnicodeOprPred) =
   template m(len): untyped =
     (int8(len), Mul)
 
@@ -1137,7 +1137,7 @@ proc unicodeOprLen(buf: cstring; pos: int): (int8, UnicodeOprPred) =
   else:
     discard
 
-proc getSymbol(L: var Lexer; tok: var Token) =
+proc getSymbol(L: var Lexer, tok: var Token) =
   var h: Hash = 0
   var pos = L.bufpos
 
@@ -1192,7 +1192,7 @@ proc getSymbol(L: var Lexer; tok: var Token) =
 
   L.bufpos = pos
 
-proc endOperator(L: var Lexer; tok: var Token; pos: int; hash: Hash) {.inline.} =
+proc endOperator(L: var Lexer, tok: var Token, pos: int, hash: Hash) {.inline.} =
   var h = !$hash
 
   tok.ident = L.cache.getIdent(cast[cstring](addr(L.buf[L.bufpos])), pos - L.bufpos, h)
@@ -1203,7 +1203,7 @@ proc endOperator(L: var Lexer; tok: var Token; pos: int; hash: Hash) {.inline.} 
 
   L.bufpos = pos
 
-proc getOperator(L: var Lexer; tok: var Token) =
+proc getOperator(L: var Lexer, tok: var Token) =
   var pos = L.bufpos
 
   tokenBegin(tok, pos)
@@ -1302,7 +1302,7 @@ proc getPrecedence*(tok: Token): int =
   else:
     return -10
 
-proc bufMatches(L: Lexer; pos: int; chars: string): bool =
+proc bufMatches(L: Lexer, pos: int, chars: string): bool =
   for i, c in chars:
     if L.buf[pos + i] != c:
       return false
@@ -1310,11 +1310,11 @@ proc bufMatches(L: Lexer; pos: int; chars: string): bool =
   true
 
 proc scanMultiLineComment(
-    L: var Lexer;
-    tok: var Token;
-    start: int;
-    starter, ender: string;
-    endOptional = false;
+    L: var Lexer,
+    tok: var Token,
+    start: int,
+    starter, ender: string,
+    endOptional = false,
 ) =
   var pos = start
 
@@ -1365,7 +1365,7 @@ proc scanMultiLineComment(
 
   L.bufpos = pos
 
-proc scanComment(L: var Lexer; tok: var Token) =
+proc scanComment(L: var Lexer, tok: var Token) =
   var pos = L.bufpos
 
   tok.tokType = tkComment
@@ -1391,7 +1391,7 @@ proc scanComment(L: var Lexer; tok: var Token) =
 
     L.bufpos = pos
 
-proc skip(L: var Lexer; tok: var Token) =
+proc skip(L: var Lexer, tok: var Token) =
   var pos = L.bufpos
 
   tokenBegin(tok, pos)
@@ -1430,7 +1430,7 @@ proc skip(L: var Lexer; tok: var Token) =
 
   L.bufpos = pos
 
-proc rawGetTok*(L: var Lexer; tok: var Token) =
+proc rawGetTok*(L: var Lexer, tok: var Token) =
   template atTokenEnd() {.dirty.} =
     L.previousTokenEnd.line = L.tokenEnd.line
     L.previousTokenEnd.col = L.tokenEnd.col
@@ -1652,7 +1652,7 @@ proc rawGetTok*(L: var Lexer; tok: var Token) =
     printTok(L.config, tok)
 
 proc getIndentWidth*(
-    fileIdx: FileIndex; inputstream: PLLStream; cache: IdentCache; config: ConfigRef
+    fileIdx: FileIndex, inputstream: PLLStream, cache: IdentCache, config: ConfigRef
 ): int =
   result = 0
 

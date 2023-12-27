@@ -16,7 +16,7 @@ import
   "$nim"/compiler/[rodutils],
   std/[intsets, strutils]
 
-proc addYamlString*(res: var string; s: string) =
+proc addYamlString*(res: var string, s: string) =
   # We have to split long strings into many ropes. Otherwise
   # this could trigger InternalError(111). See the ropes module for
   # further information.
@@ -35,18 +35,18 @@ proc addYamlString*(res: var string; s: string) =
 proc makeYamlString(s: string): string =
   result.addYamlString(s)
 
-proc lineInfoToStr(conf: ConfigRef; info: TLineInfo): string =
+proc lineInfoToStr(conf: ConfigRef, info: TLineInfo): string =
   result.add "["
   result.addYamlString(toFilename(conf, info))
   result.addf ", $1, $2]", [toLinenumber(info), toColumn(info)]
 
 proc treeToYamlAux(
-    res: var string;
-    conf: ConfigRef;
-    n: PNode;
-    marker: var IntSet;
-    indent: int;
-    maxRecDepth: int;
+    res: var string,
+    conf: ConfigRef,
+    n: PNode,
+    marker: var IntSet,
+    indent: int,
+    maxRecDepth: int,
 ) =
   if n == nil:
     res.add("null")
@@ -96,7 +96,7 @@ proc treeToYamlAux(
           res.addf("\n$1  - $2", [istr, makeYamlString($n.postfix[i])])
 
 proc treeToYaml*(
-    conf: ConfigRef; n: PNode; indent: int = 0; maxRecDepth: int = -1
+    conf: ConfigRef, n: PNode, indent: int = 0, maxRecDepth: int = -1
 ): string =
   var marker = initIntSet()
   result.treeToYamlAux(conf, n, marker, indent, maxRecDepth)

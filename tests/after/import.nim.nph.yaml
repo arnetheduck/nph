@@ -249,3 +249,11 @@ sons:
           - kind: "nkIdent"
             ident: "raises"
           - kind: "nkBracket"
+  - kind: "nkImportStmt"
+    sons:
+      - kind: "nkIdent"
+        ident: "tables"
+  - kind: "nkExportStmt"
+    sons:
+      - kind: "nkIdent"
+        ident: "tables"

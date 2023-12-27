@@ -1456,7 +1456,7 @@ when false:
     result = x[]
 
 when false:
-  proc storeBack*(dest: var IdGenerator; src: IdGenerator) {.inline.} =
+  proc storeBack*(dest: var IdGenerator, src: IdGenerator) {.inline.} =
     assert dest.ItemId.module == src.ItemId.module
     if dest.ItemId.item > src.ItemId.item:
       echo dest.ItemId.item, " ", src.ItemId.item, " ", src.ItemId.module
@@ -1501,16 +1501,16 @@ proc add*(father, son: Indexable) =
 proc addAllowNil*(father, son: Indexable) {.inline.} =
   father.sons.add(son)
 
-template `[]`*(n: Indexable; i: int): Indexable =
+template `[]`*(n: Indexable, i: int): Indexable =
   n.sons[i]
 
-template `[]=`*(n: Indexable; i: int; x: Indexable) =
+template `[]=`*(n: Indexable, i: int, x: Indexable) =
   n.sons[i] = x
 
-template `[]`*(n: Indexable; i: BackwardsIndex): Indexable =
+template `[]`*(n: Indexable, i: BackwardsIndex): Indexable =
   n[n.len - i.int]
 
-template `[]=`*(n: Indexable; i: BackwardsIndex; x: Indexable) =
+template `[]=`*(n: Indexable, i: BackwardsIndex, x: Indexable) =
   n[n.len - i.int] = x
 
 proc getDeclPragma*(n: PNode): PNode =
@@ -1567,7 +1567,7 @@ proc skipPragmaExpr*(n: PNode): PNode =
   else:
     result = n
 
-proc setInfoRecursive*(n: PNode; info: TLineInfo) =
+proc setInfoRecursive*(n: PNode, info: TLineInfo) =
   ## set line info recursively
   if n != nil:
     for i in 0..<n.safeLen:
@@ -1598,12 +1598,12 @@ proc newNode*(kind: TNodeKind): PNode =
   newNodeImpl(unknownLineInfo)
   setIdMaybe()
 
-proc newNodeI*(kind: TNodeKind; info: TLineInfo): PNode =
+proc newNodeI*(kind: TNodeKind, info: TLineInfo): PNode =
   ## new node with line info, no type, and no children
   newNodeImpl(info)
   setIdMaybe()
 
-proc newNodeI*(kind: TNodeKind; info: TLineInfo; children: int): PNode =
+proc newNodeI*(kind: TNodeKind, info: TLineInfo, children: int): PNode =
   ## new node with line info, type, and children
   newNodeImpl(info)
   if children > 0:
@@ -1611,20 +1611,20 @@ proc newNodeI*(kind: TNodeKind; info: TLineInfo; children: int): PNode =
 
   setIdMaybe()
 
-proc newNodeIT*(kind: TNodeKind; info: TLineInfo; typ: PType): PNode =
+proc newNodeIT*(kind: TNodeKind, info: TLineInfo, typ: PType): PNode =
   ## new node with line info, type, and no children
   result = newNode(kind)
   result.info = info
   result.typ = typ
 
-proc newTree*(kind: TNodeKind; children: varargs[PNode]): PNode =
+proc newTree*(kind: TNodeKind, children: varargs[PNode]): PNode =
   result = newNode(kind)
   if children.len > 0:
     result.info = children[0].info
 
   result.sons = @children
 
-proc newTreeI*(kind: TNodeKind; info: TLineInfo; children: varargs[PNode]): PNode =
+proc newTreeI*(kind: TNodeKind, info: TLineInfo, children: varargs[PNode]): PNode =
   result = newNodeI(kind, info)
   if children.len > 0:
     result.info = children[0].info
@@ -1632,7 +1632,7 @@ proc newTreeI*(kind: TNodeKind; info: TLineInfo; children: varargs[PNode]): PNod
   result.sons = @children
 
 proc newTreeIT*(
-    kind: TNodeKind; info: TLineInfo; typ: PType; children: varargs[PNode]
+    kind: TNodeKind, info: TLineInfo, typ: PType, children: varargs[PNode]
 ): PNode =
   result = newNodeIT(kind, info, typ)
   if children.len > 0:
@@ -1657,12 +1657,12 @@ when false:
         echo v
 
 proc newSym*(
-    symKind: TSymKind;
-    name: PIdent;
-    idgen: IdGenerator;
-    owner: PSym;
-    info: TLineInfo;
-    options: TOptions = {};
+    symKind: TSymKind,
+    name: PIdent,
+    idgen: IdGenerator,
+    owner: PSym,
+    info: TLineInfo,
+    options: TOptions = {},
 ): PSym =
   # generates a symbol and initializes the hash field too
   assert not name.isNil
@@ -1705,12 +1705,12 @@ proc isMetaType*(t: PType): bool =
 proc isUnresolvedStatic*(t: PType): bool =
   return t.kind == tyStatic and t.n == nil
 
-proc linkTo*(t: PType; s: PSym): PType {.discardable.} =
+proc linkTo*(t: PType, s: PSym): PType {.discardable.} =
   t.sym = s
   s.typ = t
   result = t
 
-proc linkTo*(s: PSym; t: PType): PSym {.discardable.} =
+proc linkTo*(s: PSym, t: PType): PSym {.discardable.} =
   t.sym = s
   s.typ = t
   result = s
@@ -1723,7 +1723,7 @@ template filename*(c: PSym): string =
   # XXX: this should be used only on module symbols
   c.position.FileIndex.toFilename
 
-proc appendToModule*(m: PSym; n: PNode) =
+proc appendToModule*(m: PSym, n: PNode) =
   ## The compiler will use this internally to add nodes that will be
   ## appended to the module after the sem pass
   if m.ast == nil:
@@ -1739,21 +1739,21 @@ const
   GrowthFactor* = 2 # must be power of 2, > 0
   StartSize* = 8 # must be power of 2, > 0
 
-proc copyStrTable*(dest: var TStrTable; src: TStrTable) =
+proc copyStrTable*(dest: var TStrTable, src: TStrTable) =
   dest.counter = src.counter
 
   setLen(dest.data, src.data.len)
   for i in 0..high(src.data):
     dest.data[i] = src.data[i]
 
-proc copyIdTable*(dest: var TIdTable; src: TIdTable) =
+proc copyIdTable*(dest: var TIdTable, src: TIdTable) =
   dest.counter = src.counter
 
   newSeq(dest.data, src.data.len)
   for i in 0..high(src.data):
     dest.data[i] = src.data[i]
 
-proc copyObjectSet*(dest: var TObjectSet; src: TObjectSet) =
+proc copyObjectSet*(dest: var TObjectSet, src: TObjectSet) =
   dest.counter = src.counter
 
   setLen(dest.data, src.data.len)
@@ -1763,12 +1763,12 @@ proc copyObjectSet*(dest: var TObjectSet; src: TObjectSet) =
 proc discardSons*(father: PNode) =
   father.sons = @[]
 
-proc withInfo*(n: PNode; info: TLineInfo): PNode =
+proc withInfo*(n: PNode, info: TLineInfo): PNode =
   n.info = info
 
   return n
 
-proc newIdentNode*(ident: PIdent; info: TLineInfo): PNode =
+proc newIdentNode*(ident: PIdent, info: TLineInfo): PNode =
   result = newNode(nkIdent)
   result.ident = ident
   result.info = info
@@ -1779,24 +1779,24 @@ proc newSymNode*(sym: PSym): PNode =
   result.typ = sym.typ
   result.info = sym.info
 
-proc newSymNode*(sym: PSym; info: TLineInfo): PNode =
+proc newSymNode*(sym: PSym, info: TLineInfo): PNode =
   result = newNode(nkSym)
   result.sym = sym
   result.typ = sym.typ
   result.info = info
 
-proc newIntNode*(kind: TNodeKind; intVal: BiggestInt): PNode =
+proc newIntNode*(kind: TNodeKind, intVal: BiggestInt): PNode =
   result = newNode(kind)
   result.intVal = intVal
 
-proc newIntNode*(kind: TNodeKind; intVal: Int128): PNode =
+proc newIntNode*(kind: TNodeKind, intVal: Int128): PNode =
   result = newNode(kind)
   result.intVal = castToInt64(intVal)
 
 proc lastSon*(n: Indexable): Indexable =
   n.sons[^1]
 
-proc skipTypes*(t: PType; kinds: TTypeKinds): PType =
+proc skipTypes*(t: PType, kinds: TTypeKinds): PType =
   ## Used throughout the compiler code to test whether a type tree contains or
   ## doesn't contain a specific type/types - it is often the case that only the
   ## last child nodes of a type tree need to be searched. This is a really hot
@@ -1805,7 +1805,7 @@ proc skipTypes*(t: PType; kinds: TTypeKinds): PType =
   while result.kind in kinds:
     result = lastSon(result)
 
-proc newIntTypeNode*(intVal: BiggestInt; typ: PType): PNode =
+proc newIntTypeNode*(intVal: BiggestInt, typ: PType): PNode =
   let kind = skipTypes(typ, abstractVarRange).kind
   case kind
   of tyInt:
@@ -1841,27 +1841,27 @@ proc newIntTypeNode*(intVal: BiggestInt; typ: PType): PNode =
   result.intVal = intVal
   result.typ = typ
 
-proc newIntTypeNode*(intVal: Int128; typ: PType): PNode =
+proc newIntTypeNode*(intVal: Int128, typ: PType): PNode =
   # XXX: introduce range check
   newIntTypeNode(castToInt64(intVal), typ)
 
-proc newFloatNode*(kind: TNodeKind; floatVal: BiggestFloat): PNode =
+proc newFloatNode*(kind: TNodeKind, floatVal: BiggestFloat): PNode =
   result = newNode(kind)
   result.floatVal = floatVal
 
-proc newStrNode*(kind: TNodeKind; strVal: string): PNode =
+proc newStrNode*(kind: TNodeKind, strVal: string): PNode =
   result = newNode(kind)
   result.strVal = strVal
 
-proc newStrNode*(strVal: string; info: TLineInfo): PNode =
+proc newStrNode*(strVal: string, info: TLineInfo): PNode =
   result = newNodeI(nkStrLit, info)
   result.strVal = strVal
 
 proc newProcNode*(
-    kind: TNodeKind;
-    info: TLineInfo;
-    body: PNode;
-    params, name, pattern, genericParams, pragmas, exceptions: PNode;
+    kind: TNodeKind,
+    info: TLineInfo,
+    body: PNode,
+    params, name, pattern, genericParams, pragmas, exceptions: PNode,
 ): PNode =
   result = newNodeI(kind, info)
   result.sons = @[name, pattern, genericParams, params, pragmas, exceptions, body]
@@ -1877,7 +1877,7 @@ proc `$`*(s: PSym): string =
   else:
     result = "<nil>"
 
-proc newType*(kind: TTypeKind; id: ItemId; owner: PSym): PType =
+proc newType*(kind: TTypeKind, id: ItemId, owner: PSym): PType =
   result =
     PType(
       kind: kind,
@@ -1894,7 +1894,7 @@ proc newType*(kind: TTypeKind; id: ItemId; owner: PSym): PType =
 
       writeStackTrace()
 
-proc mergeLoc(a: var TLoc; b: TLoc) =
+proc mergeLoc(a: var TLoc, b: TLoc) =
   if a.k == low(typeof(a.k)):
     a.k = b.k
 
@@ -1908,7 +1908,7 @@ proc mergeLoc(a: var TLoc; b: TLoc) =
   if a.r == "":
     a.r = b.r
 
-proc newSons*(father: Indexable; length: int) =
+proc newSons*(father: Indexable, length: int) =
   setLen(father.sons, length)
 
 proc assignType*(dest, src: PType) =
@@ -1933,7 +1933,7 @@ proc assignType*(dest, src: PType) =
   for i in 0..<src.len:
     dest[i] = src[i]
 
-proc copyType*(t: PType; id: ItemId; owner: PSym): PType =
+proc copyType*(t: PType, id: ItemId, owner: PSym): PType =
   result = newType(t.kind, id, owner)
 
   assignType(result, t)
@@ -1943,7 +1943,7 @@ proc copyType*(t: PType; id: ItemId; owner: PSym): PType =
 proc exactReplica*(t: PType): PType =
   result = copyType(t, t.itemId, t.owner)
 
-proc copySym*(s: PSym; idgen: IdGenerator): PSym =
+proc copySym*(s: PSym, idgen: IdGenerator): PSym =
   result = newSym(s.kind, s.name, idgen, s.owner, s.info, s.options)
   #result.ast = nil            # BUGFIX; was: s.ast which made problems
   result.typ = s.typ
@@ -1960,7 +1960,7 @@ proc copySym*(s: PSym; idgen: IdGenerator): PSym =
     result.alignment = s.alignment
 
 proc createModuleAlias*(
-    s: PSym; idgen: IdGenerator; newIdent: PIdent; info: TLineInfo; options: TOptions
+    s: PSym, idgen: IdGenerator, newIdent: PIdent, info: TLineInfo, options: TOptions
 ): PSym =
   result = newSym(s.kind, newIdent, idgen, s.owner, info, options)
   # keep ID!
@@ -2009,7 +2009,7 @@ proc initNodeTable*(x: var TNodeTable) =
 
   newSeq(x.data, StartSize)
 
-proc skipTypes*(t: PType; kinds: TTypeKinds; maxIters: int): PType =
+proc skipTypes*(t: PType, kinds: TTypeKinds, maxIters: int): PType =
   result = t
 
   var i = maxIters
@@ -2020,7 +2020,7 @@ proc skipTypes*(t: PType; kinds: TTypeKinds; maxIters: int): PType =
     if i == 0:
       return nil
 
-proc skipTypesOrNil*(t: PType; kinds: TTypeKinds): PType =
+proc skipTypesOrNil*(t: PType, kinds: TTypeKinds): PType =
   ## same as skipTypes but handles 'nil'
   result = t
   while result != nil and result.kind in kinds:
@@ -2034,7 +2034,7 @@ proc isGCedMem*(t: PType): bool {.inline.} =
     t.kind in {tyString, tyRef, tySequence} or
     t.kind == tyProc and t.callConv == ccClosure
 
-proc propagateToOwner*(owner, elem: PType; propagateHasAsgn = true) =
+proc propagateToOwner*(owner, elem: PType, propagateHasAsgn = true) =
   owner.flags.incl elem.flags * {tfHasMeta, tfTriggersCompileTime}
   if tfNotNil in elem.flags:
     if owner.kind in {tyGenericInst, tyGenericBody, tyGenericInvocation}:
@@ -2057,7 +2057,7 @@ proc propagateToOwner*(owner, elem: PType; propagateHasAsgn = true) =
       # ensure this doesn't bite us in sempass2.
       owner.flags.incl tfHasGCedMem
 
-proc rawAddSon*(father, son: PType; propagateHasAsgn = true) =
+proc rawAddSon*(father, son: PType, propagateHasAsgn = true) =
   father.sons.add(son)
   if not son.isNil:
     propagateToOwner(father, son, propagateHasAsgn)
@@ -2068,7 +2068,7 @@ proc rawAddSonNoPropagationOfTypeFlags*(father, son: PType) =
 proc addSonNilAllowed*(father, son: PNode) =
   father.sons.add(son)
 
-proc delSon*(father: PNode; idx: int) =
+proc delSon*(father: PNode, idx: int) =
   if father.len == 0:
     return
 
@@ -2094,17 +2094,17 @@ template transitionNodeKindCommon(k: TNodeKind) =
   when defined(useNodeIds):
     n.id = obj.id
 
-proc transitionSonsKind*(n: PNode; kind: range[nkComesFrom..nkTupleConstr]) =
+proc transitionSonsKind*(n: PNode, kind: range[nkComesFrom..nkTupleConstr]) =
   transitionNodeKindCommon(kind)
 
   n.sons = obj.sons
 
-proc transitionIntKind*(n: PNode; kind: range[nkCharLit..nkUInt64Lit]) =
+proc transitionIntKind*(n: PNode, kind: range[nkCharLit..nkUInt64Lit]) =
   transitionNodeKindCommon(kind)
 
   n.intVal = obj.intVal
 
-proc transitionIntToFloatKind*(n: PNode; kind: range[nkFloatLit..nkFloat128Lit]) =
+proc transitionIntToFloatKind*(n: PNode, kind: range[nkFloatLit..nkFloat128Lit]) =
   transitionNodeKindCommon(kind)
 
   n.floatVal = BiggestFloat(obj.intVal)
@@ -2143,7 +2143,7 @@ template transitionSymKindCommon*(k: TSymKind) =
 proc transitionGenericParamToType*(s: PSym) =
   transitionSymKindCommon(skType)
 
-proc transitionRoutineSymKind*(s: PSym; kind: range[skProc..skTemplate]) =
+proc transitionRoutineSymKind*(s: PSym, kind: range[skProc..skTemplate]) =
   transitionSymKindCommon(kind)
 
   s.gcUnsafetyReason = obj.gcUnsafetyReason
@@ -2156,7 +2156,7 @@ proc transitionToLet*(s: PSym) =
   s.bitsize = obj.bitsize
   s.alignment = obj.alignment
 
-proc hasSonWith*(n: PNode; kind: TNodeKind): bool =
+proc hasSonWith*(n: PNode, kind: TNodeKind): bool =
   for i in 0..<n.len:
     if n[i].kind == kind:
       return true
@@ -2172,7 +2172,7 @@ proc hasNilSon*(n: PNode): bool =
 
   result = false
 
-proc containsNode*(n: PNode; kinds: TNodeKinds): bool =
+proc containsNode*(n: PNode, kinds: TNodeKinds): bool =
   if n == nil:
     return
 
@@ -2184,7 +2184,7 @@ proc containsNode*(n: PNode; kinds: TNodeKinds): bool =
       if n.kind in kinds or containsNode(n[i], kinds):
         return true
 
-proc hasSubnodeWith*(n: PNode; kind: TNodeKind): bool =
+proc hasSubnodeWith*(n: PNode, kind: TNodeKind): bool =
   case n.kind
   of nkEmpty..nkNilLit, nkFormalParams:
     result = n.kind == kind
@@ -2335,7 +2335,7 @@ proc skipStmtList*(n: PNode): PNode =
   else:
     result = n
 
-proc toVar*(typ: PType; kind: TTypeKind; idgen: IdGenerator): PType =
+proc toVar*(typ: PType, kind: TTypeKind, idgen: IdGenerator): PType =
   ## If ``typ`` is not a tyVar then it is converted into a `var <typ>` and
   ## returned. Otherwise ``typ`` is simply returned as-is.
   result = typ
@@ -2344,7 +2344,7 @@ proc toVar*(typ: PType; kind: TTypeKind; idgen: IdGenerator): PType =
 
     rawAddSon(result, typ)
 
-proc toRef*(typ: PType; idgen: IdGenerator): PType =
+proc toRef*(typ: PType, idgen: IdGenerator): PType =
   ## If ``typ`` is a tyObject then it is converted into a `ref <typ>` and
   ## returned. Otherwise ``typ`` is simply returned as-is.
   result = typ
@@ -2385,7 +2385,7 @@ proc toObjectFromRefPtrGeneric*(typ: PType): PType =
     else:
       break
 
-proc isImportedException*(t: PType; conf: ConfigRef): bool =
+proc isImportedException*(t: PType, conf: ConfigRef): bool =
   assert t != nil
   if conf.exc != excCpp:
     return false
@@ -2454,7 +2454,7 @@ proc isSinkParam*(s: PSym): bool {.inline.} =
 proc isSinkType*(t: PType): bool {.inline.} =
   t.kind == tySink or tfHasOwned in t.flags
 
-proc newProcType*(info: TLineInfo; id: ItemId; owner: PSym): PType =
+proc newProcType*(info: TLineInfo, id: ItemId, owner: PSym): PType =
   result = newType(tyProc, id, owner)
   result.n = newNodeI(nkFormalParams, info)
 
@@ -2464,7 +2464,7 @@ proc newProcType*(info: TLineInfo; id: ItemId; owner: PSym): PType =
   # usual we desperately try to save memory:
   result.n.add newNodeI(nkEffectList, info)
 
-proc addParam*(procType: PType; param: PSym) =
+proc addParam*(procType: PType, param: PSym) =
   param.position = procType.len - 1
 
   procType.n.add newSymNode(param)
@@ -2504,7 +2504,7 @@ proc canRaise*(fn: PNode): bool =
           )
         )
 
-proc toHumanStrImpl[T](kind: T; num: static int): string =
+proc toHumanStrImpl[T](kind: T, num: static int): string =
   result = $kind
   result = result[num..^1]
   result[0] = result[0].toLowerAscii

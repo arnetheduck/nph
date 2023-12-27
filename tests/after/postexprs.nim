@@ -88,3 +88,12 @@ call(
     28
 )
 call(command: 29)
+
+command "llllllllllllllllooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnggggggggggggggggggggg parameter":
+  discard
+
+command param:
+of a:
+  discard
+else:
+  discard

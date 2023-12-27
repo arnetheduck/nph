@@ -347,6 +347,8 @@ sons:
         postfix:
           - "## alias2 eol"
       - kind: "nkTypeDef"
+        mid:
+          - "# alias after equals"
         sons:
           - kind: "nkIdent"
             ident: "SomeAlias3"
@@ -361,8 +363,6 @@ sons:
                   - kind: "nkEmpty"
                   - kind: "nkEmpty"
           - kind: "nkIdent"
-            prefix:
-              - "# alias after equals"
             ident: "int"
         postfix:
           - "# alias after type"
@@ -380,6 +380,50 @@ sons:
         postfix:
           - "## after alias4"
           - "## more after alias4"
+      - kind: "nkTypeDef"
+        mid:
+          - "## doc comment after equals before proc"
+        sons:
+          - kind: "nkIdent"
+            ident: "SomeAlias5"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+            prefix:
+              - "## more than one line"
+            sons:
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "v"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+              - kind: "nkEmpty"
+      - kind: "nkTypeDef"
+        mid:
+          - "##"
+        sons:
+          - kind: "nkIdent"
+            ident: "SomeAlias6"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+            prefix:
+              - "## doc comment after equals before proc continued"
+            sons:
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "v"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+              - kind: "nkEmpty"
       - kind: "nkTypeDef"
         prefix:
           - "## Some comment before whenobj"
@@ -945,8 +989,8 @@ sons:
             ident: "b"
           - kind: "nkIdent"
             ident: "c"
-  - kind: "nkCommentStmt"
-    "comment": "# dedented comment after keyword parameter"
+        postfix:
+          - "# dedented comment after keyword parameter"
   - kind: "nkPragma"
     sons:
       - kind: "nkIdent"
@@ -1031,6 +1075,8 @@ sons:
       - "# const eol"
     sons:
       - kind: "nkConstDef"
+        mid:
+          - "# const ident after type"
         sons:
           - kind: "nkIdent"
             ident: "v"
@@ -1042,7 +1088,6 @@ sons:
             ident: "int"
           - kind: "nkIntLit"
             prefix:
-              - "# const ident after type"
               - "# const ident after equals"
             intVal: 42
         postfix:

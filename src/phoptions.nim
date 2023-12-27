@@ -476,7 +476,7 @@ type
     lastLineInfo*: TLineInfo
     writelnHook*: proc(output: string) {.closure, gcsafe.}
     structuredErrorHook*:
-      proc(config: ConfigRef; info: TLineInfo; msg: string; severity: Severity) {.
+      proc(config: ConfigRef, info: TLineInfo, msg: string, severity: Severity) {.
         closure, gcsafe
       .}
     cppCustomNamespace*: string
@@ -501,7 +501,7 @@ proc parseNimVersion*(a: string): NimVer =
     fn(1)
     fn(2)
 
-proc assignIfDefault*[T](result: var T; val: T; def = default(T)) =
+proc assignIfDefault*[T](result: var T, val: T, def = default(T)) =
   ## if `result` was already assigned to a value (that wasn't `def`), this is a noop.
   if result == def:
     result = val
@@ -510,7 +510,7 @@ template setErrorMaxHighMaybe*(conf: ConfigRef) =
   ## do not stop after first error (but honor --errorMax if provided)
   assignIfDefault(conf.errorMax, high(int))
 
-proc setNoteDefaults*(conf: ConfigRef; note: TNoteKind; enabled = true) =
+proc setNoteDefaults*(conf: ConfigRef, note: TNoteKind, enabled = true) =
   template fun(op) =
     conf.notes.op note
     conf.mainPackageNotes.op note
@@ -521,7 +521,7 @@ proc setNoteDefaults*(conf: ConfigRef; note: TNoteKind; enabled = true) =
   else:
     fun(excl)
 
-proc setNote*(conf: ConfigRef; note: TNoteKind; enabled = true) =
+proc setNote*(conf: ConfigRef, note: TNoteKind, enabled = true) =
   # see also `prepareConfigNotes` which sets notes
   if note notin conf.cmdlineNotes:
     if enabled:
@@ -529,7 +529,7 @@ proc setNote*(conf: ConfigRef; note: TNoteKind; enabled = true) =
     else:
       excl(conf.notes, note)
 
-proc hasHint*(conf: ConfigRef; note: TNoteKind): bool =
+proc hasHint*(conf: ConfigRef, note: TNoteKind): bool =
   # ternary states instead of binary states would simplify logic
   if optHints notin conf.options:
     false
@@ -540,7 +540,7 @@ proc hasHint*(conf: ConfigRef; note: TNoteKind): bool =
   else:
     note in conf.notes
 
-proc hasWarn*(conf: ConfigRef; note: TNoteKind): bool {.inline.} =
+proc hasWarn*(conf: ConfigRef, note: TNoteKind): bool {.inline.} =
   optWarns in conf.options and note in conf.notes
 
 proc hcrOn*(conf: ConfigRef): bool =
@@ -608,7 +608,7 @@ const
     hintProcessing, warnUnknownMagic, hintQuitCalled, hintExecuting, hintUser, warnUser
   }
 
-proc isDefined*(conf: ConfigRef; symbol: string): bool
+proc isDefined*(conf: ConfigRef, symbol: string): bool
 
 when defined(nimDebugUtils):
   # this allows inserting debugging utilties in all modules that import `options`
@@ -700,7 +700,7 @@ proc newPartialConfigRef*(): ConfigRef =
 
     initConfigRefCommon(result)
 
-proc cppDefine*(c: ConfigRef; define: string) =
+proc cppDefine*(c: ConfigRef, define: string) =
   c.cppDefines.incl define
 
 proc getStdlibVersion*(conf: ConfigRef): NimVer =
@@ -711,7 +711,7 @@ proc getStdlibVersion*(conf: ConfigRef): NimVer =
 
   result = conf.nimStdlibVersion
 
-proc isDefined*(conf: ConfigRef; symbol: string): bool =
+proc isDefined*(conf: ConfigRef, symbol: string): bool =
   if conf.symbols.hasKey(symbol):
     result = true
   elif cmpIgnoreStyle(symbol, CPU[conf.target.targetCPU].name) == 0:
@@ -780,7 +780,7 @@ proc isDefined*(conf: ConfigRef; symbol: string): bool =
     else:
       discard
 
-template quitOrRaise*(conf: ConfigRef; msg = "") =
+template quitOrRaise*(conf: ConfigRef, msg = "") =
   # xxx in future work, consider whether to also intercept `msgQuit` calls
   if conf.isDefined("nimDebug"):
     doAssert false, msg
@@ -809,16 +809,16 @@ proc mainCommandArg*(conf: ConfigRef): string =
   else:
     result = conf.projectName
 
-proc existsConfigVar*(conf: ConfigRef; key: string): bool =
+proc existsConfigVar*(conf: ConfigRef, key: string): bool =
   result = hasKey(conf.configVars, key)
 
-proc getConfigVar*(conf: ConfigRef; key: string; default = ""): string =
+proc getConfigVar*(conf: ConfigRef, key: string, default = ""): string =
   result = conf.configVars.getOrDefault(key, default)
 
-proc setConfigVar*(conf: ConfigRef; key, val: string) =
+proc setConfigVar*(conf: ConfigRef, key, val: string) =
   conf.configVars[key] = val
 
-proc getOutFile*(conf: ConfigRef; filename: RelativeFile; ext: string): AbsoluteFile =
+proc getOutFile*(conf: ConfigRef, filename: RelativeFile, ext: string): AbsoluteFile =
   # explains regression https://github.com/nim-lang/Nim/issues/6583#issuecomment-625711125
   # Yet another reason why "" should not mean ".";  `""/something` should raise
   # instead of implying "" == "." as it's bug prone.
@@ -879,10 +879,10 @@ proc setDefaultLibpath*(conf: ConfigRef) =
         fileExists(parentNimLibPath / "system.nim"):
       conf.libpath = AbsoluteDir parentNimLibPath
 
-proc canonicalizePath*(conf: ConfigRef; path: AbsoluteFile): AbsoluteFile =
+proc canonicalizePath*(conf: ConfigRef, path: AbsoluteFile): AbsoluteFile =
   result = AbsoluteFile path.string.expandFilename
 
-proc setFromProjectName*(conf: ConfigRef; projectName: string) =
+proc setFromProjectName*(conf: ConfigRef, projectName: string) =
   try:
     conf.projectFull = canonicalizePath(conf, AbsoluteFile projectName)
   except OSError:
@@ -946,7 +946,7 @@ proc getNimcacheDir*(conf: ConfigRef): AbsoluteDir =
         getOsCacheDir() / splitFile(conf.projectName).name & nimcacheSuffix(conf)
       )
 
-proc pathSubs*(conf: ConfigRef; p, config: string): string =
+proc pathSubs*(conf: ConfigRef, p, config: string): string =
   let home = removeTrailingDirSep(os.getHomeDir())
 
   result =
@@ -971,7 +971,7 @@ proc pathSubs*(conf: ConfigRef; p, config: string): string =
       ]
     ).expandTilde
 
-iterator nimbleSubs*(conf: ConfigRef; p: string): string =
+iterator nimbleSubs*(conf: ConfigRef, p: string): string =
   let pl = p.toLowerAscii
   if "$nimblepath" in pl or "$nimbledir" in pl:
     for i in countdown(conf.nimblePaths.len - 1, 0):
@@ -981,13 +981,13 @@ iterator nimbleSubs*(conf: ConfigRef; p: string): string =
   else:
     yield p
 
-proc toGeneratedFile*(conf: ConfigRef; path: AbsoluteFile; ext: string): AbsoluteFile =
+proc toGeneratedFile*(conf: ConfigRef, path: AbsoluteFile, ext: string): AbsoluteFile =
   ## converts "/home/a/mymodule.nim", "rod" to "/home/a/nimcache/mymodule.rod"
   result =
     getNimcacheDir(conf) / RelativeFile path.string.splitPath.tail.changeFileExt(ext)
 
 proc completeGeneratedFilePath*(
-    conf: ConfigRef; f: AbsoluteFile; createSubDir: bool = true
+    conf: ConfigRef, f: AbsoluteFile, createSubDir: bool = true
 ): AbsoluteFile =
   ## Return an absolute path of a generated intermediary file.
   ## Optionally creates the cache directory if `createSubDir` is `true`.
@@ -1000,7 +1000,7 @@ proc completeGeneratedFilePath*(
 
   result = subdir / RelativeFile f.string.splitPath.tail
 
-proc rawFindFile(conf: ConfigRef; f: RelativeFile; suppressStdlib: bool): AbsoluteFile =
+proc rawFindFile(conf: ConfigRef, f: RelativeFile, suppressStdlib: bool): AbsoluteFile =
   for it in conf.searchPaths:
     if suppressStdlib and it.string.startsWith(conf.libpath.string):
       continue
@@ -1011,7 +1011,7 @@ proc rawFindFile(conf: ConfigRef; f: RelativeFile; suppressStdlib: bool): Absolu
 
   result = AbsoluteFile""
 
-proc rawFindFile2(conf: ConfigRef; f: RelativeFile): AbsoluteFile =
+proc rawFindFile2(conf: ConfigRef, f: RelativeFile): AbsoluteFile =
   for i, it in conf.lazyPaths:
     result = it / f
     if fileExists(result):
@@ -1043,7 +1043,7 @@ const
   stdPrefix = "std/"
 
 proc getRelativePathFromConfigPath*(
-    conf: ConfigRef; f: AbsoluteFile; isTitle = false
+    conf: ConfigRef, f: AbsoluteFile, isTitle = false
 ): RelativeFile =
   let f = $f
   if isTitle:
@@ -1061,7 +1061,7 @@ proc getRelativePathFromConfigPath*(
   search(conf.searchPaths)
   search(conf.lazyPaths)
 
-proc findFile*(conf: ConfigRef; f: string; suppressStdlib = false): AbsoluteFile =
+proc findFile*(conf: ConfigRef, f: string, suppressStdlib = false): AbsoluteFile =
   if f.isAbsolute:
     result =
       if f.fileExists:
@@ -1079,7 +1079,7 @@ proc findFile*(conf: ConfigRef; f: string; suppressStdlib = false): AbsoluteFile
 
   patchModule(conf)
 
-proc findModule*(conf: ConfigRef; modulename, currentModule: string): AbsoluteFile =
+proc findModule*(conf: ConfigRef, modulename, currentModule: string): AbsoluteFile =
   # returns path to module
   var m = addFileExt(modulename, NimExt)
   var hasRelativeDot = false
@@ -1107,7 +1107,7 @@ proc findModule*(conf: ConfigRef; modulename, currentModule: string): AbsoluteFi
 
   patchModule(conf)
 
-proc findProjectNimFile*(conf: ConfigRef; pkg: string): string =
+proc findProjectNimFile*(conf: ConfigRef, pkg: string): string =
   const extensions = [".nims", ".cfg", ".nimcfg", ".nimble"]
 
   var
@@ -1157,7 +1157,7 @@ proc findProjectNimFile*(conf: ConfigRef; pkg: string): string =
 
   return ""
 
-proc canonicalImportAux*(conf: ConfigRef; file: AbsoluteFile): string =
+proc canonicalImportAux*(conf: ConfigRef, file: AbsoluteFile): string =
   ##[
   Shows the canonical module import, e.g.:
   system, std/tables, fusion/pointers, system/assertions, std/private/asciitables
@@ -1176,7 +1176,7 @@ proc canonicalImportAux*(conf: ConfigRef; file: AbsoluteFile): string =
 
   result = ret.string
 
-proc canonicalImport*(conf: ConfigRef; file: AbsoluteFile): string =
+proc canonicalImport*(conf: ConfigRef, file: AbsoluteFile): string =
   let ret = canonicalImportAux(conf, file)
 
   result = ret.nativeToUnixPath.changeFileExt("")
@@ -1190,10 +1190,10 @@ proc canonDynlibName(s: string): string =
   else:
     result = s.substr(start)
 
-proc inclDynlibOverride*(conf: ConfigRef; lib: string) =
+proc inclDynlibOverride*(conf: ConfigRef, lib: string) =
   conf.dllOverrides[lib.canonDynlibName] = "true"
 
-proc isDynlibOverride*(conf: ConfigRef; lib: string): bool =
+proc isDynlibOverride*(conf: ConfigRef, lib: string): bool =
   result =
     optDynlibOverrideAll in conf.globalOptions or
     conf.dllOverrides.hasKey(lib.canonDynlibName)
