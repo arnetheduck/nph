@@ -4,6 +4,8 @@ on:
     branches:
       - master
       - release
+    tags:
+      - "v*"
   workflow_dispatch:
 
 
@@ -98,13 +100,19 @@ jobs:
         uses: actions/download-artifact@v3
 
       - uses: ncipollo/release-action@v1
+        if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
         with:
-          name: Latest nph binaries
+          name: Latest prerelease
           artifacts: "*/*"
           allowUpdates: true
-          makeLatest: true
           prerelease: true
-          tag: latest
+
+      - uses: ncipollo/release-action@v1
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        with:
+          name: nph ${{github.ref}}
+          artifacts: "*/*"
+          allowUpdates: false
 
       - name: Delete artefacts
         uses: geekyeggo/delete-artifact@v2
