@@ -316,6 +316,10 @@ proc x = discard
   ## indented doc comment for proc
   ## that is long
 
+proc x = echo a.b
+  ## indented doc comment for proc
+  ## with a dotexpr and a command
+
 proc f: bool =
   ## Comment here
   ## another

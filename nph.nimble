@@ -82,9 +82,9 @@ proc commitProject(
   cd "../.."
 
 const projects = [
-  ("Nim", "https://github.com/arnetheduck/Nim.git", "version-2-0", ["compiler"]),
-  ("nim-results", "https://github.com/arnetheduck/nim-results.git", "master", [""]),
-  ("nimbus-eth2", "https://github.com/status-im/nimbus-eth2.git", "unstable", [""]),
+  ("Nim", "https://github.com/arnetheduck/Nim.git", "version-2-0", @["compiler", "lib"]),
+  ("nim-results", "https://github.com/arnetheduck/nim-results.git", "master", @[""]),
+  ("nimbus-eth2", "https://github.com/status-im/nimbus-eth2.git", "unstable", @[""]),
 ]
 
 task play, "Format several popular projects":

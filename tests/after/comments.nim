@@ -296,7 +296,8 @@ const # const eol
   v # const ident after symbol
   :
     # const ident after colon
-    int = # const ident after type
+    int =
+    # const ident after type
     # const ident after equals
     42 # const ident after value
 
@@ -328,6 +329,11 @@ proc x() =
   discard
   ## indented doc comment for proc
   ## that is long
+
+proc x() =
+  echo a.b
+  ## indented doc comment for proc
+  ## with a dotexpr and a command
 
 proc f(): bool =
   ## Comment here
