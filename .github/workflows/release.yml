@@ -102,10 +102,11 @@ jobs:
       - uses: ncipollo/release-action@v1
         if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
         with:
-          name: Latest prerelease
+          name: Continuous prerelease
           artifacts: "*/*"
           allowUpdates: true
           prerelease: true
+          tag: latest
 
       - uses: ncipollo/release-action@v1
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
