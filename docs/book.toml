@@ -1,0 +1,24 @@
+[book]
+authors = ["Jacek Sieka"]
+language = "en"
+multilingual = false
+src = "src"
+title = "nph"
+
+[preprocessor.toc]
+command = "mdbook-toc"
+renderer = ["html"]
+max-level = 3
+
+[preprocessor.open-on-gh]
+command = "mdbook-open-on-gh"
+renderer = ["html"]
+
+[preprocessor.admonish]
+command = "mdbook-admonish"
+assets_version = "3.0.1" # do not edit: managed by `mdbook-admonish install`
+
+[output.html]
+git-repository-url = "https://github.com/arnetheduck/nph/"
+git-branch = "master"
+additional-css = ["open-in.css", "./mdbook-admonish.css"]

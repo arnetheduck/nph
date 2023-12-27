@@ -1,0 +1,29 @@
+name: github pages
+
+on:
+  push:
+    branches:
+      - master
+      - docs
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cargo-bins/cargo-binstall@main
+      - name: Build book
+        run: |
+          cargo binstall --no-confirm mdbook --version 0.4.36
+          cargo binstall --no-confirm mdbook-toc --version 0.14.1
+          cargo binstall --no-confirm mdbook-open-on-gh --version 2.4.1
+          cargo binstall --no-confirm mdbook-admonish --version 1.14.0
+
+          PATH=.cargo/bin:$PATH mdbook build docs
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/book
+          force_orphan: true
