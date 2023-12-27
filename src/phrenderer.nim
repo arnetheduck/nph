@@ -100,6 +100,9 @@ type
   SubFlags = set[SubFlag]
   TOutput = TSrcGen | TSrcLen
 
+proc isDocComment(s: string): bool =
+  s.startsWith("##")
+
 proc flagIndent(flags: SubFlags): int =
   if sfNoIndent in flags:
     0
@@ -692,6 +695,10 @@ proc gextras(g: var TSrcGen, toks: openArray[Token], indented, firstSticky: bool
   let long = toks.len > 1 or overflows(g, len($toks[0]))
   if indented:
     optIndent(g)
+
+  ## We must place doc comments on the same line as certain nodes or the
+  ## optInd parsing breaks
+  let firstSticky = firstSticky and isDocComment($toks[0])
 
   if long and not firstSticky:
     optNL(g)
@@ -2192,7 +2199,9 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     internalError(g.config, n.info, "renderer.gsub(" & $n.kind & ')')
 
   if sfSkipPostfix notin flags:
-    gpostfixes(g, n)
+    const stickyPostfix = {nkCommand}
+
+    gpostfixes(g, n, n.kind in stickyPostfix)
 
   if n.kind in blankAfterComplex and currLine < g.line:
     g.blankLine()

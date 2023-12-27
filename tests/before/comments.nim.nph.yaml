@@ -1229,6 +1229,32 @@ sons:
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
+        ident: "x"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkCommand"
+            sons:
+              - kind: "nkIdent"
+                ident: "echo"
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "a"
+                  - kind: "nkIdent"
+                    ident: "b"
+    postfix:
+      - "## indented doc comment for proc"
+      - "## with a dotexpr and a command"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
         ident: "f"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
@@ -1385,8 +1411,8 @@ sons:
         strVal: "b"
       - kind: "nkStrLit"
         strVal: "c"
-        postfix:
-          - "# command eol comment"
+    postfix:
+      - "# command eol comment"
   - kind: "nkCommand"
     sons:
       - kind: "nkIdent"
@@ -1401,8 +1427,8 @@ sons:
           - "# second arg comment"
       - kind: "nkStrLit"
         strVal: "third arg"
-        postfix:
-          - "# third arg comment"
+    postfix:
+      - "# third arg comment"
   - kind: "nkCommand"
     sons:
       - kind: "nkIdent"
@@ -1417,8 +1443,8 @@ sons:
         ident: "command"
       - kind: "nkIntLit"
         intVal: 234
-        postfix:
-          - "# command after ind"
+    postfix:
+      - "# command after ind"
   - kind: "nkWhenStmt"
     sons:
       - kind: "nkElifBranch"
@@ -1471,8 +1497,8 @@ sons:
             ident: "dotexpr"
           - kind: "nkIdent"
             ident: "dot"
-        postfix:
-          - "# after dotexpr in command"
+    postfix:
+      - "# after dotexpr in command"
   - kind: "nkCommentStmt"
     "comment": "# between two dotepxrs"
   - kind: "nkDotExpr"
@@ -1501,8 +1527,8 @@ sons:
                         ident: "dotexpr"
                       - kind: "nkIdent"
                         ident: "dot"
-                    postfix:
-                      - "# after dotexpr in command ind"
+                postfix:
+                  - "# after dotexpr in command ind"
               - kind: "nkCommentStmt"
                 "comment": "# between two dotepxrs ind"
               - kind: "nkDotExpr"

@@ -1764,10 +1764,6 @@ proc parseExprStmt(p: var Parser): PNode =
         getTok(p)
         splitLookahead(p, result[^1], clPostfix)
         optInd(p, result)
-      # This attaches any eol comments to the last argument instead of the
-      # command which may or may not be a good idea, specially if those comments
-      # are doc comments
-      splitLookahead(p, result[^1], baseIndent, clPostfix)
     else:
       result = a
     result = postExprBlocks(p, result)
