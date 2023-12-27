@@ -1,9 +1,10 @@
+name: Binaries
 on:
   push:
     branches:
       - master
       - release
-    workflow_dispatch:
+  workflow_dispatch:
 
 
 jobs:
