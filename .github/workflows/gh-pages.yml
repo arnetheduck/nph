@@ -11,14 +11,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: cargo-bins/cargo-binstall@main
+      - uses: baptiste0928/cargo-install@v2
+        with:
+          crate: mdbook
+          version: 0.4.36
+      - uses: baptiste0928/cargo-install@v2
+        with:
+          crate: mdbook-toc
+          version: 0.14.1
+      - uses: baptiste0928/cargo-install@v2
+        with:
+          crate: mdbook-open-on-gh
+          version: 2.4.1
+      - uses: baptiste0928/cargo-install@v2
+        with:
+          crate: mdbook-admonish
+          version: 1.14.0
       - name: Build book
         run: |
-          cargo binstall --no-confirm mdbook --version 0.4.36
-          cargo binstall --no-confirm mdbook-toc --version 0.14.1
-          cargo binstall --no-confirm mdbook-open-on-gh --version 2.4.1
-          cargo binstall --no-confirm mdbook-admonish --version 1.14.0
-
           PATH=.cargo/bin:$PATH mdbook build docs
 
       - name: Deploy
