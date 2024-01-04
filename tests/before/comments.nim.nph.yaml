@@ -1401,6 +1401,25 @@ sons:
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkIdent"
+            ident: "int"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkIntLit"
+            intVal: 42
+    postfix:
+      - "## Doc comment that needs body reordering"
+      - "## even two lines again"
   - kind: "nkCommand"
     sons:
       - kind: "nkIdent"

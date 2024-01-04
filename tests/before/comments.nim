@@ -349,6 +349,10 @@ proc f =
 
 proc a(v#[block]#: int, abc: int)
 
+proc a(): int = 42
+  ## Doc comment that needs body reordering
+  ## even two lines again
+
 command "a", "b", "c" # command eol comment
 
 command "first arg", # first arg comment

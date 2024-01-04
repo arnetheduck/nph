@@ -330,14 +330,14 @@ proc x() =
       discard
 
 proc x() =
-  discard
   ## indented doc comment for proc
   ## that is long
+  discard
 
 proc x() =
-  echo a.b
   ## indented doc comment for proc
   ## with a dotexpr and a command
+  echo a.b
 
 proc f(): bool =
   ## Comment here
@@ -371,6 +371,11 @@ proc a(
   : int,
   abc: int,
 )
+
+proc a(): int =
+  ## Doc comment that needs body reordering
+  ## even two lines again
+  42
 
 command "a", "b", "c" # command eol comment
 

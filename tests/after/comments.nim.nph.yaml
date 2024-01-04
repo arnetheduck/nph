@@ -1221,13 +1221,13 @@ sons:
       - kind: "nkEmpty"
       - kind: "nkStmtList"
         sons:
-          - kind: "nkDiscardStmt"
-            sons:
-              - kind: "nkEmpty"
           - kind: "nkCommentStmt"
             "comment": "## indented doc comment for proc"
           - kind: "nkCommentStmt"
             "comment": "## that is long"
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
@@ -1241,6 +1241,10 @@ sons:
       - kind: "nkEmpty"
       - kind: "nkStmtList"
         sons:
+          - kind: "nkCommentStmt"
+            "comment": "## indented doc comment for proc"
+          - kind: "nkCommentStmt"
+            "comment": "## with a dotexpr and a command"
           - kind: "nkCommand"
             sons:
               - kind: "nkIdent"
@@ -1251,10 +1255,6 @@ sons:
                     ident: "a"
                   - kind: "nkIdent"
                     ident: "b"
-          - kind: "nkCommentStmt"
-            "comment": "## indented doc comment for proc"
-          - kind: "nkCommentStmt"
-            "comment": "## with a dotexpr and a command"
   - kind: "nkProcDef"
     sons:
       - kind: "nkIdent"
@@ -1404,6 +1404,26 @@ sons:
       - kind: "nkEmpty"
       - kind: "nkEmpty"
       - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkIdent"
+            ident: "int"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkCommentStmt"
+            "comment": "## Doc comment that needs body reordering"
+          - kind: "nkCommentStmt"
+            "comment": "## even two lines again"
+          - kind: "nkIntLit"
+            intVal: 42
   - kind: "nkCommand"
     sons:
       - kind: "nkIdent"
