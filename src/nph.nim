@@ -87,12 +87,12 @@ proc prettyPrint(infile, outfile: string, debug, check, printTokens: bool): int 
   if infile != "-":
     if debug:
       # Always write file in debug mode
-      writeFile(infile & ".nph.yaml", treeToYaml(nil, node))
+      writeFile(infile & ".nph.yaml", treeToYaml(nil, node) & "\n")
       if infile != outfile:
         writeFile(outfile, output)
         writeFile(
           outfile & ".nph.yaml",
-          treeToYaml(nil, parse(output, outfile, printTokens, newConfigRef())),
+          treeToYaml(nil, parse(output, outfile, printTokens, newConfigRef())) & "\n",
         )
     elif fileExists(outFile) and output == readFile(outFile):
       # No formatting difference - don't touch file modificuation date

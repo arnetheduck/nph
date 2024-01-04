@@ -2,9 +2,7 @@
 #        (c) Copyright 2023 Jacek Sieka
 ## Compare two AST's for semantic equivalence - aka undo whitespace bugs in the
 ## Nim parser / grammar
-import
-  "$nim"/compiler/[ast, llstream, parser, idents, options, pathutils],
-  std/sequtils
+import "$nim"/compiler/[ast, llstream, parser, idents, options, pathutils], std/sequtils
 
 from std/math import isNaN
 

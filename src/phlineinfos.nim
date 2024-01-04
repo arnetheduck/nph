@@ -194,11 +194,11 @@ const
     warnUnusedImportX: "imported and not used: '$1'",
     warnInheritFromException:
       "inherit from a more precise exception type like ValueError, " &
-        "IOError or OSError. If these don't suit, inherit from CatchableError or Defect.",
+      "IOError or OSError. If these don't suit, inherit from CatchableError or Defect.",
     warnEachIdentIsTuple: "each identifier is a tuple",
     warnUnsafeSetLen:
       "setLen can potentially expand the sequence, " &
-        "but the element type '$1' doesn't have a valid default value",
+      "but the element type '$1' doesn't have a valid default value",
     warnUnsafeDefault: "The '$1' type doesn't have a valid default value",
     warnProveInit:
       "Cannot prove that '$1' is initialized. This will become a compile time error in the future.",

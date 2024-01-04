@@ -98,7 +98,7 @@ proc aaaaaaaa[
 proc aaaaaaaaaaa(
   v:
     Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb |
-      Cccccccccccccccccccccccccc
+    Cccccccccccccccccccccccccc
 )
 
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa 42 + 33 +
@@ -136,7 +136,7 @@ type
       bbbbbbbbbbbbbbb =
         proc() =
             discard
-          ,
+      ,
       cccccccccccccccccc = 30,
     )
 

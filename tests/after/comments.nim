@@ -93,7 +93,8 @@ type
     ## alias eol
     ## alias next
 
-  SomeAlias2 {.nodecl.} = int ## alias2 eol
+  SomeAlias2 {.nodecl.} = # after pragma
+    int ## alias2 eol
 
   SomeAlias3 # alias after symbol
     [T] = # alias after equals
@@ -104,8 +105,8 @@ type
     ## more after alias4
 
   SomeAlias5 = ## doc comment after equals before proc
-      ## more than one line
-      proc(v: int)
+    ## more than one line
+    proc(v: int)
 
   SomeAlias6 = ##
     ## doc comment after equals before proc continued
@@ -233,7 +234,7 @@ discard Object( # object eol
     field2:
       # field colon line
       # Field colon next line
-      42
+      42,
   )
 
 a = b
@@ -246,31 +247,34 @@ block:
 ## needs to be double
 
 abc and
-# dedented comment in infix
-def
+  # dedented comment in infix
+  def
 
 abc and
-# indented comment in infix
-def
+  # indented comment in infix
+  def
 
 if abc and
-# dedented comment in infix
-def:
+    # dedented comment in infix
+    def:
   discard
 
 if abc and
-# indented comment in infix
-def:
+    # indented comment in infix
+    def:
   discard
 
-a(b = c # comment after keyword parameter
-  )
+a(
+  b = c # comment after keyword parameter
+)
 
-a(b = c # dedented comment after keyword parameter
-  )
+a(
+  b = c # dedented comment after keyword parameter
+)
 
-{.pragma # comment here
-  .}
+{.
+  pragma # comment here
+.}
 
 let v = 52 # let all on one line
 let v = addr output # let all on one line with command
@@ -362,8 +366,11 @@ proc f() =
   ## Doc comment only
   ## even two lines
 
-proc a(v #[block]#
-  : int, abc: int)
+proc a(
+  v #[block]#
+  : int,
+  abc: int,
+)
 
 command "a", "b", "c" # command eol comment
 
@@ -379,6 +386,9 @@ command 234 # command after ind
 when false:
   command "first arg"
   # comment after command nest
+
+when false:
+  command "first arg" # comment command postfix nest
 
 when false:
   command a.b
@@ -415,3 +425,8 @@ block:
   # no whitespace between the next two multilines
   functionCall(param)
   functionCall(param)
+
+block:
+  if true:
+    discard
+  # comment after if in block

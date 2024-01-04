@@ -1042,7 +1042,7 @@ proc simpleExprAux(p: var Parser, limit: int, mode: PrimaryMode): PNode =
     mode = pmNormal
   if p.tok.tokType == tkCurlyDotLe and (p.tok.indent < 0 or realInd(p)) and
       mode == pmNormal:
-    var pragmaExp = newNodeP(nkPragmaExpr, p)
+    var pragmaExp = newNodeP(nkPragmaExpr, p, withPrefix = false)
     pragmaExp.add result
     pragmaExp.add p.parsePragma
     result = pragmaExp
@@ -1096,7 +1096,7 @@ proc identWithPragma(p: var Parser, allowDot = false): PNode =
   #| identWithPragmaDot = identVisDot pragma?
   var a = identVis(p, allowDot)
   if p.tok.tokType == tkCurlyDotLe:
-    result = newNodeP(nkPragmaExpr, p)
+    result = newNodeP(nkPragmaExpr, p, withPrefix = false)
     result.add(a)
     result.add(parsePragma(p))
   else:
@@ -1896,7 +1896,7 @@ proc parseIfOrWhen(p: var Parser, kind: TNodeKind): PNode =
     branch.add(parseExpr(p))
     branch.add(parseColComStmt(p, branch, clMid))
     result.add(branch)
-    splitLookahead(p, branch, clPostfix)
+    splitLookahead(p, branch, p.currInd, clPostfix)
     if p.tok.tokType != tkElif or not sameOrNoInd(p):
       break
   if p.tok.tokType == tkElse and sameOrNoInd(p):
@@ -2483,7 +2483,7 @@ proc parseTypeDef(p: var Parser): PNode =
   else:
     pragma = p.emptyNode
   if pragma.kind != nkEmpty:
-    identPragma = newNodeP(nkPragmaExpr, p)
+    identPragma = newNodeP(nkPragmaExpr, p, withPrefix = false)
     identPragma.add(identifier)
     identPragma.add(pragma)
 
