@@ -343,20 +343,22 @@ sons:
     sons:
       - kind: "nkTryStmt"
         sons:
-          - kind: "nkStmtListExpr"
+          - kind: "nkStmtList"
             sons:
-              - kind: "nkDiscardStmt"
+              - kind: "nkStmtListExpr"
                 sons:
-                  - kind: "nkCall"
+                  - kind: "nkDiscardStmt"
                     sons:
-                      - kind: "nkDotExpr"
+                      - kind: "nkCall"
                         sons:
-                          - kind: "nkIdent"
-                            ident: "rOk"
-                          - kind: "nkIdent"
-                            ident: "tryError"
-              - kind: "nkIdent"
-                ident: "false"
+                          - kind: "nkDotExpr"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "rOk"
+                              - kind: "nkIdent"
+                                ident: "tryError"
+                  - kind: "nkIdent"
+                    ident: "false"
           - kind: "nkExceptBranch"
             sons:
               - kind: "nkBracketExpr"

@@ -37,7 +37,8 @@ discard xxxx "arg":
     yyy
 
 (
-  try: (discard rOk.tryError(); false)
+  try:
+    (discard rOk.tryError(); false)
   except ResultError[int]:
     true
 )

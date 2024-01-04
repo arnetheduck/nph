@@ -366,6 +366,9 @@ when false:
   # comment after command nest
 
 when false:
+  command "first arg" # comment command postfix nest
+
+when false:
   command a.b
   # comment after command dotexpr nest
 
@@ -406,3 +409,8 @@ block:
   functionCall(
     param
   )
+
+block:
+  if true:
+    discard
+  # comment after if in block

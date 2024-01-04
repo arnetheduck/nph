@@ -332,6 +332,8 @@ sons:
           - "## alias eol"
           - "## alias next"
       - kind: "nkTypeDef"
+        mid:
+          - "# after pragma"
         sons:
           - kind: "nkPragmaExpr"
             sons:
@@ -1474,6 +1476,22 @@ sons:
                 sons:
                   - kind: "nkIdent"
                     ident: "command"
+                  - kind: "nkStrLit"
+                    strVal: "first arg"
+                postfix:
+                  - "# comment command postfix nest"
+  - kind: "nkWhenStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkIdent"
+            ident: "false"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkCommand"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "command"
                   - kind: "nkDotExpr"
                     sons:
                       - kind: "nkIdent"
@@ -1590,3 +1608,21 @@ sons:
                 ident: "functionCall"
               - kind: "nkIdent"
                 ident: "param"
+  - kind: "nkBlockStmt"
+    sons:
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkIfStmt"
+            sons:
+              - kind: "nkElifBranch"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "true"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkDiscardStmt"
+                        sons:
+                          - kind: "nkEmpty"
+          - kind: "nkCommentStmt"
+            "comment": "# comment after if in block"

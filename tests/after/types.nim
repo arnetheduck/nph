@@ -10,14 +10,14 @@ type
   GenericAlias[
     T:
       Aaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbb | Cccccccccccccccccccc |
-        Dddddddddddddddd | Eeeeeeeeeeeeeeeeeee
+      Dddddddddddddddd | Eeeeeeeeeeeeeeeeeee
   ] = Bbbbbbbbbbbbbbbbbb[T]
 
 type GenericRef = GenType[A, ref B]
 proc procTypeclass(
   a:
     Aaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbb | Ccccccccccccccccccccccccccc |
-      Ddddddddddddddddddddddddd | Eeeeeeeeeeeeeeeee
+    Ddddddddddddddddddddddddd | Eeeeeeeeeeeeeeeee
 )
 
 type EmptyObject = object
