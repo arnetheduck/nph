@@ -1193,6 +1193,14 @@ proc gcase(g: var TOutput, n: PNode) =
     optNL(g)
     gsonsNL(g, n, start = 1)
 
+proc reorderPostfix(n: PNode): bool =
+  # Because we move the body to a new line, we must also reorder postfix doc
+  # comments or they end up becoming the last statement in the proc and
+  # thus breaking it
+  # TODO enable AST checking for nkCommentStmt to catch this :/
+  n.kind in procDefs and n.postfix.len > 0 and isDocComment(n.postfix[0].literal) and
+    n[bodyPos].kind != nkEmpty
+
 proc gproc(g: var TOutput, n: PNode) =
   gsub(g, n[namePos])
 
@@ -1219,8 +1227,14 @@ proc gproc(g: var TOutput, n: PNode) =
       withIndent(g):
         g.optNL()
         gmids(g, n)
+
+      if reorderPostfix(n):
+        gpostfixes(g, n)
     else:
       gmids(g, n, true)
+
+      if reorderPostfix(n):
+        gpostfixes(g, n)
 
       gstmts(g, n[bodyPos], flags)
   else:
@@ -2186,9 +2200,8 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     #nkNone, nkExplicitTypeListCall:
     internalError(g.config, n.info, "renderer.gsub(" & $n.kind & ')')
 
-  if sfSkipPostfix notin flags:
+  if sfSkipPostfix notin flags and not reorderPostfix(n):
     const stickyPostfix = {nkCommand}
-
     gpostfixes(g, n, n.kind in stickyPostfix)
 
   if n.kind in blankAfterComplex and currLine < g.line:
