@@ -1198,7 +1198,7 @@ proc reorderPostfix(n: PNode): bool =
   # comments or they end up becoming the last statement in the proc and
   # thus breaking it
   # TODO enable AST checking for nkCommentStmt to catch this :/
-  n.kind in procDefs and n.postfix.len > 0 and isDocComment(n.postfix[0].literal) and
+  n.kind in routineDefs and n.postfix.len > 0 and isDocComment(n.postfix[0].literal) and
     n[bodyPos].kind != nkEmpty
 
 proc gproc(g: var TOutput, n: PNode) =
