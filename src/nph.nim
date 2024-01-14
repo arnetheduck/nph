@@ -12,10 +12,6 @@ import "$nim"/compiler/idents
 
 import std/[parseopt, strutils, os, sequtils]
 
-static:
-  doAssert (NimMajor, NimMinor, NimPatch) == (2, 0, 0),
-    "nph needs to be compiled with nim 2.0.0 exactly for now"
-
 const
   Version = gorge("git describe --long --dirty --always --tags")
   Usage =
