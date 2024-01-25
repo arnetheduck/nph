@@ -14,7 +14,8 @@ git commit -am "Formatted with nph $(nph --version)"
 echo "# Formatted with nph $(nph --version)" >> .git-blame-ignore-revs
 echo "$(git rev-parse HEAD)" >> .git-blame-ignore-revs
 
-git commit -am "Add $(git rev-parse HEAD) to .git-blame-ignore-revs"
+git add .git-blame-ignore-revs
+git commit -m "Add $(git rev-parse HEAD) to .git-blame-ignore-revs"
 
 echo "The repo has been updated with two commits recording the reformatting and blame information."
 echo "You can review the changes with 'git diff HEAD^^' before pushing to a public repository."
