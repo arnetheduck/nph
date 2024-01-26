@@ -192,7 +192,7 @@ finally:
   discard
 # finally last dedent line
 
-for i in 0..1: # for colon line
+for i in 0 .. 1: # for colon line
   # for first line
   discard
 
@@ -326,7 +326,7 @@ proc x() =
   if true:
     numberOfCharsRead -= 2 # handle Ctrl+Z as EOF
 
-    for i in 0..<numberOfCharsRead:
+    for i in 0 ..< numberOfCharsRead:
       discard
 
 proc x() =
