@@ -103,6 +103,8 @@ type
     sfSkipPostfix ## The caller will handle rendering the postfix
     sfSkipDo ## Don't add `do` token for post-statments
     sfOneLine ## Use single-line formatting (if possible)
+    sfStackDot ## Stack multiple dot-calls
+    sfStackDotInCall ## Stacked dotting opportunity
 
   SubFlags = set[SubFlag]
   TOutput = TSrcGen | TSrcLen
@@ -1335,7 +1337,7 @@ proc gsubOptNL(
 
       gsub(g, n, flags = flags)
 
-proc accentedName(g: var TOutput, n: PNode) =
+proc accentedName(g: var TOutput, n: PNode, flags: SubFlags = {}) =
   # This is for cases where ident should've really been a `nkAccQuoted`, e.g. `:tmp`
   # or if user writes a macro with `ident":foo"`. It's unclear whether these should be legal.
   const backticksNeeded = OpChars + {'[', '{', '\''}
@@ -1348,7 +1350,7 @@ proc accentedName(g: var TOutput, n: PNode) =
     gident(g, n)
     put(g, tkAccent, "`")
   else:
-    gsub(g, n)
+    gsub(g, n, flags = flags)
 
 proc infixArgument(g: var TOutput, n: PNode, i: int, flags: SubFlags) =
   if i < 1 or i > 2:
@@ -1471,9 +1473,9 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     put(g, tkCharLit, atom(g, n))
   of nkNilLit:
     put(g, tkNil, atom(g, n)) # complex expressions
-  of nkCall, nkConv, nkDotCall, nkPattern, nkObjConstr:
+  of nkCall, nkConv, nkPattern, nkObjConstr:
     if n.len > 1 and n.lastSon.kind in postExprBlocks:
-      accentedName(g, n[0])
+      accentedName(g, n[0], flags = (flags * {sfStackDot}) + {sfStackDotInCall})
 
       var i = 1
       while i < n.len and n[i].kind notin postExprBlocks:
@@ -1486,7 +1488,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
       postStatements(g, n, i, sfSkipDo in flags)
     elif n.len >= 1:
-      accentedName(g, n[0])
+      accentedName(g, n[0], flags = (flags * {sfStackDot}) + {sfStackDotInCall})
       glist(g, n, tkParLe, start = 1, flags = {lfLongSepAtEnd})
     else:
       put(g, tkParLe, "(")
@@ -1600,17 +1602,29 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       gmids(g, n)
       gsub(g, n[1])
     else:
-      gsub(g, n[0])
+      let
+        stackDot = sfStackDot in flags or g.overflows(lsub(g, n[0]) + lsub(g, n[1]) + 1)
+        stackNL = stackDot and sfStackDotInCall in flags
+
+      gsub(
+        g,
+        n[0],
+        if stackDot:
+          {sfStackDot}
+        else:
+          {}
+        ,
+      )
+
       # Mids here are put on a new line, then the dot follows on yet another new
       # line as dot parsing continues after a comment on a new line too! see
       # clMid pickup point in phparser.dotExpr
       if n.mid.len > 0:
         optNL(g)
         gmids(g, n)
+      if stackNL:
+        optNL(g)
       put(g, tkDot, ".")
-
-      assert n.len == 2, $n.len
-
       accentedName(g, n[1])
   of nkBind:
     putWithSpace(g, tkBind, "bind")

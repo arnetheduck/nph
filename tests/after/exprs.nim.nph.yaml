@@ -1589,3 +1589,151 @@ sons:
             intVal: -1
           - kind: "nkIntLit"
             intVal: -2
+  - kind: "nkDotExpr"
+    sons:
+      - kind: "nkDotExpr"
+        sons:
+          - kind: "nkDotExpr"
+            sons:
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkDotExpr"
+                    sons:
+                      - kind: "nkDotExpr"
+                        sons:
+                          - kind: "nkDotExpr"
+                            sons:
+                              - kind: "nkDotExpr"
+                                sons:
+                                  - kind: "nkDotExpr"
+                                    sons:
+                                      - kind: "nkCall"
+                                        sons:
+                                          - kind: "nkDotExpr"
+                                            sons:
+                                              - kind: "nkDotExpr"
+                                                sons:
+                                                  - kind: "nkDotExpr"
+                                                    sons:
+                                                      - kind: "nkDotExpr"
+                                                        sons:
+                                                          - kind: "nkCall"
+                                                            sons:
+                                                              - kind: "nkDotExpr"
+                                                                sons:
+                                                                  - kind: "nkDotExpr"
+                                                                    sons:
+                                                                      - kind: "nkIdent"
+                                                                        ident: "aaaaaaa"
+                                                                      - kind: "nkIdent"
+                                                                        ident: "bbbbbbbbb"
+                                                                  - kind: "nkIdent"
+                                                                    ident: "longdotcall"
+                                                          - kind: "nkIdent"
+                                                            ident: "ccccccccc"
+                                                      - kind: "nkIdent"
+                                                        ident: "dddddddddd"
+                                                  - kind: "nkIdent"
+                                                    ident: "eeeeeeeee"
+                                              - kind: "nkIdent"
+                                                ident: "sdcsd"
+                                          - kind: "nkIdent"
+                                            ident: "a0000000"
+                                          - kind: "nkIdent"
+                                            ident: "b000000"
+                                          - kind: "nkIdent"
+                                            ident: "c000000"
+                                      - kind: "nkIdent"
+                                        ident: "fffffff"
+                                  - kind: "nkIdent"
+                                    ident: "ggggggg"
+                              - kind: "nkIdent"
+                                ident: "hhhhhhhh"
+                          - kind: "nkIdent"
+                            ident: "csdcsdcs"
+                      - kind: "nkIdent"
+                        ident: "sdcsdcsd"
+                  - kind: "nkIdent"
+                    ident: "csdcsdcsdcsd"
+              - kind: "nkIdent"
+                ident: "csdcsdcs"
+          - kind: "nkIdent"
+            ident: "dcsdcsdcsdcs"
+      - kind: "nkIdent"
+        ident: "sdc"
+  - kind: "nkAsgn"
+    sons:
+      - kind: "nkIdent"
+        ident: "mynums"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkDotExpr"
+            sons:
+              - kind: "nkCall"
+                sons:
+                  - kind: "nkDotExpr"
+                    sons:
+                      - kind: "nkCall"
+                        sons:
+                          - kind: "nkDotExpr"
+                            sons:
+                              - kind: "nkCall"
+                                sons:
+                                  - kind: "nkDotExpr"
+                                    sons:
+                                      - kind: "nkCall"
+                                        sons:
+                                          - kind: "nkDotExpr"
+                                            sons:
+                                              - kind: "nkCall"
+                                                sons:
+                                                  - kind: "nkDotExpr"
+                                                    sons:
+                                                      - kind: "nkCall"
+                                                        sons:
+                                                          - kind: "nkDotExpr"
+                                                            sons:
+                                                              - kind: "nkIdent"
+                                                                ident: "myNums"
+                                                              - kind: "nkIdent"
+                                                                ident: "replace1"
+                                                          - kind: "nkStrLit"
+                                                            strVal: "one"
+                                                          - kind: "nkStrLit"
+                                                            strVal: "o1ne"
+                                                      - kind: "nkIdent"
+                                                        ident: "replace2"
+                                                  - kind: "nkStrLit"
+                                                    strVal: "two"
+                                                  - kind: "nkStrLit"
+                                                    strVal: "t2wo"
+                                              - kind: "nkIdent"
+                                                ident: "replace3"
+                                          - kind: "nkStrLit"
+                                            strVal: "three"
+                                          - kind: "nkStrLit"
+                                            strVal: "t3hree"
+                                      - kind: "nkIdent"
+                                        ident: "replace5"
+                                  - kind: "nkStrLit"
+                                    strVal: "four"
+                                  - kind: "nkStrLit"
+                                    strVal: "f4our"
+                              - kind: "nkIdent"
+                                ident: "replace5"
+                          - kind: "nkStrLit"
+                            strVal: "five"
+                          - kind: "nkStrLit"
+                            strVal: "f5ive"
+                      - kind: "nkIdent"
+                        ident: "replace6"
+                  - kind: "nkStrLit"
+                    strVal: "six"
+                  - kind: "nkStrLit"
+                    strVal: "s6ix"
+              - kind: "nkIdent"
+                ident: "replace7"
+          - kind: "nkStrLit"
+            strVal: "seven"
+          - kind: "nkStrLit"
+            strVal: "s7even"
