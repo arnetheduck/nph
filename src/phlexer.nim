@@ -669,19 +669,18 @@ proc getNumber(L: var Lexer, result: var Token) =
           internalError(L.config, getLineInfo(L), "getNumber")
 
         if result.tokType notin floatTypes:
-          let
-            outOfRange =
-              case result.tokType
-              of tkUInt8Lit, tkUInt16Lit, tkUInt32Lit:
-                result.iNumber != xi
-              of tkInt8Lit:
-                (xi > BiggestInt(uint8.high))
-              of tkInt16Lit:
-                (xi > BiggestInt(uint16.high))
-              of tkInt32Lit:
-                (xi > BiggestInt(uint32.high))
-              else:
-                false
+          let outOfRange =
+            case result.tokType
+            of tkUInt8Lit, tkUInt16Lit, tkUInt32Lit:
+              result.iNumber != xi
+            of tkInt8Lit:
+              (xi > BiggestInt(uint8.high))
+            of tkInt16Lit:
+              (xi > BiggestInt(uint16.high))
+            of tkInt32Lit:
+              (xi > BiggestInt(uint32.high))
+            else:
+              false
 
           if outOfRange:
             #echo "out of range num: ", result.iNumber, " vs ", xi
@@ -715,23 +714,22 @@ proc getNumber(L: var Lexer, result: var Token) =
 
           result.iNumber = iNumber
 
-        let
-          outOfRange =
-            case result.tokType
-            of tkInt8Lit:
-              result.iNumber > int8.high or result.iNumber < int8.low
-            of tkUInt8Lit:
-              result.iNumber > BiggestInt(uint8.high) or result.iNumber < 0
-            of tkInt16Lit:
-              result.iNumber > int16.high or result.iNumber < int16.low
-            of tkUInt16Lit:
-              result.iNumber > BiggestInt(uint16.high) or result.iNumber < 0
-            of tkInt32Lit:
-              result.iNumber > int32.high or result.iNumber < int32.low
-            of tkUInt32Lit:
-              result.iNumber > BiggestInt(uint32.high) or result.iNumber < 0
-            else:
-              false
+        let outOfRange =
+          case result.tokType
+          of tkInt8Lit:
+            result.iNumber > int8.high or result.iNumber < int8.low
+          of tkUInt8Lit:
+            result.iNumber > BiggestInt(uint8.high) or result.iNumber < 0
+          of tkInt16Lit:
+            result.iNumber > int16.high or result.iNumber < int16.low
+          of tkUInt16Lit:
+            result.iNumber > BiggestInt(uint16.high) or result.iNumber < 0
+          of tkInt32Lit:
+            result.iNumber > int32.high or result.iNumber < int32.low
+          of tkUInt32Lit:
+            result.iNumber > BiggestInt(uint32.high) or result.iNumber < 0
+          else:
+            false
 
         if outOfRange:
           lexMessageLitNum(L, "number out of range: '$1'", startpos)
@@ -936,11 +934,10 @@ proc handleCRLF(L: var Lexer, pos: int): int =
   else:
     result = pos
 
-type
-  StringMode = enum
-    normal
-    raw
-    generalized
+type StringMode = enum
+  normal
+  raw
+  generalized
 
 proc getString(L: var Lexer, tok: var Token, mode: StringMode) =
   var pos = L.bufpos
@@ -1073,10 +1070,9 @@ const UnicodeOperatorStartChars = {'\226', '\194', '\195'}
 # the allowed unicode characters ("∙ ∘ × ★ ⊗ ⊘ ⊙ ⊛ ⊠ ⊡ ∩ ∧ ⊓ ± ⊕ ⊖ ⊞ ⊟ ∪ ∨ ⊔")
 # all start with one of these.
 
-type
-  UnicodeOprPred = enum
-    Mul
-    Add
+type UnicodeOprPred = enum
+  Mul
+  Add
 
 proc unicodeOprLen(buf: cstring, pos: int): (int8, UnicodeOprPred) =
   template m(len): untyped =
@@ -1586,9 +1582,8 @@ proc rawGetTok*(L: var Lexer, tok: var Token) =
       tokenEnd(tok, L.bufpos - 1)
     of '\"':
       # check for generalized raw string literal:
-      let
-        mode =
-          if L.bufpos > 0 and L.buf[L.bufpos - 1] in SymChars: generalized else: normal
+      let mode =
+        if L.bufpos > 0 and L.buf[L.bufpos - 1] in SymChars: generalized else: normal
 
       getString(L, tok, mode)
       if mode == generalized:

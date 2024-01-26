@@ -25,19 +25,18 @@ import phlexer
 
 export int128
 
-type
-  TCallingConvention* = enum
-    ccNimCall = "nimcall" # nimcall, also the default
-    ccStdCall = "stdcall" # procedure is stdcall
-    ccCDecl = "cdecl" # cdecl
-    ccSafeCall = "safecall" # safecall
-    ccSysCall = "syscall" # system call
-    ccInline = "inline" # proc should be inlined
-    ccNoInline = "noinline" # proc should not be inlined
-    ccFastCall = "fastcall" # fastcall (pass parameters in registers)
-    ccThisCall = "thiscall" # thiscall (parameters are pushed right-to-left)
-    ccClosure = "closure" # proc has a closure
-    ccNoConvention = "noconv" # needed for generating proper C procs sometimes
+type TCallingConvention* = enum
+  ccNimCall = "nimcall" # nimcall, also the default
+  ccStdCall = "stdcall" # procedure is stdcall
+  ccCDecl = "cdecl" # cdecl
+  ccSafeCall = "safecall" # safecall
+  ccSysCall = "syscall" # system call
+  ccInline = "inline" # proc should be inlined
+  ccNoInline = "noinline" # proc should not be inlined
+  ccFastCall = "fastcall" # fastcall (pass parameters in registers)
+  ccThisCall = "thiscall" # thiscall (parameters are pushed right-to-left)
+  ccClosure = "closure" # proc has a closure
+  ccNoConvention = "noconv" # needed for generating proper C procs sometimes
 
 type
   TNodeKind* = enum
@@ -383,108 +382,107 @@ const
   nkLastBlockStmts* = {nkRaiseStmt, nkReturnStmt, nkBreakStmt, nkContinueStmt}
     # these must be last statements in a block
 
-type
-  TTypeKind* = enum
-    # order is important!
-    # Don't forget to change hti.nim if you make a change here
-    # XXX put this into an include file to avoid this issue!
-    # several types are no longer used (guess which), but a
-    # spot in the sequence is kept for backwards compatibility
-    # (apparently something with bootstrapping)
-    # if you need to add a type, they can apparently be reused
-    tyNone
-    tyBool
-    tyChar
-    tyEmpty
-    tyAlias
-    tyNil
-    tyUntyped
-    tyTyped
-    tyTypeDesc
-    tyGenericInvocation # ``T[a, b]`` for types to invoke
-    tyGenericBody # ``T[a, b, body]`` last parameter is the body
-    tyGenericInst
-      # ``T[a, b, realInstance]`` instantiated generic type
-      # realInstance will be a concrete type like tyObject
-      # unless this is an instance of a generic alias type.
-      # then realInstance will be the tyGenericInst of the
-      # completely (recursively) resolved alias.
-    tyGenericParam # ``a`` in the above patterns
-    tyDistinct
-    tyEnum
-    tyOrdinal # integer types (including enums and boolean)
-    tyArray
-    tyObject
-    tyTuple
-    tySet
-    tyRange
-    tyPtr
-    tyRef
-    tyVar
-    tySequence
-    tyProc
-    tyPointer
-    tyOpenArray
-    tyString
-    tyCstring
-    tyForward
-    tyInt
-    tyInt8
-    tyInt16
-    tyInt32
-    tyInt64 # signed integers
-    tyFloat
-    tyFloat32
-    tyFloat64
-    tyFloat128
-    tyUInt
-    tyUInt8
-    tyUInt16
-    tyUInt32
-    tyUInt64
-    tyOwned
-    tySink
-    tyLent
-    tyVarargs
-    tyUncheckedArray # An array with boundaries [0,+∞]
-    tyProxy # used as errornous type (for idetools)
-    tyBuiltInTypeClass # Type such as the catch-all object, tuple, seq, etc
-    tyUserTypeClass # the body of a user-defined type class
-    tyUserTypeClassInst
-      # Instance of a parametric user-defined type class.
-      # Structured similarly to tyGenericInst.
-      # tyGenericInst represents concrete types, while
-      # this is still a "generic param" that will bind types
-      # and resolves them during sigmatch and instantiation.
-    tyCompositeTypeClass
-      # Type such as seq[Number]
-      # The notes for tyUserTypeClassInst apply here as well
-      # sons[0]: the original expression used by the user.
-      # sons[1]: fully expanded and instantiated meta type
-      # (potentially following aliases)
-    tyInferred
-      # In the initial state `base` stores a type class constraining
-      # the types that can be inferred. After a candidate type is
-      # selected, it's stored in `lastSon`. Between `base` and `lastSon`
-      # there may be 0, 2 or more types that were also considered as
-      # possible candidates in the inference process (i.e. lastSon will
-      # be updated to store a type best conforming to all candidates)
-    tyAnd
-    tyOr
-    tyNot
-      # boolean type classes such as `string|int`,`not seq`,
-      # `Sortable and Enumable`, etc
-    tyAnything # a type class matching any type
-    tyStatic # a value known at compile type (the underlying type is .base)
-    tyFromExpr
-      # This is a type representing an expression that depends
-      # on generic parameters (the expression is stored in t.n)
-      # It will be converted to a real type only during generic
-      # instantiation and prior to this it has the potential to
-      # be any type.
-    tyConcept # new style concept.
-    tyVoid # now different from tyEmpty, hurray!
-    tyIterable
+type TTypeKind* = enum
+  # order is important!
+  # Don't forget to change hti.nim if you make a change here
+  # XXX put this into an include file to avoid this issue!
+  # several types are no longer used (guess which), but a
+  # spot in the sequence is kept for backwards compatibility
+  # (apparently something with bootstrapping)
+  # if you need to add a type, they can apparently be reused
+  tyNone
+  tyBool
+  tyChar
+  tyEmpty
+  tyAlias
+  tyNil
+  tyUntyped
+  tyTyped
+  tyTypeDesc
+  tyGenericInvocation # ``T[a, b]`` for types to invoke
+  tyGenericBody # ``T[a, b, body]`` last parameter is the body
+  tyGenericInst
+    # ``T[a, b, realInstance]`` instantiated generic type
+    # realInstance will be a concrete type like tyObject
+    # unless this is an instance of a generic alias type.
+    # then realInstance will be the tyGenericInst of the
+    # completely (recursively) resolved alias.
+  tyGenericParam # ``a`` in the above patterns
+  tyDistinct
+  tyEnum
+  tyOrdinal # integer types (including enums and boolean)
+  tyArray
+  tyObject
+  tyTuple
+  tySet
+  tyRange
+  tyPtr
+  tyRef
+  tyVar
+  tySequence
+  tyProc
+  tyPointer
+  tyOpenArray
+  tyString
+  tyCstring
+  tyForward
+  tyInt
+  tyInt8
+  tyInt16
+  tyInt32
+  tyInt64 # signed integers
+  tyFloat
+  tyFloat32
+  tyFloat64
+  tyFloat128
+  tyUInt
+  tyUInt8
+  tyUInt16
+  tyUInt32
+  tyUInt64
+  tyOwned
+  tySink
+  tyLent
+  tyVarargs
+  tyUncheckedArray # An array with boundaries [0,+∞]
+  tyProxy # used as errornous type (for idetools)
+  tyBuiltInTypeClass # Type such as the catch-all object, tuple, seq, etc
+  tyUserTypeClass # the body of a user-defined type class
+  tyUserTypeClassInst
+    # Instance of a parametric user-defined type class.
+    # Structured similarly to tyGenericInst.
+    # tyGenericInst represents concrete types, while
+    # this is still a "generic param" that will bind types
+    # and resolves them during sigmatch and instantiation.
+  tyCompositeTypeClass
+    # Type such as seq[Number]
+    # The notes for tyUserTypeClassInst apply here as well
+    # sons[0]: the original expression used by the user.
+    # sons[1]: fully expanded and instantiated meta type
+    # (potentially following aliases)
+  tyInferred
+    # In the initial state `base` stores a type class constraining
+    # the types that can be inferred. After a candidate type is
+    # selected, it's stored in `lastSon`. Between `base` and `lastSon`
+    # there may be 0, 2 or more types that were also considered as
+    # possible candidates in the inference process (i.e. lastSon will
+    # be updated to store a type best conforming to all candidates)
+  tyAnd
+  tyOr
+  tyNot
+    # boolean type classes such as `string|int`,`not seq`,
+    # `Sortable and Enumable`, etc
+  tyAnything # a type class matching any type
+  tyStatic # a value known at compile type (the underlying type is .base)
+  tyFromExpr
+    # This is a type representing an expression that depends
+    # on generic parameters (the expression is stored in t.n)
+    # It will be converted to a real type only during generic
+    # instantiation and prior to this it has the potential to
+    # be any type.
+  tyConcept # new style concept.
+  tyVoid # now different from tyEmpty, hurray!
+  tyIterable
 
 static:
   # remind us when TTypeKind stops to fit in a single 64-bit word
@@ -685,296 +683,294 @@ const
   tfReturnsNew* = tfInheritable
   skError* = skUnknown
 
-var
-  eqTypeFlags* = {
-    tfIterator, tfNotNil, tfVarIsPtr, tfGcSafe, tfNoSideEffect, tfIsOutParam, tfSendable
-  }
-    ## type flags that are essential for type equality.
-    ## This is now a variable because for emulation of version:1.0 we
-    ## might exclude {tfGcSafe, tfNoSideEffect}.
+var eqTypeFlags* = {
+  tfIterator, tfNotNil, tfVarIsPtr, tfGcSafe, tfNoSideEffect, tfIsOutParam, tfSendable
+}
+  ## type flags that are essential for type equality.
+  ## This is now a variable because for emulation of version:1.0 we
+  ## might exclude {tfGcSafe, tfNoSideEffect}.
 
-type
-  TMagic* = enum # symbols that require compiler magic:
-    mNone
-    mDefined
-    mDeclared
-    mDeclaredInScope
-    mCompiles
-    mArrGet
-    mArrPut
-    mAsgn
-    mLow
-    mHigh
-    mSizeOf
-    mAlignOf
-    mOffsetOf
-    mTypeTrait
-    mIs
-    mOf
-    mAddr
-    mType
-    mTypeOf
-    mPlugin
-    mEcho
-    mShallowCopy
-    mSlurp
-    mStaticExec
-    mStatic
-    mParseExprToAst
-    mParseStmtToAst
-    mExpandToAst
-    mQuoteAst
-    mInc
-    mDec
-    mOrd
-    mNew
-    mNewFinalize
-    mNewSeq
-    mNewSeqOfCap
-    mLengthOpenArray
-    mLengthStr
-    mLengthArray
-    mLengthSeq
-    mIncl
-    mExcl
-    mCard
-    mChr
-    mGCref
-    mGCunref
-    mAddI
-    mSubI
-    mMulI
-    mDivI
-    mModI
-    mSucc
-    mPred
-    mAddF64
-    mSubF64
-    mMulF64
-    mDivF64
-    mShrI
-    mShlI
-    mAshrI
-    mBitandI
-    mBitorI
-    mBitxorI
-    mMinI
-    mMaxI
-    mAddU
-    mSubU
-    mMulU
-    mDivU
-    mModU
-    mEqI
-    mLeI
-    mLtI
-    mEqF64
-    mLeF64
-    mLtF64
-    mLeU
-    mLtU
-    mEqEnum
-    mLeEnum
-    mLtEnum
-    mEqCh
-    mLeCh
-    mLtCh
-    mEqB
-    mLeB
-    mLtB
-    mEqRef
-    mLePtr
-    mLtPtr
-    mXor
-    mEqCString
-    mEqProc
-    mUnaryMinusI
-    mUnaryMinusI64
-    mAbsI
-    mNot
-    mUnaryPlusI
-    mBitnotI
-    mUnaryPlusF64
-    mUnaryMinusF64
-    mCharToStr
-    mBoolToStr
-    mIntToStr
-    mInt64ToStr
-    mFloatToStr # for compiling nimStdlibVersion < 1.5.1 (not bootstrapping)
-    mCStrToStr
-    mStrToStr
-    mEnumToStr
-    mAnd
-    mOr
-    mImplies
-    mIff
-    mExists
-    mForall
-    mOld
-    mEqStr
-    mLeStr
-    mLtStr
-    mEqSet
-    mLeSet
-    mLtSet
-    mMulSet
-    mPlusSet
-    mMinusSet
-    mConStrStr
-    mSlice
-    mDotDot # this one is only necessary to give nice compile time warnings
-    mFields
-    mFieldPairs
-    mOmpParFor
-    mAppendStrCh
-    mAppendStrStr
-    mAppendSeqElem
-    mInSet
-    mRepr
-    mExit
-    mSetLengthStr
-    mSetLengthSeq
-    mIsPartOf
-    mAstToStr
-    mParallel
-    mSwap
-    mIsNil
-    mArrToSeq
-    mOpenArrayToSeq
-    mNewString
-    mNewStringOfCap
-    mParseBiggestFloat
-    mMove
-    mEnsureMove
-    mWasMoved
-    mDup
-    mDestroy
-    mTrace
-    mDefault
-    mUnown
-    mFinished
-    mIsolate
-    mAccessEnv
-    mAccessTypeField
-    mReset
-    mArray
-    mOpenArray
-    mRange
-    mSet
-    mSeq
-    mVarargs
-    mRef
-    mPtr
-    mVar
-    mDistinct
-    mVoid
-    mTuple
-    mOrdinal
-    mIterableType
-    mInt
-    mInt8
-    mInt16
-    mInt32
-    mInt64
-    mUInt
-    mUInt8
-    mUInt16
-    mUInt32
-    mUInt64
-    mFloat
-    mFloat32
-    mFloat64
-    mFloat128
-    mBool
-    mChar
-    mString
-    mCstring
-    mPointer
-    mNil
-    mExpr
-    mStmt
-    mTypeDesc
-    mVoidType
-    mPNimrodNode
-    mSpawn
-    mDeepCopy
-    mIsMainModule
-    mCompileDate
-    mCompileTime
-    mProcCall
-    mCpuEndian
-    mHostOS
-    mHostCPU
-    mBuildOS
-    mBuildCPU
-    mAppType
-    mCompileOption
-    mCompileOptionArg
-    mNLen
-    mNChild
-    mNSetChild
-    mNAdd
-    mNAddMultiple
-    mNDel
-    mNKind
-    mNSymKind
-    mNccValue
-    mNccInc
-    mNcsAdd
-    mNcsIncl
-    mNcsLen
-    mNcsAt
-    mNctPut
-    mNctLen
-    mNctGet
-    mNctHasNext
-    mNctNext
-    mNIntVal
-    mNFloatVal
-    mNSymbol
-    mNIdent
-    mNGetType
-    mNStrVal
-    mNSetIntVal
-    mNSetFloatVal
-    mNSetSymbol
-    mNSetIdent
-    mNSetStrVal
-    mNLineInfo
-    mNNewNimNode
-    mNCopyNimNode
-    mNCopyNimTree
-    mStrToIdent
-    mNSigHash
-    mNSizeOf
-    mNBindSym
-    mNCallSite
-    mEqIdent
-    mEqNimrodNode
-    mSameNodeType
-    mGetImpl
-    mNGenSym
-    mNHint
-    mNWarning
-    mNError
-    mInstantiationInfo
-    mGetTypeInfo
-    mGetTypeInfoV2
-    mNimvm
-    mIntDefine
-    mStrDefine
-    mBoolDefine
-    mGenericDefine
-    mRunnableExamples
-    mException
-    mBuiltinType
-    mSymOwner
-    mUncheckedArray
-    mGetImplTransf
-    mSymIsInstantiationOf
-    mNodeId
-    mPrivateAccess
-    mZeroDefault
+type TMagic* = enum # symbols that require compiler magic:
+  mNone
+  mDefined
+  mDeclared
+  mDeclaredInScope
+  mCompiles
+  mArrGet
+  mArrPut
+  mAsgn
+  mLow
+  mHigh
+  mSizeOf
+  mAlignOf
+  mOffsetOf
+  mTypeTrait
+  mIs
+  mOf
+  mAddr
+  mType
+  mTypeOf
+  mPlugin
+  mEcho
+  mShallowCopy
+  mSlurp
+  mStaticExec
+  mStatic
+  mParseExprToAst
+  mParseStmtToAst
+  mExpandToAst
+  mQuoteAst
+  mInc
+  mDec
+  mOrd
+  mNew
+  mNewFinalize
+  mNewSeq
+  mNewSeqOfCap
+  mLengthOpenArray
+  mLengthStr
+  mLengthArray
+  mLengthSeq
+  mIncl
+  mExcl
+  mCard
+  mChr
+  mGCref
+  mGCunref
+  mAddI
+  mSubI
+  mMulI
+  mDivI
+  mModI
+  mSucc
+  mPred
+  mAddF64
+  mSubF64
+  mMulF64
+  mDivF64
+  mShrI
+  mShlI
+  mAshrI
+  mBitandI
+  mBitorI
+  mBitxorI
+  mMinI
+  mMaxI
+  mAddU
+  mSubU
+  mMulU
+  mDivU
+  mModU
+  mEqI
+  mLeI
+  mLtI
+  mEqF64
+  mLeF64
+  mLtF64
+  mLeU
+  mLtU
+  mEqEnum
+  mLeEnum
+  mLtEnum
+  mEqCh
+  mLeCh
+  mLtCh
+  mEqB
+  mLeB
+  mLtB
+  mEqRef
+  mLePtr
+  mLtPtr
+  mXor
+  mEqCString
+  mEqProc
+  mUnaryMinusI
+  mUnaryMinusI64
+  mAbsI
+  mNot
+  mUnaryPlusI
+  mBitnotI
+  mUnaryPlusF64
+  mUnaryMinusF64
+  mCharToStr
+  mBoolToStr
+  mIntToStr
+  mInt64ToStr
+  mFloatToStr # for compiling nimStdlibVersion < 1.5.1 (not bootstrapping)
+  mCStrToStr
+  mStrToStr
+  mEnumToStr
+  mAnd
+  mOr
+  mImplies
+  mIff
+  mExists
+  mForall
+  mOld
+  mEqStr
+  mLeStr
+  mLtStr
+  mEqSet
+  mLeSet
+  mLtSet
+  mMulSet
+  mPlusSet
+  mMinusSet
+  mConStrStr
+  mSlice
+  mDotDot # this one is only necessary to give nice compile time warnings
+  mFields
+  mFieldPairs
+  mOmpParFor
+  mAppendStrCh
+  mAppendStrStr
+  mAppendSeqElem
+  mInSet
+  mRepr
+  mExit
+  mSetLengthStr
+  mSetLengthSeq
+  mIsPartOf
+  mAstToStr
+  mParallel
+  mSwap
+  mIsNil
+  mArrToSeq
+  mOpenArrayToSeq
+  mNewString
+  mNewStringOfCap
+  mParseBiggestFloat
+  mMove
+  mEnsureMove
+  mWasMoved
+  mDup
+  mDestroy
+  mTrace
+  mDefault
+  mUnown
+  mFinished
+  mIsolate
+  mAccessEnv
+  mAccessTypeField
+  mReset
+  mArray
+  mOpenArray
+  mRange
+  mSet
+  mSeq
+  mVarargs
+  mRef
+  mPtr
+  mVar
+  mDistinct
+  mVoid
+  mTuple
+  mOrdinal
+  mIterableType
+  mInt
+  mInt8
+  mInt16
+  mInt32
+  mInt64
+  mUInt
+  mUInt8
+  mUInt16
+  mUInt32
+  mUInt64
+  mFloat
+  mFloat32
+  mFloat64
+  mFloat128
+  mBool
+  mChar
+  mString
+  mCstring
+  mPointer
+  mNil
+  mExpr
+  mStmt
+  mTypeDesc
+  mVoidType
+  mPNimrodNode
+  mSpawn
+  mDeepCopy
+  mIsMainModule
+  mCompileDate
+  mCompileTime
+  mProcCall
+  mCpuEndian
+  mHostOS
+  mHostCPU
+  mBuildOS
+  mBuildCPU
+  mAppType
+  mCompileOption
+  mCompileOptionArg
+  mNLen
+  mNChild
+  mNSetChild
+  mNAdd
+  mNAddMultiple
+  mNDel
+  mNKind
+  mNSymKind
+  mNccValue
+  mNccInc
+  mNcsAdd
+  mNcsIncl
+  mNcsLen
+  mNcsAt
+  mNctPut
+  mNctLen
+  mNctGet
+  mNctHasNext
+  mNctNext
+  mNIntVal
+  mNFloatVal
+  mNSymbol
+  mNIdent
+  mNGetType
+  mNStrVal
+  mNSetIntVal
+  mNSetFloatVal
+  mNSetSymbol
+  mNSetIdent
+  mNSetStrVal
+  mNLineInfo
+  mNNewNimNode
+  mNCopyNimNode
+  mNCopyNimTree
+  mStrToIdent
+  mNSigHash
+  mNSizeOf
+  mNBindSym
+  mNCallSite
+  mEqIdent
+  mEqNimrodNode
+  mSameNodeType
+  mGetImpl
+  mNGenSym
+  mNHint
+  mNWarning
+  mNError
+  mInstantiationInfo
+  mGetTypeInfo
+  mGetTypeInfoV2
+  mNimvm
+  mIntDefine
+  mStrDefine
+  mBoolDefine
+  mGenericDefine
+  mRunnableExamples
+  mException
+  mBuiltinType
+  mSymOwner
+  mUncheckedArray
+  mGetImplTransf
+  mSymIsInstantiationOf
+  mNodeId
+  mPrivateAccess
+  mZeroDefault
 
 const
   # things that we can evaluate safely at compile time, even if not asked for it:
@@ -994,10 +990,9 @@ const
   generatedMagics* = {mNone, mIsolate, mFinished, mOpenArrayToSeq}
     ## magics that are generated as normal procs in the backend
 
-type
-  ItemId* = object
-    module*: int32
-    item*: int32
+type ItemId* = object
+  module*: int32
+  item*: int32
 
 proc `$`*(x: ItemId): string =
   "(module: " & $x.module & ", item: " & $x.item & ")"
@@ -1288,11 +1283,10 @@ type
     impNo
     impYes
 
-type
-  Gconfig = object
-    # we put comments in a side channel to avoid increasing `sizeof(TNode)`, which
-    # reduces memory usage given that `PNode` is the most allocated type by far.
-    useIc*: bool
+type Gconfig = object
+  # we put comments in a side channel to avoid increasing `sizeof(TNode)`, which
+  # reduces memory usage given that `PNode` is the most allocated type by far.
+  useIc*: bool
 
 var gconfig {.threadvar.}: Gconfig
 
@@ -1400,14 +1394,13 @@ template id*(a: PIdObj): int =
 
   (x.itemId.module.int shl moduleShift) + x.itemId.item.int
 
-type
-  IdGenerator* = ref object
-    # unfortunately, we really need the 'shared mutable' aspect here.
-    module*: int32
-    symId*: int32
-    typeId*: int32
-    sealed*: bool
-    disambTable*: CountTable[PIdent]
+type IdGenerator* = ref object
+  # unfortunately, we really need the 'shared mutable' aspect here.
+  module*: int32
+  symId*: int32
+  typeId*: int32
+  sealed*: bool
+  disambTable*: CountTable[PIdent]
 
 const PackageModuleId* = -3'i32
 
@@ -1862,10 +1855,9 @@ proc newProcNode*(
   result = newNodeI(kind, info)
   result.sons = @[name, pattern, genericParams, params, pragmas, exceptions, body]
 
-const
-  AttachedOpToStr*: array[TTypeAttachedOp, string] = [
-    "=wasMoved", "=destroy", "=copy", "=dup", "=sink", "=trace", "=deepcopy"
-  ]
+const AttachedOpToStr*: array[TTypeAttachedOp, string] = [
+  "=wasMoved", "=destroy", "=copy", "=dup", "=sink", "=trace", "=deepcopy"
+]
 
 proc `$`*(s: PSym): string =
   if s != nil:
@@ -2467,10 +2459,9 @@ proc addParam*(procType: PType, param: PSym) =
 
   rawAddSon(procType, param.typ)
 
-const
-  magicsThatCanRaise = {
-    mNone, mSlurp, mStaticExec, mParseExprToAst, mParseStmtToAst, mEcho
-  }
+const magicsThatCanRaise = {
+  mNone, mSlurp, mStaticExec, mParseExprToAst, mParseStmtToAst, mEcho
+}
 
 proc canRaiseConservative*(fn: PNode): bool =
   if fn.kind == nkSym and fn.sym.magic notin magicsThatCanRaise:
@@ -2527,29 +2518,28 @@ proc isNewStyleConcept*(n: PNode): bool {.inline.} =
 proc isOutParam*(t: PType): bool {.inline.} =
   tfIsOutParam in t.flags
 
-const
-  nodesToIgnoreSet* = {
-    nkNone .. pred(nkSym),
-    succ(nkSym) .. nkNilLit,
-    nkTypeSection,
-    nkProcDef,
-    nkConverterDef,
-    nkMethodDef,
-    nkIteratorDef,
-    nkMacroDef,
-    nkTemplateDef,
-    nkLambda,
-    nkDo,
-    nkFuncDef,
-    nkConstSection,
-    nkConstDef,
-    nkIncludeStmt,
-    nkImportStmt,
-    nkExportStmt,
-    nkPragma,
-    nkCommentStmt,
-    nkBreakState,
-    nkTypeOfExpr,
-    nkMixinStmt,
-    nkBindStmt
-  }
+const nodesToIgnoreSet* = {
+  nkNone .. pred(nkSym),
+  succ(nkSym) .. nkNilLit,
+  nkTypeSection,
+  nkProcDef,
+  nkConverterDef,
+  nkMethodDef,
+  nkIteratorDef,
+  nkMacroDef,
+  nkTemplateDef,
+  nkLambda,
+  nkDo,
+  nkFuncDef,
+  nkConstSection,
+  nkConstDef,
+  nkIncludeStmt,
+  nkImportStmt,
+  nkExportStmt,
+  nkPragma,
+  nkCommentStmt,
+  nkBreakState,
+  nkTypeOfExpr,
+  nkMixinStmt,
+  nkBindStmt
+}
