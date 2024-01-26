@@ -8,10 +8,10 @@ while (node = node.next; node != nil):
 while (var a = 0; inc a; a += 42; a > 0):
   discard
 
-for a in 0..<1:
+for a in 0 ..< 1:
   discard
 
-for a in 0..1:
+for a in 0 .. 1:
   discard
 
 # needs spaces
@@ -127,12 +127,12 @@ of aaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb, cccccccccccccccccc
 else:
   discard
 
-discard a..b
-discard a..<b
-discard a..^b
-discard a..b
-discard a..^b
-discard a..<b
+discard a .. b
+discard a ..< b
+discard a ..^ b
+discard a .. b
+discard a ..^ b
+discard a ..< b
 discard a .. ^b
 discard a .. <b
 discard a .. -b

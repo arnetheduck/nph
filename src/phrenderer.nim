@@ -27,7 +27,7 @@ const
   IndentWidth = 2
   longIndentWid = IndentWidth * 2
   MaxLineLen = 88
-  blankAfterComplex = {nkObjectTy, nkEnumTy, nkTypeSection, nkProcDef..nkIteratorDef}
+  blankAfterComplex = {nkObjectTy, nkEnumTy, nkTypeSection, nkProcDef .. nkIteratorDef}
     ## If a statment is sufficiently complex as measured by the number of lines
     ## it occupies, add a blank line after it
   subOptSkipNL = {
@@ -143,9 +143,9 @@ proc hasComments(n: PNode): bool =
   else:
     case n.kind
     of
-        nkCharLit..nkUInt64Lit,
-        nkFloatLit..nkFloat128Lit,
-        nkStrLit..nkTripleStrLit,
+        nkCharLit .. nkUInt64Lit,
+        nkFloatLit .. nkFloat128Lit,
+        nkStrLit .. nkTripleStrLit,
         nkIdent:
       false
     else:
@@ -158,7 +158,7 @@ proc isSimple(n: PNode, allowExported = false, allowInfix = false): bool =
     false
   else:
     case n.kind
-    of nkEmpty, nkCharLit..nkNilLit, nkIdent, nkAccQuoted:
+    of nkEmpty, nkCharLit .. nkNilLit, nkIdent, nkAccQuoted:
       true
     of nkStmtList, nkImportStmt, nkExportStmt:
       n.allIt(isSimple(it))
@@ -203,7 +203,7 @@ proc initSrcGen(g: var TSrcGen, config: ConfigRef) =
   g.config = config
 
 proc containsNL(s: string): bool =
-  for i in 0..<s.len:
+  for i in 0 ..< s.len:
     case s[i]
     of '\r', '\n':
       return true
@@ -719,22 +719,6 @@ proc gpostfixes(g: var TOutput, n: PNode, firstSticky = false) =
 proc eqIdent(n: PNode, s: string): bool =
   n.kind == nkIdent and n.ident != nil and n.ident.s.cmpIgnoreStyle(s) == 0
 
-proc isOperatorFirst(g: TOutput, n: PNode): bool =
-  case n.kind
-  of nkInfix:
-    isOperatorFirst(g, n[1])
-  of nkIdent:
-    n.ident.s.len > 0 and n.ident.s[0] in OpChars
-  of nkCharLit..nkUInt64Lit, nkFloatLit..nkFloat128Lit:
-    let lit = atom(g, n)
-    lit.len > 0 and lit[0] in OpChars
-  of nkStrLit..nkTripleStrLit, nkCommentStmt:
-    false
-  of nkPar:
-    false
-  else:
-    isOperatorFirst(g, n[0])
-
 proc gcomma(
     g: var TOutput,
     n: PNode,
@@ -817,9 +801,11 @@ proc gcomma(
         false
       else:
         count > 1 and
-          anyIt(n.sons[start..n.len + theEnd], not isSimple(it, n.kind == nkIdentDefs))
+          anyIt(
+            n.sons[start .. n.len + theEnd], not isSimple(it, n.kind == nkIdentDefs)
+          )
 
-  for i in start..n.len + theEnd:
+  for i in start .. n.len + theEnd:
     let c = i < n.len + theEnd
     if onePerLine or overflows(g, lsub(g, n[i]) + ord(c)):
       optNL(g)
@@ -845,13 +831,13 @@ proc gcomma(
 proc gsons(
     g: var TOutput, n: PNode, start: int = 0, theEnd: int = -1, flags: SubFlags = {}
 ) =
-  for i in start..n.len + theEnd:
+  for i in start .. n.len + theEnd:
     gsub(g, n[i], flags)
 
 proc gsonsNL(
     g: var TOutput, n: PNode, start: int = 0, theEnd: int = -1, flags: SubFlags = {}
 ) =
-  for i in start..n.len + theEnd:
+  for i in start .. n.len + theEnd:
     gsub(g, n[i], flags)
     g.optNL()
 
@@ -919,7 +905,7 @@ proc gsection(g: var TOutput, n: PNode, kind: TokType, k: string) =
     gmids(g, n, true)
 
     indentNL(g)
-    for i in 0..<n.len:
+    for i in 0 ..< n.len:
       if i > 0:
         optNL(g, n[i - 1], n[i])
       else:
@@ -972,7 +958,7 @@ proc gstmts(g: var TOutput, n: PNode, flags: SubFlags = {}, doIndent = true) =
   if n.kind in {nkStmtList, nkStmtListExpr, nkStmtListType}:
     gprefixes(g, n)
     var j = 0
-    for i in 0..<n.len:
+    for i in 0 ..< n.len:
       if n[i].kind == nkEmpty:
         continue
 
@@ -1101,7 +1087,7 @@ proc gif(g: var TOutput, n: PNode, flags: SubFlags) =
   if trivial:
     putWithSpace(g, tkColon, $tkColon)
     gsub(g, n[0][1].skipTrivialStmtList())
-    for i in 1..<n.len:
+    for i in 1 ..< n.len:
       gtrivialBranch(g, n[i])
   else:
     gcolcoms(g, n[0], n[0][1], true)
@@ -1171,16 +1157,18 @@ proc gcase(g: var TOutput, n: PNode) =
   # If each branch is simple and fits on a line, we render the whole case using
   # trivial mode with no newline before branch body
   let
-    trivial = n.sons[1..^1].allIt(isTrivialBranch(it) and not hasComments(it))
+    trivial = n.sons[1 ..^ 1].allIt(isTrivialBranch(it) and not hasComments(it))
     sublen =
       if trivial:
-        max(n.sons[1..^1].mapIt(lbranch(g, it) + lsub(g, it[^1].skipTrivialStmtList())))
+        max(
+          n.sons[1 ..^ 1].mapIt(lbranch(g, it) + lsub(g, it[^1].skipTrivialStmtList()))
+        )
       else:
         (MaxLineLen + 1, true)
 
   if trivial and not overflows(g, sublen):
     gcond(g, n[0].skipTrivialStmtList())
-    for i in 1..<n.len:
+    for i in 1 ..< n.len:
       optNL(g)
       gtrivialBranch(g, n[i])
 
@@ -1404,7 +1392,7 @@ proc postStatements(
   gsub(g, n[i])
 
   i.inc
-  for j in i..<n.len:
+  for j in i ..< n.len:
     if n[j].kind == nkDo:
       optNL(g)
     elif n[j].kind in {nkStmtList, nkStmtListExpr}:
@@ -1697,14 +1685,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
     infixArgument(g, n, 1, flags = flags)
 
-    let
-      spaces =
-        not (
-          (g.inImportLike > 0 and eqIdent(n[0], "/")) or (
-            (eqIdent(n[0], "..") or eqIdent(n[0], "..<") or eqIdent(n[0], "..^")) and
-            not isOperatorFirst(g, n[2])
-          )
-        )
+    let spaces = not (g.inImportLike > 0 and eqIdent(n[0], "/"))
 
     if spaces:
       optSpace(g)
@@ -1784,12 +1765,12 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     put(g, tkOpr, "[]")
   of nkAccQuoted:
     put(g, tkAccent, "`")
-    for i in 0..<n.len:
+    for i in 0 ..< n.len:
       proc isAlpha(n: PNode): bool =
         if n.kind in {nkIdent, nkSym}:
           let tmp = n.getPIdent.s
 
-          result = tmp.len > 0 and tmp[0] in {'a'..'z', 'A'..'Z'}
+          result = tmp.len > 0 and tmp[0] in {'a' .. 'z', 'A' .. 'Z'}
 
       var useSpace = false
       if i == 1 and n[0].kind == nkIdent and n[0].ident.s in ["=", "'"]:
@@ -1911,7 +1892,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       indentNL(g)
 
     gmids(g, n)
-    for i in 0..<n.len:
+    for i in 0 ..< n.len:
       # The prefix check is here because if the previous line has a postfix
       # and the next has a prefix and they are both doc comments,
       # this might generate an invalid doc comment

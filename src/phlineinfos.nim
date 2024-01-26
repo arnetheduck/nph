@@ -282,22 +282,22 @@ const
   ]
 
 const
-  fatalMsgs* = {errUnknown..errInternal}
+  fatalMsgs* = {errUnknown .. errInternal}
   errMin* = errUnknown
   errMax* = errUser
   warnMin* = warnCannotOpenFile
   warnMax* = pred(hintSuccess)
   hintMin* = hintSuccess
   hintMax* = high(TMsgKind)
-  rstWarnings* = {warnRstRedefinitionOfLabel..warnRstStyle}
+  rstWarnings* = {warnRstRedefinitionOfLabel .. warnRstStyle}
 
 type
-  TNoteKind* = range[warnMin..hintMax] # "notes" are warnings or hints
+  TNoteKind* = range[warnMin .. hintMax] # "notes" are warnings or hints
   TNoteKinds* = set[TNoteKind]
 
-proc computeNotesVerbosity(): array[0..3, TNoteKinds] =
+proc computeNotesVerbosity(): array[0 .. 3, TNoteKinds] =
   result[3] =
-    {low(TNoteKind)..high(TNoteKind)} - {
+    {low(TNoteKind) .. high(TNoteKind)} - {
       warnObservableStores, warnResultUsed, warnAnyEnumConv, warnBareExcept
     }
 

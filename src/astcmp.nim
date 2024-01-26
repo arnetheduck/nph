@@ -93,11 +93,11 @@ proc equivalent*(a, b: PNode): Outcome =
   let
     eq =
       case a.kind
-      of nkCharLit..nkUInt64Lit:
+      of nkCharLit .. nkUInt64Lit:
         a.intVal == b.intVal
-      of nkFloatLit..nkFloat128Lit:
+      of nkFloatLit .. nkFloat128Lit:
         (isNaN(a.floatVal) and isNaN(b.floatVal)) or a.floatVal == b.floatVal
-      of nkStrLit..nkTripleStrLit:
+      of nkStrLit .. nkTripleStrLit:
         a.strVal == b.strVal
       of nkSym:
         raiseAssert "Shouldn't eixst in parser"

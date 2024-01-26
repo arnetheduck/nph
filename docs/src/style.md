@@ -167,3 +167,22 @@ proc f(
   nextParameter = 1,
 )
 ```
+
+### Infix operators
+
+`nph` puts spaces around infix operators such as `and` and `..`.
+
+Although NEP1 suggests not having spaces around `..` and `..<` in particular,
+this creates an exception to the normal infix spacing rules.
+
+In spite of this recommendation, lots of code out there maintains spaces around
+the operators which makes decision based on "existing practice" hard.
+
+Adding to the complexity is in order to not break the AST, one would have to
+take care to remove the spaces only in cases where the infix is not followed by
+another operator (such as `-`) - this means that we _sometimes_ have to put
+spaces around these infixes and sometimes not, leading to irregularity.
+
+Since there's no consensus in existing code at the time of writing, the rule is
+irregular and causes implementation complexity, `nph` formats `..` and `..<`
+with spaces.

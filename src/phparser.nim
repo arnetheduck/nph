@@ -233,7 +233,7 @@ proc drainSkipped(p: var Parser, indent: int): seq[Token] =
       break
 
   if result.high >= 0:
-    p.skipped.delete(0..result.high)
+    p.skipped.delete(0 .. result.high)
 
 proc splitLookahead(p: var Parser, n: PNode, indent: int, commentLoc: CommentLoc) =
   for c in p.drainSkipped(indent):
@@ -259,7 +259,7 @@ proc addSkipped(p: var Parser, n: PNode) =
     n.add c
     i += 1
 
-  p.skipped = tmp[i..^1]
+  p.skipped = tmp[i ..^ 1]
 
 proc indAndComment(p: var Parser, n: PNode, maybeMissEquals = false) =
   # indComment(p, n, commentLoc)
@@ -392,7 +392,7 @@ proc parseSymbol(p: var Parser, mode = smNormal): PNode =
   of tkSymbol:
     result = newIdentNodeP(p.tok.ident, p)
     getTok(p)
-  of tokKeywordLow..tokKeywordHigh:
+  of tokKeywordLow .. tokKeywordHigh:
     if p.tok.tokType in tkBuiltInMagics or mode == smAfterDot:
       # for backwards compatibility these 2 are always valid:
       result = newIdentNodeP(p.tok.ident, p)
@@ -413,17 +413,17 @@ proc parseSymbol(p: var Parser, mode = smNormal): PNode =
         if result.len == 0:
           parMessage(p, errIdentifierExpected, p.tok)
         break
-      of tkOpr, tkDot, tkDotDot, tkEquals, tkParLe..tkParDotRi:
+      of tkOpr, tkDot, tkDotDot, tkEquals, tkParLe .. tkParDotRi:
         var lineinfo = parLineInfo(p)
         var accm = ""
-        while p.tok.tokType in {tkOpr, tkDot, tkDotDot, tkEquals, tkParLe..tkParDotRi}:
+        while p.tok.tokType in {tkOpr, tkDot, tkDotDot, tkEquals, tkParLe .. tkParDotRi}:
           accm.add($p.tok)
           lineinfo.offsetB = p.tok.offsetB
           getTok(p)
         let node = newNodeI(nkIdent, lineinfo)
         node.ident = p.lex.cache.getIdent(accm)
         result.add(node)
-      of tokKeywordLow..tokKeywordHigh, tkSymbol, tkIntLit..tkCustomLit:
+      of tokKeywordLow .. tokKeywordHigh, tkSymbol, tkIntLit .. tkCustomLit:
         result.add(newIdentNodeP(p.lex.cache.getIdent($p.tok), p))
         getTok(p)
       else:
@@ -968,7 +968,7 @@ proc primarySuffix(p: var Parser, r: PNode, baseIndent: int, mode: PrimaryMode):
     of
         tkSymbol,
         tkAccent,
-        tkIntLit..tkCustomLit,
+        tkIntLit .. tkCustomLit,
         tkNil,
         tkCast,
         tkOpr,
@@ -1356,7 +1356,7 @@ proc isExprStart(p: Parser): bool =
       tkParLe,
       tkBracketLe,
       tkCurlyLe,
-      tkIntLit..tkCustomLit,
+      tkIntLit .. tkCustomLit,
       tkVar,
       tkRef,
       tkPtr,
@@ -1501,7 +1501,7 @@ proc primary(p: var Parser, mode: PrimaryMode): PNode =
           tkSymbol,
           tkAccent,
           tkNil,
-          tkIntLit..tkCustomLit,
+          tkIntLit .. tkCustomLit,
           tkCast,
           tkOut,
           tkParLe,
@@ -2146,7 +2146,7 @@ proc parseRoutine(p: var Parser, kind: TNodeKind): PNode =
   splitLookahead(p, result, clMid)
   optInd(p, result)
   if kind in {nkProcDef, nkLambda, nkIteratorDef, nkFuncDef} and
-      p.tok.tokType notin {tkSymbol, tokKeywordLow..tokKeywordHigh, tkAccent}:
+      p.tok.tokType notin {tkSymbol, tokKeywordLow .. tokKeywordHigh, tkAccent}:
     # no name; lambda or proc type
     # in every context that we can parse a routine, we can also parse these
     result = parseProcExpr(p, true, if kind == nkProcDef: nkLambda else: kind)

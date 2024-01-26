@@ -1031,11 +1031,11 @@ type
     info*: TLineInfo
     flags*: TNodeFlags
     case kind*: TNodeKind
-    of nkCharLit..nkUInt64Lit:
+    of nkCharLit .. nkUInt64Lit:
       intVal*: BiggestInt
-    of nkFloatLit..nkFloat128Lit:
+    of nkFloatLit .. nkFloat128Lit:
       floatVal*: BiggestFloat
-    of nkStrLit..nkTripleStrLit, nkCommentStmt:
+    of nkStrLit .. nkTripleStrLit, nkCommentStmt:
       strVal*: string
     of nkSym:
       sym*: PSym
@@ -1335,14 +1335,14 @@ const
     tyOpenArray,
     tyString,
     tyCstring,
-    tyInt..tyInt64,
-    tyFloat..tyFloat128,
-    tyUInt..tyUInt64
+    tyInt .. tyInt64,
+    tyFloat .. tyFloat128,
+    tyUInt .. tyUInt64
   }
     # types of the expr that may occur in::
     # var x = expr
   IntegralTypes* = {
-    tyBool, tyChar, tyEnum, tyInt..tyInt64, tyFloat..tyFloat128, tyUInt..tyUInt64
+    tyBool, tyChar, tyEnum, tyInt .. tyInt64, tyFloat .. tyFloat128, tyUInt .. tyUInt64
   } # weird name because it contains tyFloat
   ConstantDataTypes*: TTypeKinds = {tyArray, tySet, tyTuple, tySequence}
   NilableTypes*: TTypeKinds = {tyPointer, tyCstring, tyRef, tyPtr, tyProc, tyError}
@@ -1368,15 +1368,15 @@ const
   }
   nkIdentKinds* = {nkIdent, nkSym, nkAccQuoted, nkOpenSymChoice, nkClosedSymChoice}
   nkPragmaCallKinds* = {nkExprColonExpr, nkCall, nkCallStrLit}
-  nkLiterals* = {nkCharLit..nkTripleStrLit}
-  nkFloatLiterals* = {nkFloatLit..nkFloat128Lit}
+  nkLiterals* = {nkCharLit .. nkTripleStrLit}
+  nkFloatLiterals* = {nkFloatLit .. nkFloat128Lit}
   nkLambdaKinds* = {nkLambda, nkDo}
   declarativeDefs* = {nkProcDef, nkFuncDef, nkMethodDef, nkIteratorDef, nkConverterDef}
   routineDefs* = declarativeDefs + {nkMacroDef, nkTemplateDef}
   procDefs* = nkLambdaKinds + declarativeDefs
   callableDefs* = nkLambdaKinds + routineDefs
   nkSymChoices* = {nkClosedSymChoice, nkOpenSymChoice}
-  nkStrKinds* = {nkStrLit..nkTripleStrLit}
+  nkStrKinds* = {nkStrLit .. nkTripleStrLit}
   skLocalVars* = {skVar, skLet, skForVar, skParam, skResult}
   skProcKinds* = {
     skProc, skFunc, skTemplate, skMacro, skIterator, skMethod, skConverter
@@ -1479,16 +1479,16 @@ proc len*(n: Indexable): int {.inline.} =
 
 proc safeLen*(n: PNode): int {.inline.} =
   ## works even for leaves.
-  if n.kind in {nkNone..nkNilLit}:
+  if n.kind in {nkNone .. nkNilLit}:
     result = 0
   else:
     result = n.len
 
 proc safeArrLen*(n: PNode): int {.inline.} =
   ## works for array-like objects (strings passed as openArray in VM).
-  if n.kind in {nkStrLit..nkTripleStrLit}:
+  if n.kind in {nkStrLit .. nkTripleStrLit}:
     result = n.strVal.len
-  elif n.kind in {nkNone..nkFloat128Lit}:
+  elif n.kind in {nkNone .. nkFloat128Lit}:
     result = 0
   else:
     result = n.len
@@ -1570,7 +1570,7 @@ proc skipPragmaExpr*(n: PNode): PNode =
 proc setInfoRecursive*(n: PNode, info: TLineInfo) =
   ## set line info recursively
   if n != nil:
-    for i in 0..<n.safeLen:
+    for i in 0 ..< n.safeLen:
       setInfoRecursive(n[i], info)
 
     n.info = info
@@ -1743,21 +1743,21 @@ proc copyStrTable*(dest: var TStrTable, src: TStrTable) =
   dest.counter = src.counter
 
   setLen(dest.data, src.data.len)
-  for i in 0..high(src.data):
+  for i in 0 .. high(src.data):
     dest.data[i] = src.data[i]
 
 proc copyIdTable*(dest: var TIdTable, src: TIdTable) =
   dest.counter = src.counter
 
   newSeq(dest.data, src.data.len)
-  for i in 0..high(src.data):
+  for i in 0 .. high(src.data):
     dest.data[i] = src.data[i]
 
 proc copyObjectSet*(dest: var TObjectSet, src: TObjectSet) =
   dest.counter = src.counter
 
   setLen(dest.data, src.data.len)
-  for i in 0..high(src.data):
+  for i in 0 .. high(src.data):
     dest.data[i] = src.data[i]
 
 proc discardSons*(father: PNode) =
@@ -1930,7 +1930,7 @@ proc assignType*(dest, src: PType) =
       dest.sym = src.sym
 
   newSons(dest, src.len)
-  for i in 0..<src.len:
+  for i in 0 ..< src.len:
     dest[i] = src[i]
 
 proc copyType*(t: PType, id: ItemId, owner: PSym): PType =
@@ -2072,7 +2072,7 @@ proc delSon*(father: PNode, idx: int) =
   if father.len == 0:
     return
 
-  for i in idx..<father.len - 1:
+  for i in idx ..< father.len - 1:
     father[i] = father[i + 1]
 
   father.sons.setLen(father.len - 1)
@@ -2094,17 +2094,17 @@ template transitionNodeKindCommon(k: TNodeKind) =
   when defined(useNodeIds):
     n.id = obj.id
 
-proc transitionSonsKind*(n: PNode, kind: range[nkComesFrom..nkTupleConstr]) =
+proc transitionSonsKind*(n: PNode, kind: range[nkComesFrom .. nkTupleConstr]) =
   transitionNodeKindCommon(kind)
 
   n.sons = obj.sons
 
-proc transitionIntKind*(n: PNode, kind: range[nkCharLit..nkUInt64Lit]) =
+proc transitionIntKind*(n: PNode, kind: range[nkCharLit .. nkUInt64Lit]) =
   transitionNodeKindCommon(kind)
 
   n.intVal = obj.intVal
 
-proc transitionIntToFloatKind*(n: PNode, kind: range[nkFloatLit..nkFloat128Lit]) =
+proc transitionIntToFloatKind*(n: PNode, kind: range[nkFloatLit .. nkFloat128Lit]) =
   transitionNodeKindCommon(kind)
 
   n.floatVal = BiggestFloat(obj.intVal)
@@ -2143,7 +2143,7 @@ template transitionSymKindCommon*(k: TSymKind) =
 proc transitionGenericParamToType*(s: PSym) =
   transitionSymKindCommon(skType)
 
-proc transitionRoutineSymKind*(s: PSym, kind: range[skProc..skTemplate]) =
+proc transitionRoutineSymKind*(s: PSym, kind: range[skProc .. skTemplate]) =
   transitionSymKindCommon(kind)
 
   s.gcUnsafetyReason = obj.gcUnsafetyReason
@@ -2157,14 +2157,14 @@ proc transitionToLet*(s: PSym) =
   s.alignment = obj.alignment
 
 proc hasSonWith*(n: PNode, kind: TNodeKind): bool =
-  for i in 0..<n.len:
+  for i in 0 ..< n.len:
     if n[i].kind == kind:
       return true
 
   result = false
 
 proc hasNilSon*(n: PNode): bool =
-  for i in 0..<n.safeLen:
+  for i in 0 ..< n.safeLen:
     if n[i] == nil:
       return true
     elif hasNilSon(n[i]):
@@ -2177,19 +2177,19 @@ proc containsNode*(n: PNode, kinds: TNodeKinds): bool =
     return
 
   case n.kind
-  of nkEmpty..nkNilLit:
+  of nkEmpty .. nkNilLit:
     result = n.kind in kinds
   else:
-    for i in 0..<n.len:
+    for i in 0 ..< n.len:
       if n.kind in kinds or containsNode(n[i], kinds):
         return true
 
 proc hasSubnodeWith*(n: PNode, kind: TNodeKind): bool =
   case n.kind
-  of nkEmpty..nkNilLit, nkFormalParams:
+  of nkEmpty .. nkNilLit, nkFormalParams:
     result = n.kind == kind
   else:
-    for i in 0..<n.len:
+    for i in 0 ..< n.len:
       if (n[i].kind == kind) or hasSubnodeWith(n[i], kind):
         return true
 
@@ -2197,9 +2197,9 @@ proc hasSubnodeWith*(n: PNode, kind: TNodeKind): bool =
 
 proc getInt*(a: PNode): Int128 =
   case a.kind
-  of nkCharLit, nkUIntLit..nkUInt64Lit:
+  of nkCharLit, nkUIntLit .. nkUInt64Lit:
     result = toInt128(cast[uint64](a.intVal))
-  of nkInt8Lit..nkInt64Lit:
+  of nkInt8Lit .. nkInt64Lit:
     result = toInt128(a.intVal)
   of nkIntLit:
     # XXX: enable this assert
@@ -2210,7 +2210,7 @@ proc getInt*(a: PNode): Int128 =
 
 proc getInt64*(a: PNode): int64 {.deprecated: "use getInt".} =
   case a.kind
-  of nkCharLit, nkUIntLit..nkUInt64Lit, nkIntLit..nkInt64Lit:
+  of nkCharLit, nkUIntLit .. nkUInt64Lit, nkIntLit .. nkInt64Lit:
     result = a.intVal
   else:
     raiseRecoverableError("cannot extract number from invalid AST node")
@@ -2219,7 +2219,7 @@ proc getFloat*(a: PNode): BiggestFloat =
   case a.kind
   of nkFloatLiterals:
     result = a.floatVal
-  of nkCharLit, nkUIntLit..nkUInt64Lit, nkIntLit..nkInt64Lit:
+  of nkCharLit, nkUIntLit .. nkUInt64Lit, nkIntLit .. nkInt64Lit:
     result = BiggestFloat a.intVal
   else:
     raiseRecoverableError("cannot extract number from invalid AST node")
@@ -2229,7 +2229,7 @@ proc getFloat*(a: PNode): BiggestFloat =
 
 proc getStr*(a: PNode): string =
   case a.kind
-  of nkStrLit..nkTripleStrLit:
+  of nkStrLit .. nkTripleStrLit:
     result = a.strVal
   of nkNilLit:
     # let's hope this fixes more problems than it creates:
@@ -2242,9 +2242,9 @@ proc getStr*(a: PNode): string =
 
 proc getStrOrChar*(a: PNode): string =
   case a.kind
-  of nkStrLit..nkTripleStrLit:
+  of nkStrLit .. nkTripleStrLit:
     result = a.strVal
-  of nkCharLit..nkUInt64Lit:
+  of nkCharLit .. nkUInt64Lit:
     result = $chr(int(a.intVal))
   else:
     raiseRecoverableError("cannot extract string from invalid AST node")
@@ -2303,11 +2303,11 @@ proc hasPattern*(s: PSym): bool {.inline.} =
   result = isRoutine(s) and s.ast[patternPos].kind != nkEmpty
 
 iterator items*(n: PNode): PNode =
-  for i in 0..<n.safeLen:
+  for i in 0 ..< n.safeLen:
     yield n[i]
 
 iterator pairs*(n: PNode): tuple[i: int, n: PNode] =
-  for i in 0..<n.safeLen:
+  for i in 0 ..< n.safeLen:
     yield (i, n[i])
 
 proc isAtom*(n: PNode): bool {.inline.} =
@@ -2327,7 +2327,7 @@ proc makeStmtList*(n: PNode): PNode =
 
 proc skipStmtList*(n: PNode): PNode =
   if n.kind in {nkStmtList, nkStmtListExpr}:
-    for i in 0..<n.len - 1:
+    for i in 0 ..< n.len - 1:
       if n[i].kind notin {nkEmpty, nkCommentStmt}:
         return n
 
@@ -2420,7 +2420,7 @@ when false:
     if n.isNil:
       return true
 
-    for i in 0..<n.safeLen:
+    for i in 0 ..< n.safeLen:
       if n[i].containsNil:
         return true
 
@@ -2506,7 +2506,7 @@ proc canRaise*(fn: PNode): bool =
 
 proc toHumanStrImpl[T](kind: T, num: static int): string =
   result = $kind
-  result = result[num..^1]
+  result = result[num ..^ 1]
   result[0] = result[0].toLowerAscii
 
 proc toHumanStr*(kind: TSymKind): string =
@@ -2533,8 +2533,8 @@ proc isOutParam*(t: PType): bool {.inline.} =
 
 const
   nodesToIgnoreSet* = {
-    nkNone..pred(nkSym),
-    succ(nkSym)..nkNilLit,
+    nkNone .. pred(nkSym),
+    succ(nkSym) .. nkNilLit,
     nkTypeSection,
     nkProcDef,
     nkConverterDef,
