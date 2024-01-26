@@ -373,19 +373,17 @@ proc infixHasParens(n: PNode, i: int): bool =
   let nNext = n[i].skipHiddenNodes
   if nNext.kind == nkInfix:
     if nNext[0].kind in {nkSym, nkIdent} and n[0].kind in {nkSym, nkIdent}:
-      let
-        nextId =
-          if nNext[0].kind == nkSym:
-            nNext[0].sym.name
-          else:
-            nNext[0].ident
+      let nextId =
+        if nNext[0].kind == nkSym:
+          nNext[0].sym.name
+        else:
+          nNext[0].ident
 
-      let
-        nnId =
-          if n[0].kind == nkSym:
-            n[0].sym.name
-          else:
-            n[0].ident
+      let nnId =
+        if n[0].kind == nkSym:
+          n[0].sym.name
+        else:
+          n[0].ident
 
       if i == 1:
         if getPrecedence(nextId) < getPrecedence(nnId):
@@ -427,12 +425,11 @@ proc litAux(g: TOutput, n: PNode, x: BiggestInt, size: int): string =
   if nfBase2 in n.flags:
     result = "0b" & toBin(x, size * 8)
   elif nfBase8 in n.flags:
-    var
-      y =
-        if size < sizeof(BiggestInt):
-          x and ((1.BiggestInt shl (size * 8)) - 1)
-        else:
-          x
+    var y =
+      if size < sizeof(BiggestInt):
+        x and ((1.BiggestInt shl (size * 8)) - 1)
+      else:
+        x
 
     result = "0o" & toOct(y, size * 3)
   elif nfBase16 in n.flags:
@@ -593,12 +590,11 @@ template withSrcLen(g: TSrcGen, body: untyped): LineLen =
   var sl {.inject.} = TSrcLen.init(g)
   let pre = sl.lineLen
   body
-  let
-    post =
-      if sl.nl:
-        MaxLineLen + 1
-      else:
-        sl.lineLen - pre
+  let post =
+    if sl.nl:
+      MaxLineLen + 1
+    else:
+      sl.lineLen - pre
   (post, sl.nl)
 
 template withSrcLen(g: TSrcLen, body: untyped): LineLen =
@@ -639,10 +635,9 @@ proc llist(
     subFlags: SubFlags = {},
     extra = 0,
 ): LineLen =
-  let
-    res =
-      withSrcLen(g):
-        glist(sl, n, brOpen, start, theEnd, separator, indentNL, flags, subFlags, extra)
+  let res =
+    withSrcLen(g):
+      glist(sl, n, brOpen, start, theEnd, separator, indentNL, flags, subFlags, extra)
   res + extra
 
 proc lstmts(g: var TOutput, n: PNode, flags: SubFlags = {}, doIndent = true): LineLen =
@@ -736,44 +731,43 @@ proc gcomma(
     if indented:
       g.dedent(indentNL)
 
-  let
-    (start, count) =
-      if lfFirstSticky in flags:
-        let count = n.len + theEnd - start + 1
-        if count == 0:
-          return
+  let (start, count) =
+    if lfFirstSticky in flags:
+      let count = n.len + theEnd - start + 1
+      if count == 0:
+        return
 
-        # The first item must be rendered without newlines, so we start with that
-        gsub(g, n[start], flags = subFlags + {sfSkipPostfix})
+      # The first item must be rendered without newlines, so we start with that
+      gsub(g, n[start], flags = subFlags + {sfSkipPostfix})
 
-        if count > 1:
-          let sep = separator(n[start])
-          putWithSpace(g, sep, $sep)
+      if count > 1:
+        let sep = separator(n[start])
+        putWithSpace(g, sep, $sep)
 
-        # Postfixes after separator!
-        gpostfixes(g, n[start], lfFirstCommentSticky in flags)
+      # Postfixes after separator!
+      gpostfixes(g, n[start], lfFirstCommentSticky in flags)
 
-        # If we can't fit everything on the current line, start over at a fresh one
-        if lfFirstAlone in flags and count > 1 and
-            overflows(
+      # If we can't fit everything on the current line, start over at a fresh one
+      if lfFirstAlone in flags and count > 1 and
+          overflows(
+            g,
+            lcomma(
               g,
-              lcomma(
-                g,
-                n,
-                start + 1,
-                theEnd,
-                separator,
-                indentNL = 0,
-                flags - {lfFirstSticky, lfFirstAlone},
-                subFlags,
-              ),
-            ) or n[start].postfix.len > 0:
-          indented = true
-          g.indentNL(indentNL)
+              n,
+              start + 1,
+              theEnd,
+              separator,
+              indentNL = 0,
+              flags - {lfFirstSticky, lfFirstAlone},
+              subFlags,
+            ),
+          ) or n[start].postfix.len > 0:
+        indented = true
+        g.indentNL(indentNL)
 
-        (start + 1, count - 1)
-      else:
-        (start, n.len + theEnd - start + 1)
+      (start + 1, count - 1)
+    else:
+      (start, n.len + theEnd - start + 1)
 
   if count == 0:
     return
@@ -785,27 +779,24 @@ proc gcomma(
   # If a full, comma-separate list fits on one line, go for it. If not, we put
   # each element on its own line unless it's a list of trivial things (so as to
   # avoid wasting significant vertical space on lists of numbers and the like)
-  let
-    onePerLine =
-      if not overflows(
+  let onePerLine =
+    if not overflows(
+      g,
+      lcomma(
         g,
-        lcomma(
-          g,
-          n,
-          start,
-          theEnd,
-          separator,
-          indentNL,
-          flags - {lfFirstSticky, lfFirstAlone},
-          subFlags,
-        ),
-      ):
-        false
-      else:
-        count > 1 and
-          anyIt(
-            n.sons[start .. n.len + theEnd], not isSimple(it, n.kind == nkIdentDefs)
-          )
+        n,
+        start,
+        theEnd,
+        separator,
+        indentNL,
+        flags - {lfFirstSticky, lfFirstAlone},
+        subFlags,
+      ),
+    ):
+      false
+    else:
+      count > 1 and
+        anyIt(n.sons[start .. n.len + theEnd], not isSimple(it, n.kind == nkIdentDefs))
 
   for i in start .. n.len + theEnd:
     let c = i < n.len + theEnd
@@ -900,9 +891,7 @@ proc gsection(g: var TOutput, n: PNode, kind: TokType, k: string) =
   # empty var sections are possible
   putWithSpace(g, kind, k)
 
-  let
-    complex =
-      n.len > 1 or n.mid.len > 0 or n[0].prefix.len > 0 or overflows(g, lsub(g, n[0]))
+  let complex = n.len > 1 or n.mid.len > 0 or n[0].prefix.len > 0
   if complex:
     gmids(g, n, true)
 
@@ -1198,12 +1187,11 @@ proc gproc(g: var TOutput, n: PNode) =
     gpattern(g, n[patternPos])
 
   # If there is no body, we don't need to indent the parameters as much
-  let
-    flags =
-      if n[bodyPos].kind != nkEmpty:
-        {sfLongIndent}
-      else:
-        {}
+  let flags =
+    if n[bodyPos].kind != nkEmpty:
+      {sfLongIndent}
+    else:
+      {}
 
   gsub(g, n[genericParamsPos], flags)
   gsub(g, n[paramsPos], flags, extra = lsub(g, n[pragmasPos], flags)[0])
@@ -1292,12 +1280,11 @@ proc gident(g: var TOutput, n: PNode) =
   put(g, t, s)
 
 proc doParamsAux(g: var TOutput, params: PNode) =
-  let
-    retLen =
-      if params.len > 0 and params[0].kind != nkEmpty:
-        lsub(g, params[0]) + len(" -> ")
-      else:
-        (0, false)
+  let retLen =
+    if params.len > 0 and params[0].kind != nkEmpty:
+      lsub(g, params[0]) + len(" -> ")
+    else:
+      (0, false)
 
   if params.len > 0:
     # We must always output () or we get a significantly different AST (!)
@@ -1321,16 +1308,15 @@ proc gsubOptNL(
   if hasIndent(n) and n.kind in subOptSkipNL:
     gsub(g, n, flags = flags)
   else:
-    let
-      nl =
-        overflows(
-          g,
-          if strict:
-            lsub(g, n)
-          else:
-            nlsub(g, n)
-          ,
-        )
+    let nl =
+      overflows(
+        g,
+        if strict:
+          lsub(g, n)
+        else:
+          nlsub(g, n)
+        ,
+      )
     withIndent(g, indentNL):
       if nl:
         optNL(g)
@@ -1365,11 +1351,10 @@ proc infixArgument(g: var TOutput, n: PNode, i: int, flags: SubFlags) =
   if needsParenthesis:
     put(g, tkParRi, ")")
 
-const
-  postExprBlocks = {
-    nkStmtList, nkStmtListExpr, nkOfBranch, nkElifBranch, nkElse, nkExceptBranch,
-    nkFinally, nkDo
-  }
+const postExprBlocks = {
+  nkStmtList, nkStmtListExpr, nkOfBranch, nkElifBranch, nkElse, nkExceptBranch,
+  nkFinally, nkDo
+}
 
 proc postStatements(
     g: var TOutput, n: PNode, start: int, skipDo: bool, skipColon = false
@@ -1574,12 +1559,11 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
   of nkPar, nkClosure:
     glist(g, n, tkParLe, subflags = {sfNoIndent})
   of nkTupleConstr:
-    let
-      flags =
-        if n.len == 1 and n[0].kind != nkExprColonExpr:
-          {lfSepAtEnd}
-        else:
-          {lfLongSepAtEnd}
+    let flags =
+      if n.len == 1 and n[0].kind != nkExprColonExpr:
+        {lfSepAtEnd}
+      else:
+        {lfLongSepAtEnd}
 
     glist(g, n, tkParLe, flags = flags)
   of nkCurly:
@@ -1739,16 +1723,15 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
   of nkPrefix:
     gsub(g, n[0])
     if n.len > 1:
-      let
-        opr =
-          if n[0].kind == nkIdent:
-            n[0].ident
-          elif n[0].kind == nkSym:
-            n[0].sym.name
-          elif n[0].kind in {nkOpenSymChoice, nkClosedSymChoice}:
-            n[0][0].sym.name
-          else:
-            nil
+      let opr =
+        if n[0].kind == nkIdent:
+          n[0].ident
+        elif n[0].kind == nkSym:
+          n[0].sym.name
+        elif n[0].kind in {nkOpenSymChoice, nkClosedSymChoice}:
+          n[0][0].sym.name
+        else:
+          nil
 
       let nNext = skipHiddenNodes(n[1])
       if nNext.kind == nkPrefix or (opr != nil and phrenderer.isKeyword(opr)):
@@ -2154,15 +2137,14 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     # Need to add empty parens here, or nkProcTy parsing becomes non-equal -
     # see hasSignature - it would be nicer to remove them when unncessary
     if n.len >= 1:
-      let
-        retExtra =
-          extra +
-          (
-            if n.len > 0 and n[0].kind != nkEmpty:
-              lsub(g, n[0]) + len(": ")
-            else:
-              (0, false)
-          ).len
+      let retExtra =
+        extra +
+        (
+          if n.len > 0 and n[0].kind != nkEmpty:
+            lsub(g, n[0]) + len(": ")
+          else:
+            (0, false)
+        ).len
       # Properties of the proc formal params formatting:
       # * long indent when body follows to separate args from body
       # * separator at end when using one-per-line for easy copy-pasting and

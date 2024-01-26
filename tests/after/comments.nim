@@ -214,12 +214,11 @@ block: # block colon line
   discard
   discard
 
-let
-  x =
-    proc(): int = # lambda eq line
-        # lambda first line
-        discard
-        discard
+let x =
+  proc(): int = # lambda eq line
+      # lambda first line
+      discard
+      discard
 while false: # while colon line
   # while first line
   discard

@@ -603,10 +603,9 @@ template newPackageCache*(): untyped =
 proc newProfileData(): ProfileData =
   ProfileData(data: newTable[TLineInfo, ProfileInfo]())
 
-const
-  foreignPackageNotesDefault* = {
-    hintProcessing, warnUnknownMagic, hintQuitCalled, hintExecuting, hintUser, warnUser
-  }
+const foreignPackageNotesDefault* = {
+  hintProcessing, warnUnknownMagic, hintQuitCalled, hintExecuting, hintUser, warnUser
+}
 
 proc isDefined*(conf: ConfigRef, symbol: string): bool
 
@@ -889,12 +888,11 @@ proc setFromProjectName*(conf: ConfigRef, projectName: string) =
     conf.projectFull = AbsoluteFile projectName
 
   let p = splitFile(conf.projectFull)
-  let
-    dir =
-      if p.dir.isEmpty:
-        AbsoluteDir getCurrentDir()
-      else:
-        p.dir
+  let dir =
+    if p.dir.isEmpty:
+      AbsoluteDir getCurrentDir()
+    else:
+      p.dir
 
   conf.projectPath = AbsoluteDir canonicalizePath(conf, AbsoluteFile dir)
   conf.projectName = p.name
@@ -1031,12 +1029,11 @@ template patchModule(conf: ConfigRef) {.dirty.} =
       if ov.len > 0:
         result = AbsoluteFile(ov)
 
-const
-  stdlibDirs* = [
-    "pure", "core", "arch", "pure/collections", "pure/concurrency", "pure/unidecode",
-    "impure", "wrappers", "wrappers/linenoise", "windows", "posix", "js",
-    "deprecated/pure"
-  ]
+const stdlibDirs* = [
+  "pure", "core", "arch", "pure/collections", "pure/concurrency", "pure/unidecode",
+  "impure", "wrappers", "wrappers/linenoise", "windows", "posix", "js",
+  "deprecated/pure"
+]
 
 const
   pkgPrefix = "pkg/"

@@ -236,12 +236,11 @@ proc popInfoContext*(conf: ConfigRef) =
   setLen(conf.m.msgContext, conf.m.msgContext.len - 1)
 
 proc getInfoContext*(conf: ConfigRef, index: int): TLineInfo =
-  let
-    i =
-      if index < 0:
-        conf.m.msgContext.len + index
-      else:
-        index
+  let i =
+    if index < 0:
+      conf.m.msgContext.len + index
+    else:
+      index
 
   if i >=% conf.m.msgContext.len:
     result = unknownLineInfo
@@ -376,12 +375,11 @@ proc msgWriteln*(conf: ConfigRef, s: string, flags: MsgFlags = {}) =
   ## This is used for 'nim dump' etc. where we don't have nimsuggest
   ## support.
   #if conf.cmd == cmdIdeTools and optCDebug notin gGlobalOptions: return
-  let
-    sep =
-      if msgNoUnitSep notin flags:
-        conf.unitSep
-      else:
-        ""
+  let sep =
+    if msgNoUnitSep notin flags:
+      conf.unitSep
+    else:
+      ""
 
   if not isNil(conf.writelnHook) and msgSkipHook notin flags:
     conf.writelnHook(s & sep)
@@ -472,11 +470,10 @@ proc msgKindToString*(kind: TMsgKind): string =
 proc getMessageStr(msg: TMsgKind, arg: string): string =
   msgKindToString(msg) % [arg]
 
-type
-  TErrorHandling* = enum
-    doNothing
-    doAbort
-    doRaise
+type TErrorHandling* = enum
+  doNothing
+  doAbort
+  doRaise
 
 proc log*(s: string) =
   var f: File
@@ -544,12 +541,11 @@ proc writeContext(conf: ConfigRef, lastinfo: TLineInfo) =
       if conf.structuredErrorHook != nil:
         conf.structuredErrorHook(conf, context.info, instantiationFrom, Severity.Hint)
       else:
-        let
-          message =
-            if context.detail == "":
-              instantiationFrom
-            else:
-              instantiationOfFrom.format(context.detail)
+        let message =
+          if context.detail == "":
+            instantiationFrom
+          else:
+            instantiationOfFrom.format(context.detail)
 
         styledMsgWriteln(
           styleBright, conf.toFileLineCol(context.info), " ", resetStyle, message
@@ -599,12 +595,11 @@ proc getSurroundingSrc(conf: ConfigRef, info: TLineInfo): string =
       result.add "\n" & indent & spaces(info.col) & '^'
 
 proc formatMsg*(conf: ConfigRef, info: TLineInfo, msg: TMsgKind, arg: string): string =
-  let
-    title =
-      case msg
-      of warnMin .. warnMax: WarningTitle
-      of hintMin .. hintMax: HintTitle
-      else: ErrorTitle
+  let title =
+    case msg
+    of warnMin .. warnMax: WarningTitle
+    of hintMin .. hintMax: HintTitle
+    else: ErrorTitle
 
   conf.toFileLineCol(info) & " " & title & getMessageStr(msg, arg)
 
@@ -630,13 +625,12 @@ proc liMessage*(
     # or inside a `tryConstExpr`.
     conf.m.errorOutputs = {eStdOut, eStdErr}
 
-  let
-    kind =
-      if msg in warnMin .. hintMax and msg != hintUserRaw:
-        $msg
-      else:
-        ""
-        # xxx not sure why hintUserRaw is special
+  let kind =
+    if msg in warnMin .. hintMax and msg != hintUserRaw:
+      $msg
+    else:
+      ""
+      # xxx not sure why hintUserRaw is special
 
   case msg
   of errMin .. errMax:
@@ -680,27 +674,24 @@ proc liMessage*(
 
     inc(conf.hintCounter)
 
-  let
-    s =
-      if isRaw:
-        arg
-      else:
-        getMessageStr(msg, arg)
+  let s =
+    if isRaw:
+      arg
+    else:
+      getMessageStr(msg, arg)
 
   if not ignoreMsg:
-    let
-      loc =
-        if info != unknownLineInfo:
-          conf.toFileLineCol(info) & " "
-        else:
-          ""
+    let loc =
+      if info != unknownLineInfo:
+        conf.toFileLineCol(info) & " "
+      else:
+        ""
     # we could also show `conf.cmdInput` here for `projectIsCmd`
-    var
-      kindmsg =
-        if kind.len > 0:
-          KindFormat % kind
-        else:
-          ""
+    var kindmsg =
+      if kind.len > 0:
+        KindFormat % kind
+      else:
+        ""
 
     if conf.structuredErrorHook != nil:
       conf.structuredErrorHook(conf, info, s & kindmsg, sev)
@@ -843,19 +834,17 @@ proc uniqueModuleName*(conf: ConfigRef, fid: FileIndex): string =
   ## The unique module name is guaranteed to only contain {'A'..'Z', 'a'..'z', '0'..'9', '_'}
   ## so that it is useful as a C identifier snippet.
   let path = AbsoluteFile toFullPath(conf, fid)
-  let
-    rel =
-      if path.string.startsWith(conf.libpath.string):
-        relativeTo(path, conf.libpath).string
-      else:
-        relativeTo(path, conf.projectPath).string
+  let rel =
+    if path.string.startsWith(conf.libpath.string):
+      relativeTo(path, conf.libpath).string
+    else:
+      relativeTo(path, conf.projectPath).string
 
-  let
-    trunc =
-      if rel.endsWith(".nim"):
-        rel.len - len(".nim")
-      else:
-        rel.len
+  let trunc =
+    if rel.endsWith(".nim"):
+      rel.len - len(".nim")
+    else:
+      rel.len
 
   result = newStringOfCap(trunc)
   for i in 0 ..< trunc:
@@ -873,12 +862,11 @@ proc uniqueModuleName*(conf: ConfigRef, fid: FileIndex): string =
       result.addInt ord(c)
 
 proc genSuccessX*(conf: ConfigRef) =
-  let
-    mem =
-      when declared(system.getMaxMem):
-        formatSize(getMaxMem()) & " peakmem"
-      else:
-        formatSize(getTotalMem()) & " totmem"
+  let mem =
+    when declared(system.getMaxMem):
+      formatSize(getMaxMem()) & " peakmem"
+    else:
+      formatSize(getTotalMem()) & " totmem"
 
   let loc = $conf.linesCompiled
 
@@ -919,12 +907,11 @@ proc genSuccessX*(conf: ConfigRef) =
       build.add "; options:" & flags
 
   let sec = formatFloat(epochTime() - conf.lastCmdTime, ffDecimal, 3)
-  let
-    project =
-      if conf.filenameOption == foAbs:
-        $conf.projectFull
-      else:
-        $conf.projectName # xxx honor conf.filenameOption more accurately
+  let project =
+    if conf.filenameOption == foAbs:
+      $conf.projectFull
+    else:
+      $conf.projectName # xxx honor conf.filenameOption more accurately
 
   var output: string
   if optCompileOnly in conf.globalOptions and conf.cmd != cmdJsonscript:

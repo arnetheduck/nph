@@ -45,45 +45,40 @@ discard xxxx "arg":
 
 let shortInfix = a * b * c + d * e * f + (a + b) * g
 
-let
-  mediumInfix =
+let mediumInfix =
+  aaaaaaaaaaaaa + bbbbbbbbbbbbbbb + ccccccccccccccc + dddddddddddddddd +
+  eeeeeeeeeeeeeeeeeeeee + fffffffffffffff * ggggggggggggggg + hhhhhhhhhhhhhhh +
+  iiiiiiiiiiiiii + jjjjjjjjjjjjjjjjj + kkkkkkkkkk
+let parenInfix =
+  (
     aaaaaaaaaaaaa + bbbbbbbbbbbbbbb + ccccccccccccccc + dddddddddddddddd +
-    eeeeeeeeeeeeeeeeeeeee + fffffffffffffff * ggggggggggggggg + hhhhhhhhhhhhhhh +
-    iiiiiiiiiiiiii + jjjjjjjjjjjjjjjjj + kkkkkkkkkk
-let
-  parenInfix =
-    (
-      aaaaaaaaaaaaa + bbbbbbbbbbbbbbb + ccccccccccccccc + dddddddddddddddd +
-      eeeeeeeeeeeeeeeeeeeee + fffffffffffffff
-    ) * (
-      ggggggggggggggg + hhhhhhhhhhhhhhh + iiiiiiiiiiiiii + jjjjjjjjjjjjjjjjj +
-      kkkkkkkkkkkkk
-    )
-let
-  parenShortInfix =
-    (aaaaaaaaaaaaa + eeeeeeeeeeeeeeeeeeeee) * (
-      ggggggggggggggg + hhhhhhhhhhhhhhh + iiiiiiiiiiiiii + jjjjjjjjjjjjjjjjj +
-      kkkkkkkkkkkkkkkk
-    )
-
-let
-  longInfix = (
-    a30 * a21 * a12 * a03 - a20 * a31 * a12 * a03 - a30 * a11 * a22 * a03 +
-    a10 * a31 * a22 * a03 + a20 * a11 * a32 * a03 - a10 * a21 * a32 * a03 -
-    a30 * a21 * a02 * a13 + a20 * a31 * a02 * a13 + a30 * a01 * a22 * a13 -
-    a00 * a31 * a22 * a13 - a20 * a01 * a32 * a13 + a00 * a21 * a32 * a13 +
-    a30 * a11 * a02 * a23 - a10 * a31 * a02 * a23 - a30 * a01 * a12 * a23 +
-    a00 * a31 * a12 * a23 + a10 * a01 * a32 * a23 - a00 * a11 * a32 * a23 -
-    a20 * a11 * a02 * a33 + a10 * a21 * a02 * a33 + a20 * a01 * a12 * a33 -
-    a00 * a21 * a12 * a33 - a10 * a01 * a22 * a33 + a00 * a11 * a22 * a33
+    eeeeeeeeeeeeeeeeeeeee + fffffffffffffff
+  ) * (
+    ggggggggggggggg + hhhhhhhhhhhhhhh + iiiiiiiiiiiiii + jjjjjjjjjjjjjjjjj +
+    kkkkkkkkkkkkk
+  )
+let parenShortInfix =
+  (aaaaaaaaaaaaa + eeeeeeeeeeeeeeeeeeeee) * (
+    ggggggggggggggg + hhhhhhhhhhhhhhh + iiiiiiiiiiiiii + jjjjjjjjjjjjjjjjj +
+    kkkkkkkkkkkkkkkk
   )
 
-let
-  longArray = [
-    aaaaaaaaaaaaa, bbbbbbbbbbbbbbb, ccccccccccccccc, dddddddddddddddd,
-    eeeeeeeeeeeeeeeeeeeee, fffffffffffffff, ggggggggggggggg, hhhhhhhhhhhhhhh,
-    iiiiiiiiiiiiii, jjjjjjjjjjjjjjjjj, kkkkkkkkkk
-  ]
+let longInfix = (
+  a30 * a21 * a12 * a03 - a20 * a31 * a12 * a03 - a30 * a11 * a22 * a03 +
+  a10 * a31 * a22 * a03 + a20 * a11 * a32 * a03 - a10 * a21 * a32 * a03 -
+  a30 * a21 * a02 * a13 + a20 * a31 * a02 * a13 + a30 * a01 * a22 * a13 -
+  a00 * a31 * a22 * a13 - a20 * a01 * a32 * a13 + a00 * a21 * a32 * a13 +
+  a30 * a11 * a02 * a23 - a10 * a31 * a02 * a23 - a30 * a01 * a12 * a23 +
+  a00 * a31 * a12 * a23 + a10 * a01 * a32 * a23 - a00 * a11 * a32 * a23 -
+  a20 * a11 * a02 * a33 + a10 * a21 * a02 * a33 + a20 * a01 * a12 * a33 -
+  a00 * a21 * a12 * a33 - a10 * a01 * a22 * a33 + a00 * a11 * a22 * a33
+)
+
+let longArray = [
+  aaaaaaaaaaaaa, bbbbbbbbbbbbbbb, ccccccccccccccc, dddddddddddddddd,
+  eeeeeeeeeeeeeeeeeeeee, fffffffffffffff, ggggggggggggggg, hhhhhhhhhhhhhhh,
+  iiiiiiiiiiiiii, jjjjjjjjjjjjjjjjj, kkkkkkkkkk
+]
 
 if aaaaaaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbb and ccccccccccccccccccccccccc and
     ddddddddddddddddd and fffffffffffffffff:
@@ -108,11 +103,10 @@ if true:
   if false:
     discard
 
-let
-  a =
-    case x
-    of 2: 4
-    else: 4
+let a =
+  case x
+  of 2: 4
+  else: 4
 
 case aaaaaaaaaa
 of aaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc,
