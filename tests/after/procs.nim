@@ -134,7 +134,7 @@ type Fp =
     aaaaaaaaaaaaaaaaa: int,
     bbbbbbbbbbbbbbb =
       proc() =
-          discard
+        discard
     ,
     cccccccccccccccccc = 30,
   )
