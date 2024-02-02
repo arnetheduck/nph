@@ -1220,7 +1220,7 @@ proc gproc(g: var TOutput, n: PNode) =
       if reorderPostfix(n):
         gpostfixes(g, n)
 
-      gstmts(g, n[bodyPos], flags)
+      gstmts(g, n[bodyPos])
   else:
     withIndent(g):
       gmids(g, n)
@@ -1632,14 +1632,8 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     putWithSpace(g, tkBind, "bind")
     gsub(g, n[0])
   of nkLambda:
-    gprefixes(g, n[paramsPos])
     put(g, tkProc, "proc")
-    gsub(g, n[paramsPos], flags = {sfSkipPrefix})
-    gsub(g, n[pragmasPos])
-    optSpace(g)
-    putWithSpace(g, tkEquals, "=")
-    gmids(g, n, true, true)
-    gsubOptNL(g, n[bodyPos], strict = true)
+    gproc(g, n)
   of nkDo:
     optSpace(g)
     put(g, tkDo, $tkDo)
