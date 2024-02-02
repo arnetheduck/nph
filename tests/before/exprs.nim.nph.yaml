@@ -1362,7 +1362,53 @@ sons:
               - kind: "nkElifExpr"
                 sons:
                   - kind: "nkIdent"
-                    ident: "someprettylongconditionhereabcabcabcabc"
+                    ident: "ifstmtthatfitsonasinglelinewithlongcond"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkStrLit"
+                        strVal: "[Valid]   "
+              - kind: "nkElseExpr"
+                sons:
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkStrLit"
+                        strVal: "[Invalid] "
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "prefix2"
+          - kind: "nkEmpty"
+          - kind: "nkIfExpr"
+            sons:
+              - kind: "nkElifExpr"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "someprettylongconditionhereexpressiondoestfit"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkStrLit"
+                        strVal: "[Valid]   "
+              - kind: "nkElseExpr"
+                sons:
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkStrLit"
+                        strVal: "[Invalid] "
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "prefix3"
+          - kind: "nkEmpty"
+          - kind: "nkIfExpr"
+            sons:
+              - kind: "nkElifExpr"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "someprettylongconditionhereexpressiondoestfitatallabcabcabcabc"
                   - kind: "nkStmtList"
                     sons:
                       - kind: "nkStrLit"
@@ -1465,6 +1511,29 @@ sons:
             ident: "ccccccccccccccccccccccc"
           - kind: "nkIdent"
             ident: "dddddddddddddddddddddd"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+      - kind: "nkOfBranch"
+        sons:
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: ".."
+              - kind: "nkIdent"
+                ident: "aaaaaaaaaaaaaaaaaaaaaaaaaa"
+              - kind: "nkIdent"
+                ident: "bbbbbbbbbbbbbbbbbbbbbbbb"
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: ".."
+              - kind: "nkIdent"
+                ident: "dddddddddddddddddddddddddd"
+              - kind: "nkIdent"
+                ident: "ccccccccccccccccccccccc"
           - kind: "nkStmtList"
             sons:
               - kind: "nkDiscardStmt"

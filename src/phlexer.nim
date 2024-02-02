@@ -268,10 +268,7 @@ proc `$`*(tok: Token): string =
   of tkParLe .. tkColon, tkEof, tkAccent:
     $tok.tokType
   else:
-    if tok.ident != nil:
-      tok.ident.s
-    else:
-      ""
+    if tok.ident != nil: tok.ident.s else: ""
 
 proc prettyTok*(tok: Token): string =
   if isKeyword(tok.tokType):
@@ -986,10 +983,8 @@ proc getString(L: var Lexer, tok: var Token, mode: StringMode) =
         L.lineNumber = line
 
         lexMessagePos(
-          L,
-          errGenerated,
-          L.lineStart,
-          "closing \"\"\" expected, but end of file reached",
+          L, errGenerated, L.lineStart,
+          "closing \"\"\" expected, but end of file reached"
         )
 
         L.lineNumber = line2

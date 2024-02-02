@@ -96,7 +96,15 @@ elif aaaaaaaaa and (
 ):
   discard
 
-let prefix = if someprettylongconditionhereabcabcabcabc: "[Valid]   " else: "[Invalid] "
+let prefix = if ifstmtthatfitsonasinglelinewithlongcond: "[Valid]   " else: "[Invalid] "
+
+let prefix2 =
+  if someprettylongconditionhereexpressiondoestfit: "[Valid]   " else: "[Invalid] "
+let prefix3 =
+  if someprettylongconditionhereexpressiondoestfitatallabcabcabcabc:
+    "[Valid]   "
+  else:
+    "[Invalid] "
 
 # short if in short if
 if true:
@@ -117,6 +125,9 @@ of aaaa:
 of aaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc,
     dddddddddddddddddddddd, aaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb,
     ccccccccccccccccccccccc, dddddddddddddddddddddd:
+  discard
+of aaaaaaaaaaaaaaaaaaaaaaaaaa .. bbbbbbbbbbbbbbbbbbbbbbbb,
+    dddddddddddddddddddddddddd .. ccccccccccccccccccccccc:
   discard
 else:
   discard
