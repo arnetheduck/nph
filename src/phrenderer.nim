@@ -1399,6 +1399,19 @@ proc isCustomLit(n: PNode): bool =
 
     result = ident != nil and ident.s.startsWith('\'')
 
+proc isStackedCall(n: PNode, inCall: bool): bool =
+  # At least two calls to enable "stacking" mode
+  case n.kind
+  of nkCall:
+    if inCall:
+      true
+    else:
+      isStackedCall(n, true)
+  of nkDotExpr:
+    isStackedCall(n[0], inCall)
+  else:
+    false
+
 proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
   if isNil(n):
     return
@@ -1591,18 +1604,19 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       gsub(g, n[1])
     else:
       let
-        stackDot = sfStackDot in flags or g.overflows(lsub(g, n[0]) + lsub(g, n[1]) + 1)
+        stackDot =
+          sfStackDot in flags or (
+            g.overflows(lsub(g, n[0]) + lsub(g, n[1]) + 1) and
+            isStackedCall(n[0], sfStackDotInCall in flags)
+          )
         stackNL = stackDot and sfStackDotInCall in flags
+        subFlags =
+          if stackDot:
+            {sfStackDot}
+          else:
+            {}
 
-      gsub(
-        g,
-        n[0],
-        if stackDot:
-          {sfStackDot}
-        else:
-          {}
-        ,
-      )
+      gsub(g, n[0], flags = subFlags)
 
       # Mids here are put on a new line, then the dot follows on yet another new
       # line as dot parsing continues after a comment on a new line too! see
@@ -1610,7 +1624,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       if n.mid.len > 0:
         optNL(g)
         gmids(g, n)
-      if stackNL:
+      elif stackNL:
         optNL(g)
       put(g, tkDot, ".")
       accentedName(g, n[1])
