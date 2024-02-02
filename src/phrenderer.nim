@@ -144,8 +144,7 @@ proc hasComments(n: PNode): bool =
     true
   else:
     case n.kind
-    of
-        nkCharLit .. nkUInt64Lit,
+    of nkCharLit .. nkUInt64Lit,
         nkFloatLit .. nkFloat128Lit,
         nkStrLit .. nkTripleStrLit,
         nkIdent:
@@ -156,7 +155,7 @@ proc hasComments(n: PNode): bool =
 proc isSimple(n: PNode, allowExported = false, allowInfix = false): bool =
   ## Simple nodes are those that are either literals, identifiers or simple
   ## lists thereof - we will stack these up when rendering lists
-  if hascomments(n):
+  if hasComments(n):
     false
   else:
     case n.kind
@@ -176,7 +175,7 @@ proc isSimple(n: PNode, allowExported = false, allowInfix = false): bool =
       n.len == 0 or n.allIt(isSimple(it)) and n[2].len == 0
     of nkTypeDef, nkRefTy, nkOfInherit, nkGenericParams:
       n.allIt(isSimple(it, allowInfix = true))
-    of nkDiscardStmt:
+    of nkDiscardStmt, nkDotExpr:
       n.allIt(isSimple(it))
     of nkProcTy:
       true
@@ -556,6 +555,10 @@ proc init(T: type TSrcLen, g: TSrcGen): T =
   )
 
 proc gsub(g: var TOutput, n: PNode, flags: SubFlags = {}, extra = 0)
+proc gsubOptNL(
+  g: var TOutput, n: PNode, indentNL = IndentWidth, flags: SubFlags = {}, strict = false
+)
+
 proc gsons(
   g: var TOutput, n: PNode, start: int = 0, theEnd: int = -1, flags: SubFlags = {}
 )
@@ -731,6 +734,7 @@ proc gcomma(
     if indented:
       g.dedent(indentNL)
 
+  let sstart = start
   let (start, count) =
     if lfFirstSticky in flags:
       let count = n.len + theEnd - start + 1
@@ -796,7 +800,7 @@ proc gcomma(
       false
     else:
       count > 1 and
-        anyIt(n.sons[start .. n.len + theEnd], not isSimple(it, n.kind == nkIdentDefs))
+        anyIt(n.sons[sstart .. n.len + theEnd], not isSimple(it, n.kind == nkIdentDefs))
 
   for i in start .. n.len + theEnd:
     let c = i < n.len + theEnd
@@ -995,7 +999,7 @@ proc gcolcoms(g: var TOutput, n, stmts: PNode, useSub = false) =
     g.optNL() # doc-comment-only
   gmids(g, n, true)
   if useSub:
-    gsub(g, stmts)
+    gsubOptNL(g, stmts, indentNL = 0)
   else:
     withIndent(g):
       optNL(g)
@@ -1059,6 +1063,9 @@ proc gtrivialBranch(g: var TOutput, n: PNode) =
 
 proc gif(g: var TOutput, n: PNode, flags: SubFlags) =
   gprefixes(g, n[0])
+
+  gcond(g, n[0][0], {sfLongIndent})
+
   let
     # An `if` is "trivial" if it's used in an expression-like way - this helps
     # normalise an expression-if split over multiple lines which is parsed to
@@ -1068,14 +1075,13 @@ proc gif(g: var TOutput, n: PNode, flags: SubFlags) =
       n.allIt(isTrivialBranch(it) and not hasComments(it))
     sublen =
       if trivial:
-        foldl(n, a + lbranch(g, b) + lsub(g, b[^1].skipTrivialStmtList()), (0, false))
+        lsub(g, n[0][1].skipTrivialStmtList()) + len(":_") +
+          lsub(g, n[1][^1].skipTrivialStmtList()) + lbranch(g, n[1])
       else:
         lsub(g, n[0][0]) + lsub(g, n[0][1]) + lsons(g, n, 1) + len(":")
     oneline = not overflows(g, sublen)
 
-  gcond(g, n[0][0], {sfLongIndent})
-
-  if trivial:
+  if trivial and oneline:
     putWithSpace(g, tkColon, $tkColon)
     gsub(g, n[0][1].skipTrivialStmtList())
     for i in 1 ..< n.len:
@@ -1308,15 +1314,13 @@ proc gsubOptNL(
   if hasIndent(n) and n.kind in subOptSkipNL:
     gsub(g, n, flags = flags)
   else:
-    let nl =
-      overflows(
-        g,
+    let
+      sublen =
         if strict:
-          lsub(g, n)
+          lsub(g, n, flags = flags)
         else:
-          nlsub(g, n)
-        ,
-      )
+          nlsub(g, n, flags = flags)
+      nl = overflows(g, sublen)
     withIndent(g, indentNL):
       if nl:
         optNL(g)
@@ -2089,7 +2093,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
   of nkOfBranch:
     optNL(g)
     putWithSpace(g, tkOf, "of")
-    gcomma(g, n, 0, -2, indentNL = longIndentWid)
+    gcomma(g, n, 0, -2, indentNL = longIndentWid, flags = {lfFirstSticky})
     gcolcoms(g, n, n[^1], true)
   of nkImportAs:
     gsub(g, n[0])

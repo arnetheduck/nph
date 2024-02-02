@@ -66,10 +66,13 @@ elif aaaaaaaaa and (bbbbbbbbbb or cccccccccccc and (dddddddddddddddd or eeeeeeee
 
 let
   prefix =
-    if someprettylongconditionhereabcabcabcabc:
+    if ifstmtthatfitsonasinglelinewithlongcond:
       "[Valid]   "
     else:
       "[Invalid] "
+
+let prefix2 = if someprettylongconditionhereexpressiondoestfit: "[Valid]   " else: "[Invalid] "
+let prefix3 = if someprettylongconditionhereexpressiondoestfitatallabcabcabcabc: "[Valid]   " else: "[Invalid] "
 
 # short if in short if
 if true:
@@ -83,6 +86,8 @@ case aaaaaaaaaa
 of aaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc, ddddddddddddddddddddddd: discard
 of aaaa: discard
 of aaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc, dddddddddddddddddddddd, aaaaaaaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc, dddddddddddddddddddddd:
+  discard
+of aaaaaaaaaaaaaaaaaaaaaaaaaa..bbbbbbbbbbbbbbbbbbbbbbbb, dddddddddddddddddddddddddd..ccccccccccccccccccccccc:
   discard
 else:
   discard

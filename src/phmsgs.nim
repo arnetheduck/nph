@@ -375,11 +375,7 @@ proc msgWriteln*(conf: ConfigRef, s: string, flags: MsgFlags = {}) =
   ## This is used for 'nim dump' etc. where we don't have nimsuggest
   ## support.
   #if conf.cmd == cmdIdeTools and optCDebug notin gGlobalOptions: return
-  let sep =
-    if msgNoUnitSep notin flags:
-      conf.unitSep
-    else:
-      ""
+  let sep = if msgNoUnitSep notin flags: conf.unitSep else: ""
 
   if not isNil(conf.writelnHook) and msgSkipHook notin flags:
     conf.writelnHook(s & sep)

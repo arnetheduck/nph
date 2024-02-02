@@ -964,8 +964,7 @@ proc primarySuffix(p: var Parser, r: PNode, baseIndent: int, mode: PrimaryMode):
         result = commandExpr(p, result, mode)
         break
       result = namedParams(p, result, nkCurlyExpr, tkCurlyRi)
-    of
-        tkSymbol,
+    of tkSymbol,
         tkAccent,
         tkIntLit .. tkCustomLit,
         tkNil,
@@ -1337,8 +1336,7 @@ proc parseProcExpr(p: var Parser, isExpr: bool, kind: TNodeKind): PNode =
 
 proc isExprStart(p: Parser): bool =
   case p.tok.tokType
-  of
-      tkSymbol,
+  of tkSymbol,
       tkAccent,
       tkOpr,
       tkNot,
@@ -2221,11 +2219,7 @@ proc parseEnum(p: var Parser): PNode =
   splitLookahead(p, result, clMid)
   # progress guaranteed
   while true:
-    let symInd =
-      if p.tok.indent == -1:
-        p.currInd
-      else:
-        p.tok.indent
+    let symInd = if p.tok.indent == -1: p.currInd else: p.tok.indent
     var a = parseSymbol(p)
     if a.kind == nkEmpty:
       return
@@ -2446,7 +2440,7 @@ proc parseTypeClass(p: var Parser): PNode =
       parMessage(
         p,
         "routine expected, but found '$1' (empty new-styled concepts are not allowed)",
-        p.tok,
+        p.tok
       )
     result.add(p.emptyNode)
   else:

@@ -1630,10 +1630,7 @@ proc newTreeIT*(
   result.sons = @children
 
 template previouslyInferred*(t: PType): PType =
-  if t.sons.len > 1:
-    t.lastSon
-  else:
-    nil
+  if t.sons.len > 1: t.lastSon else: nil
 
 when false:
   import tables, strutils
@@ -2271,10 +2268,7 @@ proc skipGenericOwner*(s: PSym): PSym =
   ## symbol. This proc skips such owners and goes straight to the owner
   ## of the generic itself (the module or the enclosing proc).
   result =
-    if s.kind in skProcKinds and sfFromGeneric in s.flags:
-      s.owner.owner
-    else:
-      s.owner
+    if s.kind in skProcKinds and sfFromGeneric in s.flags: s.owner.owner else: s.owner
 
 proc originatingModule*(s: PSym): PSym =
   result = s.owner
@@ -2346,10 +2340,7 @@ proc toObject*(typ: PType): PType =
   ## cases should be a ``tyObject``).
   ## Otherwise ``typ`` is simply returned as-is.
   let t = typ.skipTypes({tyAlias, tyGenericInst})
-  if t.kind == tyRef:
-    t.lastSon
-  else:
-    typ
+  if t.kind == tyRef: t.lastSon else: typ
 
 proc toObjectFromRefPtrGeneric*(typ: PType): PType =
   #[
