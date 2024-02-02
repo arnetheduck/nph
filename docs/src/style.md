@@ -135,6 +135,12 @@ functionCall(
 )
 ```
 
+```admonish info "What is simple?"
+* literals (`2`, `"string"` etc)
+* simple identifiers (`myvar` etc)
+* dot expressions of the the above (`myObject.field`)
+```
+
 ### Parameter lists
 
 Parameter lists, such as function parameters and generics, are rendered using
