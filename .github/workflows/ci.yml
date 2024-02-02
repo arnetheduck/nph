@@ -68,8 +68,9 @@ jobs:
 
       - name: Check formatting
         run: |
-          ! ./nph --check tests/before || echo "Failed before check"
-          ./nph --check tests/after || echo "Failed after check"
+          ! ./nph --check tests/before
+          ./nph --check tests/after
 
           ./nph src
-          git diff --exit-code || echo "Failed diff"
+          git diff --exit-code
+
