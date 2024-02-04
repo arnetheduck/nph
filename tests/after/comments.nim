@@ -125,6 +125,17 @@ type
     ## comment nofield1 eol
     ## comment nl
 
+  CommentedTuple* =
+    tuple
+      ## Comment here
+      field: int ## comment tuple field
+      field2: int ## comment tuple field2
+
+  CommentedTuple2* =
+    tuple
+      ## comment tuple only mid
+      field: int
+
 when defined(somecond): # when colon line
   # when first line
   discard
@@ -374,6 +385,11 @@ proc a(): int =
   ## Doc comment that needs body reordering
   ## even two lines again
   42
+
+proc a(
+    param: int, ## doc comment here
+) =
+  discard
 
 command "a", "b", "c" # command eol comment
 

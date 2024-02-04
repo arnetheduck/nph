@@ -491,6 +491,57 @@ sons:
                   - kind: "nkIdent"
                     ident: "RootObj"
               - kind: "nkEmpty"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkPostfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "*"
+              - kind: "nkIdent"
+                ident: "CommentedTuple"
+          - kind: "nkEmpty"
+          - kind: "nkTupleTy"
+            sons:
+              - kind: "nkIdentDefs"
+                prefix:
+                  - "## Comment here"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "field"
+                  - kind: "nkIdent"
+                    ident: "int"
+                  - kind: "nkEmpty"
+                postfix:
+                  - "## comment tuple field"
+              - kind: "nkIdentDefs"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "field2"
+                  - kind: "nkIdent"
+                    ident: "int"
+                  - kind: "nkEmpty"
+                postfix:
+                  - "## comment tuple field2"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkPostfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "*"
+              - kind: "nkIdent"
+                ident: "CommentedTuple2"
+          - kind: "nkEmpty"
+          - kind: "nkTupleTy"
+            sons:
+              - kind: "nkIdentDefs"
+                prefix:
+                  - "## comment tuple only mid"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "field"
+                  - kind: "nkIdent"
+                    ident: "int"
+                  - kind: "nkEmpty"
   - kind: "nkWhenStmt"
     sons:
       - kind: "nkElifBranch"
@@ -1420,6 +1471,31 @@ sons:
     postfix:
       - "## Doc comment that needs body reordering"
       - "## even two lines again"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "param"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+            postfix:
+              - "## doc comment here"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
   - kind: "nkCommand"
     sons:
       - kind: "nkIdent"

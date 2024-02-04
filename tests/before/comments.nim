@@ -118,6 +118,15 @@ type
   NoField1* = object of RootObj ## comment nofield1 eol
                                 ## comment nl
 
+  CommentedTuple* = tuple
+    ## Comment here
+    field: int ## comment tuple field
+    field2: int ## comment tuple field2
+
+  CommentedTuple2* =
+    tuple
+      ## comment tuple only mid
+      field: int
 
 when defined(somecond): # when colon line
   # when first line
@@ -352,6 +361,10 @@ proc a(v#[block]#: int, abc: int)
 proc a(): int = 42
   ## Doc comment that needs body reordering
   ## even two lines again
+
+proc a(
+  param: int, ## doc comment here
+) = discard
 
 command "a", "b", "c" # command eol comment
 

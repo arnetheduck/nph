@@ -36,7 +36,7 @@ const
 type
   TRenderTok* = object
     kind*: TokType
-    length*: int16
+    length*: int
     sym*: PSym
 
   TRenderTokSeq* = seq[TRenderTok]
@@ -101,6 +101,7 @@ type
     sfOneLine ## Use single-line formatting (if possible)
     sfStackDot ## Stack multiple dot-calls
     sfStackDotInCall ## Stacked dotting opportunity
+    sfParDo ## Add parens to `do` to avoid dot-expr ambiguity
 
   SubFlags = set[SubFlag]
   TOutput = TSrcGen | TSrcLen
@@ -211,11 +212,11 @@ proc containsNL(s: string): bool =
 
 proc addTok(g: var TSrcLen, kind: TokType, s: string) =
   g.nl = g.nl or containsNL(s)
-  g.tokens.add TRenderTok(kind: kind, length: int16(s.len))
+  g.tokens.add TRenderTok(kind: kind, length: s.len)
 
 proc addTok(g: var TSrcGen, kind: TokType, s: string) =
   # debugEcho "addTok ", kind, " " , s.len, " ", s
-  g.tokens.add TRenderTok(kind: kind, length: int16(s.len))
+  g.tokens.add TRenderTok(kind: kind, length: s.len)
 
   g.buf.add(s)
   g.line += count(s, "\n")
@@ -808,24 +809,28 @@ proc gcomma(
   # If a full, comma-separate list fits on one line, go for it. If not, we put
   # each element on its own line unless it's a list of trivial things (so as to
   # avoid wasting significant vertical space on lists of numbers and the like)
-  let onePerLine =
-    if not overflows(
-      g,
-      lcomma(
+  let
+    onePerLine =
+      if not overflows(
         g,
-        n,
-        start,
-        theEnd,
-        separator,
-        indentNL,
-        flags - {lfFirstSticky, lfFirstAlone},
-        subFlags,
-      ),
-    ):
-      false
-    else:
-      count > 1 and
-        anyIt(n.sons[sstart .. n.len + theEnd], not isSimple(it, n.kind == nkIdentDefs))
+        lcomma(
+          g,
+          n,
+          start,
+          theEnd,
+          separator,
+          indentNL,
+          flags - {lfFirstSticky, lfFirstAlone},
+          subFlags,
+        ),
+      ):
+        false
+      else:
+        count > 1 and
+          anyIt(
+            n.sons[sstart .. n.len + theEnd], not isSimple(it, n.kind == nkIdentDefs)
+          )
+    sepAtEnd = lfSepAtEnd in flags or onePerLine and lfLongSepAtEnd in flags
 
   for i in start .. n.len + theEnd:
     let c = i < n.len + theEnd
@@ -836,19 +841,20 @@ proc gcomma(
 
     gsub(g, n[i], flags = subFlags + {sfSkipPostfix})
 
-    if c:
+    # In sticky comment mode we put a separator before the comment, else a
+    # comment for a single parameter in an argument list fails to parse
+    if c or sepAtEnd or (lfFirstCommentSticky in flags and n[i].postfix.len > 0):
       if g.tokens.len > oldLen:
         if lfSkipPushComma notin flags or not eqIdent(n[i], "push"):
           let sep = separator(n[i])
-          putWithSpace(g, sep, $sep)
+          put(g, sep, $sep)
+
+          if c:
+            optSpace(g)
         else:
           optSpace(g)
 
     gpostfixes(g, n[i], lfFirstCommentSticky in flags)
-
-  if lfSepAtEnd in flags or onePerLine and lfLongSepAtEnd in flags:
-    let sep = separator(n[n.len + theEnd])
-    put(g, sep, $sep)
 
 proc gsons(
     g: var TOutput, n: PNode, start: int = 0, theEnd: int = -1, flags: SubFlags = {}
@@ -1495,6 +1501,18 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     put(g, tkNil, atom(g, n)) # complex expressions
   of nkCall, nkConv, nkPattern, nkObjConstr:
     if n.len > 1 and n.lastSon.kind in postExprBlocks:
+      let
+        doPars =
+          if n.lastSon.kind == nkDo and sfParDo in flags:
+            # A dot-expr that ends with a call with a `do` needs an extra set of
+            # parens to highlight where the `do` ends.
+            put(g, tkParLe, $tkParLe)
+            optNL(g)
+            true
+          else:
+            false
+        ind = condIndent(g, doPars)
+
       accentedName(g, n[0], flags = (flags * {sfStackDot}) + {sfStackDotInCall})
 
       var i = 1
@@ -1507,6 +1525,10 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
         )
 
       postStatements(g, n, i, sfSkipDo in flags)
+      dedent(g, ind)
+
+      if n.lastSon.kind == nkDo and sfParDo in flags:
+        put(g, tkParRi, $tkParRi)
     elif n.len >= 1:
       accentedName(g, n[0], flags = (flags * {sfStackDot}) + {sfStackDotInCall})
       glist(g, n, tkParLe, start = 1, flags = {lfLongSepAtEnd})
@@ -1595,10 +1617,12 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     glist(g, n, tkParLe, subflags = {sfNoIndent})
   of nkTupleConstr:
     let flags =
-      if n.len == 1 and n[0].kind != nkExprColonExpr:
-        {lfSepAtEnd}
-      else:
-        {lfLongSepAtEnd}
+      {lfFirstCommentSticky} + (
+        if n.len == 1 and n[0].kind != nkExprColonExpr:
+          {lfSepAtEnd}
+        else:
+          {lfLongSepAtEnd}
+      )
 
     glist(g, n, tkParLe, flags = flags)
   of nkCurly:
@@ -1629,10 +1653,12 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
           )
         stackNL = stackDot and sfStackDotInCall in flags
         subFlags =
-          if stackDot:
-            {sfStackDot}
-          else:
-            {}
+          {sfParDo} + (
+            if stackDot:
+              {sfStackDot}
+            else:
+              {}
+          )
 
       gsub(g, n[0], flags = subFlags)
 
@@ -2177,7 +2203,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
         extra = retExtra,
         start = 1,
         indentNL = flagIndent(flags),
-        flags = {lfLongSepAtEnd},
+        flags = {lfLongSepAtEnd, lfFirstCommentSticky},
       )
 
     if n.len > 0 and n[0].kind != nkEmpty:
@@ -2185,7 +2211,15 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       gsub(g, n[0], flags)
   of nkTupleTy:
     put(g, tkTuple, "tuple")
-    glist(g, n, tkBracketLe)
+    if anyIt(n, hasComments(it)) or n.mid.len > 0:
+      withIndent(g):
+        optNL(g)
+        gmids(g, n)
+        for child in n:
+          optNL(g)
+          gsub(g, child)
+    else:
+      glist(g, n, tkBracketLe)
   of nkTupleClassTy:
     put(g, tkTuple, "tuple")
   of nkTypeClassTy:

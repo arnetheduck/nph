@@ -1425,8 +1425,8 @@ proc rawGetTok*(L: var Lexer, tok: var Token) =
   template atTokenEnd() {.dirty.} =
     L.previousTokenEnd.line = L.tokenEnd.line
     L.previousTokenEnd.col = L.tokenEnd.col
-    L.tokenEnd.line = tok.line.uint16
-    L.tokenEnd.col = getColNumber(L, L.bufpos).int16
+    L.tokenEnd.line = tok.line
+    L.tokenEnd.col = getColNumber(L, L.bufpos)
 
   let lineB = tok.lineB
   reset(tok)

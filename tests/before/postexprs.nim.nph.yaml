@@ -531,3 +531,48 @@ sons:
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkCall"
+        sons:
+          - kind: "nkDotExpr"
+            sons:
+              - kind: "nkCall"
+                sons:
+                  - kind: "nkDotExpr"
+                    sons:
+                      - kind: "nkDotExpr"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "aaa"
+                          - kind: "nkIdent"
+                            ident: "bbb"
+                      - kind: "nkIdent"
+                        ident: "exec"
+                  - kind: "nkDo"
+                    sons:
+                      - kind: "nkEmpty"
+                      - kind: "nkEmpty"
+                      - kind: "nkEmpty"
+                      - kind: "nkFormalParams"
+                        sons:
+                          - kind: "nkEmpty"
+                          - kind: "nkIdentDefs"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "res"
+                              - kind: "nkIdent"
+                                ident: "int64"
+                              - kind: "nkEmpty"
+                      - kind: "nkEmpty"
+                      - kind: "nkEmpty"
+                      - kind: "nkStmtList"
+                        sons:
+                          - kind: "nkAsgn"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "size"
+                              - kind: "nkIdent"
+                                ident: "res"
+              - kind: "nkIdent"
+                ident: "ccc"

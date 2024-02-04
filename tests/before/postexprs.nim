@@ -94,3 +94,6 @@ command "llllllllllllllllooooooooooooooooooonnnnnnnnnnnnnnnnnnnnnngggggggggggggg
 command param:
 of a: discard
 else: discard
+
+discard (aaa.bbb.exec do(res: int64):
+      size = res).ccc()
