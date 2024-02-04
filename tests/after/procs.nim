@@ -35,11 +35,10 @@ proc a6(
   discard
 
 proc a7(
-    T:
-      typedesc[
-        Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb |
-          Cccccccccccccccccccccccccc | Dddddddddddd
-      ],
+    T: typedesc[
+      Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa | Bbbbbbbbbbbbbbbbbbbbbbbbbbbbb |
+        Cccccccccccccccccccccccccc | Dddddddddddd
+    ],
     aaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccccccc, ddddddddddddddddddddddd;
 ) =
   discard
@@ -129,27 +128,24 @@ type Bp = proc
 type Cp = proc(v: int)
 type Dp = proc() {.nimcall.}
 type Ep = proc {.nimcall.}
-type Fp =
-  proc(
-    aaaaaaaaaaaaaaaaa: int,
-    bbbbbbbbbbbbbbb =
-      proc() =
-        discard
-    ,
-    cccccccccccccccccc = 30,
-  )
+type Fp = proc(
+  aaaaaaaaaaaaaaaaa: int,
+  bbbbbbbbbbbbbbb = proc() =
+    discard
+  ,
+  cccccccccccccccccc = 30,
+)
 
 type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc {.bbbbbbbbbbbbbbbbbbbbbbbb.}
 type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =
   proc(aaaaaaaa: Bbbbbbb, ccccccccc: Dddddddddddd, eeeeee: Ffffff)
 
-type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa =
-  proc(
-    aaaaaaaa: Bbbbbbb,
-    ccccccccc: Dddddddddddd,
-    eeeeeeeeeeeee: Ffffffffffffffff,
-    gggggggggggggg: Hhhhhhhhhhhhhhhhhhhh,
-  )
+type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc(
+  aaaaaaaa: Bbbbbbb,
+  ccccccccc: Dddddddddddd,
+  eeeeeeeeeeeee: Ffffffffffffffff,
+  gggggggggggggg: Hhhhhhhhhhhhhhhhhhhh,
+)
 
 proc `.()`() =
   discard

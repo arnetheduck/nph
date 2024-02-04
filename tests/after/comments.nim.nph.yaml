@@ -866,10 +866,10 @@ sons:
           - kind: "nkIdent"
             ident: "Object"
           - kind: "nkExprColonExpr"
+            prefix:
+              - "# object first line"
             sons:
               - kind: "nkIdent"
-                prefix:
-                  - "# object first line"
                 ident: "field"
               - kind: "nkIntLit"
                 intVal: 0

@@ -1407,22 +1407,20 @@ const PackageModuleId* = -3'i32
 proc idGeneratorFromModule*(m: PSym): IdGenerator =
   assert m.kind == skModule
 
-  result =
-    IdGenerator(
-      module: m.itemId.module,
-      symId: m.itemId.item,
-      typeId: 0,
-      disambTable: initCountTable[PIdent](),
-    )
+  result = IdGenerator(
+    module: m.itemId.module,
+    symId: m.itemId.item,
+    typeId: 0,
+    disambTable: initCountTable[PIdent](),
+  )
 
 proc idGeneratorForPackage*(nextIdWillBe: int32): IdGenerator =
-  result =
-    IdGenerator(
-      module: PackageModuleId,
-      symId: nextIdWillBe - 1'i32,
-      typeId: 0,
-      disambTable: initCountTable[PIdent](),
-    )
+  result = IdGenerator(
+    module: PackageModuleId,
+    symId: nextIdWillBe - 1'i32,
+    typeId: 0,
+    disambTable: initCountTable[PIdent](),
+  )
 
 proc nextSymId*(x: IdGenerator): ItemId {.inline.} =
   assert(not x.sealed)
@@ -1655,18 +1653,17 @@ proc newSym*(
 
   let id = nextSymId idgen
 
-  result =
-    PSym(
-      name: name,
-      kind: symKind,
-      flags: {},
-      info: info,
-      itemId: id,
-      options: options,
-      owner: owner,
-      offset: defaultOffset,
-      disamb: getOrDefault(idgen.disambTable, name).int32,
-    )
+  result = PSym(
+    name: name,
+    kind: symKind,
+    flags: {},
+    info: info,
+    itemId: id,
+    options: options,
+    owner: owner,
+    offset: defaultOffset,
+    disamb: getOrDefault(idgen.disambTable, name).int32,
+  )
 
   idgen.disambTable.inc name
   when false:
@@ -1685,8 +1682,8 @@ proc astdef*(s: PSym): PNode =
     s.ast
 
 proc isMetaType*(t: PType): bool =
-  return t.kind in tyMetaTypes or (t.kind == tyStatic and t.n == nil) or
-      tfHasMeta in t.flags
+  return
+    t.kind in tyMetaTypes or (t.kind == tyStatic and t.n == nil) or tfHasMeta in t.flags
 
 proc isUnresolvedStatic*(t: PType): bool =
   return t.kind == tyStatic and t.n == nil
@@ -1863,15 +1860,14 @@ proc `$`*(s: PSym): string =
     result = "<nil>"
 
 proc newType*(kind: TTypeKind, id: ItemId, owner: PSym): PType =
-  result =
-    PType(
-      kind: kind,
-      owner: owner,
-      size: defaultSize,
-      align: defaultAlignment,
-      itemId: id,
-      uniqueId: id,
-    )
+  result = PType(
+    kind: kind,
+    owner: owner,
+    size: defaultSize,
+    align: defaultAlignment,
+    itemId: id,
+    uniqueId: id,
+  )
 
   when false:
     if result.itemId.module == 55 and result.itemId.item == 2:
@@ -2065,16 +2061,15 @@ proc delSon*(father: PNode, idx: int) =
 template transitionNodeKindCommon(k: TNodeKind) =
   let obj {.inject.} = n[]
 
-  n[] =
-    TNode(
-      kind: k,
-      typ: obj.typ,
-      info: obj.info,
-      flags: obj.flags,
-      prefix: obj.prefix,
-      mid: obj.mid,
-      postfix: obj.postfix,
-    )
+  n[] = TNode(
+    kind: k,
+    typ: obj.typ,
+    info: obj.info,
+    flags: obj.flags,
+    prefix: obj.prefix,
+    mid: obj.mid,
+    postfix: obj.postfix,
+  )
   # n.comment = obj.comment # shouldn't be needed, the address doesnt' change
   when defined(useNodeIds):
     n.id = obj.id
@@ -2100,24 +2095,23 @@ proc transitionNoneToSym*(n: PNode) =
 template transitionSymKindCommon*(k: TSymKind) =
   let obj {.inject.} = s[]
 
-  s[] =
-    TSym(
-      kind: k,
-      itemId: obj.itemId,
-      magic: obj.magic,
-      typ: obj.typ,
-      name: obj.name,
-      info: obj.info,
-      owner: obj.owner,
-      flags: obj.flags,
-      ast: obj.ast,
-      options: obj.options,
-      position: obj.position,
-      offset: obj.offset,
-      loc: obj.loc,
-      annex: obj.annex,
-      constraint: obj.constraint,
-    )
+  s[] = TSym(
+    kind: k,
+    itemId: obj.itemId,
+    magic: obj.magic,
+    typ: obj.typ,
+    name: obj.name,
+    info: obj.info,
+    owner: obj.owner,
+    flags: obj.flags,
+    ast: obj.ast,
+    options: obj.options,
+    position: obj.position,
+    offset: obj.offset,
+    loc: obj.loc,
+    annex: obj.annex,
+    constraint: obj.constraint,
+  )
 
   when hasFFI:
     s.cname = obj.cname

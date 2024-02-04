@@ -192,3 +192,42 @@ spaces around these infixes and sometimes not, leading to irregularity.
 Since there's no consensus in existing code at the time of writing, the rule is
 irregular and causes implementation complexity, `nph` formats `..` and `..<`
 with spaces.
+
+## Expressions
+
+Expressions appear in many places, such as after certain keywords (`return`,
+`yield`), as part of control flows (`if`, `while`), in assignments etc.
+
+Whenever possible, `nph` will try to keep the full expression on a single line:
+
+```nim
+let myvariable = somelongexpression(abc)
+```
+
+If this is not possible, the second preference is to move the whole expression
+to a new line, assuming it fits:
+
+```nim
+let myvariable =
+   someevenlongerexpression(abc, def)
+```
+
+If the expression still doesn't fit, we'll split it up on multiple lines:
+
+```nim
+let myvariable = someevenlongerexpression(
+  aaa, bbb, ccc, ddd
+)
+```
+
+Certain expressions linked by related keywords that don't fit on a single line
+will also be moved to a new line - for example, a multi-line `if`/`else` nested
+in a `return` will be lined up like so:
+
+```nim
+return
+  if condition:
+    complex(call)
+  else:
+    alsocomplex(call)
+```

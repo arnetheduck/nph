@@ -475,10 +475,9 @@ type
     suggestMaxResults*: int
     lastLineInfo*: TLineInfo
     writelnHook*: proc(output: string) {.closure, gcsafe.}
-    structuredErrorHook*:
-      proc(config: ConfigRef, info: TLineInfo, msg: string, severity: Severity) {.
-        closure, gcsafe
-      .}
+    structuredErrorHook*: proc(
+      config: ConfigRef, info: TLineInfo, msg: string, severity: Severity
+    ) {.closure, gcsafe.}
     cppCustomNamespace*: string
     nimMainPrefix*: string
     vmProfileData*: ProfileData
@@ -628,58 +627,57 @@ proc initConfigRefCommon(conf: ConfigRef) =
   conf.mainPackageNotes = NotesVerbosity[1]
 
 proc newConfigRef*(): ConfigRef =
-  result =
-    ConfigRef(
-      cCompiler: ccGcc,
-      macrosToExpand: newStringTable(modeStyleInsensitive),
-      arcToExpand: newStringTable(modeStyleInsensitive),
-      m: initMsgConfig(),
-      cppDefines: initHashSet[string](),
-      headerFile: "",
-      features: {},
-      legacyFeatures: {},
-      configVars: newStringTable(modeStyleInsensitive),
-      symbols: newStringTable(modeStyleInsensitive),
-      packageCache: newPackageCache(),
-      searchPaths: @[],
-      lazyPaths: @[],
-      outFile: RelativeFile"",
-      outDir: AbsoluteDir"",
-      prefixDir: AbsoluteDir"",
-      libpath: AbsoluteDir"",
-      nimcacheDir: AbsoluteDir"",
-      dllOverrides: newStringTable(modeCaseInsensitive),
-      moduleOverrides: newStringTable(modeStyleInsensitive),
-      cfileSpecificOptions: newStringTable(modeCaseSensitive),
-      projectName: "", # holds a name like 'nim'
-      projectPath: AbsoluteDir"", # holds a path like /home/alice/projects/nim/compiler/
-      projectFull: AbsoluteFile"", # projectPath/projectName
-      projectIsStdin: false, # whether we're compiling from stdin
-      projectMainIdx: FileIndex(0'i32), # the canonical path id of the main module
-      command: "", # the main command (e.g. cc, check, scan, etc)
-      commandArgs: @[], # any arguments after the main command
-      commandLine: "",
-      keepComments: true, # whether the parser needs to keep comments
-      implicitImports: @[], # modules that are to be implicitly imported
-      implicitIncludes: @[], # modules that are to be implicitly included
-      docSeeSrcUrl: "",
-      cIncludes: @[], # directories to search for included files
-      cLibs: @[], # directories to search for lib files
-      cLinkedLibs: @[], # libraries to link
-      backend: backendInvalid,
-      externalToLink: @[],
-      linkOptionsCmd: "",
-      compileOptionsCmd: @[],
-      linkOptions: "",
-      compileOptions: "",
-      ccompilerpath: "",
-      toCompile: @[],
-      arguments: "",
-      suggestMaxResults: 10_000,
-      maxLoopIterationsVM: 10_000_000,
-      vmProfileData: newProfileData(),
-      spellSuggestMax: spellSuggestSecretSauce,
-    )
+  result = ConfigRef(
+    cCompiler: ccGcc,
+    macrosToExpand: newStringTable(modeStyleInsensitive),
+    arcToExpand: newStringTable(modeStyleInsensitive),
+    m: initMsgConfig(),
+    cppDefines: initHashSet[string](),
+    headerFile: "",
+    features: {},
+    legacyFeatures: {},
+    configVars: newStringTable(modeStyleInsensitive),
+    symbols: newStringTable(modeStyleInsensitive),
+    packageCache: newPackageCache(),
+    searchPaths: @[],
+    lazyPaths: @[],
+    outFile: RelativeFile"",
+    outDir: AbsoluteDir"",
+    prefixDir: AbsoluteDir"",
+    libpath: AbsoluteDir"",
+    nimcacheDir: AbsoluteDir"",
+    dllOverrides: newStringTable(modeCaseInsensitive),
+    moduleOverrides: newStringTable(modeStyleInsensitive),
+    cfileSpecificOptions: newStringTable(modeCaseSensitive),
+    projectName: "", # holds a name like 'nim'
+    projectPath: AbsoluteDir"", # holds a path like /home/alice/projects/nim/compiler/
+    projectFull: AbsoluteFile"", # projectPath/projectName
+    projectIsStdin: false, # whether we're compiling from stdin
+    projectMainIdx: FileIndex(0'i32), # the canonical path id of the main module
+    command: "", # the main command (e.g. cc, check, scan, etc)
+    commandArgs: @[], # any arguments after the main command
+    commandLine: "",
+    keepComments: true, # whether the parser needs to keep comments
+    implicitImports: @[], # modules that are to be implicitly imported
+    implicitIncludes: @[], # modules that are to be implicitly included
+    docSeeSrcUrl: "",
+    cIncludes: @[], # directories to search for included files
+    cLibs: @[], # directories to search for lib files
+    cLinkedLibs: @[], # libraries to link
+    backend: backendInvalid,
+    externalToLink: @[],
+    linkOptionsCmd: "",
+    compileOptionsCmd: @[],
+    linkOptions: "",
+    compileOptions: "",
+    ccompilerpath: "",
+    toCompile: @[],
+    arguments: "",
+    suggestMaxResults: 10_000,
+    maxLoopIterationsVM: 10_000_000,
+    vmProfileData: newProfileData(),
+    spellSuggestMax: spellSuggestSecretSauce,
+  )
 
   initConfigRefCommon(result)
   setTargetFromSystem(result.target)
@@ -947,27 +945,26 @@ proc getNimcacheDir*(conf: ConfigRef): AbsoluteDir =
 proc pathSubs*(conf: ConfigRef, p, config: string): string =
   let home = removeTrailingDirSep(os.getHomeDir())
 
-  result =
-    unixToNativePath(
-      p % [
-        "nim",
-        getPrefixDir(conf).string,
-        "lib",
-        conf.libpath.string,
-        "home",
-        home,
-        "config",
-        config,
-        "projectname",
-        conf.projectName,
-        "projectpath",
-        conf.projectPath.string,
-        "projectdir",
-        conf.projectPath.string,
-        "nimcache",
-        getNimcacheDir(conf).string
-      ]
-    ).expandTilde
+  result = unixToNativePath(
+    p % [
+      "nim",
+      getPrefixDir(conf).string,
+      "lib",
+      conf.libpath.string,
+      "home",
+      home,
+      "config",
+      config,
+      "projectname",
+      conf.projectName,
+      "projectpath",
+      conf.projectPath.string,
+      "projectdir",
+      conf.projectPath.string,
+      "nimcache",
+      getNimcacheDir(conf).string
+    ]
+  ).expandTilde
 
 iterator nimbleSubs*(conf: ConfigRef, p: string): string =
   let pl = p.toLowerAscii

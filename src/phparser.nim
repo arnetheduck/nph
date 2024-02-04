@@ -217,12 +217,11 @@ template setEndInfo(node: PNode) =
   # End info is used to compute original line breaks
   # TODO this endinfo is not quite correct - we only need to track this for
   #      for statement lists, which is the only place where we retain whitespace
-  node.endInfo =
-    TLineInfo(
-      fileIndex: p.lex.fileIdx,
-      line: uint16 p.lineNumberPrevious,
-      col: p.lex.previousTokenEnd.col,
-    )
+  node.endInfo = TLineInfo(
+    fileIndex: p.lex.fileIdx,
+    line: uint16 p.lineNumberPrevious,
+    col: p.lex.previousTokenEnd.col,
+  )
 
 proc drainSkipped(p: var Parser, indent: int): seq[Token] =
   for c in p.skipped:
@@ -307,6 +306,11 @@ proc isRightAssociative(tok: Token): bool {.inline.} =
   ## Determines whether the token is right assocative.
   result = tok.tokType == tkOpr and tok.ident.s[0] == '^'
   # or (tok.ident.s.len > 1 and tok.ident.s[^1] == '>')
+
+proc wrap(a, b: PNode): PNode =
+  a.prefix = move(b.prefix)
+  a.add(b)
+  a
 
 proc isUnary(tok: Token): bool =
   ## Check if the given token is a unary operator
@@ -441,20 +445,16 @@ proc parseSymbol(p: var Parser, mode = smNormal): PNode =
 
 proc equals(p: var Parser, a: PNode): PNode =
   if p.tok.tokType == tkEquals:
-    result = newNodeP(nkExprEqExpr, p)
+    result = wrap(newNodeP(nkExprEqExpr, p), a)
     getTok(p)
-    #optInd(p, result)
-    result.add(a)
     result.add(parseExpr(p))
   else:
     result = a
 
 proc colonOrEquals(p: var Parser, a: PNode): PNode =
   if p.tok.tokType == tkColon:
-    result = newNodeP(nkExprColonExpr, p)
+    result = wrap(newNodeP(nkExprColonExpr, p), a)
     getTok(p)
-    #optInd(p, result)
-    result.add(a)
     result.add(parseExpr(p))
   else:
     result = equals(p, a)
@@ -544,11 +544,10 @@ proc dotExpr(p: var Parser, a: PNode): PNode =
 
   getTok(p)
 
-  result = newNodeP(nkDotExpr, p, withPrefix = false)
+  result = wrap(newNodeP(nkDotExpr, p, withPrefix = false), a)
   result.info = info
   splitLookahead(p, result, clMid)
   optInd(p, result)
-  result.add(a)
   result.add(parseSymbol(p, smAfterDot))
   # TODO non-line-ending comments?
   # splitLookahead(p, result[^1], clPostfix)
@@ -559,8 +558,7 @@ proc dotExpr(p: var Parser, a: PNode): PNode =
 
     exprList(p, tkBracketRi, x)
     eat(p, tkBracketRi)
-    var y = newNodeP(nkCall, p)
-    y.add x
+    var y = wrap(newNodeP(nkCall, p), x)
     y.add result[0]
     if p.tok.tokType == tkParLe and tsLeading notin p.tok.spacing:
       exprColonEqExprListAux(p, tkParRi, y)
@@ -891,8 +889,7 @@ proc identOrLiteral(p: var Parser, mode: PrimaryMode): PNode =
 
 proc namedParams(p: var Parser, callee: PNode, kind: TNodeKind, endTok: TokType): PNode =
   let a = callee
-  result = newNodeP(kind, p)
-  result.add(a)
+  result = wrap(newNodeP(kind, p), a)
   # progress guaranteed
   exprColonEqExprListAux(p, endTok, result)
 
@@ -911,9 +908,8 @@ proc commandExpr(p: var Parser, r: PNode, mode: PrimaryMode): PNode =
   if mode == pmTrySimple:
     result = r
   else:
-    result = newNodeP(nkCommand, p)
+    result = wrap(newNodeP(nkCommand, p), r)
     let baseIndent = p.currInd
-    result.add(r)
     var isFirstParam = true
     # progress NOT guaranteed
     p.hasProgress = false
@@ -1261,18 +1257,17 @@ proc parseDoBlock(p: var Parser, info: TLineInfo): PNode =
   #| doBlock = 'do' paramListArrow pragma? colcom stmt
   var params = parseParamList(p, retColon = false)
   let pragmas = optPragmas(p)
-  result =
-    newProcNode(
-      nkDo,
-      info,
-      body = nil,
-      params = params,
-      name = p.emptyNode,
-      pattern = p.emptyNode,
-      genericParams = p.emptyNode,
-      pragmas = pragmas,
-      exceptions = p.emptyNode,
-    )
+  result = newProcNode(
+    nkDo,
+    info,
+    body = nil,
+    params = params,
+    name = p.emptyNode,
+    pattern = p.emptyNode,
+    genericParams = p.emptyNode,
+    pragmas = pragmas,
+    exceptions = p.emptyNode,
+  )
   let body = parseColComStmt(p, result, clMid)
   if params.kind != nkEmpty or pragmas.kind != nkEmpty:
     if params.kind == nkEmpty:
@@ -1303,18 +1298,17 @@ proc parseProcExpr(p: var Parser, isExpr: bool, kind: TNodeKind): PNode =
   let pragmas = optPragmas(p)
   if p.tok.tokType == tkEquals and isExpr:
     getTok(p)
-    result =
-      newProcNode(
-        kind,
-        info,
-        body = p.emptyNode,
-        params = params,
-        name = p.emptyNode,
-        pattern = p.emptyNode,
-        genericParams = p.emptyNode,
-        pragmas = pragmas,
-        exceptions = p.emptyNode,
-      )
+    result = newProcNode(
+      kind,
+      info,
+      body = p.emptyNode,
+      params = params,
+      name = p.emptyNode,
+      pattern = p.emptyNode,
+      genericParams = p.emptyNode,
+      pragmas = pragmas,
+      exceptions = p.emptyNode,
+    )
     result.prefix.add skipped
     result[bodyPos] = parseComStmt(p, result, clMid)
   else:
@@ -1633,10 +1627,9 @@ proc parseTypeDefValue(p: var Parser): PNode =
 proc makeCall(n: PNode): PNode =
   ## Creates a call if the given node isn't already a call.
   if n.kind in nkCallKinds:
-    result = n
+    n
   else:
-    result = newNodeI(nkCall, n.info)
-    result.add n
+    wrap(newNodeI(nkCall, n.info), n)
 
 proc postExprBlocks(p: var Parser, x: PNode): PNode =
   #| extraPostExprBlock = ( IND{=} doBlock
@@ -1749,7 +1742,7 @@ proc parseExprStmt(p: var Parser): PNode =
     # if an expression is starting here, a simplePrimary was parsed and
     # this is the start of a command
     if p.tok.indent < 0 and isExprStart(p):
-      result = newTreeI(nkCommand, a.info, a)
+      result = wrap(newNodeI(nkCommand, a.info), a)
       let baseIndent = p.currInd
       splitLookahead(p, result[^1], clPostfix)
       while true:
