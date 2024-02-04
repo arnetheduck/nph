@@ -680,10 +680,10 @@ sons:
       - kind: "nkStmtList"
         sons:
           - kind: "nkCall"
+            prefix:
+              - "# try first dedent line"
             sons:
               - kind: "nkIdent"
-                prefix:
-                  - "# try first dedent line"
                 ident: "f"
       - kind: "nkExceptBranch"
         prefix:
@@ -865,10 +865,10 @@ sons:
           - kind: "nkIdent"
             ident: "Object"
           - kind: "nkExprColonExpr"
+            prefix:
+              - "# object first line"
             sons:
               - kind: "nkIdent"
-                prefix:
-                  - "# object first line"
                 ident: "field"
               - kind: "nkIntLit"
                 intVal: 0

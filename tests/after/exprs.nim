@@ -34,7 +34,7 @@ let
 
 # command syntax with colon
 discard xxxx "arg":
-    yyy
+  yyy
 
 (
   try:
@@ -156,3 +156,11 @@ mynums =
   .replace5("five", "f5ive")
   .replace6("six", "s6ix")
   .replace7("seven", "s7even")
+
+let xxxxxxxxx = block:
+  f()
+  v
+
+let yyyyyyyyyy = aaaaaaaaaaaaaaaaaaaaaaaaa.ffffffffffffff(
+  aaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccccc
+)

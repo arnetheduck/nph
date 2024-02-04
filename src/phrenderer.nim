@@ -30,11 +30,7 @@ const
   blankAfterComplex = {nkObjectTy, nkEnumTy, nkTypeSection, nkProcDef .. nkIteratorDef}
     ## If a statment is sufficiently complex as measured by the number of lines
     ## it occupies, add a blank line after it
-  subOptSkipNL = {
-    nkPar, nkCurly, nkBracket, nkTableConstr, nkStmtListExpr, nkPragma, nkPragmaExpr
-  }
-    ## When rendering nodes of the above kind, ignore length of children for the purpose
-    ## of adding newlines
+
   Space = " "
 
 type
@@ -395,8 +391,21 @@ proc infixHasParens(n: PNode, i: int): bool =
 proc hasIndent(n: PNode): bool =
   n.kind in {
     nkPar, nkCurly, nkBracket, nkTableConstr, nkStmtListExpr, nkPragma, nkPragmaExpr,
-    nkObjectTy, nkEnumTy
+    nkObjectTy, nkEnumTy, nkBlockStmt, nkBlockExpr
   }
+
+proc isStackedCall(n: PNode, inCall: bool): bool =
+  # At least two calls to enable "stacking" mode
+  case n.kind
+  of nkCall:
+    if inCall:
+      true
+    else:
+      isStackedCall(n[0], true)
+  of nkDotExpr:
+    isStackedCall(n[0], inCall)
+  else:
+    false
 
 proc litAux(g: TOutput, n: PNode, x: BiggestInt, size: int): string =
   proc skip(t: PType): PType =
@@ -555,9 +564,7 @@ proc init(T: type TSrcLen, g: TSrcGen): T =
   )
 
 proc gsub(g: var TOutput, n: PNode, flags: SubFlags = {}, extra = 0)
-proc gsubOptNL(
-  g: var TOutput, n: PNode, indentNL = IndentWidth, flags: SubFlags = {}, strict = false
-)
+proc gsubOptNL(g: var TOutput, n: PNode, indentNL = IndentWidth, flags: SubFlags = {})
 
 proc gsons(
   g: var TOutput, n: PNode, start: int = 0, theEnd: int = -1, flags: SubFlags = {}
@@ -600,11 +607,30 @@ template withSrcLen(g: TSrcGen, body: untyped): LineLen =
       sl.lineLen - pre
   (post, sl.nl)
 
+template withSrcLenNl(g: TSrcGen, nlParam: bool, body: untyped): LineLen =
+  var sl {.inject.} = TSrcLen.init(g)
+  if nlParam:
+    optNL(sl)
+    addPendingNL(sl)
+    sl.nl = false
+
+  let pre = sl.lineLen
+  body
+  let post =
+    if sl.nl:
+      MaxLineLen + 1
+    else:
+      sl.lineLen - pre
+  (post, sl.nl)
+
 template withSrcLen(g: TSrcLen, body: untyped): LineLen =
   (0, false)
 
-proc lsub(g: TOutput, n: PNode, flags: SubFlags = {}, extra = 0): LineLen =
-  withSrcLen(g):
+template withSrcLenNl(g: TSrcLen, nlParam: bool, body: untyped): LineLen =
+  (0, false)
+
+proc lsub(g: TOutput, n: PNode, flags: SubFlags = {}, extra = 0, nl = false): LineLen =
+  withSrcLenNl(g, nl):
     gsub(sl, n, flags, extra)
 
 proc lsons(
@@ -638,9 +664,8 @@ proc llist(
     subFlags: SubFlags = {},
     extra = 0,
 ): LineLen =
-  let res =
-    withSrcLen(g):
-      glist(sl, n, brOpen, start, theEnd, separator, indentNL, flags, subFlags, extra)
+  let res = withSrcLen(g):
+    glist(sl, n, brOpen, start, theEnd, separator, indentNL, flags, subFlags, extra)
   res + extra
 
 proc lstmts(g: var TOutput, n: PNode, flags: SubFlags = {}, doIndent = true): LineLen =
@@ -651,7 +676,7 @@ proc nlsub(g: TOutput, n: PNode, flags: SubFlags = {}): LineLen =
   ## How many characters until the next early line break
   let ll = lsub(g, n, flags)
   case n.kind
-  of nkPar, nkCurly, nkBracket, nkTableConstr, nkStmtListExpr:
+  of nkPar, nkClosure, nkCurly, nkBracket, nkTableConstr, nkStmtListExpr, nkTupleConstr:
     (1, ll[1])
   of nkPragma, nkPragmaExpr:
     (2, ll[1])
@@ -1222,8 +1247,7 @@ proc gproc(g: var TOutput, n: PNode) =
 
       gstmts(g, n[bodyPos])
   else:
-    withIndent(g):
-      gmids(g, n)
+    gmids(g, n, indented = true)
 
 proc gTypeClassTy(g: var TOutput, n: PNode) =
   putWithSpace(g, tkConcept, "concept")
@@ -1301,31 +1325,38 @@ proc doParamsAux(g: var TOutput, params: PNode) =
     putWithSpace(g, tkOpr, "->")
     gsub(g, params[0])
 
-proc gsubOptNL(
-    g: var TOutput,
-    n: PNode,
-    indentNL = IndentWidth,
-    flags: SubFlags = {},
-    strict = false,
-) =
+proc gsubOptNL(g: var TOutput, n: PNode, indentNL = IndentWidth, flags: SubFlags = {}) =
   # Output n on the same line if it fits, else continue on next - indentation is
   # always set up in case a comment linebreaks the statement
 
-  if hasIndent(n) and n.kind in subOptSkipNL:
-    gsub(g, n, flags = flags)
-  else:
-    let
-      sublen =
-        if strict:
-          lsub(g, n, flags = flags)
-        else:
-          nlsub(g, n, flags = flags)
-      nl = overflows(g, sublen)
-    withIndent(g, indentNL):
-      if nl:
-        optNL(g)
+  # The following node kinds are allowed to appear partially on the same line
+  # where we were even if they don't fully fit / have newlines in them -
+  # everything else (such as control flow, literals etc) will be moved to a new
+  # indented line if it doesn't fit.
+  #
+  # In particular, we put infixes, if/case/try expressions and the like on a
+  # new line so as to align their keywords.
+  const suboptAvoidNL = {
+    nkCall, nkConv, nkPattern, nkObjConstr, nkCast, nkStaticExpr, nkBracketExpr,
+    nkCurlyExpr, nkPragmaExpr, nkCommand, nkExprEqExpr, nkAsgn, nkFastAsgn, nkClosure,
+    nkTupleConstr, nkCurly, nkArgList, nkTableConstr, nkBracket, nkDotExpr, nkBind,
+    nkDo, nkIdentDefs, nkConstDef, nkVarTuple, nkExprColonExpr, nkTypeOfExpr,
+    nkDistinctTy, nkTypeDef, nkBlockStmt, nkBlockExpr, nkLambda, nkProcTy
+  }
 
-      gsub(g, n, flags = flags)
+  let
+    sublen = nlsub(g, n, flags = flags)
+    nl =
+      overflows(g, sublen) and (
+        n.kind notin suboptAvoidNL or fits(g, sublen + g.indent + indentNL) or
+        isStackedCall(n, false)
+      )
+    ind = condIndent(g, nl or g.pendingNL >= 0 or n.prefix.len > 0, indentNL)
+
+  if nl:
+    optNL(g)
+  gsub(g, n, flags = flags)
+  dedent(g, ind)
 
 proc accentedName(g: var TOutput, n: PNode, flags: SubFlags = {}) =
   # This is for cases where ident should've really been a `nkAccQuoted`, e.g. `:tmp`
@@ -1398,19 +1429,6 @@ proc isCustomLit(n: PNode): bool =
     let ident = n[1].getPIdent
 
     result = ident != nil and ident.s.startsWith('\'')
-
-proc isStackedCall(n: PNode, inCall: bool): bool =
-  # At least two calls to enable "stacking" mode
-  case n.kind
-  of nkCall:
-    if inCall:
-      true
-    else:
-      isStackedCall(n, true)
-  of nkDotExpr:
-    isStackedCall(n[0], inCall)
-  else:
-    false
 
 proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
   if isNil(n):
@@ -1881,7 +1899,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       if n[2].kind in {nkObjectTy, nkEnumTy, nkRefTy}:
         gsub(g, n[2], flags = {sfNoIndent})
       else:
-        gsubOptNL(g, n[2], strict = true, flags = {sfNoIndent})
+        gsubOptNL(g, n[2], flags = {sfNoIndent})
 
     if n[0].postfix.len > 0:
       g.dedent()
@@ -1890,9 +1908,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       putWithSpace(g, tkObject, "object")
       gsub(g, n[0]) # nkEmpty (unused)
       gsub(g, n[1]) # nkOfInherit / nkEmpty
-      withIndent(g):
-        gmids(g, n)
-
+      gmids(g, n, indented = true)
       gsub(g, n[2]) # fields
     else:
       put(g, tkObject, "object")
@@ -1944,9 +1960,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     if n.len > 0:
       putWithSpace(g, tkEnum, "enum")
       gsub(g, n[0])
-      withIndent(g):
-        gmids(g, n)
-
+      gmids(g, n, indented = true)
       indentNL(g)
       gsonsNL(g, n, 1)
       dedent(g)
@@ -2012,39 +2026,33 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     gsection(g, n, tkUsing, "using")
   of nkReturnStmt:
     putWithSpace(g, tkReturn, "return")
-    withIndent(g):
-      gmids(g, n)
-      if n.len > 0 and n[0].kind == nkAsgn:
-        gsub(g, n[0][1])
-      else:
-        gsub(g, n[0], flags = {sfSkipDo})
+    gmids(g, n, indented = true)
+    if n.len > 0 and n[0].kind == nkAsgn:
+      gsubOptNL(g, n[0][1])
+    else:
+      gsubOptNL(g, n[0], flags = {sfSkipDo})
   of nkRaiseStmt:
     putWithSpace(g, tkRaise, "raise")
-    withIndent(g):
-      gmids(g, n)
-      gsub(g, n[0])
+    gmids(g, n, indented = true)
+    gsubOptNL(g, n[0])
   of nkYieldStmt:
     putWithSpace(g, tkYield, "yield")
-    withIndent(g):
-      gmids(g, n)
-      gsub(g, n[0])
+    gmids(g, n, indented = true)
+    gsubOptNL(g, n[0])
   of nkDiscardStmt:
     put(g, tkDiscard, "discard")
+    gmids(g, n, indented = true)
     if n[0].kind != nkEmpty:
-      withIndent(g):
-        optSpace(g)
-        gmids(g, n)
-        gsub(g, n[0], flags = {sfSkipDo})
+      optSpace(g)
+      gsubOptNL(g, n[0], flags = {sfSkipDo})
   of nkBreakStmt:
     putWithSpace(g, tkBreak, "break")
-    withIndent(g):
-      gmids(g, n)
-      gsub(g, n[0])
+    gmids(g, n, indented = true)
+    gsubOptNL(g, n[0])
   of nkContinueStmt:
     putWithSpace(g, tkContinue, "continue")
-    withIndent(g):
-      gmids(g, n)
-      gsub(g, n[0])
+    gmids(g, n, indented = true)
+    gsubOptNL(g, n[0])
   of nkPragma:
     if g.inPragma <= 0:
       inc g.inPragma

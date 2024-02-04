@@ -38,46 +38,40 @@ call.dotExpr:
 call.dotExpr:
   discard 14
 
-asgn =
-  command do():
-    discard 15
-asgn =
-  command:
-    discard 16
-asgn =
-  command:
-    discard 17
+asgn = command do():
+  discard 15
+asgn = command:
+  discard 16
+asgn = command:
+  discard 17
 
-asgn =
-  command do():
-    discard 18
-asgn =
-  command:
-    discard 19
-asgn =
-  command:
-    discard 20
+asgn = command do():
+  discard 18
+asgn = command:
+  discard 19
+asgn = command:
+  discard 20
 
 if false:
   return command do():
-      discard 21
+    discard 21
 
 if false:
   return command:
-      discard 22
+    discard 22
 
 if false:
   return command:
-      discard 23
+    discard 23
 
 discard command do():
-    discard 24
+  discard 24
 
 discard command:
-    discard 25
+  discard 25
 
 discard command:
-    discard 26
+  discard 26
 
 call(
   command do():

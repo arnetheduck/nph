@@ -214,11 +214,10 @@ block: # block colon line
   discard
   discard
 
-let x =
-  proc(): int = # lambda eq line
-    # lambda first line
-    discard
-    discard
+let x = proc(): int = # lambda eq line
+  # lambda first line
+  discard
+  discard
 while false: # while colon line
   # while first line
   discard
@@ -228,13 +227,13 @@ static: # static colon line
   discard
 
 discard Object( # object eol
-    # object first line
-    field: 0, # field line
-    field2:
-      # field colon line
-      # Field colon next line
-      42,
-  )
+  # object first line
+  field: 0, # field line
+  field2:
+    # field colon line
+    # Field colon next line
+    42,
+)
 
 a = b
 ## Doc comment after assignment
