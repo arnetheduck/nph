@@ -49,3 +49,4 @@ nimble build
 ## Editor integration
 
 * [VSCode](https://marketplace.visualstudio.com/items?itemName=arnetheduck.vscode-nph) (`ext install arnetheduck.vscode-nph`)
+* [NeoVim](https://github.com/sbdchd/neoformat) - Install **neoformat** in your neovim setup then add the nim formating option with **nph** with this option in init.vim `let g:neoformat_enabled_nim = ['nph']`
