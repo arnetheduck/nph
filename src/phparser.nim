@@ -51,7 +51,7 @@ type
     inSemiStmtList*: int
     emptyNode: PNode
     skipped*: seq[Token]
-    endLine: uint16
+    endLine: int
 
   SymbolMode = enum
     smNormal
@@ -219,7 +219,7 @@ template setEndInfo(node: PNode) =
   #      for statement lists, which is the only place where we retain whitespace
   node.endInfo = TLineInfo(
     fileIndex: p.lex.fileIdx,
-    line: uint16 p.lineNumberPrevious,
+    line: p.lineNumberPrevious,
     col: p.lex.previousTokenEnd.col,
   )
 
@@ -488,7 +488,7 @@ proc exprList(p: var Parser, endTok: TokType, result: PNode) =
     if p.tok.tokType != tkComma:
       break
     getTok(p)
-    splitLookahead(p, a, clPostfix)
+    splitLookahead(p, result[^1], clPostfix)
     optInd(p, a)
     var a = parseExpr(p)
     result.add(a)
@@ -600,6 +600,8 @@ proc setOrTableConstr(p: var Parser): PNode =
         result.transitionSonsKind(nkTableConstr)
       result.add(a)
       if p.tok.tokType != tkComma:
+        # All comments before closing token
+        a.postfix.add move(p.skipped)
         break
       getTok(p)
       splitLookahead(p, a, clPostfix)
@@ -753,6 +755,8 @@ proc parsePar(p: var Parser): PNode =
       result.add(a)
       if p.tok.tokType == tkComma:
         getTok(p)
+        splitLookahead(p, a, clPostfix)
+
         # (1,) produces a tuple expression:
         result.transitionSonsKind(nkTupleConstr)
         # progress guaranteed
@@ -762,6 +766,9 @@ proc parsePar(p: var Parser): PNode =
           if p.tok.tokType != tkComma:
             break
           getTok(p)
+          splitLookahead(p, a, clPostfix)
+      # All comments before closing token
+      result[^1].postfix.add move(p.skipped)
   optPar(p)
   eat(p, tkParRi)
   setEndInfo()
@@ -1163,6 +1170,8 @@ proc parseTuple(p: var Parser, indentAllowed = false): PNode =
       var a = parseIdentColonEquals(p, {})
       result.add(a)
       if p.tok.tokType notin {tkComma, tkSemiColon}:
+        # All comments before closing token
+        a.postfix.add move(p.skipped)
         break
       getTok(p)
       splitLookahead(p, a, clPostfix)
@@ -1178,6 +1187,7 @@ proc parseTuple(p: var Parser, indentAllowed = false): PNode =
           case p.tok.tokType
           of tkSymbol, tkAccent:
             var a = parseIdentColonEquals(p, {})
+            splitLookahead(p, a, clPostfix)
             result.add(a)
           of tkEof:
             break
@@ -1223,10 +1233,12 @@ proc parseParamList(p: var Parser, retColon = true): PNode =
         parMessage(p, "expected closing ')'")
         break
       result.add(a)
-      splitLookahead(p, a, clPostfix)
       if p.tok.tokType notin {tkComma, tkSemiColon}:
+        # All comments before closing token
+        a.postfix.add move(p.skipped)
         break
       getTok(p)
+      splitLookahead(p, a, clPostfix)
     # Not ideal, but we'll attach the last comment in the par to the last
     # parameter
     if result.len > 0:
@@ -2111,6 +2123,8 @@ proc parseGenericParamList(p: var Parser): PNode =
     var a = parseGenericParam(p)
     result.add(a)
     if p.tok.tokType notin {tkComma, tkSemiColon}:
+      # All comments before closing token
+      a.postfix.add move(p.skipped)
       break
     getTok(p)
     splitLookahead(p, a, clPostfix)
@@ -2497,6 +2511,8 @@ proc parseVarTuple(p: var Parser): PNode =
       a = identWithPragma(p, allowDot = true)
     result.add(a)
     if p.tok.tokType != tkComma:
+      # All comments before closing token
+      a.postfix.add move(p.skipped)
       break
     getTok(p)
     splitLookahead(p, a, clPostfix)
