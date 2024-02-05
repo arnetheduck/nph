@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.3"
+version       = "0.4"
 author        = "Jacek Sieka"
 description   = "Nim code formatter"
 license       = "MIT"
