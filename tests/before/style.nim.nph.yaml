@@ -1,0 +1,467 @@
+kind: "nkStmtList"
+sons:
+  - kind: "nkCommentStmt"
+    "comment": "# Style examples - compile with `-d:nphBookExamples` to regenerate them"
+  - kind: "nkCommentStmt"
+    "comment": "# for the book"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "function"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkIdent"
+            ident: "bool"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "par0"
+              - kind: "nkIdent"
+                ident: "SomeType"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "function"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkIdent"
+            ident: "bool"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "par0"
+              - kind: "nkIdent"
+                ident: "SomeType"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "par1"
+              - kind: "nkIdent"
+                ident: "SomeType"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "function"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkIdent"
+            ident: "bool"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "par0"
+              - kind: "nkIdent"
+                ident: "SomeType"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "par1"
+              - kind: "nkIdent"
+                ident: "par2"
+              - kind: "nkIdent"
+                ident: "SomeOtherType"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "par3"
+              - kind: "nkEmpty"
+              - kind: "nkCall"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "default"
+                  - kind: "nkIdent"
+                    ident: "SomeType"
+      - kind: "nkPragma"
+        sons:
+          - kind: "nkIdent"
+            ident: "inline"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkImportStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "/"
+          - kind: "nkIdent"
+            ident: "dir"
+          - kind: "nkIdent"
+            ident: "module"
+  - kind: "nkConstSection"
+    sons:
+      - kind: "nkConstDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "v"
+          - kind: "nkEmpty"
+          - kind: "nkBracket"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 1
+              - kind: "nkIntLit"
+                intVal: 2
+              - kind: "nkIntLit"
+                intVal: 3
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "T"
+          - kind: "nkEmpty"
+          - kind: "nkProcTy"
+            sons:
+              - kind: "nkFormalParams"
+                sons:
+                  - kind: "nkEmpty"
+                  - kind: "nkIdentDefs"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "a"
+                      - kind: "nkIdent"
+                        ident: "b"
+                      - kind: "nkIdent"
+                        ident: "int"
+                      - kind: "nkEmpty"
+              - kind: "nkEmpty"
+  - kind: "nkImportStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "/"
+          - kind: "nkIdent"
+            ident: "dir"
+          - kind: "nkBracket"
+            sons:
+              - kind: "nkIdent"
+                ident: "module1"
+              - kind: "nkIdent"
+                ident: "module2"
+              - kind: "nkIdent"
+                ident: "module3"
+              - kind: "nkIdent"
+                ident: "module4"
+  - kind: "nkConstSection"
+    sons:
+      - kind: "nkConstDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "mylongvariablename"
+          - kind: "nkEmpty"
+          - kind: "nkBracket"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 100000000
+              - kind: "nkIntLit"
+                intVal: 200000000
+              - kind: "nkIntLit"
+                intVal: 300000000
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "function"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "param0"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "param1"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "param2"
+              - kind: "nkIdent"
+                ident: "int"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkImportStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "/"
+          - kind: "nkIdent"
+            ident: "dir"
+          - kind: "nkBracket"
+            sons:
+              - kind: "nkIdent"
+                ident: "module1"
+              - kind: "nkIdent"
+                ident: "module2"
+              - kind: "nkIdent"
+                ident: "module3"
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "/"
+          - kind: "nkIdent"
+            ident: "dir2"
+          - kind: "nkBracket"
+            sons:
+              - kind: "nkIdent"
+                ident: "module4"
+              - kind: "nkIdent"
+                ident: "module5"
+              - kind: "nkIdent"
+                ident: "module6"
+              - kind: "nkIdent"
+                ident: "module7"
+              - kind: "nkIdent"
+                ident: "module8"
+              - kind: "nkIdent"
+                ident: "module9"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "myVariable"
+          - kind: "nkEmpty"
+          - kind: "nkBracket"
+            sons:
+              - kind: "nkCall"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "functionCall"
+                  - kind: "nkIdent"
+                    ident: "a"
+                  - kind: "nkIdent"
+                    ident: "b"
+                  - kind: "nkIdent"
+                    ident: "c"
+              - kind: "nkCall"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "functionCall"
+                  - kind: "nkIdent"
+                    ident: "a"
+                  - kind: "nkIdent"
+                    ident: "b"
+                  - kind: "nkIdent"
+                    ident: "c"
+                  - kind: "nkIdent"
+                    ident: "d"
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "functionCall"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "functionCall"
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkIdent"
+            ident: "b"
+          - kind: "nkIdent"
+            ident: "c"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "functionCall"
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkIdent"
+            ident: "b"
+          - kind: "nkIdent"
+            ident: "c"
+          - kind: "nkIdent"
+            ident: "d"
+  - kind: "nkConstSection"
+    sons:
+      - kind: "nkConstDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "values"
+          - kind: "nkEmpty"
+          - kind: "nkBracket"
+            sons:
+              - kind: "nkIntLit"
+                intVal: 10000000
+              - kind: "nkIntLit"
+                intVal: 2000000000
+              - kind: "nkInt64Lit"
+                intVal: 3000000000
+              - kind: "nkIntLit"
+                intVal: 40000000
+              - kind: "nkInt64Lit"
+                intVal: 5000000000
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
+        ident: "functionCall"
+      - kind: "nkIntLit"
+        intVal: 10000000
+      - kind: "nkIntLit"
+        intVal: 2000000000
+      - kind: "nkInt64Lit"
+        intVal: 3000000000
+      - kind: "nkIntLit"
+        intVal: 40000000
+      - kind: "nkInt64Lit"
+        intVal: 5000000000
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "f"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "myParameter"
+              - kind: "nkEmpty"
+              - kind: "nkIntLit"
+                intVal: 0
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "callback"
+              - kind: "nkIdent"
+                ident: "SomeCallback"
+              - kind: "nkLambda"
+                sons:
+                  - kind: "nkEmpty"
+                  - kind: "nkEmpty"
+                  - kind: "nkEmpty"
+                  - kind: "nkFormalParams"
+                    sons:
+                      - kind: "nkEmpty"
+                  - kind: "nkEmpty"
+                  - kind: "nkEmpty"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkDiscardStmt"
+                        sons:
+                          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "nextParameter"
+              - kind: "nkEmpty"
+              - kind: "nkIntLit"
+                intVal: 1
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "myvariable"
+          - kind: "nkEmpty"
+          - kind: "nkCall"
+            sons:
+              - kind: "nkIdent"
+                ident: "shortexpression"
+              - kind: "nkIdent"
+                ident: "abc"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "myvariable"
+          - kind: "nkEmpty"
+          - kind: "nkCall"
+            sons:
+              - kind: "nkIdent"
+                ident: "someevenlongerexpression"
+              - kind: "nkIdent"
+                ident: "abc"
+              - kind: "nkIdent"
+                ident: "def"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "myvariable"
+          - kind: "nkEmpty"
+          - kind: "nkCall"
+            sons:
+              - kind: "nkIdent"
+                ident: "someevenlongerexpression"
+              - kind: "nkIdent"
+                ident: "aaa"
+              - kind: "nkIdent"
+                ident: "bbb"
+              - kind: "nkIdent"
+                ident: "ccc"
+              - kind: "nkIdent"
+                ident: "ddd"
+  - kind: "nkReturnStmt"
+    sons:
+      - kind: "nkIfExpr"
+        sons:
+          - kind: "nkElifExpr"
+            sons:
+              - kind: "nkIdent"
+                ident: "condition"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "complex"
+                      - kind: "nkIdent"
+                        ident: "call"
+          - kind: "nkElseExpr"
+            sons:
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "alsocomplex"
+                      - kind: "nkIdent"
+                        ident: "call"
