@@ -52,9 +52,8 @@ proc parseString2(
   closeParser(p)
 
 proc similarKinds(ak, bk: TNodeKind): bool =
-  ak == bk or (ak in {nkElseExpr, nkElse} and bk in {nkElseExpr, nkElse}) or (
-    ak in {nkElifExpr, nkElifBranch} and bk in {nkElifExpr, nkElifBranch}
-  )
+  ak == bk or (ak in {nkElseExpr, nkElse} and bk in {nkElseExpr, nkElse}) or
+    (ak in {nkElifExpr, nkElifBranch} and bk in {nkElifExpr, nkElifBranch})
 
 proc equivalent*(a, b: PNode): Outcome =
   if not similarKinds(a.kind, b.kind):

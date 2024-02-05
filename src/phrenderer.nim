@@ -183,9 +183,8 @@ proc isSimple(n: PNode, allowExported = false, allowInfix = false): bool =
 # determines how long the subtree will likely be, the second
 # phase appends to a buffer that will be the output.
 proc isKeyword*(i: PIdent): bool =
-  if (i.id >= ord(tokKeywordLow) - ord(tkSymbol)) and (
-    i.id <= ord(tokKeywordHigh) - ord(tkSymbol)
-  ):
+  if (i.id >= ord(tokKeywordLow) - ord(tkSymbol)) and
+      (i.id <= ord(tokKeywordHigh) - ord(tkSymbol)):
     result = true
 
 proc initSrcGen(g: var TSrcGen, config: ConfigRef) =
@@ -412,9 +411,8 @@ proc litAux(g: TOutput, n: PNode, x: BiggestInt, size: int): string =
   proc skip(t: PType): PType =
     result = t
     while result != nil and
-        result.kind in {
-          tyGenericInst, tyRange, tyVar, tyLent, tyDistinct, tyOrdinal, tyAlias, tySink
-        }
+        result.kind in
+        {tyGenericInst, tyRange, tyVar, tyLent, tyDistinct, tyOrdinal, tyAlias, tySink}
     :
       result = lastSon(result)
 
@@ -1302,9 +1300,8 @@ proc gident(g: var TOutput, n: PNode) =
   var s = atom(g, n)
   if s.len > 0 and s[0] in phlexer.SymChars:
     if n.kind == nkIdent:
-      if (n.ident.id < ord(tokKeywordLow) - ord(tkSymbol)) or (
-        n.ident.id > ord(tokKeywordHigh) - ord(tkSymbol)
-      ):
+      if (n.ident.id < ord(tokKeywordLow) - ord(tkSymbol)) or
+          (n.ident.id > ord(tokKeywordHigh) - ord(tkSymbol)):
         t = tkSymbol
       else:
         t = TokType(n.ident.id + ord(tkSymbol))
@@ -1358,7 +1355,11 @@ proc gsubOptNL(g: var TOutput, n: PNode, indentNL = IndentWidth, flags: SubFlags
         isStackedCall(n, false)
       )
     ind = condIndent(g, nl or g.pendingNL >= 0 or n.prefix.len > 0, indentNL)
-
+    flags =
+      if ind > 0:
+        {sfNoIndent} + flags
+      else:
+        flags
   if nl:
     optNL(g)
   gsub(g, n, flags = flags)
@@ -1746,10 +1747,18 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
     gsub(g, n[0], flags = flags) # binary operator
 
+    doAssert n.len == 3
+
+    # `fitsNL` governs a preference to fit an argument fully on a new line over
+    # leaving parts of it on the same line as the operator.
+    # This increases the probability that the line will end with an operator and
+    # not a `(` or some other nlsub-selected line-breaking token
     let
-      overflows =
-        n.len == 3 and overflows(g, nlsub(g, n[2])) and not infixHasParens(n, 2)
-      indent = overflows and sfNoIndent notin flags and not hasIndent(n[2])
+      sublen = lsub(g, n[2])
+      nsublen = nlsub(g, n[2])
+      overflows = n.len == 3 and overflows(g, nsublen) and not infixHasParens(n, 2)
+      fitsNL = overflows(g, sublen) and fits(g, sublen + g.indent)
+      indent = sfNoIndent notin flags and (fitsNL or overflows and not hasIndent(n[2]))
       wid = flagIndent(flags)
       flags =
         if indent:
@@ -1761,7 +1770,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
     if indent:
       indentNL(g, wid)
-    elif overflows:
+    elif overflows or fitsNL:
       optNL(g)
     elif spaces:
       optSpace(g)

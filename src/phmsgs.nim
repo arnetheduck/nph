@@ -483,7 +483,7 @@ proc quit(conf: ConfigRef, msg: TMsgKind) {.gcsafe.} =
           """
 No stack traceback available
 To create a stacktrace, rerun compilation with './koch temp $1 <file>', see $2 for details""" %
-          [conf.command, "intern.html#debugging-the-compiler".createDocLink],
+            [conf.command, "intern.html#debugging-the-compiler".createDocLink],
           conf.unitSep,
         )
 
@@ -498,9 +498,8 @@ proc handleError(
 
     quit(conf, msg)
 
-  if msg >= errMin and msg <= errMax or (
-    msg in warnMin .. hintMax and msg in conf.warningAsErrors and not ignoreMsg
-  ):
+  if msg >= errMin and msg <= errMax or
+      (msg in warnMin .. hintMax and msg in conf.warningAsErrors and not ignoreMsg):
     inc(conf.errorCounter)
 
     conf.exitcode = 1'i8

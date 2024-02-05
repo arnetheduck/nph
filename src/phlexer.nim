@@ -588,9 +588,8 @@ proc getNumber(L: var Lexer, result: var Token) =
     else:
       lexMessageLitNum(L, "invalid number suffix: '$1'", errPos)
   # Is there still a literalish char awaiting? Then it's an error!
-  if L.buf[postPos] in literalishChars or (
-    L.buf[postPos] == '.' and L.buf[postPos + 1] in {'0' .. '9'}
-  ):
+  if L.buf[postPos] in literalishChars or
+      (L.buf[postPos] == '.' and L.buf[postPos + 1] in {'0' .. '9'}):
     lexMessageLitNum(L, "invalid number: '$1'", startpos)
 
   if result.tokType != tkCustomLit:
@@ -1172,9 +1171,8 @@ proc getSymbol(L: var Lexer, tok: var Token) =
 
   h = !$h
   tok.ident = L.cache.getIdent(cast[cstring](addr(L.buf[L.bufpos])), pos - L.bufpos, h)
-  if (tok.ident.id < ord(tokKeywordLow) - ord(tkSymbol)) or (
-    tok.ident.id > ord(tokKeywordHigh) - ord(tkSymbol)
-  ):
+  if (tok.ident.id < ord(tokKeywordLow) - ord(tkSymbol)) or
+      (tok.ident.id > ord(tokKeywordHigh) - ord(tkSymbol)):
     tok.tokType = tkSymbol
   else:
     tok.tokType = TokType(tok.ident.id + ord(tkSymbol))
@@ -1604,9 +1602,8 @@ proc rawGetTok*(L: var Lexer, tok: var Token) =
             "invalid token: no whitespace between number and identifier"
           )
     of '-':
-      if L.buf[L.bufpos + 1] in {'0' .. '9'} and (
-        L.bufpos - 1 == 0 or L.buf[L.bufpos - 1] in UnaryMinusWhitelist
-      ):
+      if L.buf[L.bufpos + 1] in {'0' .. '9'} and
+          (L.bufpos - 1 == 0 or L.buf[L.bufpos - 1] in UnaryMinusWhitelist):
         # x)-23 # binary minus
         # ,-23  # unary minus
         # \n-78 # unary minus? Yes.

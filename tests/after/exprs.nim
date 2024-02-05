@@ -84,15 +84,13 @@ if aaaaaaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbb and cccccccccccccccccccccccc
     ddddddddddddddddd and fffffffffffffffff:
   discard
 
-if (aaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbbbbbbb) or (
-  ccccccccccccccccccccccccccc and ddddddddddddddddddddd
-):
+if (aaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbbbbbbb) or
+    (ccccccccccccccccccccccccccc and ddddddddddddddddddddd):
   discard
 elif aaaaaaaaa and (
   bbbbbbbbbb or
-  cccccccccccc and (
-    dddddddddddddddd or eeeeeeeeeeeeeee or fffffffffffffff or gggggggggggggg
-  )
+  cccccccccccc and
+  (dddddddddddddddd or eeeeeeeeeeeeeee or fffffffffffffff or gggggggggggggg)
 ):
   discard
 
@@ -164,3 +162,11 @@ let xxxxxxxxx = block:
 let yyyyyyyyyy = aaaaaaaaaaaaaaaaaaaaaaaaa.ffffffffffffff(
   aaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccccc
 )
+
+discard
+  aaaaaaaaa and (
+    aaaaaaaaaaaaaaaaaaaaaaaa and (
+      aaaaaaaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbb and
+      (cccccccccccccccccccccc and ddddddddddddddddddd)
+    )
+  )
