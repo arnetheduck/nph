@@ -18,7 +18,7 @@ To get an idea what the format looks like, here's a typical proc definition -
 everything fits on one line, nice!
 
 ```nim
-proc covers(entry: AttestationEntry; bits: CommitteeValidatorsBits): bool =
+proc function(par0: SomeType): bool =
   ...
 ```
 
@@ -26,8 +26,8 @@ If we add more arguments, it starts getting long - nph will try with a version
 where the arguments sit on a line of their own:
 
 ```nim
-proc addAttestation(
-    entry: var AttestationEntry; attestation: Attestation; signature: CookedSig
+proc function(
+    par0: SomeType, par1: SomeType
 ): bool =
   ...
 ```
@@ -35,21 +35,20 @@ proc addAttestation(
 The above idea extends to most formatting: if something is simple, format it in
 a simple way - if not, use a bit of style to break down what's going on into
 more easily consumable pieces - here's a function with several information-dense
-parameters and a complex return type:
+parameters and a pragma:
 
 ```nim
-proc validateBlsToExecutionChange*(
-    pool: ValidatorChangePool;
-    batchCrypto: ref BatchCrypto;
-    signed_address_change: SignedBLSToExecutionChange;
-    wallEpoch: Epoch
-): Future[Result[void, ValidationError]] {.async.} =
+proc function(
+    par0: SomeType,
+    par1, par2: SomeOtherType,
+    par3 = default(SomeType),
+): bool {.inline.} =
   ...
 ```
 
 ```admonish info "Example styling"
 The examples are illustrative and not based on exact rendering semantics - in
-particular, a different line length was used to keep them readable
+particular, a different line length was used to make the point
 ```
 
 ## Lists
@@ -64,7 +63,7 @@ If the whole list fits on the current line, it is rendered in-place. Short
 sequences, single-parameter functions etc usually fit into this category:
 
 ```nim
-import folder/module
+import dir/module
 
 const v = [1, 2, 3]
 
@@ -77,12 +76,11 @@ name takes up space
 
 ```nim
 import
-  folder/[module1, module2, module3]
+  dir/[module1, module2, module3, module4]
 
-const
-  mylongvariablename = [
-    100000000, 2000000000, 300000000000
-  ]
+const mylongvariablename = [
+  100000000, 200000000, 300000000
+]
 
 proc function(
   param0: int, param1: int, param2: int
@@ -97,22 +95,22 @@ happens most often for function parameters and other information-dense construct
 
 ```nim
 import
-  folder/[module1, module2, module3],
-  folder2/[
-    module4, module5, module6, module7, module8,
-    module9
+  dir/[module1, module2, module3],
+  dir2/[
+    module4, module5, module6, module7,
+    module8, module9
   ]
 
-let
-  myVariable = [
-    functionCall(a, b, c),
-    functionCall(a, b, c, d),
-  ]
+let myVariable = [
+  functionCall(a, b, c),
+  functionCall(a, b, c, d)
+]
 
 functionCall(
   functionCall(a, b, c),
   functionCall(a, b, c, d),
 )
+
 ```
 
 ```admonish info "Extra separator"
@@ -123,11 +121,10 @@ this makes it easier to reorder entries and reduces git conflicts!
 For simple values, we use a compact style that fits several items per row:
 
 ```nim
-const
-  values = [
-    10000000, 2000000000, 3000000000,
-    40000000, 5000000000
-  ]
+const values = [
+  10000000, 2000000000, 3000000000,
+  40000000, 5000000000
+]
 
 functionCall(
   10000000, 2000000000, 3000000000,
@@ -166,9 +163,8 @@ template notthesame(a, b) = discard
 # Semicolons cannot be used at all for inline procedures:
 proc f(
   myParameter = 0,
-  callback: SomeCallback =
-    proc() =
-      discard
+  callback: SomeCallback = proc() =
+    discard
   ,
   nextParameter = 1,
 )
@@ -201,7 +197,7 @@ Expressions appear in many places, such as after certain keywords (`return`,
 Whenever possible, `nph` will try to keep the full expression on a single line:
 
 ```nim
-let myvariable = somelongexpression(abc)
+let myvariable = shortexpression(abc)
 ```
 
 If this is not possible, the second preference is to move the whole expression
@@ -209,7 +205,7 @@ to a new line, assuming it fits:
 
 ```nim
 let myvariable =
-   someevenlongerexpression(abc, def)
+  someevenlongerexpression(abc, def)
 ```
 
 If the expression still doesn't fit, we'll split it up on multiple lines:

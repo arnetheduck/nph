@@ -26,7 +26,7 @@ when defined(nimPreviewSlimSystem):
 const
   IndentWidth = 2
   longIndentWid = IndentWidth * 2
-  MaxLineLen = 88
+  MaxLineLen = when defined(nphBookExamples): 44 else: 88
   blankAfterComplex = {nkObjectTy, nkEnumTy, nkTypeSection, nkProcDef .. nkIteratorDef}
     ## If a statment is sufficiently complex as measured by the number of lines
     ## it occupies, add a blank line after it
