@@ -2340,7 +2340,7 @@ proc parseObjectPart(p: var Parser): PNode =
   #| objectPart = IND{>} objectPart^+IND{=} DED
   #|            / objectWhen / objectCase / 'nil' / 'discard' / declColonEquals
   if realInd(p):
-    result = newNodeP(nkRecList, p)
+    result = newNodeP(nkRecList, p, withPrefix = false)
     withInd(p):
       while sameInd(p):
         case p.tok.tokType
