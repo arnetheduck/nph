@@ -1122,8 +1122,8 @@ type
     # proc and type instantiations are cached in the generic symbol
     case kind*: TSymKind
     of routineKinds:
-    #procInstCache*: seq[PInstantiation]
-    #procInstCache*: seq[PInstantiation]
+      #procInstCache*: seq[PInstantiation]
+      #procInstCache*: seq[PInstantiation]
       gcUnsafetyReason*: PSym # for better error messages regarding gcsafe
       transformedBody*: PNode # cached body after transf pass
     of skLet, skVar, skField, skForVar:

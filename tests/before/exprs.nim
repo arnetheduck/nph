@@ -112,3 +112,5 @@ let xxxxxxxxx = block:
   v
 
 let yyyyyyyyyy = aaaaaaaaaaaaaaaaaaaaaaaaa.ffffffffffffff(aaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+
+discard aaaaaaaaa and (aaaaaaaaaaaaaaaaaaaaaaaa and (aaaaaaaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbb and (cccccccccccccccccccccc and ddddddddddddddddddd)))

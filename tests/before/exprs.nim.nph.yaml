@@ -1845,3 +1845,43 @@ sons:
                 ident: "bbbbbbbbbbbbbbbbbb"
               - kind: "nkIdent"
                 ident: "cccccccccccccccccccc"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkInfix"
+        sons:
+          - kind: "nkIdent"
+            ident: "and"
+          - kind: "nkIdent"
+            ident: "aaaaaaaaa"
+          - kind: "nkPar"
+            sons:
+              - kind: "nkInfix"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "and"
+                  - kind: "nkIdent"
+                    ident: "aaaaaaaaaaaaaaaaaaaaaaaa"
+                  - kind: "nkPar"
+                    sons:
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "and"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "and"
+                              - kind: "nkIdent"
+                                ident: "aaaaaaaaaaaaaaaaaaaaa"
+                              - kind: "nkIdent"
+                                ident: "bbbbbbbbbbbbbbbbbbbbbbb"
+                          - kind: "nkPar"
+                            sons:
+                              - kind: "nkInfix"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "and"
+                                  - kind: "nkIdent"
+                                    ident: "cccccccccccccccccccccc"
+                                  - kind: "nkIdent"
+                                    ident: "ddddddddddddddddddd"

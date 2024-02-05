@@ -771,9 +771,8 @@ proc isDefined*(conf: ConfigRef, symbol: string): bool =
       result = CPU[conf.target.targetCPU].bit == 64
     of "nimrawsetjmp":
       result =
-        conf.target.targetOS in {
-          osSolaris, osNetbsd, osFreebsd, osOpenbsd, osDragonfly, osMacosx
-        }
+        conf.target.targetOS in
+        {osSolaris, osNetbsd, osFreebsd, osOpenbsd, osDragonfly, osMacosx}
     else:
       discard
 
