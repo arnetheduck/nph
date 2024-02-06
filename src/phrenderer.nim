@@ -1738,7 +1738,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
       return
 
-    let flags = flags*{sfNoIndent, sfLongIndent}
+    let flags = flags * {sfNoIndent, sfLongIndent}
 
     infixArgument(g, n, 1, flags = flags)
 
