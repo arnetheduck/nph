@@ -1718,3 +1718,26 @@ sons:
                           - kind: "nkEmpty"
           - kind: "nkCommentStmt"
             "comment": "# comment after if in block"
+  - kind: "nkDiscardStmt"
+    sons:
+      - kind: "nkPar"
+        prefix:
+          - "# infix pre par"
+        sons:
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "and"
+                postfix:
+                  - "# infix post-operator"
+              - kind: "nkIdent"
+                prefix:
+                  - "# infix parle"
+                  - "# infix prefix"
+                ident: "a"
+              - kind: "nkIdent"
+                ident: "b"
+            postfix:
+              - "# infix post"
+        postfix:
+          - "# infix post par"
