@@ -449,3 +449,12 @@ block:
   if true:
     discard
   # comment after if in block
+
+discard
+  # infix pre par
+  (
+    # infix parle
+    # infix prefix
+    a and # infix post-operator
+    b # infix post
+  ) # infix post par

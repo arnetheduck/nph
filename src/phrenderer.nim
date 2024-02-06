@@ -1738,6 +1738,8 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
       return
 
+    let flags = flags*{sfNoIndent, sfLongIndent}
+
     infixArgument(g, n, 1, flags = flags)
 
     let spaces = not (g.inImportLike > 0 and eqIdent(n[0], "/"))
@@ -1760,7 +1762,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       fitsNL = overflows(g, sublen) and fits(g, sublen + g.indent)
       indent = sfNoIndent notin flags and (fitsNL or overflows and not hasIndent(n[2]))
       wid = flagIndent(flags)
-      flags =
+      flags2 =
         if indent:
           # Only indent infix once otherwise for long strings of + / and / etc
           # we get a cascade
@@ -1775,7 +1777,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     elif spaces:
       optSpace(g)
 
-    infixArgument(g, n, 2, flags = flags)
+    infixArgument(g, n, 2, flags = flags2)
     if indent:
       dedent(g, wid)
 
@@ -1784,7 +1786,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       while i < n.len and n[i].kind notin postExprBlocks:
         i.inc
 
-      postStatements(g, n, i, sfSkipDo in flags)
+      postStatements(g, n, i, sfSkipDo in flags2)
   of nkPrefix:
     gsub(g, n[0])
     if n.len > 1:
