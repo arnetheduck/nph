@@ -1,5 +1,9 @@
 # Changelog
 
+# 0.4.1
+
+* fix comment-eating bug in infix
+
 # 0.4
 
 * `..` and `..<` gained spaces around them like all other infixes
