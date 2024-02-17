@@ -53,3 +53,7 @@ type Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = proc (aaaaaaaa: Bbbbbbb, ccccccccc
 proc `.()`() = discard
 proc `[]`() = discard
 proc `[`() = discard
+
+
+proc exact88charswithequals(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: int) = discard
+proc exact89charswithequals(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: int) = discard

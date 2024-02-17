@@ -299,7 +299,9 @@ template toFullPath*(conf: ConfigRef, info: TLineInfo): string =
 template toFullPathConsiderDirty*(conf: ConfigRef, info: TLineInfo): string =
   string toFullPathConsiderDirty(conf, info.fileIndex)
 
-proc toFilenameOption*(conf: ConfigRef, fileIdx: FileIndex, opt: FilenameOption): string =
+proc toFilenameOption*(
+    conf: ConfigRef, fileIdx: FileIndex, opt: FilenameOption
+): string =
   case opt
   of foAbs:
     result = toFullPath(conf, fileIdx)
@@ -791,7 +793,9 @@ template internalAssert*(conf: ConfigRef, e: bool) =
 
     internalErrorImpl(conf, unknownLineInfo, arg, info2)
 
-template lintReport*(conf: ConfigRef, info: TLineInfo, beau, got: string, extraMsg = "") =
+template lintReport*(
+    conf: ConfigRef, info: TLineInfo, beau, got: string, extraMsg = ""
+) =
   let m = "'$1' should be: '$2'$3" % [got, beau, extraMsg]
   let msg = if optStyleError in conf.globalOptions: errGenerated else: hintName
 
