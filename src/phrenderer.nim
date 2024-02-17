@@ -1613,7 +1613,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     optSpace(g)
     putWithSpace(g, tkEquals, "=")
     gmids(g, n, true, true)
-    gsubOptNL(g, n[1], flags = {sfSkipDo, sfNoIndent})
+    gsubOptNL(g, n[1], flags = {sfSkipDo})
   of nkPar, nkClosure:
     glist(g, n, tkParLe, subflags = {sfNoIndent})
   of nkTupleConstr:
@@ -1698,14 +1698,13 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
     if n.len >= 2 and n[^2].kind != nkEmpty:
       putWithSpace(g, tkColon, ":")
-      gsubOptNL(g, n[^2], flags = {sfNoIndent})
+      gsubOptNL(g, n[^2])
 
     if n.len >= 1 and n[^1].kind != nkEmpty:
       optSpace(g)
       putWithSpace(g, tkEquals, "=")
-      if n.mid.len > 0:
-        gmids(g, n, true, true)
-      gsubOptNL(g, n[^1], flags = {sfSkipDo, sfNoIndent})
+      gmids(g, n, true, true)
+      gsubOptNL(g, n[^1], flags = {sfSkipDo})
   of nkConstDef:
     gcomma(g, n, theEnd = -3, indentNL = 0, flags = {lfFirstSticky})
     if n.len >= 2 and n[^2].kind != nkEmpty:
@@ -1715,9 +1714,8 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     if n.len >= 1 and n[^1].kind != nkEmpty:
       optSpace(g)
       putWithSpace(g, tkEquals, "=")
-      if n.mid.len > 0:
-        gmids(g, n, true, true)
-      gsubOptNL(g, n[^1], flags = {sfSkipDo, sfNoIndent})
+      gmids(g, n, true, true)
+      gsubOptNL(g, n[^1], flags = {sfSkipDo})
   of nkVarTuple:
     if n[^1].kind == nkEmpty:
       glist(g, n, tkParLe, theEnd = -2)
@@ -1725,13 +1723,12 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       glist(g, n, tkParLe, extra = len(" = "), theEnd = -3)
       optSpace(g)
       putWithSpace(g, tkEquals, "=")
-      if n.mid.len > 0:
-        gmids(g, n, true, true)
-      gsubOptNL(g, n[^1], flags = {sfSkipDo, sfNoIndent})
+      gmids(g, n, true, true)
+      gsubOptNL(g, n[^1], flags = {sfSkipDo})
   of nkExprColonExpr:
     gsub(g, n[0])
     putWithSpace(g, tkColon, ":")
-    gsubOptNL(g, n[1], flags = {sfNoIndent})
+    gsubOptNL(g, n[1])
   of nkInfix:
     if n.len < 3:
       put(g, tkOpr, "Too few children for nkInfix")
@@ -1931,12 +1928,11 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     optSpace(g)
     if n.len > 2 and n[2].kind != nkEmpty:
       putWithSpace(g, tkEquals, "=")
-      if n.mid.len > 0:
-        gmids(g, n, true, true)
+      gmids(g, n, true, true)
       if n[2].kind in {nkObjectTy, nkEnumTy, nkRefTy}:
         gsub(g, n[2], flags = {sfNoIndent})
       else:
-        gsubOptNL(g, n[2], flags = {sfNoIndent})
+        gsubOptNL(g, n[2])
 
     if n[0].postfix.len > 0:
       g.dedent()
@@ -2007,7 +2003,8 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     gsub(g, n[0])
     optSpace(g)
     putWithSpace(g, tkEquals, "=")
-    gsub(g, n[1])
+    gmids(g, n, true, true)
+    gsubOptNL(g, n[1])
   of nkIfStmt:
     putWithSpace(g, tkIf, "if")
     gif(g, n, flags)
