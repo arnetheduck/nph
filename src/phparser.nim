@@ -894,7 +894,9 @@ proc identOrLiteral(p: var Parser, mode: PrimaryMode): PNode =
     getTok(p) # we must consume a token here to prevent endless loops!
     result = p.emptyNode
 
-proc namedParams(p: var Parser, callee: PNode, kind: TNodeKind, endTok: TokType): PNode =
+proc namedParams(
+    p: var Parser, callee: PNode, kind: TNodeKind, endTok: TokType
+): PNode =
   let a = callee
   result = wrap(newNodeP(kind, p), a)
   # progress guaranteed

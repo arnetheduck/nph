@@ -155,3 +155,11 @@ proc `[]`() =
 
 proc `[`() =
   discard
+
+proc exact88charswithequals(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: int) =
+  discard
+
+proc exact89charswithequals(
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: int
+) =
+  discard

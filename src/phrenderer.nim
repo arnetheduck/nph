@@ -1228,9 +1228,11 @@ proc gproc(g: var TOutput, n: PNode) =
     else:
       {}
 
-  gsub(g, n[genericParamsPos], flags)
-  gsub(g, n[paramsPos], flags, extra = lsub(g, n[pragmasPos], flags)[0])
-  gsub(g, n[pragmasPos], flags)
+  let extra = if n[bodyPos].kind != nkEmpty: 2 else: 0
+
+  gsub(g, n[genericParamsPos], flags, extra = extra)
+  gsub(g, n[paramsPos], flags, extra = extra + lsub(g, n[pragmasPos], flags)[0])
+  gsub(g, n[pragmasPos], flags, extra = extra)
 
   if n[bodyPos].kind != nkEmpty:
     optSpace(g)
