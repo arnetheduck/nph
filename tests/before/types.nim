@@ -39,3 +39,16 @@ type RefObject = ref object of RootObj
   reffield: int
 
 type RefAlone = ref object of RootObj
+
+type SimpleEnum = enum
+  a, b, c
+
+type LongStringEnum = enum
+  aaa = "test"
+  bbbbbbbbbbbbbbbbbbbbb = "cccccccccccccccccccc dddddddddddddddddddddddd  eeeeeeeeeeeeeeee fffffffffffff"
+  bbbbbbbbbbbbbbbbbbbbbc = "2cccccccccccccccccccc dddddddddddddddddddddddd  eeeeeeeeeeeeeeee fffffffffffff"
+  bbb = "xxxxx"
+
+type NumberEnum = enum
+  aaa = 332
+  bbbbbbbbbbbbbbbbbbbbbcddddddddddddddddssssssssssssssssssscccccccccccccrrrrrrrrrrrrrrrrr = 424

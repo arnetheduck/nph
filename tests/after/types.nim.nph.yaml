@@ -500,3 +500,75 @@ sons:
                       - kind: "nkIdent"
                         ident: "RootObj"
                   - kind: "nkEmpty"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "SimpleEnum"
+          - kind: "nkEmpty"
+          - kind: "nkEnumTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkIdent"
+                ident: "a"
+              - kind: "nkIdent"
+                ident: "b"
+              - kind: "nkIdent"
+                ident: "c"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "LongStringEnum"
+          - kind: "nkEmpty"
+          - kind: "nkEnumTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEnumFieldDef"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "aaa"
+                  - kind: "nkStrLit"
+                    strVal: "test"
+              - kind: "nkEnumFieldDef"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "bbbbbbbbbbbbbbbbbbbbb"
+                  - kind: "nkStrLit"
+                    strVal: "cccccccccccccccccccc dddddddddddddddddddddddd  eeeeeeeeeeeeeeee fffffffffffff"
+              - kind: "nkEnumFieldDef"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "bbbbbbbbbbbbbbbbbbbbbc"
+                  - kind: "nkStrLit"
+                    strVal: "2cccccccccccccccccccc dddddddddddddddddddddddd  eeeeeeeeeeeeeeee fffffffffffff"
+              - kind: "nkEnumFieldDef"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "bbb"
+                  - kind: "nkStrLit"
+                    strVal: "xxxxx"
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "NumberEnum"
+          - kind: "nkEmpty"
+          - kind: "nkEnumTy"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkEnumFieldDef"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "aaa"
+                  - kind: "nkIntLit"
+                    intVal: 332
+              - kind: "nkEnumFieldDef"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "bbbbbbbbbbbbbbbbbbbbbcddddddddddddddddssssssssssssssssssscccccccccccccrrrrrrrrrrrrrrrrr"
+                  - kind: "nkIntLit"
+                    intVal: 424
