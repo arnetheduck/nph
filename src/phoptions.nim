@@ -197,12 +197,10 @@ type
       # old unused: cmdInterpret, cmdDef: def feature (find definition for IDEs)
 
 const
-  cmdBackends* = {
-    cmdCompileToC, cmdCompileToCpp, cmdCompileToOC, cmdCompileToJS, cmdCrun
-  }
-  cmdDocLike* = {
-    cmdDoc0, cmdDoc, cmdDoc2tex, cmdJsondoc0, cmdJsondoc, cmdCtags, cmdBuildindex
-  }
+  cmdBackends* =
+    {cmdCompileToC, cmdCompileToCpp, cmdCompileToOC, cmdCompileToJS, cmdCrun}
+  cmdDocLike* =
+    {cmdDoc0, cmdDoc, cmdDoc2tex, cmdJsondoc0, cmdJsondoc, cmdCtags, cmdBuildindex}
 
 type
   NimVer* = tuple[major: int, minor: int, patch: int]
@@ -602,9 +600,8 @@ template newPackageCache*(): untyped =
 proc newProfileData(): ProfileData =
   ProfileData(data: newTable[TLineInfo, ProfileInfo]())
 
-const foreignPackageNotesDefault* = {
-  hintProcessing, warnUnknownMagic, hintQuitCalled, hintExecuting, hintUser, warnUser
-}
+const foreignPackageNotesDefault* =
+  {hintProcessing, warnUnknownMagic, hintQuitCalled, hintExecuting, hintUser, warnUser}
 
 proc isDefined*(conf: ConfigRef, symbol: string): bool
 
