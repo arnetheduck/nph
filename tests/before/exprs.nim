@@ -123,3 +123,7 @@ let test2 = someSimpleResult(aaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbb, ccccccccccccccc
 var aaaaaaaaaaaaaaaaaaaaaaaa = bbbbbbbbbbbbbbbbbbbb.cccccccccccccccccccc[].ddddddddddddddddddddd
 
 aaaaaaaaaaaaaaaaaaaaaaaa = bbbbbbbbbbbbbbbbbbbb.cccccccccccccccccccc[].ddddddddddddddddddddd
+
+let aaaaaaaaaaaaaaaaa = [f(aaaaaaaaaaaa, bbbbbbbbbbbbbbbbbb, ccccccccccccccccccccc), ddddddddddddddd(eeeeeeeeeeeee, ffffffffffffff, ggggggggggggg)]
+
+let bbbbbbb = ["aaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbb", "ccccccccccccccccccccccccccccc", "dddddddddddddddddddddd"]

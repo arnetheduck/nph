@@ -1655,19 +1655,19 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
     glist(g, n, tkParLe, flags = flags)
   of nkCurly:
-    glist(g, n, tkCurlyLe)
+    glist(g, n, tkCurlyLe, flags = {lfLongSepAtEnd})
   of nkArgList:
     glist(g, n, tkInvalid)
   of nkTableConstr:
     if n.len > 0:
-      glist(g, n, tkCurlyLe)
+      glist(g, n, tkCurlyLe, flags = {lfLongSepAtEnd})
     else:
       put(g, tkCurlyLe, "{")
       gmids(g, n, true)
       put(g, tkColon, ":")
       put(g, tkCurlyRi, "}")
   of nkBracket:
-    glist(g, n, tkBracketLe)
+    glist(g, n, tkBracketLe, flags = {lfLongSepAtEnd})
   of nkDotExpr:
     if isCustomLit(n):
       put(g, tkCustomLit, n[0].strVal)
@@ -1746,9 +1746,9 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       gsubOptNL(g, n[^1], flags = {sfSkipDo})
   of nkVarTuple:
     if n[^1].kind == nkEmpty:
-      glist(g, n, tkParLe, theEnd = -2)
+      glist(g, n, tkParLe, theEnd = -2, flags = {lfLongSepAtEnd})
     else:
-      glist(g, n, tkParLe, extra = len(" = "), theEnd = -3)
+      glist(g, n, tkParLe, extra = len(" = "), theEnd = -3, flags = {lfLongSepAtEnd})
       optSpace(g)
       putWithSpace(g, tkEquals, "=")
       gmids(g, n, true, true)
@@ -2214,7 +2214,14 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     gcomma(g, n, 0, -2, indentNL = longIndentWid)
     gcolcoms(g, n, n[^1], sfOneLine in flags)
   of nkGenericParams:
-    glist(g, n, tkBracketLe, separator = identDefsSep, indentNL = flagIndent(flags))
+    glist(
+      g,
+      n,
+      tkBracketLe,
+      separator = identDefsSep,
+      indentNL = flagIndent(flags),
+      flags = {lfLongSepAtEnd},
+    )
   of nkFormalParams:
     # Need to add empty parens here, or nkProcTy parsing becomes non-equal -
     # see hasSignature - it would be nicer to remove them when unncessary
@@ -2254,7 +2261,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
           optNL(g)
           gsub(g, child)
     else:
-      glist(g, n, tkBracketLe)
+      glist(g, n, tkBracketLe, flags = {lfLongSepAtEnd})
   of nkTupleClassTy:
     put(g, tkTuple, "tuple")
   of nkTypeClassTy:

@@ -571,7 +571,7 @@ const
     # consider adding `optStackTraceMsgs`
     optTrMacros,
     optStyleCheck,
-    optCursorInference
+    optCursorInference,
   }
   DefaultGlobalOptions* = {optThreadAnalysis, optExcessiveStackTrace, optJsBigInt64}
 
@@ -958,7 +958,7 @@ proc pathSubs*(conf: ConfigRef, p, config: string): string =
       "projectdir",
       conf.projectPath.string,
       "nimcache",
-      getNimcacheDir(conf).string
+      getNimcacheDir(conf).string,
     ]
   ).expandTilde
 
