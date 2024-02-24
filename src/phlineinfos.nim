@@ -275,7 +275,7 @@ const MsgKindToStr*: array[TMsgKind, string] = [
   hintUserRaw: "$1",
   hintExtendedContext: "$1",
   hintMsgOrigin: "$1",
-  hintDeclaredLoc: "$1"
+  hintDeclaredLoc: "$1",
 ]
 
 const

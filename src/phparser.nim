@@ -1509,7 +1509,7 @@ proc primary(p: var Parser, mode: PrimaryMode): PNode =
         tkOut,
         tkParLe,
         tkBracketLe,
-        tkCurlyLe
+        tkCurlyLe,
       }
     if isSigil and p.tok.tokType in identOrLiteralKinds:
       let baseInd = p.lex.currLineIndent

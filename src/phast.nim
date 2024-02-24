@@ -1325,7 +1325,7 @@ const
     tyCstring,
     tyInt .. tyInt64,
     tyFloat .. tyFloat128,
-    tyUInt .. tyUInt64
+    tyUInt .. tyUInt64,
   }
     # types of the expr that may occur in::
     # var x = expr
@@ -2520,5 +2520,5 @@ const nodesToIgnoreSet* = {
   nkBreakState,
   nkTypeOfExpr,
   nkMixinStmt,
-  nkBindStmt
+  nkBindStmt,
 }

@@ -184,3 +184,13 @@ var aaaaaaaaaaaaaaaaaaaaaaaa =
 
 aaaaaaaaaaaaaaaaaaaaaaaa =
   bbbbbbbbbbbbbbbbbbbb.cccccccccccccccccccc[].ddddddddddddddddddddd
+
+let aaaaaaaaaaaaaaaaa = [
+  f(aaaaaaaaaaaa, bbbbbbbbbbbbbbbbbb, ccccccccccccccccccccc),
+  ddddddddddddddd(eeeeeeeeeeeee, ffffffffffffff, ggggggggggggg),
+]
+
+let bbbbbbb = [
+  "aaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "ccccccccccccccccccccccccccccc", "dddddddddddddddddddddd"
+]
