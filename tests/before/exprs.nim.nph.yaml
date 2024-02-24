@@ -2024,3 +2024,28 @@ sons:
                 strVal: "ccccccccccccccccccccccccccccc"
               - kind: "nkStrLit"
                 strVal: "dddddddddddddddddddddd"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "bbbbbbccccb"
+          - kind: "nkEmpty"
+          - kind: "nkBracket"
+            sons:
+              - kind: "nkCommand"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "int64"
+                  - kind: "nkIntLit"
+                    intVal: 533
+              - kind: "nkInt64Lit"
+                intVal: 444444444444444444
+              - kind: "nkInt64Lit"
+                intVal: 555555555555555555
+              - kind: "nkInt64Lit"
+                intVal: 6666666666666666
+              - kind: "nkInt64Lit"
+                intVal: 6777777777777777
+              - kind: "nkInt64Lit"
+                intVal: 888888888888888
