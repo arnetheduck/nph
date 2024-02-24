@@ -90,6 +90,7 @@ type
     lfLongSepAtEnd ## Add separator at end in one-per-line mode
     lfSkipPushComma ## Hack to remove first comma in pragma push
     lfFirstCommentSticky ## Render the first comment on the same line if line-breaking
+    lfFirstComplex ## Allow the first item in a simple list to be complex
 
   ListFlags = set[ListFlag]
   SubFlag = enum
@@ -845,7 +846,8 @@ proc gcomma(
       else:
         count > 1 and
           anyIt(
-            n.sons[sstart .. n.len + theEnd], not isSimple(it, n.kind == nkIdentDefs)
+            n.sons[sstart + ord(lfFirstComplex in flags) .. n.len + theEnd],
+            not isSimple(it, n.kind == nkIdentDefs),
           )
     sepAtEnd = lfSepAtEnd in flags or onePerLine and lfLongSepAtEnd in flags
 
@@ -1667,7 +1669,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       put(g, tkColon, ":")
       put(g, tkCurlyRi, "}")
   of nkBracket:
-    glist(g, n, tkBracketLe, flags = {lfLongSepAtEnd})
+    glist(g, n, tkBracketLe, flags = {lfLongSepAtEnd, lfFirstComplex})
   of nkDotExpr:
     if isCustomLit(n):
       put(g, tkCustomLit, n[0].strVal)
