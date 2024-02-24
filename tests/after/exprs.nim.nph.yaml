@@ -1885,3 +1885,96 @@ sons:
                                     ident: "cccccccccccccccccccccc"
                                   - kind: "nkIdent"
                                     ident: "ddddddddddddddddddd"
+  - kind: "nkCommentStmt"
+    "comment": "# Dot expressions"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "test2"
+          - kind: "nkEmpty"
+          - kind: "nkCall"
+            sons:
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkDotExpr"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "someSimpleResult"
+                          - kind: "nkIdent"
+                            ident: "fff"
+                      - kind: "nkIdent"
+                        ident: "v"
+                  - kind: "nkIdent"
+                    ident: "valueOr"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 3
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "test2"
+          - kind: "nkEmpty"
+          - kind: "nkCall"
+            sons:
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "someSimpleResult"
+                      - kind: "nkIdent"
+                        ident: "aaaaaaaaaaaaaaaaaaa"
+                      - kind: "nkIdent"
+                        ident: "bbbbbbbbbbbbb"
+                      - kind: "nkIdent"
+                        ident: "ccccccccccccccccccccc"
+                      - kind: "nkIdent"
+                        ident: "ddddddddddddd"
+                  - kind: "nkIdent"
+                    ident: "valueOr"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkIntLit"
+                    intVal: 3
+  - kind: "nkVarSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "aaaaaaaaaaaaaaaaaaaaaaaa"
+          - kind: "nkEmpty"
+          - kind: "nkDotExpr"
+            sons:
+              - kind: "nkBracketExpr"
+                sons:
+                  - kind: "nkDotExpr"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "bbbbbbbbbbbbbbbbbbbb"
+                      - kind: "nkIdent"
+                        ident: "cccccccccccccccccccc"
+              - kind: "nkIdent"
+                ident: "ddddddddddddddddddddd"
+  - kind: "nkAsgn"
+    sons:
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaaaaaaa"
+      - kind: "nkDotExpr"
+        sons:
+          - kind: "nkBracketExpr"
+            sons:
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "bbbbbbbbbbbbbbbbbbbb"
+                  - kind: "nkIdent"
+                    ident: "cccccccccccccccccccc"
+          - kind: "nkIdent"
+            ident: "ddddddddddddddddddddd"

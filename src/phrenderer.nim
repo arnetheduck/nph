@@ -394,11 +394,18 @@ proc hasIndent(n: PNode): bool =
     nkObjectTy, nkEnumTy, nkBlockStmt, nkBlockExpr
   }
 
+const postExprBlocks = {
+  nkStmtList, nkStmtListExpr, nkOfBranch, nkElifBranch, nkElse, nkExceptBranch,
+  nkFinally, nkDo
+}
+
 proc isStackedCall(n: PNode, inCall: bool): bool =
   # At least two calls to enable "stacking" mode
   case n.kind
   of nkCall:
-    if inCall:
+    if n.len > 1 and n.lastSon.kind in postExprBlocks:
+      isStackedCall(n[0], inCall)
+    elif inCall:
       true
     else:
       isStackedCall(n[0], true)
@@ -671,16 +678,28 @@ proc lstmts(g: var TOutput, n: PNode, flags: SubFlags = {}, doIndent = true): Li
   withSrcLen(g):
     gstmts(sl, n, flags, doIndent)
 
+proc nlsubImpl(g: TOutput, n: PNode, flags: SubFlags): (bool, LineLen) =
+  ## How many characters until the next early line break
+  if n.kind == nkDotExpr:
+    let (a, l) = nlsubImpl(g, n[0], flags)
+    if a:
+      (a, l)
+    else:
+      (false, l + lsub(g, n[1]) + 1)
+  else:
+    let ll = lsub(g, n, flags)
+    case n.kind
+    of nkPar, nkClosure, nkCurly, nkBracket, nkTableConstr, nkStmtListExpr,
+        nkTupleConstr:
+      (true, (1, ll[1]))
+    of nkPragma, nkPragmaExpr:
+      (true, (2, ll[1]))
+    else:
+      (false, ll)
+
 proc nlsub(g: TOutput, n: PNode, flags: SubFlags = {}): LineLen =
   ## How many characters until the next early line break
-  let ll = lsub(g, n, flags)
-  case n.kind
-  of nkPar, nkClosure, nkCurly, nkBracket, nkTableConstr, nkStmtListExpr, nkTupleConstr:
-    (1, ll[1])
-  of nkPragma, nkPragmaExpr:
-    (2, ll[1])
-  else:
-    ll
+  nlsubImpl(g, n, flags)[1]
 
 proc fits(g: TSrcLen, x: LineLen): bool =
   # Line lengths are computed assuming no extra line breaks
@@ -1330,6 +1349,15 @@ proc doParamsAux(g: var TOutput, params: PNode) =
     putWithSpace(g, tkOpr, "->")
     gsub(g, params[0])
 
+proc isDotCall(n: PNode): bool =
+  case n.kind
+  of nkDotExpr:
+    isDotCall(n[0])
+  of nkCall:
+    true
+  else:
+    false
+
 proc gsubOptNL(g: var TOutput, n: PNode, indentNL = IndentWidth, flags: SubFlags = {}) =
   # Output n on the same line if it fits, else continue on next - indentation is
   # always set up in case a comment linebreaks the statement
@@ -1344,19 +1372,22 @@ proc gsubOptNL(g: var TOutput, n: PNode, indentNL = IndentWidth, flags: SubFlags
   const suboptAvoidNL = {
     nkCall, nkConv, nkPattern, nkObjConstr, nkCast, nkStaticExpr, nkBracketExpr,
     nkCurlyExpr, nkPragmaExpr, nkCommand, nkExprEqExpr, nkAsgn, nkFastAsgn, nkClosure,
-    nkTupleConstr, nkCurly, nkArgList, nkTableConstr, nkBracket, nkDotExpr, nkBind,
-    nkDo, nkIdentDefs, nkConstDef, nkVarTuple, nkExprColonExpr, nkTypeOfExpr,
-    nkDistinctTy, nkTypeDef, nkBlockStmt, nkBlockExpr, nkLambda, nkProcTy
+    nkTupleConstr, nkCurly, nkArgList, nkTableConstr, nkBracket, nkBind, nkDo,
+    nkIdentDefs, nkConstDef, nkVarTuple, nkExprColonExpr, nkTypeOfExpr, nkDistinctTy,
+    nkTypeDef, nkBlockStmt, nkBlockExpr, nkLambda, nkProcTy
   }
 
   let
-    sublen = nlsub(g, n, flags = flags)
+    sublen = lsub(g, n, flags = flags)
     nl =
-      overflows(g, sublen) and (
-        n.kind notin suboptAvoidNL or fits(g, sublen + g.indent + indentNL) or
-        isStackedCall(n, false)
-      )
-    ind = condIndent(g, nl or g.pendingNL >= 0 or n.prefix.len > 0, indentNL)
+      (
+        ((n.kind notin suboptAvoidNL and not isDotCall(n))) and
+        overflows(g, nlsub(g, n, flags = flags))
+      ) or (overflows(g, sublen) and fits(g, sublen + g.indent + indentNL))
+
+    ind = condIndent(
+      g, isStackedCall(n, false) or nl or g.pendingNL >= 0 or n.prefix.len > 0, indentNL
+    )
     flags =
       if ind > 0:
         {sfNoIndent} + flags
@@ -1394,11 +1425,6 @@ proc infixArgument(g: var TOutput, n: PNode, i: int, flags: SubFlags) =
   gcond(g, n[i], flags)
   if needsParenthesis:
     put(g, tkParRi, ")")
-
-const postExprBlocks = {
-  nkStmtList, nkStmtListExpr, nkOfBranch, nkElifBranch, nkElse, nkExceptBranch,
-  nkFinally, nkDo
-}
 
 proc postStatements(
     g: var TOutput, n: PNode, start: int, skipDo: bool, skipColon = false
@@ -1516,7 +1542,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
             false
         ind = condIndent(g, doPars)
 
-      accentedName(g, n[0], flags = (flags * {sfStackDot}) + {sfStackDotInCall})
+      accentedName(g, n[0])
 
       var i = 1
       while i < n.len and n[i].kind notin postExprBlocks:
@@ -2194,8 +2220,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     # see hasSignature - it would be nicer to remove them when unncessary
     if n.len >= 1:
       let retExtra =
-        extra +
-        (
+        extra + (
           if n.len > 0 and n[0].kind != nkEmpty:
             lsub(g, n[0]) + len(": ")
           else:

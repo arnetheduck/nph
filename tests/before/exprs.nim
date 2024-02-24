@@ -114,3 +114,12 @@ let xxxxxxxxx = block:
 let yyyyyyyyyy = aaaaaaaaaaaaaaaaaaaaaaaaa.ffffffffffffff(aaaaaaaaa, bbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
 
 discard aaaaaaaaa and (aaaaaaaaaaaaaaaaaaaaaaaa and (aaaaaaaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbb and (cccccccccccccccccccccc and ddddddddddddddddddd)))
+
+# Dot expressions
+let test2 = someSimpleResult.fff(v).valueOr: 3
+
+let test2 = someSimpleResult(aaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbb, ccccccccccccccccccccc, ddddddddddddd).valueOr: 3
+
+var aaaaaaaaaaaaaaaaaaaaaaaa = bbbbbbbbbbbbbbbbbbbb.cccccccccccccccccccc[].ddddddddddddddddddddd
+
+aaaaaaaaaaaaaaaaaaaaaaaa = bbbbbbbbbbbbbbbbbbbb.cccccccccccccccccccc[].ddddddddddddddddddddd

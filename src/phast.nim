@@ -672,9 +672,8 @@ type
   TSymKinds* = set[TSymKind]
 
 const
-  routineKinds* = {
-    skProc, skFunc, skMethod, skIterator, skConverter, skMacro, skTemplate
-  }
+  routineKinds* =
+    {skProc, skFunc, skMethod, skIterator, skConverter, skMacro, skTemplate}
   ExportableSymKinds* =
     {skVar, skLet, skConst, skType, skEnumField, skStub} + routineKinds
   tfUnion* = tfNoSideEffect
@@ -683,9 +682,8 @@ const
   tfReturnsNew* = tfInheritable
   skError* = skUnknown
 
-var eqTypeFlags* = {
-  tfIterator, tfNotNil, tfVarIsPtr, tfGcSafe, tfNoSideEffect, tfIsOutParam, tfSendable
-}
+var eqTypeFlags* =
+  {tfIterator, tfNotNil, tfVarIsPtr, tfGcSafe, tfNoSideEffect, tfIsOutParam, tfSendable}
   ## type flags that are essential for type equality.
   ## This is now a variable because for emulation of version:1.0 we
   ## might exclude {tfGcSafe, tfNoSideEffect}.
@@ -1353,9 +1351,8 @@ const
   resultPos* = 7
   dispatcherPos* = 8
   nfAllFieldsSet* = nfBase2
-  nkCallKinds* = {
-    nkCall, nkInfix, nkPrefix, nkPostfix, nkCommand, nkCallStrLit, nkHiddenCallConv
-  }
+  nkCallKinds* =
+    {nkCall, nkInfix, nkPrefix, nkPostfix, nkCommand, nkCallStrLit, nkHiddenCallConv}
   nkIdentKinds* = {nkIdent, nkSym, nkAccQuoted, nkOpenSymChoice, nkClosedSymChoice}
   nkPragmaCallKinds* = {nkExprColonExpr, nkCall, nkCallStrLit}
   nkLiterals* = {nkCharLit .. nkTripleStrLit}
@@ -1368,9 +1365,8 @@ const
   nkSymChoices* = {nkClosedSymChoice, nkOpenSymChoice}
   nkStrKinds* = {nkStrLit .. nkTripleStrLit}
   skLocalVars* = {skVar, skLet, skForVar, skParam, skResult}
-  skProcKinds* = {
-    skProc, skFunc, skTemplate, skMacro, skIterator, skMethod, skConverter
-  }
+  skProcKinds* =
+    {skProc, skFunc, skTemplate, skMacro, skIterator, skMethod, skConverter}
   defaultSize = -1
   defaultAlignment = -1
   defaultOffset* = -1
@@ -1849,9 +1845,8 @@ proc newProcNode*(
   result = newNodeI(kind, info)
   result.sons = @[name, pattern, genericParams, params, pragmas, exceptions, body]
 
-const AttachedOpToStr*: array[TTypeAttachedOp, string] = [
-  "=wasMoved", "=destroy", "=copy", "=dup", "=sink", "=trace", "=deepcopy"
-]
+const AttachedOpToStr*: array[TTypeAttachedOp, string] =
+  ["=wasMoved", "=destroy", "=copy", "=dup", "=sink", "=trace", "=deepcopy"]
 
 proc `$`*(s: PSym): string =
   if s != nil:
@@ -2444,9 +2439,8 @@ proc addParam*(procType: PType, param: PSym) =
 
   rawAddSon(procType, param.typ)
 
-const magicsThatCanRaise = {
-  mNone, mSlurp, mStaticExec, mParseExprToAst, mParseStmtToAst, mEcho
-}
+const magicsThatCanRaise =
+  {mNone, mSlurp, mStaticExec, mParseExprToAst, mParseStmtToAst, mEcho}
 
 proc canRaiseConservative*(fn: PNode): bool =
   if fn.kind == nkSym and fn.sym.magic notin magicsThatCanRaise:

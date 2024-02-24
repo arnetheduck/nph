@@ -145,8 +145,7 @@ aaaaaaa.bbbbbbbbb
 .longdotcall().ccccccccc.dddddddddd.eeeeeeeee
 .sdcsd(a0000000, b000000, c000000).fffffff.ggggggg.hhhhhhhh.csdcsdcs.sdcsdcsd.csdcsdcsdcsd.csdcsdcs.dcsdcsdcsdcs.sdc
 
-mynums =
-  myNums
+mynums = myNums
   .replace1("one", "o1ne")
   .replace2("two", "t2wo")
   .replace3("three", "t3hree")
@@ -170,3 +169,18 @@ discard
       (cccccccccccccccccccccc and ddddddddddddddddddd)
     )
   )
+
+# Dot expressions
+let test2 = someSimpleResult.fff(v).valueOr:
+  3
+
+let test2 = someSimpleResult(
+  aaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbb, ccccccccccccccccccccc, ddddddddddddd
+).valueOr:
+  3
+
+var aaaaaaaaaaaaaaaaaaaaaaaa =
+  bbbbbbbbbbbbbbbbbbbb.cccccccccccccccccccc[].ddddddddddddddddddddd
+
+aaaaaaaaaaaaaaaaaaaaaaaa =
+  bbbbbbbbbbbbbbbbbbbb.cccccccccccccccccccc[].ddddddddddddddddddddd
