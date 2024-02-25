@@ -917,6 +917,7 @@ proc gsection(g: var TOutput, n: PNode, kind: TokType, k: string) =
         optNL(g)
       gsub(g, n[i])
 
+    optNL(g)
     dedent(g)
   else:
     gsub(g, n[0])

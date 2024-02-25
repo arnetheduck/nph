@@ -2202,7 +2202,7 @@ proc parseSection(
         case p.tok.tokType
         of tkSymbol, tkAccent, tkParLe:
           var a = defparser(p)
-          splitLookahead(p, a, clPostfix)
+          splitLookahead(p, a, p.currInd, clPostfix)
           result.add(a)
         of tkComment:
           var a = parseCommentStmt(p)
