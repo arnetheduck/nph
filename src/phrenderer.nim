@@ -37,7 +37,6 @@ type
   TRenderTok* = object
     kind*: TokType
     length*: int
-    sym*: PSym
 
   TRenderTokSeq* = seq[TRenderTok]
 
@@ -64,7 +63,6 @@ type
     pendingNewline: bool
     fid*: FileIndex
     config*: ConfigRef
-    mangler: seq[PSym]
 
   TSrcLen = object
     # A "fake" source generator that counts line lengths instead of outputting them
@@ -368,18 +366,10 @@ proc skipHiddenNodes(n: PNode): PNode =
 proc infixHasParens(n: PNode, i: int): bool =
   let nNext = n[i].skipHiddenNodes
   if nNext.kind == nkInfix:
-    if nNext[0].kind in {nkSym, nkIdent} and n[0].kind in {nkSym, nkIdent}:
-      let nextId =
-        if nNext[0].kind == nkSym:
-          nNext[0].sym.name
-        else:
-          nNext[0].ident
+    if nNext[0].kind == nkIdent and n[0].kind == nkIdent:
+      let nextId = nNext[0].ident
 
-      let nnId =
-        if n[0].kind == nkSym:
-          n[0].sym.name
-        else:
-          n[0].ident
+      let nnId = n[0].ident
 
       if i == 1:
         if getPrecedence(nextId) < getPrecedence(nnId):
@@ -416,27 +406,6 @@ proc isStackedCall(n: PNode, inCall: bool): bool =
     false
 
 proc litAux(g: TOutput, n: PNode, x: BiggestInt, size: int): string =
-  proc skip(t: PType): PType =
-    result = t
-    while result != nil and
-        result.kind in
-        {tyGenericInst, tyRange, tyVar, tyLent, tyDistinct, tyOrdinal, tyAlias, tySink}
-    :
-      result = lastSon(result)
-
-  let typ = n.typ.skip
-  if typ != nil and typ.kind in {tyBool, tyEnum}:
-    if sfPure in typ.sym.flags:
-      result = typ.sym.name.s & '.'
-
-    let enumfields = typ.n
-    # we need a slow linear search because of enums with holes:
-    for e in items(enumfields):
-      if e.sym.position == x:
-        result &= e.sym.name.s
-
-        return
-
   if nfBase2 in n.flags:
     result = "0b" & toBin(x, size * 8)
   elif nfBase8 in n.flags:
@@ -475,10 +444,6 @@ proc atom(g: TOutput, n: PNode): string =
     result = ""
   of nkIdent:
     result = n.ident.s
-  of nkSym:
-    result = n.sym.name.s
-  of nkClosedSymChoice, nkOpenSymChoice:
-    result = n[0].sym.name.s
   of nkStrLit:
     result = ""
 
@@ -531,11 +496,6 @@ proc atom(g: TOutput, n: PNode): string =
       result = litAux(g, n, (cast[ptr int64](addr(n.floatVal)))[], 8) & "\'f64"
   of nkNilLit:
     result = "nil"
-  of nkType:
-    if (n.typ != nil) and (n.typ.sym != nil):
-      result = n.typ.sym.name.s
-    else:
-      result = "[type node]"
   else:
     internalError(g.config, "renderer.atom " & $n.kind)
 
@@ -1400,21 +1360,6 @@ proc gsubOptNL(g: var TOutput, n: PNode, indentNL = IndentWidth, flags: SubFlags
   gsub(g, n, flags = flags)
   dedent(g, ind)
 
-proc accentedName(g: var TOutput, n: PNode, flags: SubFlags = {}) =
-  # This is for cases where ident should've really been a `nkAccQuoted`, e.g. `:tmp`
-  # or if user writes a macro with `ident":foo"`. It's unclear whether these should be legal.
-  const backticksNeeded = OpChars + {'[', '{', '\''}
-  if n == nil:
-    return
-
-  let ident = n.getPIdent
-  if ident != nil and ident.s[0] in backticksNeeded:
-    put(g, tkAccent, "`")
-    gident(g, n)
-    put(g, tkAccent, "`")
-  else:
-    gsub(g, n, flags = flags)
-
 proc infixArgument(g: var TOutput, n: PNode, i: int, flags: SubFlags) =
   if i < 1 or i > 2:
     return
@@ -1490,9 +1435,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     put(g, tkTripleStrLit, atom(g, n))
   of nkEmpty:
     discard
-  of nkType:
-    put(g, tkInvalid, atom(g, n))
-  of nkSym, nkIdent:
+  of nkIdent:
     gident(g, n)
   of nkIntLit:
     put(g, tkIntLit, atom(g, n))
@@ -1544,7 +1487,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
             false
         ind = condIndent(g, doPars)
 
-      accentedName(g, n[0])
+      gsub(g, n[0])
 
       var i = 1
       while i < n.len and n[i].kind notin postExprBlocks:
@@ -1561,14 +1504,14 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       if n.lastSon.kind == nkDo and sfParDo in flags:
         put(g, tkParRi, $tkParRi)
     elif n.len >= 1:
-      accentedName(g, n[0], flags = (flags * {sfStackDot}) + {sfStackDotInCall})
+      gsub(g, n[0], flags = (flags * {sfStackDot}) + {sfStackDotInCall})
       glist(g, n, tkParLe, start = 1, flags = {lfLongSepAtEnd})
     else:
       put(g, tkParLe, "(")
       put(g, tkParRi, ")")
   of nkCallStrLit:
     if n.len > 0:
-      accentedName(g, n[0])
+      gsub(g, n[0])
 
     if n.len > 1 and n[1].kind == nkRStrLit:
       put(g, tkRStrLit, '\"' & replace(n[1].strVal, "\"", "\"\"") & '\"')
@@ -1611,7 +1554,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     gsub(g, n[0], flags)
     gsub(g, n[1], flags)
   of nkCommand:
-    accentedName(g, n[0])
+    gsub(g, n[0])
     optSpace(g)
 
     if n.len > 1 and n.lastSon.kind in postExprBlocks:
@@ -1702,7 +1645,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       elif stackNL:
         optNL(g)
       put(g, tkDot, ".")
-      accentedName(g, n[1])
+      gsub(g, n[1])
   of nkBind:
     putWithSpace(g, tkBind, "bind")
     gsub(g, n[0])
@@ -1820,10 +1763,6 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       let opr =
         if n[0].kind == nkIdent:
           n[0].ident
-        elif n[0].kind == nkSym:
-          n[0].sym.name
-        elif n[0].kind in {nkOpenSymChoice, nkClosedSymChoice}:
-          n[0][0].sym.name
         else:
           nil
 
@@ -1858,7 +1797,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     put(g, tkAccent, "`")
     for i in 0 ..< n.len:
       proc isAlpha(n: PNode): bool =
-        if n.kind in {nkIdent, nkSym}:
+        if n.kind in {nkIdent}:
           let tmp = n.getPIdent.s
 
           result = tmp.len > 0 and tmp[0] in {'a' .. 'z', 'A' .. 'Z'}
