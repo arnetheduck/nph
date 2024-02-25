@@ -300,6 +300,16 @@ const # const eol
  = # const ident after equals
     42 # const ident after value
 
+let
+  a = 4
+  b = 5
+  # let section postfix
+
+const
+  a = 4
+  b = 5
+  # const section postfix
+
 discard # discard eol
   # discard first line
   54 # discard value

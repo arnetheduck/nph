@@ -1144,6 +1144,42 @@ sons:
             intVal: 42
         postfix:
           - "# const ident after value"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkEmpty"
+          - kind: "nkIntLit"
+            intVal: 4
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "b"
+          - kind: "nkEmpty"
+          - kind: "nkIntLit"
+            intVal: 5
+    postfix:
+      - "# let section postfix"
+  - kind: "nkConstSection"
+    sons:
+      - kind: "nkConstDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "a"
+          - kind: "nkEmpty"
+          - kind: "nkIntLit"
+            intVal: 4
+      - kind: "nkConstDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "b"
+          - kind: "nkEmpty"
+          - kind: "nkIntLit"
+            intVal: 5
+    postfix:
+      - "# const section postfix"
   - kind: "nkDiscardStmt"
     sons:
       - kind: "nkIntLit"
