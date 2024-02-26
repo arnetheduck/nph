@@ -1,5 +1,11 @@
 # Changelog
 
+# 0.5
+
+* allow function calls to partially fill line in assignments
+* trailing commas also in simple multi-line lists
+* polish
+
 # 0.4.1
 
 * fix comment-eating bug in infix

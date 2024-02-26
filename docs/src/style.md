@@ -78,9 +78,8 @@ name takes up space
 import
   dir/[module1, module2, module3, module4]
 
-const mylongvariablename = [
-  100000000, 200000000, 300000000
-]
+const mylongvariablename =
+  [100000000, 200000000, 300000000]
 
 proc function(
   param0: int, param1: int, param2: int
@@ -98,19 +97,18 @@ import
   dir/[module1, module2, module3],
   dir2/[
     module4, module5, module6, module7,
-    module8, module9
+    module8, module9,
   ]
 
 let myVariable = [
   functionCall(a, b, c),
-  functionCall(a, b, c, d)
+  functionCall(a, b, c, d),
 ]
 
 functionCall(
   functionCall(a, b, c),
   functionCall(a, b, c, d),
 )
-
 ```
 
 ```admonish info "Extra separator"
@@ -123,12 +121,12 @@ For simple values, we use a compact style that fits several items per row:
 ```nim
 const values = [
   10000000, 2000000000, 3000000000,
-  40000000, 5000000000
+  40000000, 5000000000,
 ]
 
 functionCall(
   10000000, 2000000000, 3000000000,
-  40000000, 5000000000
+  40000000, 5000000000,
 )
 ```
 
