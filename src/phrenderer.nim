@@ -85,7 +85,7 @@ type
       ## Render the first item of a list on the same line even if it doesn't fit
     lfFirstAlone ## Render the first sticky item alone if the rest doesn't fit
     lfSepAtEnd ## Always add separator at end
-    lfLongSepAtEnd ## Add separator at end in one-per-line mode
+    lfLongSepAtEnd ## Add separator at end in multi-line lists with more than one item
     lfSkipPushComma ## Hack to remove first comma in pragma push
     lfFirstCommentSticky ## Render the first comment on the same line if line-breaking
     lfFirstComplex ## Allow the first item in a simple list to be complex
@@ -357,7 +357,7 @@ proc skipHiddenNodes(n: PNode): PNode =
       result = result[1]
     elif result.kind in {
       nkCheckedFieldExpr, nkHiddenAddr, nkHiddenDeref, nkStringToCString,
-      nkCStringToString
+      nkCStringToString,
     } and result.len > 0:
       result = result[0]
     else:
@@ -382,12 +382,12 @@ proc infixHasParens(n: PNode, i: int): bool =
 proc hasIndent(n: PNode): bool =
   n.kind in {
     nkPar, nkCurly, nkBracket, nkTableConstr, nkStmtListExpr, nkPragma, nkPragmaExpr,
-    nkObjectTy, nkEnumTy, nkBlockStmt, nkBlockExpr
+    nkObjectTy, nkEnumTy, nkBlockStmt, nkBlockExpr,
   }
 
 const postExprBlocks = {
   nkStmtList, nkStmtListExpr, nkOfBranch, nkElifBranch, nkElse, nkExceptBranch,
-  nkFinally, nkDo
+  nkFinally, nkDo,
 }
 
 proc isStackedCall(n: PNode, inCall: bool): bool =
@@ -809,12 +809,15 @@ proc gcomma(
             n.sons[sstart + ord(lfFirstComplex in flags) .. n.len + theEnd],
             not isSimple(it, n.kind == nkIdentDefs),
           )
-    sepAtEnd = lfSepAtEnd in flags or onePerLine and lfLongSepAtEnd in flags
+    sepAtEnd = lfSepAtEnd in flags
+    longSepAtEnd = lfLongSepAtEnd in flags and count > 1
 
+  var newline = false
   for i in start .. n.len + theEnd:
     let c = i < n.len + theEnd
     if onePerLine or overflows(g, lsub(g, n[i]) + ord(c)):
       optNL(g)
+      newline = true
 
     let oldLen = g.tokens.len
 
@@ -822,7 +825,8 @@ proc gcomma(
 
     # In sticky comment mode we put a separator before the comment, else a
     # comment for a single parameter in an argument list fails to parse
-    if c or sepAtEnd or (lfFirstCommentSticky in flags and n[i].postfix.len > 0):
+    if c or sepAtEnd or (newline and longSepAtEnd) or
+        (lfFirstCommentSticky in flags and n[i].postfix.len > 0):
       if g.tokens.len > oldLen:
         if lfSkipPushComma notin flags or not eqIdent(n[i], "push"):
           let sep = separator(n[i])
@@ -945,7 +949,7 @@ proc gstmts(g: var TOutput, n: PNode, flags: SubFlags = {}, doIndent = true) =
           n.len > 0 and
           n[0].kind in {
             nkIfStmt, nkWhenStmt, nkWhileStmt, nkDiscardStmt, nkTryStmt, nkBlockStmt,
-            nkLetSection, nkVarSection, nkConstSection, nkCaseStmt
+            nkLetSection, nkVarSection, nkConstSection, nkCaseStmt,
           }
         ):
       put(g, tkSemiColon, $tkSemiColon)
@@ -1337,7 +1341,7 @@ proc gsubOptNL(g: var TOutput, n: PNode, indentNL = IndentWidth, flags: SubFlags
     nkCurlyExpr, nkPragmaExpr, nkCommand, nkExprEqExpr, nkAsgn, nkFastAsgn, nkClosure,
     nkTupleConstr, nkCurly, nkArgList, nkTableConstr, nkBracket, nkBind, nkDo,
     nkIdentDefs, nkConstDef, nkVarTuple, nkExprColonExpr, nkTypeOfExpr, nkDistinctTy,
-    nkTypeDef, nkBlockStmt, nkBlockExpr, nkLambda, nkProcTy
+    nkTypeDef, nkBlockStmt, nkBlockExpr, nkLambda, nkProcTy,
   }
 
   let

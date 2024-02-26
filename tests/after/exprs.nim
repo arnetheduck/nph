@@ -77,7 +77,7 @@ let longInfix = (
 let longArray = [
   aaaaaaaaaaaaa, bbbbbbbbbbbbbbb, ccccccccccccccc, dddddddddddddddd,
   eeeeeeeeeeeeeeeeeeeee, fffffffffffffff, ggggggggggggggg, hhhhhhhhhhhhhhh,
-  iiiiiiiiiiiiii, jjjjjjjjjjjjjjjjj, kkkkkkkkkk
+  iiiiiiiiiiiiii, jjjjjjjjjjjjjjjjj, kkkkkkkkkk,
 ]
 
 if aaaaaaaaaaaaaaaaaaaa and bbbbbbbbbbbbbbbbbbbbbbb and ccccccccccccccccccccccccc and
@@ -192,10 +192,10 @@ let aaaaaaaaaaaaaaaaa = [
 
 let bbbbbbb = [
   "aaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbb",
-  "ccccccccccccccccccccccccccccc", "dddddddddddddddddddddd"
+  "ccccccccccccccccccccccccccccc", "dddddddddddddddddddddd",
 ]
 
 let bbbbbbccccb = [
   int64 533, 444444444444444444, 555555555555555555, 6666666666666666, 6777777777777777,
-  888888888888888
+  888888888888888,
 ]

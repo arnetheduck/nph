@@ -493,18 +493,18 @@ const
   tyUnknownTypes* = {tyError, tyFromExpr}
   tyTypeClasses* = {
     tyBuiltInTypeClass, tyCompositeTypeClass, tyUserTypeClass, tyUserTypeClassInst,
-    tyAnd, tyOr, tyNot, tyAnything
+    tyAnd, tyOr, tyNot, tyAnything,
   }
   tyMetaTypes* = {tyGenericParam, tyTypeDesc, tyUntyped} + tyTypeClasses
   tyUserTypeClasses* = {tyUserTypeClass, tyUserTypeClassInst}
   # consider renaming as `tyAbstractVarRange`
   abstractVarRange* = {
     tyGenericInst, tyRange, tyVar, tyDistinct, tyOrdinal, tyTypeDesc, tyAlias,
-    tyInferred, tySink, tyOwned
+    tyInferred, tySink, tyOwned,
   }
   abstractInst* = {
     tyGenericInst, tyDistinct, tyOrdinal, tyTypeDesc, tyAlias, tyInferred, tySink,
-    tyOwned
+    tyOwned,
   } # xxx what about tyStatic?
 
 type
@@ -979,7 +979,7 @@ const
     mUnaryMinusF64, mCharToStr, mBoolToStr, mIntToStr, mInt64ToStr, mFloatToStr,
     mCStrToStr, mStrToStr, mEnumToStr, mAnd, mOr, mEqStr, mLeStr, mLtStr, mEqSet,
     mLeSet, mLtSet, mMulSet, mPlusSet, mMinusSet, mConStrStr, mAppendStrCh,
-    mAppendStrStr, mAppendSeqElem, mInSet, mRepr, mOpenArrayToSeq
+    mAppendStrStr, mAppendSeqElem, mInSet, mRepr, mOpenArrayToSeq,
   }
   generatedMagics* = {mNone, mIsolate, mFinished, mOpenArrayToSeq}
     ## magics that are generated as normal procs in the backend
@@ -1160,12 +1160,12 @@ proc setUseIc*(useIc: bool) =
 const
   OverloadableSyms* = {
     skProc, skFunc, skMethod, skIterator, skConverter, skModule, skTemplate, skMacro,
-    skEnumField
+    skEnumField,
   }
   GenericTypes*: TTypeKinds = {tyGenericInvocation, tyGenericBody, tyGenericParam}
   StructuralEquivTypes*: TTypeKinds = {
     tyNil, tyTuple, tyArray, tySet, tyRange, tyPtr, tyRef, tyVar, tyLent, tySequence,
-    tyProc, tyOpenArray, tyVarargs
+    tyProc, tyOpenArray, tyVarargs,
   }
   ConcreteTypes*: TTypeKinds = {
     tyBool,
@@ -1202,7 +1202,7 @@ const
   PersistentNodeFlags*: TNodeFlags = {
     nfBase2, nfBase8, nfBase16, nfDotSetter, nfDotField, nfIsRef, nfIsPtr, nfPreventCg,
     nfLL, nfFromTemplate, nfDefaultRefsParam, nfExecuteOnReload, nfLastRead,
-    nfFirstWrite, nfSkipFieldChecking
+    nfFirstWrite, nfSkipFieldChecking,
   }
   namePos* = 0
   patternPos* = 1 # empty except for term rewriting macros

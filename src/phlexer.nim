@@ -39,7 +39,7 @@ const
   SymStartChars*: set[char] = {'a' .. 'z', 'A' .. 'Z', '\x80' .. '\xFF'}
   OpChars*: set[char] = {
     '+', '-', '*', '/', '\\', '<', '>', '!', '?', '^', '.', '|', '=', '%', '&', '$',
-    '@', '~', ':'
+    '@', '~', ':',
   }
   UnaryMinusWhitelist = {' ', '\t', '\n', '\r', ',', ';', '(', '[', '{'}
 # don't forget to update the 'highlite' module if these charsets should change
@@ -983,7 +983,7 @@ proc getString(L: var Lexer, tok: var Token, mode: StringMode) =
 
         lexMessagePos(
           L, errGenerated, L.lineStart,
-          "closing \"\"\" expected, but end of file reached"
+          "closing \"\"\" expected, but end of file reached",
         )
 
         L.lineNumber = line2
@@ -1599,7 +1599,7 @@ proc rawGetTok*(L: var Lexer, tok: var Token) =
         else:
           lexMessage(
             L, errGenerated,
-            "invalid token: no whitespace between number and identifier"
+            "invalid token: no whitespace between number and identifier",
           )
     of '-':
       if L.buf[L.bufpos + 1] in {'0' .. '9'} and
@@ -1617,7 +1617,7 @@ proc rawGetTok*(L: var Lexer, tok: var Token) =
           else:
             lexMessage(
               L, errGenerated,
-              "invalid token: no whitespace between number and identifier"
+              "invalid token: no whitespace between number and identifier",
             )
       else:
         getOperator(L, tok)

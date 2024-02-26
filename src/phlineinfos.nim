@@ -305,13 +305,13 @@ proc computeNotesVerbosity(): array[0 .. 3, TNoteKinds] =
     result[2] - {
       warnProveField, warnProveIndex, warnGcUnsafe, hintPath, hintDependency,
       hintCodeBegin, hintCodeEnd, hintSource, hintGlobalVar, hintGCStats, hintMsgOrigin,
-      hintPerformance
+      hintPerformance,
     }
 
   result[0] =
     result[1] - {
       hintSuccessX, hintSuccess, hintConf, hintProcessing, hintPattern, hintExecuting,
-      hintLinking, hintCC
+      hintLinking, hintCC,
     }
 
 const

@@ -5,7 +5,7 @@
 import
   "."/[
     astcmp, astyaml, phast, phastyaml, phmsgs, phlineinfos, phoptions, phparser,
-    phrenderer
+    phrenderer,
   ]
 
 import "$nim"/compiler/idents

@@ -923,6 +923,6 @@ proc genSuccessX*(conf: ConfigRef) =
     hintSuccessX,
     [
       "build", build, "loc", loc, "sec", sec, "mem", mem, "project", project, "output",
-      output
+      output,
     ],
   )

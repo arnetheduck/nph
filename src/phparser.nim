@@ -357,7 +357,7 @@ proc isOperator(tok: Token): bool =
   #|             'is' | 'isnot' | 'not' | 'of' | 'as' | 'from' | '..' | 'and' | 'or' | 'xor'
   tok.tokType in {
     tkOpr, tkDiv, tkMod, tkShl, tkShr, tkIn, tkNotin, tkIs, tkIsnot, tkNot, tkOf, tkAs,
-    tkFrom, tkDotDot, tkAnd, tkOr, tkXor
+    tkFrom, tkDotDot, tkAnd, tkOr, tkXor,
   }
 
 proc parseComStmt(p: var Parser, n: PNode, commentLoc = clPostfix): PNode =
@@ -714,7 +714,7 @@ proc parsePar(p: var Parser): PNode =
 
   if p.tok.tokType in {
     tkDiscard, tkInclude, tkIf, tkWhile, tkCase, tkTry, tkDefer, tkFinally, tkExcept,
-    tkBlock, tkConst, tkLet, tkWhen, tkVar, tkFor, tkMixin
+    tkBlock, tkConst, tkLet, tkWhen, tkVar, tkFor, tkMixin,
   }:
     # XXX 'bind' used to be an expression, so we exclude it here;
     # tests/reject/tbind2 fails otherwise.
@@ -998,7 +998,7 @@ proc primarySuffix(p: var Parser, r: PNode, baseIndent: int, mode: PrimaryMode):
         if isDotLike2:
           parMessage(
             p, warnDotLikeOps,
-            "dot-like operators will be parsed differently with `-d:nimPreviewDotLikeOps`"
+            "dot-like operators will be parsed differently with `-d:nimPreviewDotLikeOps`",
           )
         if p.inPragma == 0 and (isUnary(p.tok) or p.tok.tokType notin {tkOpr, tkDotDot}):
           # actually parsing {.push hints:off.} as {.push(hints:off).} is a sweet
@@ -1335,7 +1335,7 @@ proc parseProcExpr(p: var Parser, isExpr: bool, kind: TNodeKind): PNode =
       if kind == nkFuncDef:
         parMessage(
           p,
-          "func keyword is not allowed in type descriptions, use proc with {.noSideEffect.} pragma instead"
+          "func keyword is not allowed in type descriptions, use proc with {.noSideEffect.} pragma instead",
         )
       result.add(pragmas)
 
@@ -2449,7 +2449,7 @@ proc parseTypeClass(p: var Parser): PNode =
       parMessage(
         p,
         "routine expected, but found '$1' (empty new-styled concepts are not allowed)",
-        p.tok
+        p.tok,
       )
     result.add(p.emptyNode)
   else:
@@ -2813,7 +2813,7 @@ proc parseTopLevelStmt(p: var Parser): PNode =
         if p.tok.tokType == tkOpr and p.tok.ident.s == "*":
           parMessage(
             p, errGenerated,
-            "invalid indentation; an export marker '*' follows the declared identifier"
+            "invalid indentation; an export marker '*' follows the declared identifier",
           )
         else:
           parMessage(p, errInvalidIndentation & " parseTopLevelStmt 0")
