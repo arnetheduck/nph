@@ -554,7 +554,7 @@ const oldExperimentalFeatures* = {dotOperators, callOperator, parallel}
 const
   ChecksOptions* = {
     optObjCheck, optFieldCheck, optRangeCheck, optOverflowCheck, optBoundsCheck,
-    optAssert, optNaNCheck, optInfCheck, optStyleCheck
+    optAssert, optNaNCheck, optInfCheck, optStyleCheck,
   }
   DefaultOptions* = {
     optObjCheck,
@@ -725,7 +725,7 @@ proc isDefined*(conf: ConfigRef, symbol: string): bool =
         conf.target.targetOS in {
           osLinux, osMorphos, osSkyos, osIrix, osPalmos, osQnx, osAtari, osAix, osHaiku,
           osVxWorks, osSolaris, osNetbsd, osFreebsd, osOpenbsd, osDragonfly, osMacosx,
-          osIos, osAndroid, osNintendoSwitch, osFreeRTOS, osCrossos, osZephyr, osNuttX
+          osIos, osAndroid, osNintendoSwitch, osFreeRTOS, osCrossos, osZephyr, osNuttX,
         }
     of "linux":
       result = conf.target.targetOS in {osLinux, osAndroid}
@@ -1025,7 +1025,7 @@ template patchModule(conf: ConfigRef) {.dirty.} =
 const stdlibDirs* = [
   "pure", "core", "arch", "pure/collections", "pure/concurrency", "pure/unidecode",
   "impure", "wrappers", "wrappers/linenoise", "windows", "posix", "js",
-  "deprecated/pure"
+  "deprecated/pure",
 ]
 
 const

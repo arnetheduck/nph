@@ -52,7 +52,7 @@ proc aaaaaaaaa*[
 ): ReturnType[
     Nested[
       Aaaaaaaaaaaaaaaaaaaaaa, Bbbbbbbbbbbbbbbbbbbbbbbbbbb, Cccccccccccccccccccccccc,
-      Dddddddddddddddddddddddd, Eeeeeeeeeeeeeeeeeeeee
+      Dddddddddddddddddddddddd, Eeeeeeeeeeeeeeeeeeeee,
     ]
 ] =
   discard
@@ -108,7 +108,7 @@ command aaaaaaaaaaaaaaaaaaaaaa,
   bbbbbbbbbbbbbbbb
 functionCall(
   aaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaaaaaaaa,
-  aaaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaa
+  aaaaaaaaaaaaaaaaaaaaaaa, aaaaaaaaaaaaa,
 )
 
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa(
