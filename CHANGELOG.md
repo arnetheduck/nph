@@ -1,5 +1,11 @@
 # Changelog
 
+# 0.5.1
+
+* fix a bug in the length computation of postfix-commented items
+* fix a bug in statement list expression rendering in calls
+* fix a bug in whitespace retention between calls
+
 # 0.5
 
 * allow function calls to partially fill line in assignments
