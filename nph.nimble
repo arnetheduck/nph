@@ -65,6 +65,24 @@ proc formatProject(
       cd ".."
   cd "../.."
 
+proc againProject(
+  name, url, branch: string, dirs: openArray[string]
+) =
+  if not dirExists("playground"):
+    mkdir("playground")
+  cd "playground/"
+  cd name
+  for dir in dirs:
+    if dir.len > 0:
+      cd dir
+    try:
+      exec "git ls-files | grep .nim$ | xargs nph"
+      exec "git diff"
+    except: discard
+    if dir.len > 0:
+      cd ".."
+  cd "../.."
+
 proc commitProject(
   name, url, branch: string, dirs: openArray[string]
 ) =
@@ -90,6 +108,10 @@ const projects = [
 task play, "Format several popular projects":
   for p in projects:
     formatProject(p[0], p[1], p[2], p[3])
+
+task again, "Format code formatted by replay (instead of raw code)":
+  for p in projects:
+    againProject(p[0], p[1], p[2], p[3])
 
 task replay, "Commit formatted sources":
   for p in projects:

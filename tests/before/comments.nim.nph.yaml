@@ -1058,8 +1058,8 @@ sons:
           - kind: "nkEmpty"
           - kind: "nkIntLit"
             intVal: 52
-    postfix:
-      - "# let all on one line"
+        postfix:
+          - "# let all on one line"
   - kind: "nkLetSection"
     sons:
       - kind: "nkIdentDefs"
@@ -1159,8 +1159,8 @@ sons:
           - kind: "nkEmpty"
           - kind: "nkIntLit"
             intVal: 5
-    postfix:
-      - "# let section postfix"
+      - kind: "nkCommentStmt"
+        "comment": "# let section postfix"
   - kind: "nkConstSection"
     sons:
       - kind: "nkConstDef"
@@ -1177,8 +1177,8 @@ sons:
           - kind: "nkEmpty"
           - kind: "nkIntLit"
             intVal: 5
-    postfix:
-      - "# const section postfix"
+      - kind: "nkCommentStmt"
+        "comment": "# const section postfix"
   - kind: "nkDiscardStmt"
     sons:
       - kind: "nkIntLit"
@@ -1777,3 +1777,18 @@ sons:
               - "# infix post"
         postfix:
           - "# infix post par"
+  - kind: "nkBlockStmt"
+    sons:
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkBlockStmt"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkDiscardStmt"
+                    sons:
+                      - kind: "nkEmpty"
+          - kind: "nkCommentStmt"
+            "comment": "# dedented comment post discard"
