@@ -1515,20 +1515,6 @@ proc newProcNode*(
 const AttachedOpToStr*: array[TTypeAttachedOp, string] =
   ["=wasMoved", "=destroy", "=copy", "=dup", "=sink", "=trace", "=deepcopy"]
 
-proc mergeLoc(a: var TLoc, b: TLoc) =
-  if a.k == low(typeof(a.k)):
-    a.k = b.k
-
-  if a.storage == low(typeof(a.storage)):
-    a.storage = b.storage
-
-  a.flags.incl b.flags
-  if a.lode == nil:
-    a.lode = b.lode
-
-  if a.r == "":
-    a.r = b.r
-
 proc newSons*(father: Indexable, length: int) =
   setLen(father.sons, length)
 

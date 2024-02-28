@@ -308,6 +308,8 @@ proc isRightAssociative(tok: Token): bool {.inline.} =
   # or (tok.ident.s.len > 1 and tok.ident.s[^1] == '>')
 
 proc wrap(a, b: PNode): PNode =
+  a.info = b.info
+  a.endInfo = b.endInfo
   a.prefix = move(b.prefix)
   a.add(b)
   a
@@ -566,14 +568,14 @@ proc dotExpr(p: var Parser, a: PNode): PNode =
     result = y
 
 proc dotLikeExpr(p: var Parser, a: PNode): PNode =
-  var info = p.parLineInfo
-  result = newNodeI(nkInfix, info)
+  result = newNodeI(nkInfix, a.info)
   optInd(p, result)
   var opNode = newIdentNodeP(p.tok.ident, p)
   getTok(p)
   result.add(opNode)
   result.add(a)
   result.add(parseSymbol(p, smAfterDot))
+  setEndInfo(result)
 
 proc qualifiedIdent(p: var Parser): PNode =
   #| qualifiedIdent = symbol ('.' optInd symbolOrKeyword)?
@@ -1032,7 +1034,6 @@ proc parseOperators(
     a.add(b)
     # Reset the "beginning" of the infix to capture empty lines correctly
     a.info = result.info
-    a.endInfo = b.endInfo
 
     result = a
     opPrec = getPrecedence(p.tok)
@@ -1554,9 +1555,12 @@ proc binaryNot(p: var Parser, a: PNode): PNode =
     optInd(p, notOpr)
     let b = primary(p, pmTypeDesc)
     result = newNodeP(nkInfix, p)
+    result.info = a.info
+    result.endInfo = b.endInfo
     result.add notOpr
     result.add a
     result.add b
+    setEndInfo(result)
   else:
     result = a
 
@@ -1876,10 +1880,10 @@ proc parseReturnOrRaise(p: var Parser, kind: TNodeKind): PNode =
     result.add(p.emptyNode)
   else:
     var e = parseExpr(p)
-    splitLookahead(p, e, clPostfix)
+    splitLookahead(p, e, p.currInd, clPostfix)
     e = postExprBlocks(p, e)
     if e.kind != nkEmpty:
-      splitLookahead(p, result, clPostfix)
+      splitLookahead(p, result, p.currInd, clPostfix)
     result.add(e)
   setEndInfo()
 
@@ -2198,7 +2202,7 @@ proc parseSection(
   splitLookahead(p, result, clMid)
   if realInd(p):
     withInd(p):
-      while sameInd(p) or p.tok.tokType == tkComment and p.tok.indent > p.currInd:
+      while sameInd(p) or p.tok.tokType == tkComment and validInd(p):
         case p.tok.tokType
         of tkSymbol, tkAccent, tkParLe:
           var a = defparser(p)
@@ -2210,11 +2214,13 @@ proc parseSection(
         else:
           parMessage(p, errIdentifierExpected, p.tok)
           break
+      addSkipped(p, result)
     if result.len == 0:
       parMessage(p, errIdentifierExpected, p.tok)
   elif p.tok.tokType in {tkSymbol, tkAccent, tkParLe} and p.tok.indent < 0:
     # tkParLe is allowed for ``var (x, y) = ...`` tuple parsing
     result.add(defparser(p))
+    splitLookahead(p, result[^1], p.currInd, clPostfix)
   else:
     parMessage(p, errIdentifierExpected, p.tok)
   setEndInfo()

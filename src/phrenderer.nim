@@ -79,6 +79,7 @@ type
     config*: ConfigRef
     fid: FileIndex
     nl: bool # When computing line length, does a "forced" newline appear
+    firstLen: int # Length of first line
 
   ListFlag = enum
     lfFirstSticky
@@ -195,7 +196,7 @@ proc initSrcGen(g: var TSrcGen, config: ConfigRef) =
   g.idx = 0
   g.buf = ""
   g.pendingNL = -1
-  g.pendingWhitespace = -1
+  g.pendingWhitespace = 0
   g.config = config
 
 proc containsNL(s: string): bool =
@@ -209,7 +210,10 @@ proc containsNL(s: string): bool =
   result = false
 
 proc addTok(g: var TSrcLen, kind: TokType, s: string) =
-  g.nl = g.nl or containsNL(s)
+  if not g.nl:
+    g.nl = containsNL(s)
+    if not g.nl:
+      g.firstLen += s.len
   g.tokens.add TRenderTok(kind: kind, length: s.len)
 
 proc addTok(g: var TSrcGen, kind: TokType, s: string) =
@@ -237,12 +241,12 @@ proc addPendingNL(g: var TOutput) =
 
     g.lineLen = g.pendingNL
     g.pendingNL = -1
-    g.pendingWhitespace = -1
+    g.pendingWhitespace = 0
   elif g.pendingWhitespace >= 1:
     if g.lineLen > g.pendingWhitespace:
       addTok(g, tkSpaces, spaces(g.pendingWhitespace))
 
-    g.pendingWhitespace = -1
+    g.pendingWhitespace = 0
 
 proc optNL(g: var TOutput, indent: int) =
   g.pendingNL = indent
@@ -385,10 +389,8 @@ proc hasIndent(n: PNode): bool =
     nkObjectTy, nkEnumTy, nkBlockStmt, nkBlockExpr,
   }
 
-const postExprBlocks = {
-  nkStmtList, nkStmtListExpr, nkOfBranch, nkElifBranch, nkElse, nkExceptBranch,
-  nkFinally, nkDo,
-}
+const postExprBlocks =
+  {nkStmtList, nkOfBranch, nkElifBranch, nkElse, nkExceptBranch, nkFinally, nkDo}
 
 proc isStackedCall(n: PNode, inCall: bool): bool =
   # At least two calls to enable "stacking" mode
@@ -565,39 +567,25 @@ proc gstmts(g: var TOutput, n: PNode, flags: SubFlags = {}, doIndent = true)
 
 template withSrcLen(g: TSrcGen, body: untyped): LineLen =
   var sl {.inject.} = TSrcLen.init(g)
-  let pre = sl.lineLen
+  # We don't count pending whitespace towards the length of the body because it
+  # is already accounted for in `lineLen` and iff the body ends up on a new
+  # line, the pending whitespace will not actually be added to the output
+  let discount = g.pendingWhitespace
   body
   let post =
     if sl.nl:
       MaxLineLen + 1
+    elif sl.firstLen > 0:
+      sl.firstLen - discount
     else:
-      sl.lineLen - pre
-  (post, sl.nl)
-
-template withSrcLenNl(g: TSrcGen, nlParam: bool, body: untyped): LineLen =
-  var sl {.inject.} = TSrcLen.init(g)
-  if nlParam:
-    optNL(sl)
-    addPendingNL(sl)
-    sl.nl = false
-
-  let pre = sl.lineLen
-  body
-  let post =
-    if sl.nl:
-      MaxLineLen + 1
-    else:
-      sl.lineLen - pre
+      0
   (post, sl.nl)
 
 template withSrcLen(g: TSrcLen, body: untyped): LineLen =
   (0, false)
 
-template withSrcLenNl(g: TSrcLen, nlParam: bool, body: untyped): LineLen =
-  (0, false)
-
-proc lsub(g: TOutput, n: PNode, flags: SubFlags = {}, extra = 0, nl = false): LineLen =
-  withSrcLenNl(g, nl):
+proc lsub(g: TOutput, n: PNode, flags: SubFlags = {}, extra = 0): LineLen =
+  withSrcLen(g):
     gsub(sl, n, flags, extra)
 
 proc lsons(
@@ -789,7 +777,8 @@ proc gcomma(
   # avoid wasting significant vertical space on lists of numbers and the like)
   let
     onePerLine =
-      if not overflows(
+      count > 1 and
+      overflows(
         g,
         lcomma(
           g,
@@ -801,14 +790,11 @@ proc gcomma(
           flags - {lfFirstSticky, lfFirstAlone},
           subFlags,
         ),
-      ):
-        false
-      else:
-        count > 1 and
-          anyIt(
-            n.sons[sstart + ord(lfFirstComplex in flags) .. n.len + theEnd],
-            not isSimple(it, n.kind == nkIdentDefs),
-          )
+      ) and
+      anyIt(
+        n.sons[sstart + ord(lfFirstComplex in flags) .. n.len + theEnd],
+        not isSimple(it, n.kind == nkIdentDefs),
+      )
     sepAtEnd = lfSepAtEnd in flags
     longSepAtEnd = lfLongSepAtEnd in flags and count > 1
 
@@ -921,7 +907,6 @@ proc gsection(g: var TOutput, n: PNode, kind: TokType, k: string) =
         optNL(g)
       gsub(g, n[i])
 
-    optNL(g)
     dedent(g)
   else:
     gsub(g, n[0])
@@ -1394,9 +1379,9 @@ proc postStatements(
     else:
       optSpace(g)
       put(g, tkDo, "do")
-      put(g, tkColon, ":")
+      putWithSpace(g, tkColon, ":")
   elif not skipColon:
-    put(g, tkColon, ":")
+    putWithSpace(g, tkColon, ":")
 
   gsub(g, n[i])
 
@@ -1407,7 +1392,7 @@ proc postStatements(
     elif n[j].kind in {nkStmtList, nkStmtListExpr}:
       optNL(g)
       put(g, tkDo, "do")
-      put(g, tkColon, ":")
+      putWithSpace(g, tkColon, ":")
 
     gsub(g, n[j])
 

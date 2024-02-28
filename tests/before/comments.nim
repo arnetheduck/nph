@@ -449,3 +449,8 @@ discard
     a and # infix post-operator
     b # infix post
   ) # infix post par
+
+block:
+  block:
+    discard
+  # dedented comment post discard
