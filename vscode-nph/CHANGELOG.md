@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.4
+
+- Register formatter for '.nims' and '.nimble'
+
 ## 0.0.3
 
 - Lower vscode version requirement
