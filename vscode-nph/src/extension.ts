@@ -25,20 +25,25 @@ function getFormattedString(doc: vscode.TextDocument): string {
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  let disposable = vscode.languages.registerDocumentFormattingEditProvider(
-    "nim",
-    {
-      provideDocumentFormattingEdits(
-        doc: vscode.TextDocument
-      ): vscode.TextEdit[] {
-        return [
-          vscode.TextEdit.replace(rangeWholeFile(doc), getFormattedString(doc))
-        ];
-      }
+  let provider = {
+    provideDocumentFormattingEdits(
+      doc: vscode.TextDocument
+    ): vscode.TextEdit[] {
+      return [
+        vscode.TextEdit.replace(rangeWholeFile(doc), getFormattedString(doc))
+      ];
     }
-  );
-  context.subscriptions.push(disposable);
+  };
+  context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(
+    "nim", provider
+  ));
+  context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(
+    "nims", provider
+  ));
+  context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(
+    "nimble", provider
+  ));
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

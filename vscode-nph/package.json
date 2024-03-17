@@ -2,7 +2,7 @@
   "name": "vscode-nph",
   "displayName": "nph - Nim code formatter",
   "description": "Opinionated code formatter for Nim",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "arnetheduck",
   "engines": {
     "vscode": "^1.30.0"
