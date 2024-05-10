@@ -12,8 +12,10 @@ bin           = @["nph"]
 # TODO https://github.com/nim-lang/nimble/issues/1166
 # Using exact version here and adding path manually :facepalm:
 # run `nimble setup -l` to hopefully make it work
-requires "nim >= 2.0.0 & <= 2.0.4",
-         "compiler"
+# Note that the parser used by the formatter and the parser used by the verifier
+# might disagree if syntax changes are included in a Nim patch version.
+# TODO: nph should learn how to check formatting with any nim version
+requires "nim >= 2.0.0 & < 2.1", "compiler"
 
 proc build() =
   exec "nim c --debuginfo -o:nph src/nph"
