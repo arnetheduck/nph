@@ -45,7 +45,7 @@ echo $(git rev-parse HEAD) >> .git-blame-ignore-revs
 
 then configure git to use it:
 ```sh
-git --global config blame.ignoreRevsFile .git-blame-ignore-revs
+git config --global blame.ignoreRevsFile .git-blame-ignore-revs
 ```
 
 The same strategy can be used when upgrading `nph` to a new version that
