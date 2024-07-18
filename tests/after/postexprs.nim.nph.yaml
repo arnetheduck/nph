@@ -576,3 +576,45 @@ sons:
                                 ident: "res"
               - kind: "nkIdent"
                 ident: "ccc"
+  - kind: "nkMacroDef"
+    sons:
+      - kind: "nkAccQuoted"
+        sons:
+          - kind: "nkIdent"
+            ident: "->"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+          - kind: "nkIdentDefs"
+            sons:
+              - kind: "nkIdent"
+                ident: "a"
+              - kind: "nkIdent"
+                ident: "b"
+              - kind: "nkIdent"
+                ident: "c"
+              - kind: "nkIdent"
+                ident: "untyped"
+              - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkInfix"
+    sons:
+      - kind: "nkIdent"
+        ident: "->"
+      - kind: "nkIntLit"
+        intVal: 1
+      - kind: "nkIntLit"
+        intVal: 2
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"

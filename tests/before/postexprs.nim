@@ -97,3 +97,8 @@ else: discard
 
 discard (aaa.bbb.exec do(res: int64):
       size = res).ccc()
+
+macro `->`(a, b, c: untyped) = discard
+
+1 -> 2:
+  discard

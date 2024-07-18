@@ -1709,8 +1709,6 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
     gsub(g, n[0], flags = flags) # binary operator
 
-    doAssert n.len == 3
-
     # `fitsNL` governs a preference to fit an argument fully on a new line over
     # leaving parts of it on the same line as the operator.
     # This increases the probability that the line will end with an operator and
