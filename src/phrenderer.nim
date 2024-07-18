@@ -836,7 +836,8 @@ proc gsonsNL(
 ) =
   for i in start .. n.len + theEnd:
     gsub(g, n[i], flags)
-    g.optNL()
+    if i != n.len + theEnd:
+      g.optNL()
 
 proc glist(
     g: var TOutput,
@@ -977,10 +978,6 @@ proc gstmts(g: var TOutput, n: PNode, flags: SubFlags = {}, doIndent = true) =
 
   dedent(g, ind)
 
-  if not trivial:
-    optNL(g)
-  # if not trivial:
-  #   optNL(g)
   if needsPar:
     if not trivial:
       optNL(g)
@@ -1095,7 +1092,7 @@ proc gif(g: var TOutput, n: PNode, flags: SubFlags) =
     if oneline:
       # We end up here when rendering things that were parsed as expressions but
       # don't match the "trivial" rule above
-      # TODO treat such constructs as trivail for better determinism?
+      # TODO treat such constructs as trivial for better determinism?
       gsons(g, n, 1)
     else:
       optNL(g)

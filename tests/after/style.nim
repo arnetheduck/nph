@@ -39,8 +39,7 @@ functionCall(10000000, 2000000000, 3000000000, 40000000, 5000000000)
 proc f(
   myParameter = 0,
   callback: SomeCallback = proc() =
-    discard
-  ,
+    discard,
   nextParameter = 1,
 )
 
