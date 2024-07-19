@@ -74,9 +74,15 @@ jobs:
           curl -L "https://curl.se/ca/cacert.pem" -o cacert.pem
           echo "$PWD" >> $GITHUB_PATH
 
+      - uses: jiro4989/setup-nim-action@v2
+        with:
+          nim-version: '2.0.2' # default is 'stable'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build nph
         run: |
-            nimble setup -l
+            nimble install -y
+            # nimble setup -l
             nimble build -d:release
 
       - name: Create archive
