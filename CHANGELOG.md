@@ -1,5 +1,11 @@
 # Changelog
 
+# 0.6.0
+
+* avoid putting `,` on its own line after complex expressions, where possible
+* allow compiling with a wider range of Nim 2.0 versions, hoping it won't break
+* a few bugfixes
+
 # 0.5.1
 
 * fix a bug in the length computation of postfix-commented items
