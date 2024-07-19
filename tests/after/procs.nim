@@ -131,8 +131,7 @@ type Ep = proc {.nimcall.}
 type Fp = proc(
   aaaaaaaaaaaaaaaaa: int,
   bbbbbbbbbbbbbbb = proc() =
-    discard
-  ,
+    discard,
   cccccccccccccccccc = 30,
 )
 
