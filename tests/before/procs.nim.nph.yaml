@@ -1099,3 +1099,29 @@ sons:
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkIdent"
+        ident: "check"
+      - kind: "nkPrefix"
+        sons:
+          - kind: "nkIdent"
+            ident: "not"
+          - kind: "nkCall"
+            sons:
+              - kind: "nkIdent"
+                ident: "compiles"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "result"
+                      - kind: "nkStmtList"
+                        sons:
+                          - kind: "nkAsgn"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: "int8"
+                              - kind: "nkIntLit"
+                                intVal: 6

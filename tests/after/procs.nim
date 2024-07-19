@@ -162,3 +162,7 @@ proc exact89charswithequals(
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: int
 ) =
   discard
+
+check not (compiles do:
+  result:
+    int8 = 6)
