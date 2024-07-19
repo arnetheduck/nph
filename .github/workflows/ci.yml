@@ -26,7 +26,7 @@ jobs:
             builder: ubuntu-20.04
           - target:
               os: macosx
-            builder: macos-11
+            builder: macos-12
           - target:
               os: windows
             builder: windows-2019
@@ -44,26 +44,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Fetch nimble
-        uses: robinraju/release-downloader@v1.8
+      - uses: jiro4989/setup-nim-action@v2
         with:
-          repository: "nim-lang/nimble"
-          tag: "latest"
-          fileName: "nimble-${{matrix.target.name}}.tar.gz"
-          extract: false
-      - name: Setup env
-        run: |
-          # extract: true doesn't work on osx :/
-          tar xvf nimble-${{matrix.target.name}}.tar.gz
-          # needed for nimble on windows
-          curl -L "https://curl.se/ca/cacert.pem" -o cacert.pem
-          echo "$PWD" >> $GITHUB_PATH
+          nim-version: '2.0.2' # default is 'stable'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      # - name: Fetch nimble
+      #   uses: robinraju/release-downloader@v1.8
+      #   with:
+      #     repository: "nim-lang/nimble"
+      #     tag: "latest"
+      #     fileName: "nimble-${{matrix.target.name}}.tar.gz"
+      #     extract: false
+      # - name: Setup env
+      #   run: |
+      #     # extract: true doesn't work on osx :/
+      #     tar xvf nimble-${{matrix.target.name}}.tar.gz
+      #     # needed for nimble on windows
+      #     curl -L "https://curl.se/ca/cacert.pem" -o cacert.pem
+      #     echo "$PWD" >> $GITHUB_PATH
 
       - name: Build nph
         run: |
             ls -l
 
-            nimble setup -l
+            # nimble setup -l
+            nimble install -y
             nimble build
 
       - name: Check formatting
