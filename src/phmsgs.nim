@@ -139,8 +139,7 @@ proc fileInfoIdx*(
         if pseudoPath:
           RelativeFile filename
         else:
-          relativeTo(canon, conf.projectPath)
-        ,
+          relativeTo(canon, conf.projectPath),
       )
     )
 

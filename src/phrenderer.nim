@@ -527,8 +527,7 @@ proc init(T: type TSrcLen, g: TSrcGen): T =
       if g.tokens.len > 0:
         @[g.tokens[^1]]
       else:
-        @[]
-    ,
+        @[],
     config: g.config,
   )
 
@@ -1130,8 +1129,7 @@ proc gtry(g: var TOutput, n: PNode) =
       if trivial:
         {sfOneLine}
       else:
-        {}
-    ,
+        {},
   )
 
 proc gfor(g: var TOutput, n: PNode) =
@@ -2219,8 +2217,7 @@ proc renderTree*(n: PNode, conf: ConfigRef = nil): string =
     if conf == nil:
       newPartialConfigRef()
     else:
-      conf
-    ,
+      conf,
   )
   # do not indent the initial statement list so that
   # writeFile("file.nim", repr n)
