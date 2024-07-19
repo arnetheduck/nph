@@ -330,8 +330,7 @@ discard
   54 # discard value
 
 proc x() =
-  discard
-  # proc, impl and comment on one line
+  discard # proc, impl and comment on one line
 
 proc xxx() = # after proc before indented name
   discard

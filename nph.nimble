@@ -94,10 +94,10 @@ proc commitProject(
 
   try:
     exec "git checkout -b nph"
-    exec "git commit -am \"Formatted with nph $(nph --version)\""
+    exec "git commit -am \"Formatted with nph $(nph --version)\" --author \"nph <nph@example.com>\""
   except:
     exec "git checkout nph"
-    exec "git commit -am \"Formatted with nph $(nph --version)\" --amend"
+    exec "git commit -am \"Formatted with nph $(nph --version)\" --amend --author \"nph <nph@example.com>\""
 
   cd "../.."
 

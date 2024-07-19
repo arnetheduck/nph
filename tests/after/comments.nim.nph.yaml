@@ -1205,8 +1205,8 @@ sons:
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
-          - kind: "nkCommentStmt"
-            "comment": "# proc, impl and comment on one line"
+            postfix:
+              - "# proc, impl and comment on one line"
   - kind: "nkProcDef"
     mid:
       - "# after proc before indented name"
