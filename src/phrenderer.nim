@@ -1753,7 +1753,11 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       if nNext.kind == nkPrefix or (opr != nil and phrenderer.isKeyword(opr)):
         optSpace(g)
 
-      if nNext.kind == nkInfix:
+      if nNext.kind == nkInfix or (
+        # This is a special case for a do statement, which needs an extra set of parens
+        nNext.kind == nkCall and nNext.len >= 2 and nNext[1].kind == nkStmtList and
+        nNext[1].len >= 1 and nNext[1][^1].kind == nkCall
+      ):
         put(g, tkParLe, "(")
         gsub(g, n[1])
         put(g, tkParRi, ")")
