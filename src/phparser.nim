@@ -482,6 +482,7 @@ proc exprEqExpr(p: var Parser): PNode =
 proc exprList(p: var Parser, endTok: TokType, result: PNode) =
   #| exprList = expr ^+ comma
   getTok(p)
+  splitLookahead(p, result, clMid)
   optInd(p, result)
   # progress guaranteed
   var a = parseExpr(p)
@@ -498,6 +499,7 @@ proc exprList(p: var Parser, endTok: TokType, result: PNode) =
 proc optionalExprList(p: var Parser, endTok: TokType, result: PNode) =
   #| optionalExprList = expr ^* comma
   getTok(p)
+  splitLookahead(p, result, clMid)
   optInd(p, result)
   # progress guaranteed
   while (p.tok.tokType != endTok) and (p.tok.tokType != tkEof):
@@ -1894,9 +1896,10 @@ proc parseIfOrWhen(p: var Parser, kind: TNodeKind): PNode =
   #| ifStmt = 'if' condStmt
   #| whenStmt = 'when' condStmt
   result = newNodeP(kind, p)
+
   while true:
-    getTok(p) # skip `if`, `when`, `elif`
     var branch = newNodeP(nkElifBranch, p)
+    getTok(p) # skip `if`, `when`, `elif`
     splitLookahead(p, branch, clMid)
     optInd(p, branch)
     branch.add(parseExpr(p))
@@ -1920,8 +1923,8 @@ proc parseIfOrWhenExpr(p: var Parser, kind: TNodeKind): PNode =
   #| whenExpr = 'when' condExpr
   result = newNodeP(kind, p)
   while true:
-    getTok(p) # skip `if`, `when`, `elif`
     var branch = newNodeP(nkElifExpr, p)
+    getTok(p) # skip `if`, `when`, `elif`
     splitLookahead(p, branch, clMid)
     optInd(p, branch)
     branch.add(parseExpr(p))
@@ -1983,11 +1986,13 @@ proc parseCase(p: var Parser): PNode =
       inElif = true
       b = newNodeP(nkElifBranch, p)
       getTok(p)
+      splitLookahead(p, b, clMid)
       optInd(p, b)
       b.add(parseExpr(p))
     of tkElse:
       b = newNodeP(nkElse, p)
       getTok(p)
+      splitLookahead(p, b, clMid)
     else:
       break
     b.add(parseColComStmt(p, b, clMid))

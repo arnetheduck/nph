@@ -454,3 +454,42 @@ block:
   block:
     discard
   # dedented comment post discard
+
+block:
+  if  # some conditions:
+    2 >= 1 and
+    2 >= 1 and
+    2 >= 1:
+    discard
+  elif # some elif conds
+    2 >= 1 and
+    2 >= 1 and
+    2 >= 1:
+    discard
+
+  if  # some conditions with a very long comment that wont fit on a line abacacsdcasdcasdsdcsdcsdc
+    2 >= 1 and
+    2 >= 1 and
+    2 >= 1:
+    discard
+
+  if
+    2 >= 1 and
+    # some conditions
+    2 >= 1 and
+    2 >= 1:
+    discard
+
+  while  # some conditions:
+    2 >= 1 and
+    2 >= 1 and
+    2 >= 1:
+    discard
+
+  case # comment
+  true
+  of # comment
+    true:
+      discard
+  else #comment
+    : discard

@@ -1792,3 +1792,245 @@ sons:
                       - kind: "nkEmpty"
           - kind: "nkCommentStmt"
             "comment": "# dedented comment post discard"
+  - kind: "nkBlockStmt"
+    sons:
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkIfStmt"
+            sons:
+              - kind: "nkElifBranch"
+                mid:
+                  - "# some conditions:"
+                sons:
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "and"
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "and"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: ">="
+                              - kind: "nkIntLit"
+                                intVal: 2
+                              - kind: "nkIntLit"
+                                intVal: 1
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: ">="
+                              - kind: "nkIntLit"
+                                intVal: 2
+                              - kind: "nkIntLit"
+                                intVal: 1
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: ">="
+                          - kind: "nkIntLit"
+                            intVal: 2
+                          - kind: "nkIntLit"
+                            intVal: 1
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkDiscardStmt"
+                        sons:
+                          - kind: "nkEmpty"
+              - kind: "nkElifBranch"
+                mid:
+                  - "# some elif conds"
+                sons:
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "and"
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "and"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: ">="
+                              - kind: "nkIntLit"
+                                intVal: 2
+                              - kind: "nkIntLit"
+                                intVal: 1
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: ">="
+                              - kind: "nkIntLit"
+                                intVal: 2
+                              - kind: "nkIntLit"
+                                intVal: 1
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: ">="
+                          - kind: "nkIntLit"
+                            intVal: 2
+                          - kind: "nkIntLit"
+                            intVal: 1
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkDiscardStmt"
+                        sons:
+                          - kind: "nkEmpty"
+          - kind: "nkIfStmt"
+            sons:
+              - kind: "nkElifBranch"
+                mid:
+                  - "# some conditions with a very long comment that wont fit on a line abacacsdcasdcasdsdcsdcsdc"
+                sons:
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "and"
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "and"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: ">="
+                              - kind: "nkIntLit"
+                                intVal: 2
+                              - kind: "nkIntLit"
+                                intVal: 1
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: ">="
+                              - kind: "nkIntLit"
+                                intVal: 2
+                              - kind: "nkIntLit"
+                                intVal: 1
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: ">="
+                          - kind: "nkIntLit"
+                            intVal: 2
+                          - kind: "nkIntLit"
+                            intVal: 1
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkDiscardStmt"
+                        sons:
+                          - kind: "nkEmpty"
+          - kind: "nkIfStmt"
+            sons:
+              - kind: "nkElifBranch"
+                sons:
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "and"
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "and"
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: ">="
+                              - kind: "nkIntLit"
+                                intVal: 2
+                              - kind: "nkIntLit"
+                                intVal: 1
+                          - kind: "nkInfix"
+                            sons:
+                              - kind: "nkIdent"
+                                ident: ">="
+                              - kind: "nkIntLit"
+                                prefix:
+                                  - "# some conditions"
+                                intVal: 2
+                              - kind: "nkIntLit"
+                                intVal: 1
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: ">="
+                          - kind: "nkIntLit"
+                            intVal: 2
+                          - kind: "nkIntLit"
+                            intVal: 1
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkDiscardStmt"
+                        sons:
+                          - kind: "nkEmpty"
+          - kind: "nkWhileStmt"
+            mid:
+              - "# some conditions:"
+            sons:
+              - kind: "nkInfix"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "and"
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "and"
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: ">="
+                          - kind: "nkIntLit"
+                            intVal: 2
+                          - kind: "nkIntLit"
+                            intVal: 1
+                      - kind: "nkInfix"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: ">="
+                          - kind: "nkIntLit"
+                            intVal: 2
+                          - kind: "nkIntLit"
+                            intVal: 1
+                  - kind: "nkInfix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: ">="
+                      - kind: "nkIntLit"
+                        intVal: 2
+                      - kind: "nkIntLit"
+                        intVal: 1
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkDiscardStmt"
+                    sons:
+                      - kind: "nkEmpty"
+          - kind: "nkCaseStmt"
+            sons:
+              - kind: "nkIdent"
+                prefix:
+                  - "# comment"
+                ident: "true"
+              - kind: "nkOfBranch"
+                mid:
+                  - "# comment"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "true"
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkDiscardStmt"
+                        sons:
+                          - kind: "nkEmpty"
+              - kind: "nkElse"
+                mid:
+                  - "#comment"
+                sons:
+                  - kind: "nkStmtList"
+                    sons:
+                      - kind: "nkDiscardStmt"
+                        sons:
+                          - kind: "nkEmpty"
