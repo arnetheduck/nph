@@ -16,36 +16,30 @@ jobs:
       matrix:
         target:
           - os: linux
-            triple: x86_64-linux-musl
             name: linux_x64
-            nimbleName: linux_x64
           - os: linux
-            triple: i686-linux-musl
             name: linux_x32
-            nimbleName: linux_x32
           - os: linux
-            triple: aarch64-linux-musl
             name: linux_arm64
-            nimbleName: linux_aarch64
           - os: linux
-            triple: armv7l-linux-musleabihf
             name: linux_armv7l
-            nimbleName: linux_armv7l
           - os: macosx
-            triple: x86_64-apple-darwin14
             name: macosx_x64
-            nimbleName: macosx_x64
+          - os: macosx
+            name: macosx_arm64
           - os: windows
-            triple: x86_64-w64-mingw32
             name: windows_x64
-            nimbleName: windows_x64
         include:
           - target:
               os: linux
             builder: ubuntu-20.04
           - target:
               os: macosx
-            builder: macos-12
+            builder: macos-13
+          - target:
+              os: macosx
+              name: macosx_aarch64
+            builder: macos-14
           - target:
               os: windows
             builder: windows-2019
@@ -59,38 +53,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Fetch nimble
-        uses: robinraju/release-downloader@v1.8
+      - name: Install nimble
+        uses: nim-lang/setup-nimble-action@v1
         with:
-          repository: "nim-lang/nimble"
-          tag: "latest"
-          fileName: "nimble-${{matrix.target.nimbleName}}.tar.gz"
-          extract: false
-      - name: Setup env
-        run: |
-          # extract: true doesn't work on osx :/
-          tar xvf nimble-${{matrix.target.nimbleName}}.tar.gz
-          # needed for nimble on windows
-          curl -L "https://curl.se/ca/cacert.pem" -o cacert.pem
-          echo "$PWD" >> $GITHUB_PATH
-
-      - uses: jiro4989/setup-nim-action@v2
-        with:
-          nim-version: '2.0.2' # default is 'stable'
+          nimble-version: '0.16.4'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build nph
         run: |
-            nimble install -y
-            # nimble setup -l
-            nimble build -d:release
+          nimble build -d:release
 
       - name: Create archive
         run: |
           tar -c -z -v -f nph-${{ matrix.target.name }}.tar.gz `ls nph{,.exe} 2>/dev/null || true`
 
       - name: Upload the binaries
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: nph-${{ matrix.target.name }}.tar.gz
           path: nph-${{ matrix.target.name }}.tar.gz

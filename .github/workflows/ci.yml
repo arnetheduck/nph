@@ -12,13 +12,10 @@ jobs:
       matrix:
         target:
           - os: linux
-            triple: x86_64-linux-musl
             name: linux_x64
           - os: macosx
-            triple: x86_64-apple-darwin14
             name: macosx_x64
           - os: windows
-            triple: x86_64-w64-mingw32
             name: windows_x64
         include:
           - target:
@@ -60,4 +57,3 @@ jobs:
 
           ./nph src
           git diff --exit-code
-
