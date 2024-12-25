@@ -35,7 +35,8 @@ jobs:
             builder: ubuntu-20.04
           - target:
               os: macosx
-            builder: macos-13
+              name: macosx_x64
+              builder: macos-13
           - target:
               os: macosx
               name: macosx_arm64
