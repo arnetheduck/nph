@@ -38,7 +38,7 @@ jobs:
             builder: macos-13
           - target:
               os: macosx
-              name: macosx_aarch64
+              name: macosx_arm64
             builder: macos-14
           - target:
               os: windows
@@ -51,7 +51,7 @@ jobs:
     runs-on: ${{ matrix.builder }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install nimble
         uses: nim-lang/setup-nimble-action@v1
