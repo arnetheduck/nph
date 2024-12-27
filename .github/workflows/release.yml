@@ -87,7 +87,7 @@ jobs:
       - name: Clean up prerelease
         if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
         run: |
-          gh release delete "latest" --cleanup-tag --yes --repo $GITHUB_REPOSITORY
+          gh release delete "prerelease" --cleanup-tag --yes --repo $GITHUB_REPOSITORY
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -98,7 +98,7 @@ jobs:
           artifacts: "*/*"
           allowUpdates: true
           prerelease: true
-          tag: latest
+          tag: prerelease
 
       - uses: ncipollo/release-action@v1
         if: ${{ startsWith(github.ref, 'refs/tags/') }}
