@@ -87,7 +87,7 @@ jobs:
       - name: Clean up prerelease
         if: ${{ ! startsWith(github.ref, 'refs/tags/') }}
         run: |
-          gh release delete "prerelease" --cleanup-tag --yes --repo $GITHUB_REPOSITORY
+          gh release delete "prerelease" --cleanup-tag --yes --repo $GITHUB_REPOSITORY || true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
