@@ -37,29 +37,21 @@ More information about features and style available from the [documentation](htt
 
 ## Installation
 
-Download binaries from the [releases page](https://github.com/arnetheduck/nph/releases/tag/latest).
+Binaries are available from the [releases page](https://github.com/arnetheduck/nph/releases/tag/latest) on Github.
 
-`nph` can be also compiled or installed using `nimble` version `v0.14.2`+:
+`nph` can be also compiled or installed using `nimble` v0.16.4+:
 
 ```sh
-nimble -l setup
+# Install globally
+nimble install nph
+
+# Alternatively, build in source folder:
+nimble setup -l
 nimble build
 ```
 
+See the [installation instructions](https://arnetheduck.github.io/nph/installation.html) in the manual for more details.
+
 ## Editor integration
 
-* [VSCode](https://marketplace.visualstudio.com/items?itemName=arnetheduck.vscode-nph) (`ext install arnetheduck.vscode-nph`)
-* [NeoVim](https://github.com/sbdchd/neoformat) - Install **neoformat** in your neovim setup then add the nim formating option with **nph** with this option in init.vim `let g:neoformat_enabled_nim = ['nph']`
-* [Zed Editor](https://github.com/foxoman/zed-nim) - Use this in your editor settings 
-```
-"languages": {
-    "Nim": {
-      "formatter": {
-        "external": {
-          "command": "nph",
-          "arguments": ["-"]
-        }
-      }
-    }
-  }
-```
+Editor integrations are described [in the manual](https://arnetheduck.github.io/nph/installation.html#editor-integration).

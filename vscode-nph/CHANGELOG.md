@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.5
+
+- Note that upstream now supports `nph`
+
 ## 0.0.4
 
 - Register formatter for '.nims' and '.nimble'
