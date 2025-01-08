@@ -55,3 +55,9 @@ See the [installation instructions](https://arnetheduck.github.io/nph/installati
 ## Editor integration
 
 Editor integrations are described [in the manual](https://arnetheduck.github.io/nph/installation.html#editor-integration).
+
+## Continuous integration
+
+Check out the [companion Github Action](https://github.com/arnetheduck/nph-action) for a convenient CI option!
+
+

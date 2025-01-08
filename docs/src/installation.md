@@ -47,4 +47,7 @@ command line options are supported ;)
 ```
 * [vscode-nph](https://marketplace.visualstudio.com/items?itemName=arnetheduck.vscode-nph) (`ext install arnetheduck.vscode-nph`) for a formatting-only option for the official Nim extension.
 
+## Continuous integration
+
+Check out the [companion Github Action](https://github.com/arnetheduck/nph-action) for a convenient CI option!
 

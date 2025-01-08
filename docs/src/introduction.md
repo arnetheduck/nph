@@ -1,6 +1,6 @@
 # Introduction
 
-`nph`` is an opinionated source code formatter for the Nim language, aiming to
+`nph` is an opinionated source code formatter for the Nim language, aiming to
 take the drudgery of manual formatting out of your coding day.
 
 Following the great tradition of [`black`](https://github.com/psf/black/),
