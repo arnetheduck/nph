@@ -1,5 +1,12 @@
 # Changelog
 
+# 0.6.1
+
+No formatting changes!
+
+* nimble compatibility updates (fixes `nimble install nph` sometimes)
+* osx arm64 binaries
+
 # 0.6.0
 
 * avoid putting `,` on its own line after complex expressions, where possible
