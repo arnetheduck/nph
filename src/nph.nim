@@ -93,7 +93,7 @@ proc prettyPrint(infile, outfile: string, debug, check, printTokens: bool): int 
           outfile & ".nph.yaml",
           treeToYaml(nil, parse(output, outfile, printTokens, newConfigRef())) & "\n",
         )
-    elif fileExists(outFile) and output == readFile(outFile):
+    elif fileExists(outfile) and output == readFile(outfile):
       # No formatting difference - don't touch file modificuation date
       return QuitSuccess
 
@@ -168,7 +168,7 @@ proc main() =
         usesDir = true
         for file in walkDirRec(key):
           if file.isNimFile:
-            inFiles &= file
+            infiles &= file
       else:
         infiles.add(key.addFileExt(".nim"))
     of cmdLongOption, cmdShortOption:
