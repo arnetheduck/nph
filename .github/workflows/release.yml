@@ -73,10 +73,36 @@ jobs:
         with:
           name: nph-${{ matrix.target.name }}.tar.gz
           path: nph-${{ matrix.target.name }}.tar.gz
+  
+  vsix:
+    name: Build .vsix file
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install deps
+        run: |
+          cd vscode-nph
+          yarn      
+      
+      - name: Build .vsix extension
+        id: buildext
+        uses: HaaLeo/publish-vscode-extension@v1
+        with:
+          pat: "dummyVal"
+          packagePath: ./vscode-nph
+          dryRun: true
+
+      - name: Upload extension
+        uses: actions/upload-artifact@v4
+        with:
+          name: vscode-nph.vsix
+          path: ${{steps.buildext.outputs.vsixPath}}
 
   create-github-release:
     name: Create Github Release
-    needs: [build]
+    needs: [build, vsix]
     runs-on: ubuntu-latest
     permissions:
       contents: write
