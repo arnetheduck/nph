@@ -6,6 +6,9 @@ import "$nim"/compiler/[ast, llstream, parser, idents, options, pathutils], std/
 
 from std/math import isNaN
 
+when defined(nimPreviewSlimSystem):
+  import std/assertions
+
 type
   Equivalence* = enum
     Same
@@ -88,7 +91,31 @@ proc equivalent*(a, b: PNode): Outcome =
       return equivalent(a.sons[1], b.sons[0])
 
     return Outcome(kind: Different, a: a, b: b)
-
+  
+  if a.kind == nkGenericParams and a.len != b.len:
+    var
+      ac = 0
+      bc = 0
+      amc = 0
+      bmc = 0
+    while ac < a.len:
+      while amc < a[ac].len - 2:
+        if bmc >= b[bc].len - 2:
+          inc bc
+          bmc = 0
+          if bc > b.len:
+            return Outcome(kind: Different, a: a, b: b)
+        var eq = equivalent(a[ac][amc], b[bc][bmc])
+        if eq.kind == Different:
+          return Outcome(kind: Different, a: a, b: b)
+        inc amc
+        inc bmc
+        if equivalent(a[ac][^1], b[bc][^1]).kind == Different or equivalent(a[ac][^2], b[bc][^2]).kind == Different:
+          return Outcome(kind: Different, a: a, b: b)
+      inc ac
+      amc = 0
+    return Outcome(kind: Same)
+  
   let eq =
     case a.kind
     of nkCharLit .. nkUInt64Lit:

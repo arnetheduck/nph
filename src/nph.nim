@@ -12,8 +12,11 @@ import "$nim"/compiler/idents
 
 import std/[parseopt, strutils, os, sequtils]
 
-static:
-  doAssert NimMajor == 2 and NimMinor == 0, "nph needs a specific version of Nim"
+when defined(nimPreviewSlimSystem):
+  import std/[assertions, syncio]
+
+#static:
+#  doAssert NimMajor == 2 and NimMinor == 0, "nph needs a specific version of Nim"
 
 const
   Version = gorge("git describe --long --dirty --always --tags")
@@ -27,6 +30,7 @@ Options:
   --out:file            set the output file (default: overwrite the input file)
   --outDir:dir          set the output dir (default: overwrite the input files)
   --version             show the version
+  --semicolon           use semicolon instead of comma where applicable
   --help                show this help
 """
   ErrCheckFailed = 1
@@ -59,7 +63,9 @@ proc makeConfigRef(): ConfigRef =
   conf.errorMax = int.high
   conf
 
-proc prettyPrint(infile, outfile: string, debug, check, printTokens: bool): int =
+proc prettyPrint(
+    infile, outfile: string, debug, check, printTokens, preferSemicolon: bool
+): int =
   let
     conf = makeConfigRef()
     input =
@@ -76,7 +82,7 @@ proc prettyPrint(infile, outfile: string, debug, check, printTokens: bool): int 
 
     return ErrParseInputFailed
 
-  var output = renderTree(node, conf)
+  var output = renderTree(node, preferSemicolon, conf)
   if not output.endsWith("\n"):
     output.add "\n"
 
@@ -160,6 +166,7 @@ proc main() =
     check = false
     printTokens = false
     usesDir = false
+    semicolon = false
 
   for kind, key, val in getopt():
     case kind
@@ -187,9 +194,12 @@ proc main() =
         outfile = val
       of "outDir", "outdir":
         outdir = val
+      of "semicolons":
+        semicolon = true
       of "":
         infiles.add("-")
       else:
+        echo "unrec:", key
         writeHelp()
     of cmdEnd:
       assert(false) # cannot happen
@@ -221,7 +231,7 @@ proc main() =
     let (dir, _, _) = splitFile(outfile)
 
     createDir(dir)
-    let err = prettyPrint(infile, outfile, debug, check, printTokens)
+    let err = prettyPrint(infile, outfile, debug, check, printTokens, semicolon)
     case err
     of ErrCheckFailed:
       quit ErrCheckFailed

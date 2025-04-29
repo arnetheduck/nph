@@ -61,6 +61,7 @@ type
     inImportLike: int
     inConcept: int
     pendingNewline: bool
+    preferSemicolon: bool
     fid*: FileIndex
     config*: ConfigRef
 
@@ -75,6 +76,7 @@ type
     inImportLike*: int
     inConcept: int
     pendingNewline: bool
+    preferSemicolon: bool
     tokens*: TRenderTokSeq
     config*: ConfigRef
     fid: FileIndex
@@ -123,7 +125,7 @@ proc flagIndent(flags: SubFlags): int =
   else:
     IndentWidth
 
-proc renderTree*(n: PNode, conf: ConfigRef = nil): string
+proc renderTree*(n: PNode, preferSemicolon = false, conf: ConfigRef = nil): string
 
 proc isExported(n: PNode): bool =
   ## Checks if an ident is exported.
@@ -197,6 +199,7 @@ proc initSrcGen(g: var TSrcGen, config: ConfigRef) =
   g.buf = ""
   g.pendingNL = -1
   g.pendingWhitespace = 0
+  g.preferSemicolon = false
   g.config = config
 
 proc containsNL(s: string): bool =
@@ -506,6 +509,9 @@ proc atom(g: TOutput, n: PNode): string =
 proc commaSep(n: PNode): TokType =
   tkComma
 
+proc semiSep(n: PNode): TokType =
+  tkSemiColon
+
 proc identDefsSep(n: PNode): TokType =
   # nkIdentDefs must be rendered using semi-colon if it doesn't have a type or
   # default to disambiguate it from the next identdefs with multiple names
@@ -523,6 +529,7 @@ proc init(T: type TSrcLen, g: TSrcGen): T =
     inImportLike: g.inImportLike,
     inConcept: g.inConcept,
     pendingNewline: g.pendingNewline,
+    preferSemicolon: g.preferSemicolon,
     tokens:
       if g.tokens.len > 0:
         @[g.tokens[^1]]
@@ -1646,19 +1653,27 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     gsub(g, n[pragmasPos])
     gcolcoms(g, n, n[bodyPos])
   of nkIdentDefs:
+    let
+      l2Empty = n.len >= 2 and n[^2].kind != nkEmpty
+      l1Empty = n.len >= 1 and n[^1].kind != nkEmpty
+    var sep = commaSep
+    if g.preferSemicolon and not (l2Empty or l1Empty):
+      sep = semiSep
     gcomma(
       g,
       n,
       theEnd = -3,
       indentNL = IndentWidth,
+      separator = sep,
       flags = {lfFirstSticky, lfFirstCommentSticky},
     )
+    # lfMayHaveNoConstraint
 
-    if n.len >= 2 and n[^2].kind != nkEmpty:
+    if l2Empty:
       putWithSpace(g, tkColon, ":")
       gsubOptNL(g, n[^2])
 
-    if n.len >= 1 and n[^1].kind != nkEmpty:
+    if l1Empty:
       optSpace(g)
       putWithSpace(g, tkEquals, "=")
       gmids(g, n, true, true)
@@ -2146,7 +2161,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       g,
       n,
       tkBracketLe,
-      separator = identDefsSep,
+      separator = if g.preferSemicolon: semiSep else: identDefsSep,
       indentNL = flagIndent(flags),
       flags = {lfLongSepAtEnd},
     )
@@ -2161,6 +2176,12 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
           else:
             (0, false)
         ).len
+      # kinda gross, but it's either this, another member of g or
+      # propigate flags between SubFlag and ListFlag so they can 
+      # actually survive the call graph
+      let oldSemi = g.preferSemicolon
+      # turn off forced semi colons for nkIdentDefs (needed for empty constrinants)
+      g.preferSemicolon = false
       # Properties of the proc formal params formatting:
       # * long indent when body follows to separate args from body
       # * separator at end when using one-per-line for easy copy-pasting and
@@ -2169,12 +2190,13 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
         g,
         n,
         tkParLe,
-        separator = identDefsSep,
+        separator = if oldSemi: semiSep else: identDefsSep,
         extra = retExtra,
         start = 1,
         indentNL = flagIndent(flags),
         flags = {lfLongSepAtEnd, lfFirstCommentSticky},
       )
+      g.preferSemicolon = oldSemi
 
     if n.len > 0 and n[0].kind != nkEmpty:
       putWithSpace(g, tkColon, ":")
@@ -2208,7 +2230,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
   if n.kind in blankAfterComplex and currLine < g.line:
     g.blankLine()
 
-proc renderTree*(n: PNode, conf: ConfigRef = nil): string =
+proc renderTree*(n: PNode, preferSemicolon = false, conf: ConfigRef = nil): string =
   if n == nil:
     return "<nil tree>"
 
@@ -2221,6 +2243,7 @@ proc renderTree*(n: PNode, conf: ConfigRef = nil): string =
     else:
       conf,
   )
+  g.preferSemicolon = preferSemicolon
   # do not indent the initial statement list so that
   # writeFile("file.nim", repr n)
   # produces working Nim code:
