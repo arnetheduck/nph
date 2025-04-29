@@ -91,7 +91,7 @@ proc equivalent*(a, b: PNode): Outcome =
       return equivalent(a.sons[1], b.sons[0])
 
     return Outcome(kind: Different, a: a, b: b)
-  
+
   if a.kind == nkGenericParams and a.len != b.len:
     var
       ac = 0
@@ -110,12 +110,13 @@ proc equivalent*(a, b: PNode): Outcome =
           return Outcome(kind: Different, a: a, b: b)
         inc amc
         inc bmc
-        if equivalent(a[ac][^1], b[bc][^1]).kind == Different or equivalent(a[ac][^2], b[bc][^2]).kind == Different:
+        if equivalent(a[ac][^1], b[bc][^1]).kind == Different or
+            equivalent(a[ac][^2], b[bc][^2]).kind == Different:
           return Outcome(kind: Different, a: a, b: b)
       inc ac
       amc = 0
     return Outcome(kind: Same)
-  
+
   let eq =
     case a.kind
     of nkCharLit .. nkUInt64Lit:

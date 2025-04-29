@@ -15,8 +15,8 @@ import std/[parseopt, strutils, os, sequtils]
 when defined(nimPreviewSlimSystem):
   import std/[assertions, syncio]
 
-#static:
-#  doAssert NimMajor == 2 and NimMinor == 0, "nph needs a specific version of Nim"
+static:
+  doAssert NimMajor == 2 and NimMinor == 0, "nph needs a specific version of Nim"
 
 const
   Version = gorge("git describe --long --dirty --always --tags")
