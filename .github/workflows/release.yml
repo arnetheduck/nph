@@ -88,7 +88,7 @@ jobs:
       
       - name: Build .vsix extension
         id: buildext
-        uses: HaaLeo/publish-vscode-extension@v1
+        uses: HaaLeo/publish-vscode-extension@v2
         with:
           pat: "dummyVal"
           packagePath: ./vscode-nph
