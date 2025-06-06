@@ -134,9 +134,9 @@ proc typeToYamlAux(
     res.addf("\n$1align: $2", [istr, $(n.align)])
     if n.len > 0:
       res.addf("\n$1sons:")
-      for i in 0 ..< n.len:
+      for s in n:
         res.addf("\n$1  - ", [istr])
-        res.typeToYamlAux(conf, n[i], marker, indent + 1, maxRecDepth - 1)
+        res.typeToYamlAux(conf, s, marker, indent + 1, maxRecDepth - 1)
 
 proc treeToYamlAux(
     res: var string,
