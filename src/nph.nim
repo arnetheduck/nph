@@ -13,7 +13,7 @@ import "$nim"/compiler/idents
 import std/[parseopt, strutils, os, sequtils]
 
 static:
-  doAssert NimMajor == 2 and NimMinor == 0, "nph needs a specific version of Nim"
+  doAssert NimMajor == 2 and NimMinor == 2, "nph needs a specific version of Nim"
 
 const
   Version = gorge("git describe --long --dirty --always --tags")
