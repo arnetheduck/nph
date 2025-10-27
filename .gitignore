@@ -3,4 +3,9 @@ nimbledeps
 nimble.develop
 nimble.paths
 *.exe
+*.dSYM/
+*.nph.yaml
+!tests/after/*.nph.yaml
+!tests/before/*.nph.yaml
+tests/test_formatter
 playground/

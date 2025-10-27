@@ -10,10 +10,18 @@ import
 
 import "$nim"/compiler/idents
 
-import std/[parseopt, strutils, os, sequtils]
+import std/[parseopt, strutils, os, sequtils, tables]
+import std/re as stdre
+import pkg/parsetoml
 
 static:
   doAssert NimMajor == 2 and NimMinor == 2, "nph needs a specific version of Nim"
+
+type
+  NphConfig = object
+    exclude: seq[string]
+    extendExclude: seq[string]
+    includePatterns: seq[string]
 
 const
   Version = gorge("git describe --long --dirty --always --tags")
@@ -26,9 +34,19 @@ Options:
   --check               check the formatting instead of performing it
   --out:file            set the output file (default: overwrite the input file)
   --outDir:dir          set the output dir (default: overwrite the input files)
+  --exclude:pattern     regex pattern for files/dirs to exclude (overrides defaults)
+  --extend-exclude:pattern  regex pattern to add to default exclusions
+  --include:pattern     regex pattern for files to include (default: \.nim(s|ble)?$)
+  --config:file         config file to use (default: .nph.toml if it exists)
   --version             show the version
   --help                show this help
 """
+  DefaultExcludePatterns = [
+    r"\.git", r"\.hg", r"\.svn", r"\.nimble", r"nimcache", r"\.vscode", r"\.idea",
+    r"__pycache__", r"node_modules", r"\.mypy_cache", r"\.pytest_cache", r"\.nox",
+    r"\.tox", r"\.venv", r"venv", r"\.eggs", r"_build", r"buck-out", r"build", r"dist",
+  ]
+  DefaultIncludePattern = r"\.nim(s|ble)?$"
   ErrCheckFailed = 1
   ErrParseInputFailed = 2
   ErrParseOutputFailed = 3
@@ -58,6 +76,53 @@ proc makeConfigRef(): ConfigRef =
   let conf = newConfigRef()
   conf.errorMax = int.high
   conf
+
+proc loadConfig(configFile: string): NphConfig =
+  result = NphConfig(exclude: @[], extendExclude: @[], includePatterns: @[])
+
+  if not fileExists(configFile):
+    return
+
+  try:
+    let toml = parsetoml.parseFile(configFile)
+
+    if toml.hasKey("exclude"):
+      for item in toml["exclude"].getElems():
+        result.exclude.add(item.getStr())
+
+    if toml.hasKey("extend-exclude"):
+      for item in toml["extend-exclude"].getElems():
+        result.extendExclude.add(item.getStr())
+
+    if toml.hasKey("include"):
+      for item in toml["include"].getElems():
+        result.includePatterns.add(item.getStr())
+  except:
+    stderr.writeLine "Warning: Failed to parse config file: " & configFile
+    discard
+
+func shouldExclude(path: string, excludePatterns: seq[string]): bool =
+  for pattern in excludePatterns:
+    if path.contains(stdre.re(pattern)):
+      return true
+  return false
+
+func shouldInclude(path: string, includePatterns: seq[string]): bool =
+  if includePatterns.len == 0:
+    return true
+  for pattern in includePatterns:
+    if path.contains(stdre.re(pattern)):
+      return true
+  return false
+
+func matchesFilters(
+    path: string, excludePatterns: seq[string], includePatterns: seq[string]
+): bool =
+  if shouldExclude(path, excludePatterns):
+    return false
+  if not shouldInclude(path, includePatterns):
+    return false
+  return true
 
 proc prettyPrint(infile, outfile: string, debug, check, printTokens: bool): int =
   let
@@ -153,13 +218,20 @@ proc prettyPrint(infile, outfile: string, debug, check, printTokens: bool): int 
 
 proc main() =
   var
-    outfile, outdir: string
+    outfile, outdir, configFile: string
     infiles = newSeq[string]()
+    explicitFiles = newSeq[string]() # Files passed explicitly, not from dir walk
     outfiles = newSeq[string]()
     debug = false
     check = false
     printTokens = false
     usesDir = false
+    cliExclude = newSeq[string]()
+    cliExtendExclude = newSeq[string]()
+    cliInclude = newSeq[string]()
+
+  # Default config file location
+  configFile = ".nph.toml"
 
   for kind, key, val in getopt():
     case kind
@@ -170,7 +242,9 @@ proc main() =
           if file.isNimFile:
             infiles &= file
       else:
-        infiles.add(key.addFileExt(".nim"))
+        let f = key.addFileExt(".nim")
+        infiles.add(f)
+        explicitFiles.add(f) # Track explicitly passed files
     of cmdLongOption, cmdShortOption:
       case normalize(key)
       of "help", "h":
@@ -187,12 +261,62 @@ proc main() =
         outfile = val
       of "outDir", "outdir":
         outdir = val
+      of "exclude":
+        cliExclude.add(val)
+      of "extend-exclude", "extendexclude":
+        cliExtendExclude.add(val)
+      of "include":
+        cliInclude.add(val)
+      of "config":
+        configFile = val
       of "":
-        infiles.add("-")
+        let f = "-"
+        infiles.add(f)
+        explicitFiles.add(f) # stdin is explicit
       else:
         writeHelp()
     of cmdEnd:
       assert(false) # cannot happen
+
+  # Load config from file
+  var config = loadConfig(configFile)
+
+  # CLI options override config file
+  # exclude and include completely replace config
+  if cliExclude.len > 0:
+    config.exclude = cliExclude
+  if cliInclude.len > 0:
+    config.includePatterns = cliInclude
+  # extend-exclude adds to config patterns
+  if cliExtendExclude.len > 0:
+    config.extendExclude.add(cliExtendExclude)
+
+  # Build final exclude patterns: defaults + extend-exclude, or just exclude if set
+  var finalExcludePatterns: seq[string]
+  if config.exclude.len > 0:
+    # User specified exclude patterns - replace defaults
+    finalExcludePatterns = config.exclude
+  else:
+    # Use defaults + any extend-exclude patterns
+    finalExcludePatterns = @DefaultExcludePatterns
+    finalExcludePatterns.add(config.extendExclude)
+
+  # Build final include patterns
+  var finalIncludePatterns: seq[string]
+  if config.includePatterns.len > 0:
+    finalIncludePatterns = config.includePatterns
+  else:
+    finalIncludePatterns = @[DefaultIncludePattern]
+
+  # Filter input files based on include/exclude patterns
+  # BUT: explicitly passed files bypass filtering (like Black)
+  var filteredFiles = newSeq[string]()
+  for file in infiles:
+    if file in explicitFiles or
+        matchesFilters(file, finalExcludePatterns, finalIncludePatterns):
+      filteredFiles.add(file)
+
+  infiles = filteredFiles
 
   if infiles.len == 0:
     quit "[Error] no input file.", 3
