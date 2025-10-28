@@ -333,12 +333,9 @@ proc main() =
 
     # Track statistics for summary
     case err
-    of QuitSuccess:
-      filesUnchanged.inc
-    of ErrCheckFailed, ErrDiffChanges:
-      filesReformatted.inc
-    else:
-      filesErrored.inc
+    of QuitSuccess: filesUnchanged.inc
+    of ErrCheckFailed, ErrDiffChanges: filesReformatted.inc
+    else: filesErrored.inc
 
     # Keep going to show all diffs/errors instead of failing fast
     res = max(res, err)
