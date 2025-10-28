@@ -14,15 +14,6 @@ import std/[parseopt, strutils, os, sequtils, terminal]
 import pkg/hldiffpkg/edits
 import pkg/adix/lptabz
 
-# Silence LPTabz warnings by redirecting to /dev/null
-when defined(posix):
-  lpWarn = open("/dev/null", fmWrite)
-elif defined(windows):
-  lpWarn = open("NUL", fmWrite)
-else:
-  # Fallback: just use stderr but set max warnings to 0
-  lpMaxWarn = 0
-
 static:
   doAssert NimMajor == 2 and NimMinor == 2, "nph needs a specific version of Nim"
 
@@ -38,8 +29,8 @@ Options:
   --diff                show diff of formatting changes without writing files
   --out:file            set the output file (default: overwrite the input file)
   --outDir:dir          set the output dir (default: overwrite the input files)
-  --color               show colored diff (only applies when --diff is given)
-  --no-color            disable colored diff (default)
+  --color               force colored diff output (only applies when --diff is given)
+  --no-color            disable colored diff output
   --version             show the version
   --help                show this help
 """
@@ -247,7 +238,8 @@ proc main() =
     printTokens = false
     usesDir = false
     cliColorSet = false
-    cliColor = false
+    # Default to color if stdout is a TTY and NO_COLOR is not set or empty
+    cliColor = getEnv("NO_COLOR") == "" and isatty(stdout)
 
   for kind, key, val in getopt():
     case kind

@@ -10,28 +10,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target:
-          - os: linux
-            name: linux_x64
-          - os: macosx
-            name: macosx_x64
-          - os: windows
-            name: windows_x64
         include:
-          - target:
-              os: linux
-            builder: ubuntu-22.04
-          - target:
-              os: macosx
-            builder: macos-13
-          - target:
-              os: windows
-            builder: windows-2019
+          - name: linux_x64
+            builder: ubuntu-latest
+          - name: macosx_x64
+            builder: macos-latest
+          - name: windows_x64
+            builder: windows-latest
     defaults:
       run:
         shell: bash
 
-    name: CI '${{ matrix.target.name }}'
+    name: CI '${{ matrix.name }}'
     runs-on: ${{ matrix.builder }}
     steps:
       - name: Set git to use LF
@@ -41,9 +31,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Download and setup Nim DLLs (Windows)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          curl -L -o dlls.zip https://nim-lang.org/download/dlls.zip
+          unzip dlls.zip -d nim-dlls
+          echo "$GITHUB_WORKSPACE/nim-dlls" >> $GITHUB_PATH
+          echo "SSL_CERT_FILE=$GITHUB_WORKSPACE/nim-dlls/cacert.pem" >> $GITHUB_ENV
+
       - uses: nim-lang/setup-nimble-action@v1
         with:
-          nimble-version: '0.16.4'
+          nimble-version: '0.20.1'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build nph

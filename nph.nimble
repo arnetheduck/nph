@@ -15,7 +15,8 @@ bin           = @["nph"]
 # Note that the parser used by the formatter and the parser used by the verifier
 # might disagree if syntax changes are included in a Nim patch version.
 # TODO: nph should learn how to check formatting with any nim version
-requires "nim >= 2.2.0 & < 2.3", "compiler >= 2.2.0 & < 2.3", "hldiff"
+requires "nim >= 2.2.0 & < 2.3", "compiler >= 2.2.0 & < 2.3"
+requires "hldiff >= 1.0.6 & < 2"
 
 proc build() =
   exec "nim c --debuginfo -o:nph src/nph"
