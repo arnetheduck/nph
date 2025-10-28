@@ -17,11 +17,10 @@ import pkg/parsetoml
 static:
   doAssert NimMajor == 2 and NimMinor == 2, "nph needs a specific version of Nim"
 
-type
-  NphConfig = object
-    exclude: seq[string]
-    extendExclude: seq[string]
-    includePatterns: seq[string]
+type NphConfig = object
+  exclude: seq[string]
+  extendExclude: seq[string]
+  includePatterns: seq[string]
 
 const
   Version = gorge("git describe --long --dirty --always --tags")
@@ -101,17 +100,24 @@ proc loadConfig(configFile: string): NphConfig =
     stderr.writeLine "Warning: Failed to parse config file: " & configFile
     discard
 
+func normalizePath(path: string): string =
+  ## Normalize path to use forward slashes for cross-platform regex matching
+  ## Following Black's approach: convert all backslashes to forward slashes
+  path.replace("\\", "/")
+
 func shouldExclude(path: string, excludePatterns: seq[string]): bool =
+  let normalizedPath = normalizePath(path)
   for pattern in excludePatterns:
-    if path.contains(stdre.re(pattern)):
+    if normalizedPath.contains(stdre.re(pattern)):
       return true
   return false
 
 func shouldInclude(path: string, includePatterns: seq[string]): bool =
   if includePatterns.len == 0:
     return true
+  let normalizedPath = normalizePath(path)
   for pattern in includePatterns:
-    if path.contains(stdre.re(pattern)):
+    if normalizedPath.contains(stdre.re(pattern)):
       return true
   return false
 
@@ -241,6 +247,7 @@ proc main() =
         for file in walkDirRec(key):
           if file.isNimFile:
             infiles &= file
+            explicitFiles.add(file) # Track files from explicit directories
       else:
         let f = key.addFileExt(".nim")
         infiles.add(f)
