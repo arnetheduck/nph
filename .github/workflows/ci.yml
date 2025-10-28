@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: nim-lang/setup-nimble-action@d27cc94
+      - uses: nim-lang/setup-nimble-action@d27cc947821b39107883efa4a65f890a12d7d7d8
         with:
           nimble-version: '0.20.1'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
