@@ -9,3 +9,4 @@ nimble.paths
 !tests/before/*.nph.yaml
 tests/test_formatter
 playground/
+/src/nph
