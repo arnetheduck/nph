@@ -56,18 +56,10 @@ jobs:
 
           echo "$openSslPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-          # Install Nim (includes pcre64.dll and nimble)
+          # Install Nim and nimble
           choco install nim -y --no-progress
           $nimBin = (Get-ChildItem "C:\tools\Nim" -Directory -Filter "nim-*" | Select-Object -First 1 | ForEach-Object { Join-Path $_.FullName "bin" })
           echo "$nimBin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
-      - name: Install PCRE (Linux)
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y libpcre3
-
-      - name: Install PCRE (macOS)
-        if: runner.os == 'macOS'
-        run: brew install pcre
 
       - uses: nim-lang/setup-nimble-action@v1
         if: runner.os != 'Windows'
