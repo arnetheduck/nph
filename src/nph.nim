@@ -11,16 +11,21 @@ import
 import "$nim"/compiler/idents
 
 import std/[parseopt, strutils, os, sequtils, tables]
-import std/re as stdre
-import pkg/parsetoml
+import pkg/regex
+import pkg/toml_serialization
 
 static:
   doAssert NimMajor == 2 and NimMinor == 2, "nph needs a specific version of Nim"
 
-type NphConfig = object
-  exclude: seq[string]
-  extendExclude: seq[string]
-  includePatterns: seq[string]
+type
+  NphConfig = object
+    exclude: seq[string]
+    extendExclude {.serializedFieldName("extend-exclude").}: seq[string]
+    includePatterns {.serializedFieldName("include").}: seq[string]
+
+  CompiledPatterns = object
+    excludePatterns: seq[Regex2]
+    includePatterns: seq[Regex2]
 
 const
   Version = gorge("git describe --long --dirty --always --tags")
@@ -41,9 +46,10 @@ Options:
   --help                show this help
 """
   DefaultExcludePatterns = [
-    r"\.git", r"\.hg", r"\.svn", r"\.nimble", r"nimcache", r"\.vscode", r"\.idea",
-    r"__pycache__", r"node_modules", r"\.mypy_cache", r"\.pytest_cache", r"\.nox",
-    r"\.tox", r"\.venv", r"venv", r"\.eggs", r"_build", r"buck-out", r"build", r"dist",
+    r"\.git", r"\.hg", r"\.svn", r"\.nimble", r"nimbledeps", r"vendor", r"nimcache",
+    r"\.vscode", r"\.idea", r"__pycache__", r"node_modules", r"\.mypy_cache",
+    r"\.pytest_cache", r"\.nox", r"\.tox", r"\.venv", r"venv", r"\.eggs", r"_build",
+    r"buck-out", r"build", r"dist",
   ]
   DefaultIncludePattern = r"\.nim(s|ble)?$"
   ErrCheckFailed = 1
@@ -83,21 +89,10 @@ proc loadConfig(configFile: string): NphConfig =
     return
 
   try:
-    let toml = parsetoml.parseFile(configFile)
-
-    if toml.hasKey("exclude"):
-      for item in toml["exclude"].getElems():
-        result.exclude.add(item.getStr())
-
-    if toml.hasKey("extend-exclude"):
-      for item in toml["extend-exclude"].getElems():
-        result.extendExclude.add(item.getStr())
-
-    if toml.hasKey("include"):
-      for item in toml["include"].getElems():
-        result.includePatterns.add(item.getStr())
-  except:
-    stderr.writeLine "Warning: Failed to parse config file: " & configFile
+    result = Toml.loadFile(configFile, NphConfig)
+  except CatchableError as e:
+    stderr.writeLine "Warning: Failed to parse config file: " & configFile & " (" & e.msg &
+      ")"
     discard
 
 func normalizePath(path: string): string =
@@ -105,28 +100,28 @@ func normalizePath(path: string): string =
   ## Following Black's approach: convert all backslashes to forward slashes
   path.replace("\\", "/")
 
-func shouldExclude(path: string, excludePatterns: seq[string]): bool =
-  let normalizedPath = normalizePath(path)
-  for pattern in excludePatterns:
-    if normalizedPath.contains(stdre.re(pattern)):
-      return true
-  return false
+proc compilePatterns(patterns: seq[string]): seq[Regex2] =
+  result = newSeq[Regex2]()
+  for pattern in patterns:
+    try:
+      result.add(re2(pattern))
+    except RegexError as e:
+      stderr.writeLine "Warning: Invalid regex pattern '" & pattern & "': " & e.msg
 
-func shouldInclude(path: string, includePatterns: seq[string]): bool =
+func shouldExclude(path: string, excludePatterns: seq[Regex2]): bool =
+  let normalizedPath = normalizePath(path)
+  excludePatterns.anyIt(normalizedPath.contains(it))
+
+func shouldInclude(path: string, includePatterns: seq[Regex2]): bool =
   if includePatterns.len == 0:
     return true
   let normalizedPath = normalizePath(path)
-  for pattern in includePatterns:
-    if normalizedPath.contains(stdre.re(pattern)):
-      return true
-  return false
+  includePatterns.anyIt(normalizedPath.contains(it))
 
-func matchesFilters(
-    path: string, excludePatterns: seq[string], includePatterns: seq[string]
-): bool =
-  if shouldExclude(path, excludePatterns):
+func matchesFilters(path: string, patterns: CompiledPatterns): bool =
+  if shouldExclude(path, patterns.excludePatterns):
     return false
-  if not shouldInclude(path, includePatterns):
+  if not shouldInclude(path, patterns.includePatterns):
     return false
   return true
 
@@ -315,12 +310,17 @@ proc main() =
   else:
     finalIncludePatterns = @[DefaultIncludePattern]
 
+  # Pre-compile regex patterns for faster matching
+  let compiledPatterns = CompiledPatterns(
+    excludePatterns: compilePatterns(finalExcludePatterns),
+    includePatterns: compilePatterns(finalIncludePatterns),
+  )
+
   # Filter input files based on include/exclude patterns
   # BUT: explicitly passed files bypass filtering (like Black)
   var filteredFiles = newSeq[string]()
   for file in infiles:
-    if file in explicitFiles or
-        matchesFilters(file, finalExcludePatterns, finalIncludePatterns):
+    if file in explicitFiles or matchesFilters(file, compiledPatterns):
       filteredFiles.add(file)
 
   infiles = filteredFiles
