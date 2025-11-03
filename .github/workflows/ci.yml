@@ -10,28 +10,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target:
-          - os: linux
-            name: linux_x64
-          - os: macosx
-            name: macosx_x64
-          - os: windows
-            name: windows_x64
         include:
-          - target:
-              os: linux
-            builder: ubuntu-22.04
-          - target:
-              os: macosx
-            builder: macos-13
-          - target:
-              os: windows
+          - name: linux_x64
+            builder: ubuntu-latest
+          - name: macosx_x64
+            builder: macos-latest
+          - name: windows_x64
             builder: windows-latest
     defaults:
       run:
         shell: bash
 
-    name: CI '${{ matrix.target.name }}'
+    name: CI '${{ matrix.name }}'
     runs-on: ${{ matrix.builder }}
     steps:
       - name: Set git to use LF
@@ -41,27 +31,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install dependencies (Windows)
+      - name: Download and setup Nim DLLs (Windows)
         if: runner.os == 'Windows'
-        shell: pwsh
+        shell: bash
         run: |
-          # Install OpenSSL 1.1.x (for nimble)
-          choco install openssl --version=1.1.1.2100 -y --no-progress
-
-          $openSslPath = "C:\Program Files\OpenSSL-Win64\bin"
-          if (-Not (Test-Path $openSslPath)) {
-            $openSslPath = "C:\Program Files\OpenSSL\bin"
-          }
-
-          echo "$openSslPath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
-          # Install Nim and nimble
-          choco install nim -y --no-progress
-          $nimBin = (Get-ChildItem "C:\tools\Nim" -Directory -Filter "nim-*" | Select-Object -First 1 | ForEach-Object { Join-Path $_.FullName "bin" })
-          echo "$nimBin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          curl -L -o dlls.zip https://nim-lang.org/download/dlls.zip
+          unzip dlls.zip -d nim-dlls
+          echo "$GITHUB_WORKSPACE/nim-dlls" >> $GITHUB_PATH
+          echo "SSL_CERT_FILE=$GITHUB_WORKSPACE/nim-dlls/cacert.pem" >> $GITHUB_ENV
 
       - uses: nim-lang/setup-nimble-action@v1
-        if: runner.os != 'Windows'
         with:
           nimble-version: '0.20.1'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
