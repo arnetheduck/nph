@@ -10,12 +10,24 @@ import
 
 import "$nim"/compiler/idents
 
-import std/[parseopt, strutils, os, sequtils, terminal]
+import std/[parseopt, strutils, os, sequtils, terminal, tables]
 import pkg/hldiffpkg/edits
 import pkg/adix/lptabz
+import pkg/regex
+import pkg/toml_serialization
 
 static:
   doAssert NimMajor == 2 and NimMinor == 2, "nph needs a specific version of Nim"
+
+type
+  NphConfig = object
+    exclude: seq[string]
+    extendExclude {.serializedFieldName("extend-exclude").}: seq[string]
+    includePatterns {.serializedFieldName("include").}: seq[string]
+
+  CompiledPatterns = object
+    excludePatterns: seq[Regex2]
+    includePatterns: seq[Regex2]
 
 const
   Version = gorge("git describe --long --dirty --always --tags")
@@ -31,9 +43,20 @@ Options:
   --outDir:dir          set the output dir (default: overwrite the input files)
   --color               force colored diff output (only applies when --diff is given)
   --no-color            disable colored diff output
+  --exclude:pattern     regex pattern for files/dirs to exclude (overrides defaults)
+  --extend-exclude:pattern  regex pattern to add to default exclusions
+  --include:pattern     regex pattern for files to include (default: \.nim(s|ble)?$)
+  --config:file         config file to use (default: .nph.toml if it exists)
   --version             show the version
   --help                show this help
 """
+  DefaultExcludePatterns = [
+    r"\.git", r"\.hg", r"\.svn", r"\.nimble", r"nimbledeps", r"vendor", r"nimcache",
+    r"\.vscode", r"\.idea", r"__pycache__", r"node_modules", r"\.mypy_cache",
+    r"\.pytest_cache", r"\.nox", r"\.tox", r"\.venv", r"venv", r"\.eggs", r"_build",
+    r"buck-out", r"build", r"dist",
+  ]
+  DefaultIncludePattern = r"\.nim(s|ble)?$"
   ErrCheckFailed = 1
   ErrDiffChanges = 2 # --diff mode: changes found (but exit 0)
   ErrParseInputFailed = 3
@@ -64,6 +87,49 @@ proc makeConfigRef(): ConfigRef =
   let conf = newConfigRef()
   conf.errorMax = int.high
   conf
+
+proc loadConfig(configFile: string): NphConfig =
+  result = NphConfig(exclude: @[], extendExclude: @[], includePatterns: @[])
+
+  if not fileExists(configFile):
+    return
+
+  try:
+    result = Toml.loadFile(configFile, NphConfig)
+  except CatchableError as e:
+    stderr.writeLine "Warning: Failed to parse config file: " & configFile & " (" & e.msg &
+      ")"
+    discard
+
+func normalizePath(path: string): string =
+  ## Normalize path to use forward slashes for cross-platform regex matching
+  ## Following Black's approach: convert all backslashes to forward slashes
+  path.replace("\\", "/")
+
+proc compilePatterns(patterns: seq[string]): seq[Regex2] =
+  result = newSeq[Regex2]()
+  for pattern in patterns:
+    try:
+      result.add(re2(pattern))
+    except RegexError as e:
+      stderr.writeLine "Warning: Invalid regex pattern '" & pattern & "': " & e.msg
+
+func shouldExclude(path: string, excludePatterns: seq[Regex2]): bool =
+  let normalizedPath = normalizePath(path)
+  excludePatterns.anyIt(normalizedPath.contains(it))
+
+func shouldInclude(path: string, includePatterns: seq[Regex2]): bool =
+  if includePatterns.len == 0:
+    return true
+  let normalizedPath = normalizePath(path)
+  includePatterns.anyIt(normalizedPath.contains(it))
+
+func matchesFilters(path: string, patterns: CompiledPatterns): bool =
+  if shouldExclude(path, patterns.excludePatterns):
+    return false
+  if not shouldInclude(path, patterns.includePatterns):
+    return false
+  return true
 
 proc printDiff(input, output, infile: string, color: bool) =
   ## Print unified diff between input and output
@@ -229,8 +295,9 @@ proc prettyPrint(
 
 proc main() =
   var
-    outfile, outdir: string
+    outfile, outdir, configFile: string
     infiles = newSeq[string]()
+    explicitFiles = newSeq[string]() # Files passed explicitly, not from dir walk
     outfiles = newSeq[string]()
     debug = false
     check = false
@@ -240,6 +307,12 @@ proc main() =
     cliColorSet = false
     # Default to color if stdout is a TTY and NO_COLOR is not set or empty
     cliColor = getEnv("NO_COLOR") == "" and isatty(stdout)
+    cliExclude = newSeq[string]()
+    cliExtendExclude = newSeq[string]()
+    cliInclude = newSeq[string]()
+
+  # Default config file location
+  configFile = ".nph.toml"
 
   for kind, key, val in getopt():
     case kind
@@ -249,8 +322,11 @@ proc main() =
         for file in walkDirRec(key):
           if file.isNimFile:
             infiles &= file
+            explicitFiles.add(file) # Track files from explicit directories
       else:
-        infiles.add(key.addFileExt(".nim"))
+        let f = key.addFileExt(".nim")
+        infiles.add(f)
+        explicitFiles.add(f) # Track explicitly passed files
     of cmdLongOption, cmdShortOption:
       case normalize(key)
       of "help", "h":
@@ -275,12 +351,67 @@ proc main() =
       of "no-color", "nocolor":
         cliColorSet = true
         cliColor = false
+      of "exclude":
+        cliExclude.add(val)
+      of "extend-exclude", "extendexclude":
+        cliExtendExclude.add(val)
+      of "include":
+        cliInclude.add(val)
+      of "config":
+        configFile = val
       of "":
-        infiles.add("-")
+        let f = "-"
+        infiles.add(f)
+        explicitFiles.add(f) # stdin is explicit
       else:
         writeHelp()
     of cmdEnd:
       assert(false) # cannot happen
+
+  # Load config from file
+  var config = loadConfig(configFile)
+
+  # CLI options override config file
+  # exclude and include completely replace config
+  if cliExclude.len > 0:
+    config.exclude = cliExclude
+  if cliInclude.len > 0:
+    config.includePatterns = cliInclude
+  # extend-exclude adds to config patterns
+  if cliExtendExclude.len > 0:
+    config.extendExclude.add(cliExtendExclude)
+
+  # Build final exclude patterns: defaults + extend-exclude, or just exclude if set
+  var finalExcludePatterns: seq[string]
+  if config.exclude.len > 0:
+    # User specified exclude patterns - replace defaults
+    finalExcludePatterns = config.exclude
+  else:
+    # Use defaults + any extend-exclude patterns
+    finalExcludePatterns = @DefaultExcludePatterns
+    finalExcludePatterns.add(config.extendExclude)
+
+  # Build final include patterns
+  var finalIncludePatterns: seq[string]
+  if config.includePatterns.len > 0:
+    finalIncludePatterns = config.includePatterns
+  else:
+    finalIncludePatterns = @[DefaultIncludePattern]
+
+  # Pre-compile regex patterns for faster matching
+  let compiledPatterns = CompiledPatterns(
+    excludePatterns: compilePatterns(finalExcludePatterns),
+    includePatterns: compilePatterns(finalIncludePatterns),
+  )
+
+  # Filter input files based on include/exclude patterns
+  # BUT: explicitly passed files bypass filtering (like Black)
+  var filteredFiles = newSeq[string]()
+  for file in infiles:
+    if file in explicitFiles or matchesFilters(file, compiledPatterns):
+      filteredFiles.add(file)
+
+  infiles = filteredFiles
 
   if infiles.len == 0:
     quit "[Error] no input file.", 3

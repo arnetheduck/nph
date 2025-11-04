@@ -17,6 +17,7 @@ bin           = @["nph"]
 # TODO: nph should learn how to check formatting with any nim version
 requires "nim >= 2.2.0 & < 2.3", "compiler >= 2.2.0 & < 2.3"
 requires "hldiff >= 1.0.6 & < 2"
+requires "toml_serialization", "regex"
 
 proc build() =
   exec "nim c --debuginfo -o:nph src/nph"
