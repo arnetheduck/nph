@@ -10,7 +10,7 @@ import
 
 import "$nim"/compiler/idents
 
-import std/[parseopt, strutils, os, sequtils, terminal, tables]
+import std/[parseopt, strutils, os, sequtils, tables, terminal, options]
 import pkg/hldiffpkg/edits
 import pkg/adix/lptabz
 import pkg/regex
@@ -24,6 +24,7 @@ type
     exclude: seq[string]
     extendExclude {.serializedFieldName("extend-exclude").}: seq[string]
     includePatterns {.serializedFieldName("include").}: seq[string]
+    color: Option[bool]
 
   CompiledPatterns = object
     excludePatterns: seq[Regex2]
@@ -36,6 +37,7 @@ const
     """
 Usage:
   nph [options] nimfiles...
+
 Options:
   --check               check the formatting instead of performing it
   --diff                show diff of formatting changes without writing files
@@ -49,12 +51,17 @@ Options:
   --config:file         config file to use (default: .nph.toml if it exists)
   --version             show the version
   --help                show this help
+
+Config file (.nph.toml):
+  exclude = ["pattern1", "pattern2"]     # Override default exclusions
+  extend-exclude = ["pattern3"]          # Add to default exclusions
+  include = ["\.nim$", "\.nims$"]        # File patterns to include
+  color = true                           # Enable colored diff output (default: auto)
 """
   DefaultExcludePatterns = [
-    r"\.git", r"\.hg", r"\.svn", r"\.nimble", r"nimbledeps", r"vendor", r"nimcache",
-    r"\.vscode", r"\.idea", r"__pycache__", r"node_modules", r"\.mypy_cache",
-    r"\.pytest_cache", r"\.nox", r"\.tox", r"\.venv", r"venv", r"\.eggs", r"_build",
-    r"buck-out", r"build", r"dist",
+    r"\.git", r"\.hg", r"\.svn", r"\.nimble", r"nimcache", r"\.vscode", r"\.idea",
+    r"__pycache__", r"node_modules", r"\.mypy_cache", r"\.pytest_cache", r"\.nox",
+    r"\.tox", r"\.venv", r"venv", r"\.eggs", r"_build", r"buck-out", r"build", r"dist",
   ]
   DefaultIncludePattern = r"\.nim(s|ble)?$"
   ErrCheckFailed = 1
@@ -89,7 +96,8 @@ proc makeConfigRef(): ConfigRef =
   conf
 
 proc loadConfig(configFile: string): NphConfig =
-  result = NphConfig(exclude: @[], extendExclude: @[], includePatterns: @[])
+  result =
+    NphConfig(exclude: @[], extendExclude: @[], includePatterns: @[], color: none(bool))
 
   if not fileExists(configFile):
     return
@@ -371,6 +379,19 @@ proc main() =
   # Load config from file
   var config = loadConfig(configFile)
 
+  # Determine final color setting with proper precedence:
+  # 1. CLI flags (--color/--no-color) override everything
+  # 2. TOML config file (color = true/false)
+  # 3. Default behavior (TTY + NO_COLOR check)
+  if not cliColorSet:
+    if config.color.isSome:
+      cliColor = config.color.get()
+    # else: keep the default cliColor value (TTY + NO_COLOR check)
+
+  # Validate --color requires --diff
+  if cliColorSet and cliColor and not diff:
+    quit "[Error] --color can only be used with --diff", 3
+
   # CLI options override config file
   # exclude and include completely replace config
   if cliExclude.len > 0:
@@ -425,10 +446,6 @@ proc main() =
   if diff and (outfile.len != 0 or outdir.len != 0):
     quit "[Error] diff cannot be used with out or outDir", 3
 
-  # Validate --color requires --diff
-  if cliColorSet and cliColor and not diff:
-    quit "[Error] --color can only be used with --diff", 3
-
   if outfile.len == 0 and outdir.len == 0:
     outfiles = infiles
   elif outfile.len != 0 and infiles.len > 1:
@@ -473,6 +490,9 @@ proc main() =
       if filesUnchanged > 0:
         let s = if filesUnchanged == 1: "file" else: "files"
         parts.add $filesUnchanged & " " & s & " would be left unchanged"
+
+      # Flush stdout to ensure diffs appear before summary when streams are merged
+      stdout.flushFile()
 
       if check and filesReformatted > 0:
         stderr.writeLine "\nOh no! 💥 💔 💥"
