@@ -32,9 +32,6 @@ nph --check somefile.nim || echo "Not formatted!"
 # Show a diff of what would change without modifying files
 nph --diff somefile.nim
 
-# Show a colored diff (requires --diff)
-nph --diff --color somefile.nim
-
 # You can format stuff as part of a pipe using `-` as input:
 echo "echo 1" | nph -
 ```
@@ -93,5 +90,3 @@ Editor integrations are described [in the manual](https://arnetheduck.github.io/
 ## Continuous integration
 
 Check out the [companion Github Action](https://github.com/arnetheduck/nph-action) for a convenient CI option!
-
-
