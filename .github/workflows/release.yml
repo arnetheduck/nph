@@ -43,7 +43,7 @@ jobs:
             builder: macos-14
           - target:
               os: windows
-            builder: windows-2019
+            builder: windows-2022
     defaults:
       run:
         shell: bash
@@ -54,10 +54,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Download and setup Nim DLLs (Windows)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          curl -L -o dlls.zip https://nim-lang.org/download/dlls.zip
+          unzip dlls.zip -d nim-dlls
+          echo "$GITHUB_WORKSPACE/nim-dlls" >> $GITHUB_PATH
+          echo "SSL_CERT_FILE=$GITHUB_WORKSPACE/nim-dlls/cacert.pem" >> $GITHUB_ENV
+
       - name: Install nimble
         uses: nim-lang/setup-nimble-action@v1
         with:
-          nimble-version: '0.16.4'
+          nimble-version: '0.20.1'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build nph
