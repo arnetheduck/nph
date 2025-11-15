@@ -1,5 +1,24 @@
 # Changelog
 
+# Unreleased
+
+New features:
+
+* `--diff` flag to show unified diff of formatting changes without modifying
+  files
+* `--color` / `--no-color` flags for colored diff output (requires `--diff`)
+* `.nph.toml` config file support for project-level configuration
+* `--exclude` flag to replace default exclusion patterns
+* `--extend-exclude` flag to add patterns to default exclusions
+* `--include` flag to customize which files to format
+* `--config` flag to specify a custom config file
+* Default exclusion patterns for common directories (build, dist, .git,
+  nimcache, etc.)
+* Files passed explicitly on CLI bypass all exclude filters (matching Black's
+  behavior)
+* CLI options override config file settings
+* pre-commit integration support with `nph` hook
+
 # 0.6.1
 
 No formatting changes!

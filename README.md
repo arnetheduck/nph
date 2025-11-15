@@ -29,11 +29,42 @@ nph src/
 # Use --check to verify that a file is formatted as `nph` would - useful in CI
 nph --check somefile.nim || echo "Not formatted!"
 
+# Show a diff of what would change without modifying files
+nph --diff somefile.nim
+
 # You can format stuff as part of a pipe using `-` as input:
 echo "echo 1" | nph -
 ```
 
-More information about features and style available from the [documentation](https://arnetheduck.github.io/nph/)
+## Configuration
+
+You can configure `nph` using a `.nph.toml` file in your project root:
+
+```toml
+# Completely replace default exclusions
+exclude = [
+  "build",
+  "dist",
+]
+
+# Add to default exclusions (more common)
+extend-exclude = [
+  "tests/fixtures",
+  "vendor",
+]
+
+# Customize which files to include (default: \.nim(s|ble)?$)
+include = [
+  "\.nim$",
+  "\.nims$",
+]
+```
+
+CLI options override config file settings. See the
+[documentation](https://arnetheduck.github.io/nph/usage.html) for more details.
+
+More information about features and style available from the
+[documentation](https://arnetheduck.github.io/nph/)
 
 ## Installation
 
@@ -59,5 +90,3 @@ Editor integrations are described [in the manual](https://arnetheduck.github.io/
 ## Continuous integration
 
 Check out the [companion Github Action](https://github.com/arnetheduck/nph-action) for a convenient CI option!
-
-
