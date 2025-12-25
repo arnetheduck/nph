@@ -1359,7 +1359,12 @@ proc infixArgument(g: var TOutput, n: PNode, i: int, flags: SubFlags) =
     put(g, tkParRi, ")")
 
 proc postStatements(
-    g: var TOutput, n: PNode, start: int, skipDo: bool, skipColon = false
+    g: var TOutput,
+    n: PNode,
+    start: int,
+    skipDo: bool,
+    skipColon = false,
+    skipMids = true,
 ) =
   # Sometimes, `do` can be skipped but it is not entirely clear when - this
   # feature rests on experiments with large codebases but should be researched
@@ -1377,6 +1382,9 @@ proc postStatements(
       putWithSpace(g, tkColon, ":")
   elif not skipColon:
     putWithSpace(g, tkColon, ":")
+
+  if not skipMids:
+    gmids(g, n)
 
   gsub(g, n[i])
 
@@ -1483,7 +1491,8 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
           g, n, tkParLe, start = 1, theEnd = i - 1 - n.len, flags = {lfLongSepAtEnd}
         )
 
-      postStatements(g, n, i, sfSkipDo in flags)
+      postStatements(g, n, i, sfSkipDo in flags, skipMids = i > 1)
+
       dedent(g, ind)
 
       if n.lastSon.kind == nkDo and sfParDo in flags:
@@ -1561,7 +1570,9 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       # ":" is present so it looks like we can skip the `do` here :/ this needs
       # deeper investigation - see also `nkPar` which sometimes removes the
       # parenthesis from the AST
-      postStatements(g, n, i, sfSkipDo in flags, n[i].kind == nkStmtListExpr)
+      postStatements(
+        g, n, i, sfSkipDo in flags, n[i].kind == nkStmtListExpr, skipMids = false
+      )
     else:
       # The first argument must not be line-broken, or command syntax breaks!
       if n.len > 1:
