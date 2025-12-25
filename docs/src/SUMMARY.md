@@ -9,4 +9,5 @@
 
 # Developer guide
 
+- [Test suite](./test.md)
 - [Updating this book](./book.md)

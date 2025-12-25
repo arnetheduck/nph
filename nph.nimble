@@ -35,7 +35,7 @@ task self, "Format nph itself":
       echo file
       exec "./nph " & file
 
-import std/algorithm
+import std/[algorithm, os, strformat]
 task f, "Format":
   build()
 
@@ -45,42 +45,25 @@ task f, "Format":
   for file in sorted(listFiles(".")):
     if file.len > 4 and file[^4..^1] == ".nim":
       echo file
-      exec "../../nph " & file & " --outDir:../after --debug"
+      exec &"""../../nph {quoteShell(file)} --outDir:../after --debug"""
 
 
 proc formatProject(
-  name, url, branch: string, dirs: openArray[string]
+  name, url, branch: string, dirs: openArray[string], reset: bool
 ) =
   if not dirExists("playground"):
     mkdir("playground")
   cd "playground/"
   if not dirExists(name):
-    exec "git clone --single-branch --branch " & branch & " " & url & " " & name
+    exec &"""git clone --single-branch --branch {branch} {url} {name}"""
 
   cd name
   for dir in dirs:
     if dir.len > 0:
       cd dir
-    exec "git checkout " & branch & " -- ."
-    exec "git restore --staged ."
-    try:
-      exec "git ls-files | grep .nim$ | xargs nph"
-      exec "git diff"
-    except: discard
-    if dir.len > 0:
-      cd ".."
-  cd "../.."
-
-proc againProject(
-  name, url, branch: string, dirs: openArray[string]
-) =
-  if not dirExists("playground"):
-    mkdir("playground")
-  cd "playground/"
-  cd name
-  for dir in dirs:
-    if dir.len > 0:
-      cd dir
+    if reset:
+      exec &"git switch --discard-changes {branch}"
+      exec "git restore --staged --worktree ."
     try:
       exec "git ls-files | grep .nim$ | xargs nph"
       exec "git diff"
@@ -92,32 +75,31 @@ proc againProject(
 proc commitProject(
   name, url, branch: string, dirs: openArray[string]
 ) =
-  formatProject(name, url, branch, dirs)
+  formatProject(name, url, branch, dirs, reset = true)
 
   cd "playground/" & name
 
   try:
-    exec "git checkout -b nph"
+    exec "git switch -C nph"
     exec "git commit -am \"Formatted with nph $(nph --version)\" --author \"nph <nph@example.com>\""
   except:
-    exec "git checkout nph"
-    exec "git commit -am \"Formatted with nph $(nph --version)\" --amend --author \"nph <nph@example.com>\""
+    discard
 
   cd "../.."
 
 const projects = [
-  ("Nim", "https://github.com/arnetheduck/Nim.git", "version-2-0", @["compiler", "lib"]),
+  ("Nim", "https://github.com/arnetheduck/Nim.git", "version-2-2", @["compiler", "lib"]),
   ("nim-results", "https://github.com/arnetheduck/nim-results.git", "master", @[""]),
   ("nimbus-eth2", "https://github.com/status-im/nimbus-eth2.git", "unstable", @[""]),
 ]
 
 task play, "Format several popular projects":
   for p in projects:
-    formatProject(p[0], p[1], p[2], p[3])
+    formatProject(p[0], p[1], p[2], p[3], reset = true)
 
 task again, "Format code formatted by replay (instead of raw code)":
   for p in projects:
-    againProject(p[0], p[1], p[2], p[3])
+    formatProject(p[0], p[1], p[2], p[3], reset = false)
 
 task replay, "Commit formatted sources":
   for p in projects:
