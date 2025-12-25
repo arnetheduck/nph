@@ -1,11 +1,11 @@
 # Package
 
-version       = "0.6.2"
-author        = "Jacek Sieka"
-description   = "Nim code formatter"
-license       = "MIT"
-srcDir        = "src"
-bin           = @["nph"]
+version = "0.6.2"
+author = "Jacek Sieka"
+description = "Nim code formatter"
+license = "MIT"
+srcDir = "src"
+bin = @["nph"]
 
 # Dependencies
 
@@ -31,7 +31,7 @@ task self, "Format nph itself":
   exec "git diff --no-ext-diff --quiet --exit-code"
 
   for file in listFiles("src"):
-    if file.len > 4 and file[^4..^1] == ".nim":
+    if file.len > 4 and file[^4 ..^ 1] == ".nim":
       echo file
       exec "./nph " & file
 
@@ -43,14 +43,11 @@ task f, "Format":
   # Sort tests so that 00_empty always is first, which makes it a convenient
   # experimentation ground :)
   for file in sorted(listFiles(".")):
-    if file.len > 4 and file[^4..^1] == ".nim":
+    if file.len > 4 and file[^4 ..^ 1] == ".nim":
       echo file
       exec &"""../../nph {quoteShell(file)} --outDir:../after --debug"""
 
-
-proc formatProject(
-  name, url, branch: string, dirs: openArray[string], reset: bool
-) =
+proc formatProject(name, url, branch: string, dirs: openArray[string], reset: bool) =
   if not dirExists("playground"):
     mkdir("playground")
   cd "playground/"
@@ -58,23 +55,26 @@ proc formatProject(
     exec &"""git clone --single-branch --branch {branch} {url} {name}"""
 
   cd name
+
+  if reset:
+    exec &"git switch --discard-changes {branch}"
+    exec "git restore --staged --worktree ."
+
   for dir in dirs:
     if dir.len > 0:
       cd dir
-    if reset:
-      exec &"git switch --discard-changes {branch}"
-      exec "git restore --staged --worktree ."
-    try:
-      exec "git ls-files | grep .nim$ | xargs nph"
-      exec "git diff"
-    except: discard
+    exec "git ls-files | grep .nim$ | xargs nph"
     if dir.len > 0:
       cd ".."
+
+  try:
+    exec "git diff"
+  except:
+    discard
+
   cd "../.."
 
-proc commitProject(
-  name, url, branch: string, dirs: openArray[string]
-) =
+proc commitProject(name, url, branch: string, dirs: openArray[string]) =
   formatProject(name, url, branch, dirs, reset = true)
 
   cd "playground/" & name
