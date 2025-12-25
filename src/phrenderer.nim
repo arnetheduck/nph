@@ -1359,7 +1359,12 @@ proc infixArgument(g: var TOutput, n: PNode, i: int, flags: SubFlags) =
     put(g, tkParRi, ")")
 
 proc postStatements(
-    g: var TOutput, n: PNode, start: int, skipDo: bool, skipColon = false, skipMids = true
+    g: var TOutput,
+    n: PNode,
+    start: int,
+    skipDo: bool,
+    skipColon = false,
+    skipMids = true,
 ) =
   # Sometimes, `do` can be skipped but it is not entirely clear when - this
   # feature rests on experiments with large codebases but should be researched
@@ -1565,7 +1570,9 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       # ":" is present so it looks like we can skip the `do` here :/ this needs
       # deeper investigation - see also `nkPar` which sometimes removes the
       # parenthesis from the AST
-      postStatements(g, n, i, sfSkipDo in flags, n[i].kind == nkStmtListExpr, skipMids = false)
+      postStatements(
+        g, n, i, sfSkipDo in flags, n[i].kind == nkStmtListExpr, skipMids = false
+      )
     else:
       # The first argument must not be line-broken, or command syntax breaks!
       if n.len > 1:
