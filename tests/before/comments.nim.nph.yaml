@@ -2034,3 +2034,59 @@ sons:
                       - kind: "nkDiscardStmt"
                         sons:
                           - kind: "nkEmpty"
+  - kind: "nkCall"
+    mid:
+      - "# wait for nodes subscribe to finish"
+    sons:
+      - kind: "nkIdent"
+        ident: "checkUntilTimeout"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkCall"
+    mid:
+      - "# wait for nodes subscribe to finish"
+    sons:
+      - kind: "nkIdent"
+        ident: "checkUntilTimeout"
+      - kind: "nkIdent"
+        ident: "arg"
+  - kind: "nkCall"
+    mid:
+      - "# wait for nodes subscribe to finish"
+    sons:
+      - kind: "nkIdent"
+        ident: "checkUntilTimeout"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkCommand"
+    mid:
+      - "# comment"
+    sons:
+      - kind: "nkIdent"
+        ident: "command"
+      - kind: "nkIdent"
+        ident: "a"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
+  - kind: "nkPragmaBlock"
+    mid:
+      - "# comment"
+    sons:
+      - kind: "nkPragma"
+        sons:
+          - kind: "nkIdent"
+            ident: "gcsafe"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"

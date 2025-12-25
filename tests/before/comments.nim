@@ -493,3 +493,21 @@ block:
       discard
   else #comment
     : discard
+
+checkUntilTimeout: # wait for nodes subscribe to finish
+  discard
+
+checkUntilTimeout(# wait for nodes subscribe to finish
+  arg
+)
+
+checkUntilTimeout(# wait for nodes subscribe to finish
+):
+  discard
+
+command a:# comment
+  discard
+
+{.gcsafe.}: # comment
+  discard
+  

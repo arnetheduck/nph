@@ -2598,7 +2598,7 @@ proc parseStmtPragma(p: var Parser): PNode =
     result = newNodeI(nkPragmaBlock, a.info)
     result.add a
     getTok(p)
-    splitLookahead(p, result, clPostfix) # TODO mid
+    splitLookahead(p, result, clMid)
     result.add parseStmt(p)
     splitLookahead(p, result, clPostfix)
   setEndInfo()

@@ -36,7 +36,7 @@ jobs:
           - target:
               os: macosx
               name: macosx_x64
-            builder: macos-13
+            builder: macos-14-large
           - target:
               os: macosx
               name: macosx_arm64
