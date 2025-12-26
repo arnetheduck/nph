@@ -75,3 +75,23 @@ sons:
                       - kind: "nkDiscardStmt"
                         sons:
                           - kind: "nkEmpty"
+  - kind: "nkCommentStmt"
+    "comment": "# Test block comments with trailing comments in fmt off"
+  - kind: "nkProcDef"
+    sons:
+      - kind: "nkIdent"
+        ident: "testBlockComments"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkFormalParams"
+        sons:
+          - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkEmpty"
+      - kind: "nkStmtList"
+        sons:
+          - kind: "nkCommentStmt"
+            "comment": "#!fmt: off\u000A  #[ block comment ]# # trailing comment should stay\u000A  var   ugly   =   1\u000A  #[\u000A    multiline\u000A    block\u000A  ]# # also should stay on same line\u000A  #!fmt: on"
+          - kind: "nkDiscardStmt"
+            sons:
+              - kind: "nkEmpty"
