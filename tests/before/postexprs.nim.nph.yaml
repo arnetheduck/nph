@@ -618,3 +618,39 @@ sons:
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
+  - kind: "nkCommand"
+    sons:
+      - kind: "nkDotExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "x"
+          - kind: "nkIdent"
+            ident: "add"
+      - kind: "nkBracketExpr"
+        sons:
+          - kind: "nkCall"
+            sons:
+              - kind: "nkIdent"
+                ident: "func1"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "x"
+          - kind: "nkIntLit"
+            intVal: 0
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkCall"
+            sons:
+              - kind: "nkIdent"
+                ident: "func1"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "x"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkIdent"
+                ident: "true"
