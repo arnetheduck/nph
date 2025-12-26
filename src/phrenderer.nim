@@ -1002,7 +1002,7 @@ proc gcolcoms(g: var TOutput, n, stmts: PNode, useSub = false) =
       gstmts(g, stmts, flags = {sfNoIndent}, doIndent = false)
 
 proc gcond(g: var TOutput, n: PNode, flags: SubFlags = {}) =
-  gsub(g, n, flags)
+  gsub(g, n, flags + {sfParDo})
 
 proc isTrivialSub(n: PNode): bool =
   case n.kind
@@ -1470,9 +1470,9 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     if n.len > 1 and n.lastSon.kind in postExprBlocks:
       let
         doPars =
-          if n.lastSon.kind == nkDo and sfParDo in flags:
-            # A dot-expr that ends with a call with a `do` needs an extra set of
-            # parens to highlight where the `do` ends.
+          if n.lastSon.kind in {nkStmtList, nkDo} and sfParDo in flags:
+            # A expression that ends with a call with a `do` needs an extra set
+            # of parens to highlight where the `do` ends.
             put(g, tkParLe, $tkParLe)
             optNL(g)
             true
@@ -1495,7 +1495,8 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
       dedent(g, ind)
 
-      if n.lastSon.kind == nkDo and sfParDo in flags:
+      if doPars:
+        optNL(g)
         put(g, tkParRi, $tkParRi)
     elif n.len >= 1:
       gsub(g, n[0], flags = (flags * {sfStackDot}) + {sfStackDotInCall})
