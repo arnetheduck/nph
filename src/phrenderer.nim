@@ -256,8 +256,6 @@ proc optNL(g: var TOutput) =
   optNL(g, g.indent)
 
 proc optNL(g: var TOutput, a, b: PNode) =
-  optNL(g)
-
   let
     endLine =
       if a.postfix.len > 0:
@@ -269,6 +267,14 @@ proc optNL(g: var TOutput, a, b: PNode) =
         b.prefix[0].line
       else:
         int b.info.line
+
+  # Only skip newline for consecutive comment statements on the same line
+  # This preserves patterns like: #[...]# # comment
+  # For all other nodes, always add the newline (normal formatting)
+  if a.kind == nkCommentStmt and b.kind == nkCommentStmt and endLine == startLine:
+    discard # Don't add newline between comments on same line
+  else:
+    optNL(g)
 
   g.pendingNewline = g.pendingNewline or endLine + 1 < startLine
 
@@ -340,8 +346,11 @@ proc putComment(g: var TOutput, s: string) =
   optSpace(g)
   put(g, tkComment, s)
 
-  # TODO no implied eol on multiline comments
-  optNL(g)
+  # Don't add implied newline after block comments (like #[...]# or ##[...]##)
+  # to allow them to be followed by other content on the same line
+  let isBlockComment = s.startsWith("#[") or s.startsWith("##[")
+  if not isBlockComment:
+    optNL(g)
 
 proc brCloseOf(brOpen: TokType): TokType =
   case brOpen
