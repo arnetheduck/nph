@@ -31,16 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download and setup Nim DLLs (Windows)
-        if: runner.os == 'Windows'
-        shell: bash
-        run: |
-          curl -L -o dlls.zip https://nim-lang.org/download/dlls.zip
-          unzip dlls.zip -d nim-dlls
-          echo "$GITHUB_WORKSPACE/nim-dlls" >> $GITHUB_PATH
-          echo "SSL_CERT_FILE=$GITHUB_WORKSPACE/nim-dlls/cacert.pem" >> $GITHUB_ENV
-
-      - uses: nim-lang/setup-nimble-action@v1
+      - uses: nim-lang/setup-nimble-action@d27cc947821b39107883efa4a65f890a12d7d7d8
         with:
           nimble-version: '0.20.1'
           repo-token: ${{ secrets.GITHUB_TOKEN }}

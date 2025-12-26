@@ -30,6 +30,21 @@ and this
   ]#
 ]#
 
+# Test block comment followed by single-line comment on same line
+#[ block comment ]# # trailing comment
+##[ doc block comment ]## # trailing doc comment
+
+# Test with actual multiline block comments
+#[
+  multiline
+  block comment
+]# # trailing comment should stay on same line
+
+##[
+  multiline doc
+  block comment
+]## # trailing doc comment on same line
+
 template x =
   ## A template doc comment
   try:
