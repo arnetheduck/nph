@@ -1,0 +1,443 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>FAQ - nph</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="open-in.css">
+        <link rel="stylesheet" href="./mdbook-admonish.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">User guide</li><li class="chapter-item expanded "><a href="installation.html"><strong aria-hidden="true">2.</strong> Installation</a></li><li class="chapter-item expanded "><a href="usage.html"><strong aria-hidden="true">3.</strong> Usage</a></li><li class="chapter-item expanded "><a href="style.html"><strong aria-hidden="true">4.</strong> The nph style</a></li><li class="chapter-item expanded "><a href="faq.html" class="active"><strong aria-hidden="true">5.</strong> FAQ</a></li><li class="chapter-item expanded affix "><li class="part-title">Developer guide</li><li class="chapter-item expanded "><a href="test.html"><strong aria-hidden="true">6.</strong> Test suite</a></li><li class="chapter-item expanded "><a href="book.html"><strong aria-hidden="true">7.</strong> Updating this book</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">nph</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/arnetheduck/nph/" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="faq"><a class="header" href="#faq">FAQ</a></h1>
+<h2 id="why-use-a-formatter"><a class="header" href="#why-use-a-formatter">Why use a formatter?</a></h2>
+<p>A formatter removes the tedium of manually adding structure to code to make it
+more readable - overlong lines, inconsistent indentation, lack of visual
+structure and other small distractions quickly nibble away at the mental budget
+available for writing code while a formatter solves this and many other things
+at the press of a button.</p>
+<p>When you work with others, debates and nitpicking over style go away and
+collaborative efforts can focus on substance instead.</p>
+<p>Finally, the code is likely to look better - manually formatting code takes a
+lot of effort which ultimately can be spent better elsewhere - as such, poorly
+formatted code ends up being more common than not.</p>
+<h2 id="but-ive-spent-a-significant-part-of-my-life-realigning-code-and-now-its-lost"><a class="header" href="#but-ive-spent-a-significant-part-of-my-life-realigning-code-and-now-its-lost">But I've spent a significant part of my life realigning code and now it's lost!</a></h2>
+<p>https://en.wikipedia.org/wiki/Sunk_cost</p>
+<h2 id="how-do-i-introduce-nph-in-an-existing-codebase"><a class="header" href="#how-do-i-introduce-nph-in-an-existing-codebase">How do I introduce <code>nph</code> in an existing codebase?</a></h2>
+<p>Assuming <code>git</code> is used, format all code using <code>nph</code>, put it in a single commit
+and add a CI rule to ensure that future commits are all formatted using the same
+<code>nph</code> version.</p>
+<p>Formatting commits can be ignored for the purpose of <code>git blame</code> by adding a
+file named <code>.git-blame-ignore-revs</code> containing the formatted source code to the
+root of the project:</p>
+<pre><code class="language-sh">cd myproject
+
+# Format all source code with nph
+git ls-files | grep &quot;.nim$&quot; | xargs -n1 nph
+
+# Create a single commit with all changes
+git commit -am &quot;Formatted with nph $(nph --version)&quot;
+
+# Record the commit hash in the blame file
+echo &quot;# Formatted with nph $(nph --version)&quot; &gt;&gt; .git-blame-ignore-revs
+echo $(git rev-parse HEAD) &gt;&gt; .git-blame-ignore-revs
+</code></pre>
+<p>then configure git to use it:</p>
+<pre><code class="language-sh">git config --global blame.ignoreRevsFile .git-blame-ignore-revs
+</code></pre>
+<p>The same strategy can be used when upgrading <code>nph</code> to a new version that
+introduces formatting changes.</p>
+<h2 id="nph-complains-about-my-code"><a class="header" href="#nph-complains-about-my-code"><code>nph</code> complains about my code!</a></h2>
+<p>One of several things could have happened:</p>
+<ul>
+<li>The code was not valid enough - <code>nph</code> can only parse valid Nim grammar and
+while it would be nice to handle partially formatted stuff gracefully, we're
+not there yet.</li>
+<li>The parser has a bug and is unable to parse valid Nim code
+<ul>
+<li>Probably you can move some comments around to make it work!</li>
+</ul>
+</li>
+<li>the formatter has a bug and the resulting formatting is invalid
+<ul>
+<li>Probably you can move some comments around to make it work!</li>
+</ul>
+</li>
+<li>the AST equivalence checker complains
+<ul>
+<li>This often happens in complex expressions such as <code>do</code>  and parenthesis used
+for indent purposes where the Nim grammar has ambiguities and parsing
+complexity - it can usually be worked around by simplifying complex
+expressions, introducing a template or similar</li>
+<li>It could also be that the AST checker is too strict - the Nim parser will
+generate different AST:s depending on whitespace even if semantically there
+is no difference</li>
+</ul>
+</li>
+</ul>
+<p>Regardless of what happened, <code>nph</code> takes the conservative approach and retains
+the original formatting!</p>
+<p>If you have time, try to find the offending code snippet and submit an issue.</p>
+<h2 id="why-the-cited-formatters-in-particular"><a class="header" href="#why-the-cited-formatters-in-particular">Why the cited formatters in particular?</a></h2>
+<ul>
+<li><code>black</code> because of our syntactic similarity with Python and its
+<a href="https://black.readthedocs.io/en/stable/the_black_code_style/index.html#stability-policy">stability policy</a></li>
+<li><code>prettier</code> for its wisdom in how formatting <a href="https://prettier.io/docs/en/option-philosophy">options</a>
+are approached and for the closeness to user experience of its developers</li>
+<li><code>clang-format</code> for being the formatter that made me stop worrying about
+formatting
+<ul>
+<li>its secret sauce was treating formatting as a balancing of priorities rather
+than a mechanical stringification using a <a href="https://youtu.be/s7JmdCfI__c?t=640">lowest-penalty</a>
+algorithm</li>
+</ul>
+</li>
+</ul>
+<h2 id="what-is-meant-by-consistency"><a class="header" href="#what-is-meant-by-consistency">What is meant by consistency?</a></h2>
+<ul>
+<li>Similar constructs are formatted with similar rules
+<ul>
+<li>Does it look like a list? Format it with list-like rules regardless if
+its a parameter list, array of values or import list</li>
+</ul>
+</li>
+<li>Original styling is generally not preserved - instead, the formatting is based
+on the semantic structure of the program</li>
+<li>Spacing emphasizes structure and control flow to help you read the code</li>
+</ul>
+<p><code>nph</code> makes your code consistent without introducing hobgoblins in your mind!</p>
+<h2 id="why-are-there-no-options"><a class="header" href="#why-are-there-no-options">Why are there no options?</a></h2>
+<p>The aim of <code>nph</code> is to create a single consistent style that allows you to
+focus on programming while <code>nph</code> takes care of the formatting, even across
+different codebases and authors.</p>
+<p>Consistency helps reading speed by removing unique and elaborate formatting
+distractions, allowing you, the experienced programmer, to derive structural
+information about the codebase at a glance.</p>
+<p>The style might feel unfamiliar in the beginning - this is fine and not a reason
+to panic - a few weeks from now, you'll forget you ever used another one.</p>
+<h2 id="do-you-accept-style-suggestions-and-changes"><a class="header" href="#do-you-accept-style-suggestions-and-changes">Do you accept style suggestions and changes?</a></h2>
+<p>Yes! The project is still in its early phase meaning that the style is not yet
+set in stone.</p>
+<p>To submit a proposal, include some existing code, how you'd like it to be
+formatted and an option-free algorithm detailing how to achieve it and how the
+outcome relates to the above styling priorities.</p>
+<p>When in doubt, look at what other opinionated formatters have done and link to
+it!</p>
+<p>Eventually, the plan is to adopt a <a href="https://black.readthedocs.io/en/stable/the_black_code_style/index.html#stability-policy">stability policy</a>
+similar to <code>black</code>, meaning that style changes will still be accepted, but
+introduced only rarely so that you don't have to worry about massive PR-breaking
+formatting diffs all the time.</p>
+<h2 id="why-does-the-formatting-code-look-an-awful-lot-like-the-nim-compiler-renderer"><a class="header" href="#why-does-the-formatting-code-look-an-awful-lot-like-the-nim-compiler-renderer">Why does the formatting code look an awful lot like the Nim compiler renderer?</a></h2>
+<p>Because it is based on it, of course! As a starting point this is fine but the
+code would benefit greatly from being rewritten with a dedicated formatting
+AST - and here we are.</p>
+<h2 id="should-it-be-upstreamed"><a class="header" href="#should-it-be-upstreamed">Should it be upstreamed?</a></h2>
+<p>Maybe parts - feel free to make PR:s to the Nim repo from this codebase! That
+said, the aim of a compiler is to compile while a formatter formats - we are not
+the same.</p>
+<h2 id="what-about-nimpretty"><a class="header" href="#what-about-nimpretty">What about <code>nimpretty</code>?</a></h2>
+<p><code>nimpretty</code> formats tokens, not the AST. Use whichever you like better, but keep
+a backup if you don't use <code>nph</code> :)</p>
+<h2 id="why-88-characters"><a class="header" href="#why-88-characters">Why 88 characters?</a></h2>
+<p>This is an experiment.</p>
+<p>Astute and experienced programmers have noticed two things: longer variable
+names aren't that bad and monitors have gotten bigger since the 80 standard was
+set.</p>
+<p>Going beyond allows code that uses descriptive names to look better - how much
+extra is needed here is an open question but 10% seems like a good start for a
+language like Nim which defaults to 2-space significant indent and a naive
+module system that encourages globally unique identifiers with longer names.</p>
+<p>Automated formatting keeps most code well below this limit but the extra 10%
+allows gives it some lenience - think of it as those cases where a prorgammer
+would use their judgement and common sense to override a style guide
+recommendation.</p>
+<h2 id="what-about-comments"><a class="header" href="#what-about-comments">What about comments?</a></h2>
+<p>Comments may appear in many different places that are not represented in the
+Nim AST. When <code>nph</code> reformats code, it may have to move comments around in order
+to maintain line lengths and introduce or remove indentation.</p>
+<p><code>nph</code> uses heuristics to place comments into one of several categories which
+broadly play by similar rules that code does - in particular, indentation is
+used to determine &quot;ownership&quot; over the comment.</p>
+<p>The implementation currently tracks several comment categories:</p>
+<ul>
+<li>comment statement nodes - comments that appear with regular indent in
+statement list contexts (such as the body of a <code>proc</code>) as represented as such,
+ie as statement nodes and get treated similar to how regular code would</li>
+<li>node attachments - comments that are anchored to an AST node depending on
+their location in the code relative to that node:
+<ul>
+<li>prefix - anything leading up to a particular AST node - for example less
+indented or otherwise appearing before the node</li>
+<li>mid - at midpoints in composite nodes - between the <code>:</code> and the body of an
+<code>if</code> for example</li>
+<li>postfix - appearing after the node, meaning on the same line or more
+indented than the node</li>
+</ul>
+</li>
+</ul>
+<p>When rendering the code, <code>nph</code> will use these categories to guide where the
+comment text should go, maintaining comment output in such a way that parsing
+the file again results in equivalent comment placement.</p>
+<h2 id="how-are-blank-lines-handled"><a class="header" href="#how-are-blank-lines-handled">How are blank lines handled?</a></h2>
+<p>Coming up with a fully automatic rendering of blank lines is tricky because they
+are often used to signal logical groupings of code for which no other mechanism
+exists to represent them.</p>
+<p><code>nph</code> current will:</p>
+<ul>
+<li>generally retain blank space in code but normalise it to a single line</li>
+<li>insert blanks around complex statements</li>
+</ul>
+<p>This strategy is expected to evolve over time, including the meaning of
+&quot;complex&quot;.</p>
+<h2 id="what-features-will-likely-not-be-added"><a class="header" href="#what-features-will-likely-not-be-added">What features will likely not be added?</a></h2>
+<ul>
+<li>formatting options - things that change the way the formatting is done for
+aesthetic reasons - exceptions here might include options that increase
+compatiblity (for example with older Nim versions)</li>
+<li>semantic refactoring - the focus is on style only
+<ul>
+<li><code>import</code> reording in particular changes order in which code executes!</li>
+</ul>
+</li>
+</ul>
+<h2 id="whats-with-the-semicolons"><a class="header" href="#whats-with-the-semicolons">What's with the semicolons?</a></h2>
+<p>Nim's grammar unfortunately allows the use of either <code>,</code> or <code>;</code> in some places
+with a subtly different AST being produced which <em>sometimes</em> has a semantic
+impact.</p>
+<p>Parameters in particular are parsed using identifier groups where each group
+consists of one or more names followed by an option type and default.</p>
+<p>Names are separated by <code>,</code> - if the type and default are missing, a <code>;</code> is
+needed to start a new group or the name would be added to the previous group
+if a <code>;</code> was used originally to create a new group.</p>
+<p>However, if the group has a default, <code>;</code> cannot be parsed because it's swallowed
+in certain cases (<code>proc</code> implementations in particular) by the default value
+parsing.</p>
+<p>As such, <code>nph</code> will normalise usage of <code>,</code> and <code>;</code> to:</p>
+<ul>
+<li>Use <code>,</code> after a group that has a type and/or default</li>
+<li>Use <code>;</code> otherwise</li>
+</ul>
+<p>Regardless, you can usually type either and <code>nph</code> will clean it up in such a way
+that the AST remains unambiguous, compatible with all possible values and in
+line with the common expectation that <code>,</code> is used where possible.</p>
+<footer id="open-on-gh">Found a bug? <a href="https://github.com/arnetheduck/nph//edit/master/docs/src/faq.md">Edit this page on GitHub.</a></footer>
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="style.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="test.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="style.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="test.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
