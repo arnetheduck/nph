@@ -176,6 +176,8 @@ proc isSimple(n: PNode, allowExported = false, allowInfix = false): bool =
       n.allIt(isSimple(it))
     of nkProcTy:
       true
+    of nkBracketExpr:
+      n.len == 1
     else:
       false
 
