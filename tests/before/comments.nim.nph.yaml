@@ -2110,3 +2110,24 @@ sons:
           - kind: "nkDiscardStmt"
             sons:
               - kind: "nkEmpty"
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "and"
+              - kind: "nkIdent"
+                ident: "xxxxxxxxx"
+              - kind: "nkPar"
+                sons:
+                  - kind: "nkIdent"
+                    prefix:
+                      - "# comment"
+                    ident: "y"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"

@@ -107,10 +107,16 @@ type
   TOutput = TSrcGen | TSrcLen
 
 proc `+`(a: LineLen, b: int): LineLen =
-  (a[0] + b, a[1])
+  if a.nl:
+    a
+  else:
+    (a.len + b, false)
 
 proc `+`(a, b: LineLen): LineLen =
-  (a[0] + b[0], a[1] or b[1])
+  if a.nl:
+    a
+  else:
+    (a.len + b.len, b.nl)
 
 proc isDocComment(s: string): bool =
   s.startsWith("##")
@@ -199,21 +205,22 @@ proc initSrcGen(g: var TSrcGen, config: ConfigRef) =
   g.pendingWhitespace = 0
   g.config = config
 
-proc containsNL(s: string): bool =
+proc nllen(s: string): int =
   for i in 0 ..< s.len:
-    case s[i]
-    of '\r', '\n':
-      return true
-    else:
-      discard
+    if s[i] in {'\r', '\n'}:
+      return i
 
-  result = false
+  -1
 
 proc addTok(g: var TSrcLen, kind: TokType, s: string) =
   if not g.nl:
-    g.nl = containsNL(s)
-    if not g.nl:
+    let nllen = s.nllen
+    if nllen >= 0:
+      g.nl = true
+      g.firstLen += nllen
+    else:
       g.firstLen += s.len
+
   g.tokens.add TRenderTok(kind: kind, length: s.len)
 
 proc addTok(g: var TSrcGen, kind: TokType, s: string) =
@@ -581,9 +588,7 @@ template withSrcLen(g: TSrcGen, body: untyped): LineLen =
   let discount = g.pendingWhitespace
   body
   let post =
-    if sl.nl:
-      MaxLineLen + 1
-    elif sl.firstLen > 0:
+    if sl.firstLen > discount:
       sl.firstLen - discount
     else:
       0
@@ -646,11 +651,13 @@ proc nlsubImpl(g: TOutput, n: PNode, flags: SubFlags): (bool, LineLen) =
   else:
     let ll = lsub(g, n, flags)
     case n.kind
+    of nkTripleStrLit:
+      (true, (ll.len, false))
     of nkPar, nkClosure, nkCurly, nkBracket, nkTableConstr, nkStmtListExpr,
         nkTupleConstr:
-      (true, (1, ll[1]))
+      (true, (1, false))
     of nkPragma, nkPragmaExpr:
-      (true, (2, ll[1]))
+      (true, (2, false))
     else:
       (false, ll)
 
@@ -660,13 +667,13 @@ proc nlsub(g: TOutput, n: PNode, flags: SubFlags = {}): LineLen =
 
 proc fits(g: TSrcLen, x: LineLen): bool =
   # Line lengths are computed assuming no extra line breaks
-  not x[1]
+  not x.nl
 
 proc fits(g: TSrcGen, x: LineLen): bool =
-  x[0] <= MaxLineLen
+  not x.nl and x.len <= MaxLineLen
 
 proc overflows(g: TOutput, x: LineLen): bool =
-  not fits(g, (g.lineLen + x[0], x[1]))
+  not fits(g, (g.lineLen + x.len, x.nl))
 
 proc putWithSpace(g: var TOutput, kind: TokType, s: string) =
   put(g, kind, s)
@@ -1711,7 +1718,6 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
   of nkInfix:
     if n.len < 3:
       put(g, tkOpr, "Too few children for nkInfix")
-
       return
 
     let flags = flags * {sfNoIndent, sfLongIndent}

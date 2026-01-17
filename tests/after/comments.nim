@@ -529,3 +529,9 @@ command a: # comment
 
 {.gcsafe.}: # comment
   discard
+
+if xxxxxxxxx and (
+  # comment
+  y
+):
+  discard
