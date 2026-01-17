@@ -757,6 +757,22 @@ sons:
   - kind: "nkCall"
     sons:
       - kind: "nkIdent"
+        ident: "functionCall"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaaaaa"
+      - kind: "nkBracketExpr"
+        sons:
+          - kind: "nkIdent"
+            ident: "derefisalsosimple"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaa"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaaaaaaaaaaaa"
+      - kind: "nkIdent"
+        ident: "aaaaaaaaaaaaa"
+  - kind: "nkCall"
+    sons:
+      - kind: "nkIdent"
         ident: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       - kind: "nkIdent"
         ident: "aaaaaaaaaaaaaaa"
