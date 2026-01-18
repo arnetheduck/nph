@@ -1243,7 +1243,9 @@ proc gTypeClassTy(g: var TOutput, n: PNode) =
   putWithSpace(g, tkConcept, "concept")
   g.inConcept += 1
   gcomma(g, n[0]) # arglist
+  optSpace(g)
   gsub(g, n[1]) # pragmas
+  optSpace(g)
   gsub(g, n[2]) # of
   gmids(g, n)
   indentNL(g)
