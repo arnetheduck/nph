@@ -52,3 +52,13 @@ type LongStringEnum = enum
 type NumberEnum = enum
   aaa = 332
   bbbbbbbbbbbbbbbbbbbbbcddddddddddddddddssssssssssssssssssscccccccccccccrrrrrrrrrrrrrrrrr = 424
+
+type
+  User = concept u
+  SuperUser = concept u of User
+
+  SuperUser2 = concept u of User
+    close(u)
+
+  AnyFD* = concept fd
+    close(fd)

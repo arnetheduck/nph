@@ -1243,12 +1243,12 @@ proc gTypeClassTy(g: var TOutput, n: PNode) =
   putWithSpace(g, tkConcept, "concept")
   g.inConcept += 1
   gcomma(g, n[0]) # arglist
+  optSpace(g)
   gsub(g, n[1]) # pragmas
+  optSpace(g)
   gsub(g, n[2]) # of
   gmids(g, n)
-  indentNL(g)
   gstmts(g, n[3])
-  dedent(g)
 
   g.inConcept -= 1
 
@@ -1784,8 +1784,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
       if nNext.kind == nkInfix or (
         # This is a special case for a do statement, which needs an extra set of parens
-        nNext.kind == nkCall and nNext.len >= 2 and nNext[1].kind == nkStmtList and
-        nNext[1].len >= 1 and nNext[1][^1].kind == nkCall
+        nNext.kind == nkCall and nNext.len >= 2 and nNext[1].kind == nkStmtList
       ):
         put(g, tkParLe, "(")
         gsub(g, n[1])
@@ -1914,7 +1913,7 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
     if n.len > 2 and n[2].kind != nkEmpty:
       putWithSpace(g, tkEquals, "=")
       gmids(g, n, true, true)
-      if n[2].kind in {nkObjectTy, nkEnumTy, nkRefTy}:
+      if n[2].kind in {nkObjectTy, nkEnumTy, nkRefTy, nkTypeClassTy}:
         gsub(g, n[2], flags = {sfNoIndent})
       else:
         gsubOptNL(g, n[2])

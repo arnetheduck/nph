@@ -654,3 +654,16 @@ sons:
             sons:
               - kind: "nkIdent"
                 ident: "true"
+  - kind: "nkPrefix"
+    sons:
+      - kind: "nkIdent"
+        ident: "not"
+      - kind: "nkCall"
+        sons:
+          - kind: "nkIdent"
+            ident: "compiles"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
