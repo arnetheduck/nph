@@ -33,8 +33,7 @@ type
 const
   Version = gorge("git describe --long --dirty --always --tags")
   Usage =
-    "nph - Nim formatter " & Version &
-    """
+    "nph - Nim formatter " & Version & """
 Usage:
   nph [options] nimfiles...
 
