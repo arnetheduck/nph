@@ -200,6 +200,39 @@ let bbbbbbccccb = [
   888888888888888,
 ]
 
+let bbbbbbccccb = @[
+  int64 533, 444444444444444444, 555555555555555555, 6666666666666666, 6777777777777777,
+  888888888888888,
+]
+
+let bbbbbbccccb = %*{
+  a: 533,
+  b: 444444444444444444,
+  c: 555555555555555555,
+  d: 6666666666666666,
+  e: 6777777777777777,
+  f: 888888888888888,
+}
+
+let xxxxxxxxxxxxxxxxxxxxxxxxxxxx =
+  ?aaaaaaaaaaaaaaaaaaaaaaa(bbbbbbbbbbbbb, cccccccccccc, ddddddddddd)
+
+let xxxxxxxxxxxxxxxxxxxxxxxxxxxx = ?aaaaaaaaaaaaaaaaaaaaaaa(
+  bbbbbbbbbbbbb, cccccccccccc, ddddddddddd, eeeeeeeeeeeeee, ffffffffffffff,
+  ggggggggggggggggggggg,
+)
+
+let xxxxxxxxxxxxxxxxxxxxxxxxxxxx = not aaaaaaaaaaaaaaaaaaaaaaa(
+  bbbbbbbbbbbbb, cccccccccccc, ddddddddddd, eeeeeeeeeeeeee, ffffffffffffff,
+  ggggggggggggggggggggg,
+)
+
+let bbbbbbccccb = block:
+  @[
+    533, 444444444444444444, 555555555555555555, 6666666666666666, 6777777777777777,
+    888888888888888,
+  ]
+
 let xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx =
   """xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
