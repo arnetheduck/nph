@@ -605,3 +605,52 @@ sons:
                   - kind: "nkIdent"
                     ident: "User"
               - kind: "nkEmpty"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "SuperUser2"
+          - kind: "nkEmpty"
+          - kind: "nkTypeClassTy"
+            sons:
+              - kind: "nkArgList"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "u"
+              - kind: "nkEmpty"
+              - kind: "nkOfInherit"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "User"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "close"
+                      - kind: "nkIdent"
+                        ident: "u"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkPostfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "*"
+              - kind: "nkIdent"
+                ident: "AnyFD"
+          - kind: "nkEmpty"
+          - kind: "nkTypeClassTy"
+            sons:
+              - kind: "nkArgList"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "fd"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "close"
+                      - kind: "nkIdent"
+                        ident: "fd"

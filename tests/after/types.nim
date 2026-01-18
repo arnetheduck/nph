@@ -82,3 +82,9 @@ type NumberEnum = enum
 type
   User = concept u
   SuperUser = concept u of User
+
+  SuperUser2 = concept u of User
+    close(u)
+
+  AnyFD* = concept fd
+    close(fd)

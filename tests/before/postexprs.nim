@@ -106,3 +106,6 @@ macro `->`(a, b, c: untyped) = discard
 x.add (func1 do: x)[0]
 
 if (func1 do: x): true
+
+not (compiles do:
+  discard)
