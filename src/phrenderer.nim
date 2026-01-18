@@ -1339,7 +1339,7 @@ proc gsubOptNL(g: var TOutput, n: PNode, indentNL = IndentWidth, flags: SubFlags
     nkCurlyExpr, nkPragmaExpr, nkCommand, nkExprEqExpr, nkAsgn, nkFastAsgn, nkClosure,
     nkTupleConstr, nkCurly, nkArgList, nkTableConstr, nkBracket, nkBind, nkDo,
     nkIdentDefs, nkConstDef, nkVarTuple, nkExprColonExpr, nkTypeOfExpr, nkDistinctTy,
-    nkTypeDef, nkBlockStmt, nkBlockExpr, nkLambda, nkProcTy,
+    nkTypeDef, nkBlockStmt, nkBlockExpr, nkLambda, nkProcTy, nkPrefix,
   }
 
   let
@@ -1741,9 +1741,9 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
       sublen = lsub(g, n[2])
       nsublen = nlsub(g, n[2])
       overflows = n.len == 3 and overflows(g, nsublen) and not infixHasParens(n, 2)
-      fitsNL = overflows(g, sublen) and fits(g, sublen + g.indent)
-      indent = sfNoIndent notin flags and (fitsNL or overflows and not hasIndent(n[2]))
       wid = flagIndent(flags)
+      fitsNL = overflows(g, sublen) and fits(g, sublen + g.indent + wid)
+      indent = sfNoIndent notin flags and (fitsNL or overflows and not hasIndent(n[2]))
       flags2 =
         if indent:
           # Only indent infix once otherwise for long strings of + / and / etc

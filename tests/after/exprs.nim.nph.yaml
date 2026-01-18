@@ -2054,6 +2054,189 @@ sons:
       - kind: "nkIdentDefs"
         sons:
           - kind: "nkIdent"
+            ident: "bbbbbbccccb"
+          - kind: "nkEmpty"
+          - kind: "nkPrefix"
+            sons:
+              - kind: "nkIdent"
+                ident: "@"
+              - kind: "nkBracket"
+                sons:
+                  - kind: "nkCommand"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "int64"
+                      - kind: "nkIntLit"
+                        intVal: 533
+                  - kind: "nkInt64Lit"
+                    intVal: 444444444444444444
+                  - kind: "nkInt64Lit"
+                    intVal: 555555555555555555
+                  - kind: "nkInt64Lit"
+                    intVal: 6666666666666666
+                  - kind: "nkInt64Lit"
+                    intVal: 6777777777777777
+                  - kind: "nkInt64Lit"
+                    intVal: 888888888888888
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "bbbbbbccccb"
+          - kind: "nkEmpty"
+          - kind: "nkPrefix"
+            sons:
+              - kind: "nkIdent"
+                ident: "%*"
+              - kind: "nkTableConstr"
+                sons:
+                  - kind: "nkExprColonExpr"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "a"
+                      - kind: "nkIntLit"
+                        intVal: 533
+                  - kind: "nkExprColonExpr"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "b"
+                      - kind: "nkInt64Lit"
+                        intVal: 444444444444444444
+                  - kind: "nkExprColonExpr"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "c"
+                      - kind: "nkInt64Lit"
+                        intVal: 555555555555555555
+                  - kind: "nkExprColonExpr"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "d"
+                      - kind: "nkInt64Lit"
+                        intVal: 6666666666666666
+                  - kind: "nkExprColonExpr"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "e"
+                      - kind: "nkInt64Lit"
+                        intVal: 6777777777777777
+                  - kind: "nkExprColonExpr"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "f"
+                      - kind: "nkInt64Lit"
+                        intVal: 888888888888888
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          - kind: "nkEmpty"
+          - kind: "nkPrefix"
+            sons:
+              - kind: "nkIdent"
+                ident: "?"
+              - kind: "nkCall"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "aaaaaaaaaaaaaaaaaaaaaaa"
+                  - kind: "nkIdent"
+                    ident: "bbbbbbbbbbbbb"
+                  - kind: "nkIdent"
+                    ident: "cccccccccccc"
+                  - kind: "nkIdent"
+                    ident: "ddddddddddd"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          - kind: "nkEmpty"
+          - kind: "nkPrefix"
+            sons:
+              - kind: "nkIdent"
+                ident: "?"
+              - kind: "nkCall"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "aaaaaaaaaaaaaaaaaaaaaaa"
+                  - kind: "nkIdent"
+                    ident: "bbbbbbbbbbbbb"
+                  - kind: "nkIdent"
+                    ident: "cccccccccccc"
+                  - kind: "nkIdent"
+                    ident: "ddddddddddd"
+                  - kind: "nkIdent"
+                    ident: "eeeeeeeeeeeeee"
+                  - kind: "nkIdent"
+                    ident: "ffffffffffffff"
+                  - kind: "nkIdent"
+                    ident: "ggggggggggggggggggggg"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          - kind: "nkEmpty"
+          - kind: "nkPrefix"
+            sons:
+              - kind: "nkIdent"
+                ident: "not"
+              - kind: "nkCall"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "aaaaaaaaaaaaaaaaaaaaaaa"
+                  - kind: "nkIdent"
+                    ident: "bbbbbbbbbbbbb"
+                  - kind: "nkIdent"
+                    ident: "cccccccccccc"
+                  - kind: "nkIdent"
+                    ident: "ddddddddddd"
+                  - kind: "nkIdent"
+                    ident: "eeeeeeeeeeeeee"
+                  - kind: "nkIdent"
+                    ident: "ffffffffffffff"
+                  - kind: "nkIdent"
+                    ident: "ggggggggggggggggggggg"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "bbbbbbccccb"
+          - kind: "nkEmpty"
+          - kind: "nkBlockStmt"
+            sons:
+              - kind: "nkEmpty"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkPrefix"
+                    sons:
+                      - kind: "nkIdent"
+                        ident: "@"
+                      - kind: "nkBracket"
+                        sons:
+                          - kind: "nkIntLit"
+                            intVal: 533
+                          - kind: "nkInt64Lit"
+                            intVal: 444444444444444444
+                          - kind: "nkInt64Lit"
+                            intVal: 555555555555555555
+                          - kind: "nkInt64Lit"
+                            intVal: 6666666666666666
+                          - kind: "nkInt64Lit"
+                            intVal: 6777777777777777
+                          - kind: "nkInt64Lit"
+                            intVal: 888888888888888
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
             ident: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
           - kind: "nkEmpty"
           - kind: "nkTripleStrLit"
