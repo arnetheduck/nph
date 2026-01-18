@@ -572,3 +572,36 @@ sons:
                     ident: "bbbbbbbbbbbbbbbbbbbbbcddddddddddddddddssssssssssssssssssscccccccccccccrrrrrrrrrrrrrrrrr"
                   - kind: "nkIntLit"
                     intVal: 424
+  - kind: "nkTypeSection"
+    sons:
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "User"
+          - kind: "nkEmpty"
+          - kind: "nkTypeClassTy"
+            sons:
+              - kind: "nkArgList"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "u"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+              - kind: "nkEmpty"
+      - kind: "nkTypeDef"
+        sons:
+          - kind: "nkIdent"
+            ident: "SuperUser"
+          - kind: "nkEmpty"
+          - kind: "nkTypeClassTy"
+            sons:
+              - kind: "nkArgList"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "u"
+              - kind: "nkEmpty"
+              - kind: "nkOfInherit"
+                sons:
+                  - kind: "nkIdent"
+                    ident: "User"
+              - kind: "nkEmpty"
