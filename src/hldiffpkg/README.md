@@ -1,0 +1,1 @@
+Vendored version of https://github.com/c-blake/hldiff/blob/master/hldiffpkg/edits.nim minus the lptabz dep
