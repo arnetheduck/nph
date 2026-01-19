@@ -113,3 +113,6 @@ if (
     x
 ):
   true
+
+not (compiles do:
+  discard)
