@@ -3,18 +3,15 @@
 ## Opinionated source code formatter
 
 import
-  "."/[
+  std/[parseopt, strutils, os, sequtils, tables, terminal, options],
+  ./hldiffpkg/edits,
+  ./[
     astcmp, astyaml, phast, phastyaml, phmsgs, phlineinfos, phoptions, phparser,
     phrenderer,
-  ]
-
-import "$nim"/compiler/idents
-
-import std/[parseopt, strutils, os, sequtils, tables, terminal, options]
-import pkg/hldiffpkg/edits
-import pkg/adix/lptabz
-import pkg/regex
-import pkg/toml_serialization
+  ],
+  regex,
+  toml_serialization,
+  "$nim"/compiler/idents
 
 static:
   doAssert NimMajor == 2 and NimMinor == 2, "nph needs a specific version of Nim"
