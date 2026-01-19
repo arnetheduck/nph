@@ -276,7 +276,6 @@ proc optNL(g: var TOutput, a, b: PNode) =
         b.prefix[0].line
       else:
         int b.info.line
-
   # Only skip newline for consecutive comment statements on the same line
   # This preserves patterns like: #[...]# # comment
   # For all other nodes, always add the newline (normal formatting)
@@ -1017,7 +1016,13 @@ proc gcolcoms(g: var TOutput, n, stmts: PNode, useSub = false) =
   else:
     withIndent(g):
       optNL(g)
-      gstmts(g, stmts, flags = {sfNoIndent}, doIndent = false)
+      # sfSkipDo is here because when we render a colcom with a newline, the
+      # parser will add a layer of nkStmtList wrapping which in turn renders
+      # the extra `do` redundant, since post statements in nkStmtList should
+      # not have `do`. As noted elsewhere, this logic has been experimentally
+      # expanded to cover more and more cases and should probably be revisited
+      # in a principled way instead.
+      gstmts(g, stmts, flags = {sfSkipDo, sfNoIndent}, doIndent = false)
 
 proc gcond(g: var TOutput, n: PNode, flags: SubFlags = {}) =
   gsub(g, n, flags + {sfParDo})

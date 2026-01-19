@@ -153,6 +153,9 @@ mynums = myNums
   .replace5("five", "f5ive")
   .replace6("six", "s6ix")
   .replace7("seven", "s7even")
+aaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbb
+.ccccccccccccccccccccccccccc().ccccccccccccccccccccccccc
+.ddddddddddddddddd() # no newline before previous dotexpr
 
 let xxxxxxxxx = block:
   f()

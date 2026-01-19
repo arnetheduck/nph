@@ -1806,6 +1806,30 @@ sons:
             strVal: "seven"
           - kind: "nkStrLit"
             strVal: "s7even"
+  - kind: "nkCall"
+    sons:
+      - kind: "nkDotExpr"
+        sons:
+          - kind: "nkDotExpr"
+            sons:
+              - kind: "nkCall"
+                sons:
+                  - kind: "nkDotExpr"
+                    sons:
+                      - kind: "nkDotExpr"
+                        sons:
+                          - kind: "nkIdent"
+                            ident: "aaaaaaaaaaaaaaaaaaaaa"
+                          - kind: "nkIdent"
+                            ident: "bbbbbbbbbbbbbbbbbbbbbb"
+                      - kind: "nkIdent"
+                        ident: "ccccccccccccccccccccccccccc"
+              - kind: "nkIdent"
+                ident: "ccccccccccccccccccccccccc"
+          - kind: "nkIdent"
+            ident: "ddddddddddddddddd"
+    postfix:
+      - "# no newline before previous dotexpr"
   - kind: "nkLetSection"
     sons:
       - kind: "nkIdentDefs"

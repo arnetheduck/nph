@@ -450,7 +450,6 @@ dotexpr
 if true:
   echo dotexpr.dot # after dotexpr in command ind
   # between two dotepxrs ind
-
   dotexpr
   # between dotexpr and dotonnewline ind
   .dotonnewline
