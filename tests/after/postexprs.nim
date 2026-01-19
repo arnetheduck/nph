@@ -116,3 +116,9 @@ if (
 
 not (compiles do:
   discard)
+
+let aaa = (
+  block:
+    bbb.postexpr:
+      vvvv
+).ytyyy()

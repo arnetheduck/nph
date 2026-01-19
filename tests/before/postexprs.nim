@@ -109,3 +109,6 @@ if (func1 do: x): true
 
 not (compiles do:
   discard)
+
+let aaa = (block: bbb.postexpr:
+      vvvv).ytyyy()

@@ -667,3 +667,33 @@ sons:
               - kind: "nkDiscardStmt"
                 sons:
                   - kind: "nkEmpty"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "aaa"
+          - kind: "nkEmpty"
+          - kind: "nkCall"
+            sons:
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkStmtListExpr"
+                    sons:
+                      - kind: "nkBlockStmt"
+                        sons:
+                          - kind: "nkEmpty"
+                          - kind: "nkCall"
+                            sons:
+                              - kind: "nkDotExpr"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "bbb"
+                                  - kind: "nkIdent"
+                                    ident: "postexpr"
+                              - kind: "nkStmtList"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "vvvv"
+                  - kind: "nkIdent"
+                    ident: "ytyyy"

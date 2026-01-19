@@ -106,6 +106,9 @@ discard -1.. -2
 aaaaaaa.bbbbbbbbb.longdotcall().ccccccccc.dddddddddd.eeeeeeeee.sdcsd(a0000000, b000000, c000000).fffffff.ggggggg.hhhhhhhh.csdcsdcs.sdcsdcsd.csdcsdcsdcsd.csdcsdcs.dcsdcsdcsdcs.sdc
 
 mynums = myNums.replace1("one", "o1ne").replace2("two", "t2wo").replace3("three", "t3hree").replace5("four", "f4our").replace5("five", "f5ive").replace6("six", "s6ix").replace7("seven", "s7even")
+aaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbb
+.ccccccccccccccccccccccccccc()
+.ccccccccccccccccccccccccc.ddddddddddddddddd() # multiline dotexpr
 
 let xxxxxxxxx = block:
   f()

@@ -544,12 +544,11 @@ proc exprColonEqExprList(p: var Parser, kind: TNodeKind, endTok: TokType): PNode
   exprColonEqExprListAux(p, endTok, result)
 
 proc dotExpr(p: var Parser, a: PNode): PNode =
-  var info = p.parLineInfo
-
   getTok(p)
 
   result = wrap(newNodeP(nkDotExpr, p, withPrefix = false), a)
-  result.info = info
+  # the dot might be at the next line already
+  result.info = a.info
   splitLookahead(p, result, clMid)
   optInd(p, result)
   result.add(parseSymbol(p, smAfterDot))
