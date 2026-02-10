@@ -1537,6 +1537,9 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
 
       gsub(g, n[0], nameFlags)
 
+      # The way stacked calls work, the `.name` part will be indented when on a
+      # new line by the nkDotExpr handler - when that happens, we must also
+      # indent the list of parameters
       let ind = g.condIndent(stackDot, flagIndent(flags))
       glist(g, n, tkParLe, start = 1, flags = {lfLongSepAtEnd})
       g.dedent(ind)
@@ -1681,6 +1684,8 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
         gmids(g, n)
       elif stackNL:
         optNL(g)
+
+      # Careful, this indent must be matched for the parameter list in nkCall!
       g.optIndent(wid)
       put(g, tkDot, ".")
       gsub(g, n[1], {sfNoIndent})
