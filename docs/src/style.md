@@ -134,6 +134,7 @@ functionCall(
 * literals (`2`, `"string"` etc)
 * simple identifiers (`myvar` etc)
 * dot expressions of the the above (`myObject.field`)
+* dereference operator (`[]`)
 ```
 
 ### Parameter lists

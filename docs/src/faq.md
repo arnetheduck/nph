@@ -1,5 +1,7 @@
 # FAQ
 
+<!-- toc -->
+
 ## Why use a formatter?
 
 A formatter removes the tedium of manually adding structure to code to make it
@@ -60,9 +62,9 @@ One of several things could have happened:
   not there yet.
 * The parser has a bug and is unable to parse valid Nim code
   * Probably you can move some comments around to make it work!
-* the formatter has a bug and the resulting formatting is invalid
+* The formatter has a bug and the resulting formatting is invalid
   * Probably you can move some comments around to make it work!
-* the AST equivalence checker complains
+* The AST equivalence checker complains
   * This often happens in complex expressions such as `do`  and parenthesis used
     for indent purposes where the Nim grammar has ambiguities and parsing
     complexity - it can usually be worked around by simplifying complex
@@ -111,6 +113,10 @@ information about the codebase at a glance.
 
 The style might feel unfamiliar in the beginning - this is fine and not a reason
 to panic - a few weeks from now, you'll forget you ever used another one.
+
+```admonish tip ""
+Forking `nph` is an excellent way to configure it to your liking!
+```
 
 ## Do you accept style suggestions and changes?
 
