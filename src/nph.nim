@@ -55,9 +55,10 @@ Config file (.nph.toml):
   color = true                           # Enable colored diff output (default: auto)
 """
   DefaultExcludePatterns = [
-    r"\.git", r"\.hg", r"\.svn", r"\.nimble", r"nimcache", r"\.vscode", r"\.idea",
-    r"__pycache__", r"node_modules", r"\.mypy_cache", r"\.pytest_cache", r"\.nox",
-    r"\.tox", r"\.venv", r"venv", r"\.eggs", r"_build", r"buck-out", r"build", r"dist",
+    r"\.git", r"\.hg", r"\.svn", r"\.nimble", r"nimcache", r"nimbledeps", r"\.vscode",
+    r"\.idea", r"__pycache__", r"node_modules", r"\.mypy_cache", r"\.pytest_cache",
+    r"\.nox", r"\.tox", r"\.venv", r"venv", r"\.eggs", r"_build", r"buck-out", r"build",
+    r"dist",
   ]
   DefaultIncludePattern = r"\.nim(s|ble)?$"
   ErrCheckFailed = 1

@@ -51,7 +51,7 @@ By default, `nph` excludes common directories that typically don't contain
 source code:
 
 - `.git`, `.hg`, `.svn` - version control
-- `.nimble`, `nimcache` - Nim build artifacts
+- `.nimble`, `nimcache`, `nimbledeps` - Nim build artifacts
 - `.vscode`, `.idea` - editor directories
 - `__pycache__`, `.mypy_cache`, `.pytest_cache` - Python artifacts
 - `.nox`, `.tox`, `.venv`, `venv`, `.eggs` - Python environments
