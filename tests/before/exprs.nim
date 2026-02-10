@@ -152,3 +152,37 @@ let xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx = """xxxxxxxxxxxxxxxxxxxxxxx
 let xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx = """
 
 """
+
+csasacdsa.casdcasdcsadc(
+  aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+).cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+.ddddddd().eeeeeeeee()
+
+if csasacdsa.casdcasdcsadc(
+  aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+).cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+.ddddddd().eeeeeeeee():
+  discard
+
+
+if csasacdsa.casdcasdcsadc(
+  aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+).cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+.ddddddd().eeeeeeeee() and csasacdsa.casdcasdcsadc(
+  aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+).cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+.ddddddd().eeeeeeeee():
+  discard
+
+
+let x = csasacdsa.casdcasdcsadc(
+  aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+)
+.cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+.ddddddd().eeeeeeeee()
+
+let x = csasacdsa.casdcasdcsadc(
+  aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+).cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+.ddddddd().eeeeeeeee().valueOr:
+  discard

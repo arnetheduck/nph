@@ -2274,3 +2274,278 @@ sons:
           - kind: "nkEmpty"
           - kind: "nkTripleStrLit"
             strVal: "\u000A"
+  - kind: "nkCall"
+    sons:
+      - kind: "nkDotExpr"
+        sons:
+          - kind: "nkCall"
+            sons:
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkDotExpr"
+                        sons:
+                          - kind: "nkCall"
+                            sons:
+                              - kind: "nkDotExpr"
+                                sons:
+                                  - kind: "nkIdent"
+                                    ident: "csasacdsa"
+                                  - kind: "nkIdent"
+                                    ident: "casdcasdcsadc"
+                              - kind: "nkIdent"
+                                ident: "aaaaaaaaaaaaaaaaaaaaaaaa"
+                              - kind: "nkIdent"
+                                ident: "bbbbbbbbbbbbbbbbbbbbbbbb"
+                              - kind: "nkIdent"
+                                ident: "ccccccccccccccccccccccc"
+                          - kind: "nkIdent"
+                            ident: "cccccccccc"
+                      - kind: "nkIdent"
+                        ident: "eeeeeeeeeeeeeeeeeeeeee"
+                      - kind: "nkIdent"
+                        ident: "bbbbbbbbbbbbbbbbbbbb"
+                      - kind: "nkIdent"
+                        ident: "cccccccccccccccccccc"
+                  - kind: "nkIdent"
+                    ident: "ddddddd"
+          - kind: "nkIdent"
+            ident: "eeeeeeeee"
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkCall"
+            sons:
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkDotExpr"
+                        sons:
+                          - kind: "nkCall"
+                            sons:
+                              - kind: "nkDotExpr"
+                                sons:
+                                  - kind: "nkCall"
+                                    sons:
+                                      - kind: "nkDotExpr"
+                                        sons:
+                                          - kind: "nkIdent"
+                                            ident: "csasacdsa"
+                                          - kind: "nkIdent"
+                                            ident: "casdcasdcsadc"
+                                      - kind: "nkIdent"
+                                        ident: "aaaaaaaaaaaaaaaaaaaaaaaa"
+                                      - kind: "nkIdent"
+                                        ident: "bbbbbbbbbbbbbbbbbbbbbbbb"
+                                      - kind: "nkIdent"
+                                        ident: "ccccccccccccccccccccccc"
+                                  - kind: "nkIdent"
+                                    ident: "cccccccccc"
+                              - kind: "nkIdent"
+                                ident: "eeeeeeeeeeeeeeeeeeeeee"
+                              - kind: "nkIdent"
+                                ident: "bbbbbbbbbbbbbbbbbbbb"
+                              - kind: "nkIdent"
+                                ident: "cccccccccccccccccccc"
+                          - kind: "nkIdent"
+                            ident: "ddddddd"
+                  - kind: "nkIdent"
+                    ident: "eeeeeeeee"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+  - kind: "nkIfStmt"
+    sons:
+      - kind: "nkElifBranch"
+        sons:
+          - kind: "nkInfix"
+            sons:
+              - kind: "nkIdent"
+                ident: "and"
+              - kind: "nkCall"
+                sons:
+                  - kind: "nkDotExpr"
+                    sons:
+                      - kind: "nkCall"
+                        sons:
+                          - kind: "nkDotExpr"
+                            sons:
+                              - kind: "nkCall"
+                                sons:
+                                  - kind: "nkDotExpr"
+                                    sons:
+                                      - kind: "nkCall"
+                                        sons:
+                                          - kind: "nkDotExpr"
+                                            sons:
+                                              - kind: "nkIdent"
+                                                ident: "csasacdsa"
+                                              - kind: "nkIdent"
+                                                ident: "casdcasdcsadc"
+                                          - kind: "nkIdent"
+                                            ident: "aaaaaaaaaaaaaaaaaaaaaaaa"
+                                          - kind: "nkIdent"
+                                            ident: "bbbbbbbbbbbbbbbbbbbbbbbb"
+                                          - kind: "nkIdent"
+                                            ident: "ccccccccccccccccccccccc"
+                                      - kind: "nkIdent"
+                                        ident: "cccccccccc"
+                                  - kind: "nkIdent"
+                                    ident: "eeeeeeeeeeeeeeeeeeeeee"
+                                  - kind: "nkIdent"
+                                    ident: "bbbbbbbbbbbbbbbbbbbb"
+                                  - kind: "nkIdent"
+                                    ident: "cccccccccccccccccccc"
+                              - kind: "nkIdent"
+                                ident: "ddddddd"
+                      - kind: "nkIdent"
+                        ident: "eeeeeeeee"
+              - kind: "nkCall"
+                sons:
+                  - kind: "nkDotExpr"
+                    sons:
+                      - kind: "nkCall"
+                        sons:
+                          - kind: "nkDotExpr"
+                            sons:
+                              - kind: "nkCall"
+                                sons:
+                                  - kind: "nkDotExpr"
+                                    sons:
+                                      - kind: "nkCall"
+                                        sons:
+                                          - kind: "nkDotExpr"
+                                            sons:
+                                              - kind: "nkIdent"
+                                                ident: "csasacdsa"
+                                              - kind: "nkIdent"
+                                                ident: "casdcasdcsadc"
+                                          - kind: "nkIdent"
+                                            ident: "aaaaaaaaaaaaaaaaaaaaaaaa"
+                                          - kind: "nkIdent"
+                                            ident: "bbbbbbbbbbbbbbbbbbbbbbbb"
+                                          - kind: "nkIdent"
+                                            ident: "ccccccccccccccccccccccc"
+                                      - kind: "nkIdent"
+                                        ident: "cccccccccc"
+                                  - kind: "nkIdent"
+                                    ident: "eeeeeeeeeeeeeeeeeeeeee"
+                                  - kind: "nkIdent"
+                                    ident: "bbbbbbbbbbbbbbbbbbbb"
+                                  - kind: "nkIdent"
+                                    ident: "cccccccccccccccccccc"
+                              - kind: "nkIdent"
+                                ident: "ddddddd"
+                      - kind: "nkIdent"
+                        ident: "eeeeeeeee"
+          - kind: "nkStmtList"
+            sons:
+              - kind: "nkDiscardStmt"
+                sons:
+                  - kind: "nkEmpty"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "x"
+          - kind: "nkEmpty"
+          - kind: "nkCall"
+            sons:
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkDotExpr"
+                        sons:
+                          - kind: "nkCall"
+                            sons:
+                              - kind: "nkDotExpr"
+                                sons:
+                                  - kind: "nkCall"
+                                    sons:
+                                      - kind: "nkDotExpr"
+                                        sons:
+                                          - kind: "nkIdent"
+                                            ident: "csasacdsa"
+                                          - kind: "nkIdent"
+                                            ident: "casdcasdcsadc"
+                                      - kind: "nkIdent"
+                                        ident: "aaaaaaaaaaaaaaaaaaaaaaaa"
+                                      - kind: "nkIdent"
+                                        ident: "bbbbbbbbbbbbbbbbbbbbbbbb"
+                                      - kind: "nkIdent"
+                                        ident: "ccccccccccccccccccccccc"
+                                  - kind: "nkIdent"
+                                    ident: "cccccccccc"
+                              - kind: "nkIdent"
+                                ident: "eeeeeeeeeeeeeeeeeeeeee"
+                              - kind: "nkIdent"
+                                ident: "bbbbbbbbbbbbbbbbbbbb"
+                              - kind: "nkIdent"
+                                ident: "cccccccccccccccccccc"
+                          - kind: "nkIdent"
+                            ident: "ddddddd"
+                  - kind: "nkIdent"
+                    ident: "eeeeeeeee"
+  - kind: "nkLetSection"
+    sons:
+      - kind: "nkIdentDefs"
+        sons:
+          - kind: "nkIdent"
+            ident: "x"
+          - kind: "nkEmpty"
+          - kind: "nkCall"
+            sons:
+              - kind: "nkDotExpr"
+                sons:
+                  - kind: "nkCall"
+                    sons:
+                      - kind: "nkDotExpr"
+                        sons:
+                          - kind: "nkCall"
+                            sons:
+                              - kind: "nkDotExpr"
+                                sons:
+                                  - kind: "nkCall"
+                                    sons:
+                                      - kind: "nkDotExpr"
+                                        sons:
+                                          - kind: "nkCall"
+                                            sons:
+                                              - kind: "nkDotExpr"
+                                                sons:
+                                                  - kind: "nkIdent"
+                                                    ident: "csasacdsa"
+                                                  - kind: "nkIdent"
+                                                    ident: "casdcasdcsadc"
+                                              - kind: "nkIdent"
+                                                ident: "aaaaaaaaaaaaaaaaaaaaaaaa"
+                                              - kind: "nkIdent"
+                                                ident: "bbbbbbbbbbbbbbbbbbbbbbbb"
+                                              - kind: "nkIdent"
+                                                ident: "ccccccccccccccccccccccc"
+                                          - kind: "nkIdent"
+                                            ident: "cccccccccc"
+                                      - kind: "nkIdent"
+                                        ident: "eeeeeeeeeeeeeeeeeeeeee"
+                                      - kind: "nkIdent"
+                                        ident: "bbbbbbbbbbbbbbbbbbbb"
+                                      - kind: "nkIdent"
+                                        ident: "cccccccccccccccccccc"
+                                  - kind: "nkIdent"
+                                    ident: "ddddddd"
+                          - kind: "nkIdent"
+                            ident: "eeeeeeeee"
+                  - kind: "nkIdent"
+                    ident: "valueOr"
+              - kind: "nkStmtList"
+                sons:
+                  - kind: "nkDiscardStmt"
+                    sons:
+                      - kind: "nkEmpty"

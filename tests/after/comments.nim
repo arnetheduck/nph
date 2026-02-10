@@ -445,21 +445,21 @@ echo dotexpr.dot # after dotexpr in command
 
 dotexpr
 # between dotexpr and dotonnewline
-.dotonnewline
+  .dotonnewline
 
 if true:
   echo dotexpr.dot # after dotexpr in command ind
   # between two dotepxrs ind
   dotexpr
   # between dotexpr and dotonnewline ind
-  .dotonnewline
+    .dotonnewline
 
 block:
   f.x
   # comment between the dots
-  .z()
+    .z()
   # also after call
-  .d() # far eol of dotexpr
+    .d() # far eol of dotexpr
 
   # after dotexpr ind
 

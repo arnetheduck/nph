@@ -142,8 +142,8 @@ discard a .. -b
 discard -1 .. -2
 
 aaaaaaa.bbbbbbbbb
-.longdotcall().ccccccccc.dddddddddd.eeeeeeeee
-.sdcsd(a0000000, b000000, c000000).fffffff.ggggggg.hhhhhhhh.csdcsdcs.sdcsdcsd.csdcsdcsdcsd.csdcsdcs.dcsdcsdcsdcs.sdc
+  .longdotcall().ccccccccc.dddddddddd.eeeeeeeee
+  .sdcsd(a0000000, b000000, c000000).fffffff.ggggggg.hhhhhhhh.csdcsdcs.sdcsdcsd.csdcsdcsdcsd.csdcsdcs.dcsdcsdcsdcs.sdc
 
 mynums = myNums
   .replace1("one", "o1ne")
@@ -154,8 +154,8 @@ mynums = myNums
   .replace6("six", "s6ix")
   .replace7("seven", "s7even")
 aaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbb
-.ccccccccccccccccccccccccccc().ccccccccccccccccccccccccc
-.ddddddddddddddddd() # no newline before previous dotexpr
+  .ccccccccccccccccccccccccccc().ccccccccccccccccccccccccc
+  .ddddddddddddddddd() # no newline before previous dotexpr
 
 let xxxxxxxxx = block:
   f()
@@ -244,3 +244,53 @@ let xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx =
 let xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx = """
 
 """
+
+csasacdsa
+  .casdcasdcsadc(
+    aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+  )
+  .cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+  .ddddddd()
+  .eeeeeeeee()
+
+if csasacdsa
+    .casdcasdcsadc(
+      aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+    )
+    .cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+    .ddddddd()
+    .eeeeeeeee():
+  discard
+
+if csasacdsa
+    .casdcasdcsadc(
+      aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+    )
+    .cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+    .ddddddd()
+    .eeeeeeeee() and
+    csasacdsa
+    .casdcasdcsadc(
+      aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+    )
+    .cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+    .ddddddd()
+    .eeeeeeeee():
+  discard
+
+let x = csasacdsa
+  .casdcasdcsadc(
+    aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+  )
+  .cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+  .ddddddd()
+  .eeeeeeeee()
+
+let x = csasacdsa
+  .casdcasdcsadc(
+    aaaaaaaaaaaaaaaaaaaaaaaa, bbbbbbbbbbbbbbbbbbbbbbbb, ccccccccccccccccccccccc
+  )
+  .cccccccccc(eeeeeeeeeeeeeeeeeeeeee, bbbbbbbbbbbbbbbbbbbb, cccccccccccccccccccc)
+  .ddddddd()
+  .eeeeeeeee().valueOr:
+    discard

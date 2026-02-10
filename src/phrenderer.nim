@@ -1490,40 +1490,60 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
   of nkNilLit:
     put(g, tkNil, atom(g, n)) # complex expressions
   of nkCall, nkConv, nkPattern, nkObjConstr:
-    if n.len > 1 and n.lastSon.kind in postExprBlocks:
-      let
-        doPars =
-          if n.lastSon.kind in {nkStmtList, nkDo} and sfParDo in flags:
-            # A expression that ends with a call with a `do` needs an extra set
-            # of parens to highlight where the `do` ends.
-            put(g, tkParLe, $tkParLe)
-            optNL(g)
-            true
-          else:
-            false
-        ind = condIndent(g, doPars)
+    if n.len >= 1:
+      let stackDot =
+        if n[0].kind == nkDotExpr:
+          let dot = n[0]
+          sfStackDot in flags or (
+            g.overflows(lsub(g, dot[0]) + lsub(g, dot[1]) + 1) and
+            isStackedCall(dot[0], true)
+          )
+        else:
+          false
 
-      gsub(g, n[0])
+      if n.len > 1 and n.lastSon.kind in postExprBlocks:
+        let
+          doPars =
+            if n.lastSon.kind in {nkStmtList, nkDo} and sfParDo in flags:
+              # A expression that ends with a call with a `do` needs an extra set
+              # of parens to highlight where the `do` ends.
+              put(g, tkParLe, $tkParLe)
+              optNL(g)
+              true
+            else:
+              false
+          ind = condIndent(g, doPars)
 
-      var i = 1
-      while i < n.len and n[i].kind notin postExprBlocks:
-        i.inc
+        gsub(g, n[0], flags * {sfNoIndent, sfLongIndent})
 
-      if i > 1:
-        glist(
-          g, n, tkParLe, start = 1, theEnd = i - 1 - n.len, flags = {lfLongSepAtEnd}
-        )
+        var i = 1
+        while i < n.len and n[i].kind notin postExprBlocks:
+          i.inc
 
-      postStatements(g, n, i, sfSkipDo in flags, skipMids = i > 1)
+        if i > 1:
+          glist(
+            g, n, tkParLe, start = 1, theEnd = i - 1 - n.len, flags = {lfLongSepAtEnd}
+          )
 
-      dedent(g, ind)
+        postStatements(g, n, i, sfSkipDo in flags, skipMids = i > 1)
 
-      if doPars:
-        optNL(g)
-        put(g, tkParRi, $tkParRi)
-    elif n.len >= 1:
-      gsub(g, n[0], flags = (flags * {sfStackDot}) + {sfStackDotInCall})
-      glist(g, n, tkParLe, start = 1, flags = {lfLongSepAtEnd})
+        dedent(g, ind)
+
+        if doPars:
+          optNL(g)
+          put(g, tkParRi, $tkParRi)
+      else:
+        let nameFlags =
+          (flags * {sfStackDot, sfNoIndent, sfLongIndent}) + {sfStackDotInCall}
+
+        gsub(g, n[0], nameFlags)
+
+        if n[0].kind == nkDotExpr:
+          let ind = g.condIndent(stackDot, flagIndent(flags))
+          glist(g, n, tkParLe, start = 1, flags = {lfLongSepAtEnd})
+          g.dedent(ind)
+        else:
+          glist(g, n, tkParLe, start = 1, flags = {lfLongSepAtEnd})
     else:
       put(g, tkParLe, "(")
       put(g, tkParRi, ")")
@@ -1647,12 +1667,13 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
           )
         stackNL = stackDot and sfStackDotInCall in flags
         subFlags =
-          {sfParDo} + (
+          flags * {sfNoIndent, sfLongIndent} + {sfParDo} + (
             if stackDot:
               {sfStackDot}
             else:
               {}
           )
+        wid = flagIndent(flags)
 
       gsub(g, n[0], flags = subFlags)
 
@@ -1664,8 +1685,10 @@ proc gsub(g: var TOutput, n: PNode, flags: SubFlags, extra: int) =
         gmids(g, n)
       elif stackNL:
         optNL(g)
+      g.optIndent(wid)
       put(g, tkDot, ".")
-      gsub(g, n[1])
+      gsub(g, n[1], {sfNoIndent})
+      g.dedent(wid)
   of nkBind:
     putWithSpace(g, tkBind, "bind")
     gsub(g, n[0])
