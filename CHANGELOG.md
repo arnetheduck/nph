@@ -1,6 +1,40 @@
 # Changelog
 
-# Unreleased
+# 0.7.0
+
+Formatting updates:
+
+* Indent chained/dotted calls that start on a new line to make expression
+  boundaries clear. Example:
+  ```nim
+  # old
+  aaaa
+  .f()
+  .g()
+
+  # new
+  aaaa
+    .f()
+    .g()
+  ```
+* Keep lightweight prefix calls (e.g., `@`, `%`, `?`, `not`) on the same
+  line as the assignment/opening when possible so lists and prefixed
+  constructs don’t force an extra indent.
+  ```nim
+  # before
+  let f2 =
+    ?call(
+      ...
+    )
+
+  # after
+  let f2 = ?call(
+    ...
+  )
+  ```
+* Put triple-string literals on same line if it fits (f12c27c)
+* Make `[]` operator simple (0145a67)
+* Preserve block comments followed by single-line comments (bca5b70)
 
 New features:
 
