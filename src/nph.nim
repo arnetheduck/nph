@@ -327,7 +327,6 @@ proc main() =
         for file in walkDirRec(key):
           if file.isNimFile:
             infiles &= file
-            explicitFiles.add(file) # Track files from explicit directories
       else:
         let f = key.addFileExt(".nim")
         infiles.add(f)
