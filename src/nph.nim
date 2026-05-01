@@ -435,8 +435,7 @@ proc main() =
         continue
       let n = normalizePath(file)
       let relPath = relativePath(n, normalizePath(dir))
-      if not shouldExclude(relPath, compiledPatterns.excludePatterns) and
-          shouldInclude(relPath, compiledPatterns.includePatterns):
+      if matchesFilters(relPath, compiledPatterns):
         infiles.add(file)
 
   if infiles.len == 0:
