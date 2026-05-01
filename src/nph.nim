@@ -303,6 +303,7 @@ proc main() =
     outfile, outdir, configFile: string
     infiles = newSeq[string]()
     explicitFiles = newSeq[string]() # Files passed explicitly, not from dir walk
+    explicitDirs = newSeq[string]() # Directories passed explicitly on the command line
     outfiles = newSeq[string]()
     debug = false
     check = false
@@ -324,10 +325,7 @@ proc main() =
     of cmdArgument:
       if dirExists(key):
         usesDir = true
-        for file in walkDirRec(key):
-          if file.isNimFile:
-            infiles &= file
-            explicitFiles.add(file) # Track files from explicit directories
+        explicitDirs.add(key)
       else:
         let f = key.addFileExt(".nim")
         infiles.add(f)
@@ -422,14 +420,23 @@ proc main() =
     includePatterns: compilePatterns(finalIncludePatterns),
   )
 
-  # Filter input files based on include/exclude patterns
-  # BUT: explicitly passed files bypass filtering (like Black)
+  # Filter explicit files — they bypass exclusions (like Black)
   var filteredFiles = newSeq[string]()
   for file in infiles:
     if file in explicitFiles or matchesFilters(file, compiledPatterns):
       filteredFiles.add(file)
-
   infiles = filteredFiles
+
+  # Walk explicitly passed directories, applying exclusions to relative paths
+  # so that subdirs like "nimbledeps" are excluded but the dir itself is not.
+  for dir in explicitDirs:
+    for file in walkDirRec(dir):
+      if not file.isNimFile:
+        continue
+      let n = normalizePath(file)
+      let relPath = relativePath(n, normalizePath(dir))
+      if matchesFilters(relPath, compiledPatterns):
+        infiles.add(file)
 
   if infiles.len == 0:
     quit "[Error] no input file.", 3
